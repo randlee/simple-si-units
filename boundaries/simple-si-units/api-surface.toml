@@ -1,0 +1,36 @@
+boundary_id = "BOUNDARY-SimpleSiUnits"
+owner_package = "simple-si-units"
+owner_crate_path = "simple_si_units"
+name = "SimpleSiUnits"
+
+[public]
+facade = "UnitStruct"
+
+[implementation]
+type = "UnitStruct"
+module = "simple_si_units"
+visibility = "public"
+constructor = "none"
+
+[composition]
+roots = ["UnitStruct", "NumLike", "base", "chemical", "electromagnetic", "geometry", "mechanical", "nuclear"]
+
+[dependencies]
+allowed_dependents = []
+allowed_dependencies = ["simple-si-units-core", "simple-si-units-macros"]
+forbidden_edges = []
+
+[references]
+scope = "outside_owner_crate"
+forbidden = []
+
+[testing]
+allowed_test_double_paths = []
+forbidden_test_bypasses = []
+
+[enforcement]
+lint_rules = []
+review_gates = []
+
+[status]
+state = "concrete_landed"

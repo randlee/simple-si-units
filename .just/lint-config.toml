@@ -1,0 +1,4 @@
+[identities]
+forbidden_literals = []
+
+[identities.production_canonical_literals]
