@@ -1,0 +1,36 @@
+boundary_id = "BOUNDARY-SimpleSiUnitsMacros"
+owner_package = "simple-si-units-macros"
+owner_crate_path = "simple_si_units_macros"
+name = "SimpleSiUnitsMacros"
+
+[public]
+facade = "UnitStruct"
+
+[implementation]
+type = "derive_unit"
+module = "simple_si_units_macros"
+visibility = "public"
+constructor = "none"
+
+[composition]
+roots = ["derive_unit", "impl_derive_unit"]
+
+[dependencies]
+allowed_dependents = ["simple-si-units"]
+allowed_dependencies = ["simple-si-units-core"]
+forbidden_edges = []
+
+[references]
+scope = "outside_owner_crate"
+forbidden = []
+
+[testing]
+allowed_test_double_paths = []
+forbidden_test_bypasses = []
+
+[enforcement]
+lint_rules = []
+review_gates = []
+
+[status]
+state = "concrete_landed"

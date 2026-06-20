@@ -1,0 +1,7 @@
+/target/
+/.just/logs/
+/artifacts/
+/.DS_Store
+/.sc/
+__pycache__/
+*.pyc

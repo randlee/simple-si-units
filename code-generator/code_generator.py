@@ -57,7 +57,7 @@ def main(*args):
 	'''
 	this_dir = path.dirname(path.abspath(__file__))
 	project_root_dir= path.dirname(this_dir)
-	main_proj_dir = path.join(project_root_dir, 'simple-si-units')
+	main_proj_dir = path.join(project_root_dir, 'reference', 'simple-si-units')
 	recommended_unit_tests = defaultdict(lambda: [])
 	#
 	data: DataFrame = pandas.read_csv(path.join(this_dir, 'unit-type-definitions.csv'))
