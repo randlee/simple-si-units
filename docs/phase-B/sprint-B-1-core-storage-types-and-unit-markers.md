@@ -12,7 +12,7 @@ Implement the primary quantity container and the first unit marker types.
 
 1. Core `Quantity<Unit, Storage>` or equivalent
 2. Foundational unit marker traits
-3. Initial dimensions for distance, time, and temperature
+3. Initial dimensions for distance, time, temperature, velocity, and acceleration
 4. Size assertions demonstrating zero additional storage overhead
 
 ## Dependencies

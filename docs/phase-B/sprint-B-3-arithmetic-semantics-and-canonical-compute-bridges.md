@@ -12,7 +12,8 @@ Define and implement scalar arithmetic, mixed-unit addition/subtraction, and bri
 
 1. Scalar multiplication and division preserving declared unit
 2. Mixed-unit addition and subtraction with left-hand-unit preservation
-3. Canonical compute bridges for velocity and acceleration calculations
+3. Deterministic mixed-storage promotion rules
+4. Canonical compute bridges for velocity and acceleration calculations
 
 ## Dependencies
 
@@ -29,4 +30,5 @@ Define and implement scalar arithmetic, mixed-unit addition/subtraction, and bri
 ## Exit Criteria
 
 1. Arithmetic behavior matches the PRD.
-2. Derived calculations are explicit and sane rather than combinatorial.
+2. Derived calculations are limited to the documented canonical set rather than exposing undocumented combinatorial result types.
+3. Mixed-storage behavior is deterministic and documented.

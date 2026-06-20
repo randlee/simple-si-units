@@ -10,13 +10,13 @@ Demonstrate that the same ABI works cleanly for Go and C.
 
 ## Deliverables
 
-1. C consumer examples
-2. Go consumer examples
+1. C consumer smoke examples
+2. Go consumer smoke examples
 3. Smoke tests or example builds
 
 ## Dependencies
 
-- Sprint D-1
+- Sprints C-3, D-1
 
 ## Unblocks
 

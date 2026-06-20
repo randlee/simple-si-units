@@ -60,7 +60,7 @@ def main(*args):
 	main_proj_dir = path.join(project_root_dir, 'reference', 'simple-si-units')
 	recommended_unit_tests = defaultdict(lambda: [])
 	#
-	data: DataFrame = pandas.read_csv(path.join(this_dir, 'unit-type-definitions.csv'))
+	data: DataFrame = pandas.read_csv(path.join(this_dir, 'unit-type-definitions.csv'), encoding='utf-8')
 	data.sort_values(by=['category', 'name'], axis=0, ascending=[True, True], inplace=True)
 	for i, row in data.iterrows():
 		recommended_unit_tests['unit_names_and_symbols_test'].append(UNIT_NAME_TEST_TEMPLATE % {
@@ -76,7 +76,7 @@ def main(*args):
 			'struct': to_code_name(row['name']),
 			'symbol': row['unit symbol']
 		})
-	from_to_unit_conversions: DataFrame = pandas.read_csv(path.join(this_dir, 'measurement-units.csv'))
+	from_to_unit_conversions: DataFrame = pandas.read_csv(path.join(this_dir, 'measurement-units.csv'), encoding='utf-8')
 	inverse_check(data, from_to_unit_conversions)
 	print('Loaded units: %s' % ', '.join(data['name'].values))
 	conversions = find_unit_conversions(data, test_recs=recommended_unit_tests)
@@ -93,7 +93,7 @@ def main(*args):
 		generated_code = generate_modules(module_name, data, conversions, from_to_unit_conversions, test_recs=recommended_unit_tests)
 		generated_code = post_gen_patching(generated_code)
 		print('\n\n%s.rs:\n%s' % (module_file, generated_code))
-		with open(module_file, 'w', newline='\n') as fout:
+		with open(module_file, 'w', encoding='utf-8', newline='\n') as fout:
 			fout.write(generated_code)
 	#
 	recommend_unit_tests(recommended_unit_tests, path.join(main_proj_dir, 'src', 'lib.rs'),
@@ -468,9 +468,9 @@ def find_unit_conversions(data: DataFrame, test_recs: defaultdict) -> DataFrame:
 def reduce_spaces(text: str) -> str: return re.sub(r'\s+', ' ', text)
 
 def recommend_unit_tests(test_recs: defaultdict, lib_filepath: str, uom_test_filepath: str):
-	with open(lib_filepath, 'r') as fin:
+	with open(lib_filepath, 'r', encoding='utf-8') as fin:
 		test_file_content = reduce_spaces(fin.read())
-	with open(uom_test_filepath, 'r') as fin:
+	with open(uom_test_filepath, 'r', encoding='utf-8') as fin:
 		test_file_content += reduce_spaces(fin.read())
 	print()
 	print('================  RECOMMENDED UNIT TESTS ================')

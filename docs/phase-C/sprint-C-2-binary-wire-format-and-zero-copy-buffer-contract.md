@@ -14,10 +14,11 @@ Define the binary interchange format and zero-copy expectations for bulk data.
 2. Raw payload contract
 3. Rules for endianness and numeric widths
 4. Rules for schema-level versus per-element unit metadata
+5. Binary-safe unit-id namespace and wire-format versioning policy
 
 ## Dependencies
 
-- Sprints A-3, B-4
+- Sprints A-2, A-3, B-4
 
 ## Unblocks
 
@@ -26,4 +27,4 @@ Define the binary interchange format and zero-copy expectations for bulk data.
 ## Exit Criteria
 
 1. Bulk binary payloads are unambiguous and documented.
-2. ABI and binary-contract expectations align.
+2. ABI and binary-contract expectations are documented as related but separate contracts.

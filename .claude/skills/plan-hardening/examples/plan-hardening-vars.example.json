@@ -1,0 +1,21 @@
+{
+  "task_id": "phase-x-plan-hardening-step-1",
+  "phase": "phase-X",
+  "description": "Plan hardening for phase-X current plan state",
+  "worktree_path": "/absolute/path/to/worktree",
+  "branch": "plan/phase-x",
+  "pr_target": "develop",
+  "round_id": "STEP1-R1",
+  "round_index": 1,
+  "reviewer": "plan-scope-reviewer",
+  "reviewed_commit": "",
+  "previous_reviewed_commit": "",
+  "findings_hash": "",
+  "supersedes_task_id": "",
+  "replay_nonce": "2026-05-20T00:00:00Z",
+  "source_of_truth": "- docs/project-plan.md\n- docs/phase-A/phase-A-foundation-and-deliverable-bootstrap.md",
+  "references": "- docs/prd.md\n- docs/prd-python.md\n- docs/prd-interop.md\n- docs/phase-A/sprint-A-1-workspace-and-deliverable-crate-scaffold.md\n- docs/phase-A/sprint-A-2-reference-extraction-and-codegen-reuse-plan.md",
+  "questions_or_concerns": "",
+  "previous_step_json": "",
+  "reviewer_findings_json": ""
+}

@@ -17,7 +17,7 @@ Validate correctness against the existing project where comparison is meaningful
 
 ## Dependencies
 
-- Sprints B-3, C-1
+- Sprints A-2, A-5, B-2, B-3, C-1
 
 ## Unblocks
 

@@ -17,7 +17,7 @@ Validate parity, confirm storage and ABI goals, finish cross-language examples, 
 
 | Sprint | Focus | Depends On | Parallel With | Status |
 |---|---|---|---|---|
-| [Sprint F-1](sprint-F-1-reference-parity-and-correctness-suite.md) | Reference parity and correctness suite | Sprints B-3, C-1 | Sprint F-2 | `Not Started` |
+| [Sprint F-1](sprint-F-1-reference-parity-and-correctness-suite.md) | Reference parity and correctness suite | Sprints A-5, B-2, B-3, C-1 | Sprint F-2 | `Not Started` |
 | [Sprint F-2](sprint-F-2-footprint-layout-and-performance-validation.md) | Footprint, layout, and performance validation | Sprints B-4, C-3, D-1 | Sprint F-1 | `Not Started` |
 | [Sprint F-3](sprint-F-3-user-documentation-examples-and-release-readiness.md) | User docs, examples, packaging, and release readiness | Phases D-E, Sprints F-1-F-2 | None | `Not Started` |
 

@@ -17,9 +17,9 @@ Create the stable C ABI and the first non-Python interop surfaces for C#, Go, C,
 
 | Sprint | Focus | Depends On | Parallel With | Status |
 |---|---|---|---|---|
-| [Sprint D-1](sprint-D-1-stable-c-abi-types-and-exported-functions.md) | Stable C ABI types and exported functions | Sprints B-3, B-4, C-2 | None | `Not Started` |
-| [Sprint D-2](sprint-D-2-csharp-interoptopus-bindings-and-span-friendly-surface.md) | C# and Interoptopus bindings plus span-friendly surface | Sprints D-1, A-3 | Sprint D-3 | `Not Started` |
-| [Sprint D-3](sprint-D-3-go-and-c-consumer-examples.md) | Go and C consumer examples and smoke tests | Sprint D-1 | Sprint D-2 | `Not Started` |
+| [Sprint D-1](sprint-D-1-stable-c-abi-types-and-exported-functions.md) | Stable C ABI types and exported functions | Sprints A-3, B-2, B-3, B-4, C-2, C-3 | None | `Not Started` |
+| [Sprint D-2](sprint-D-2-csharp-interoptopus-bindings-and-span-friendly-surface.md) | C# and Interoptopus bindings plus span-friendly surface | Sprints A-3, C-1, D-1 | Sprint D-3 | `Not Started` |
+| [Sprint D-3](sprint-D-3-go-and-c-consumer-examples.md) | Go and C consumer smoke examples and integration checks | Sprints C-3, D-1 | Sprint D-2 | `Not Started` |
 
 ## Phase Completion Criteria
 

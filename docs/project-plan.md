@@ -45,6 +45,8 @@ Cross-cutting release rule:
 ## Execution Model
 
 - Phase A is the main prerequisite phase.
+- Phase A must end with real delivery scaffolds present and the required lint/build/test baseline green for the shipped scope.
+- Sprint dependency lists are the authoritative executable DAG. Phase dependency rows are coarse thematic ordering only.
 - Within each phase, some sprints are serial and some can run in parallel.
 - Phase D and Phase E are intentionally separable after the core model and serialization contract are stable.
 - Phase F consolidates cross-language validation and release readiness.

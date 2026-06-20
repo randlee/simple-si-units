@@ -12,14 +12,14 @@ Finalize Python-facing validation, examples, and packaging workflow.
 
 1. Python tests
 2. Packaging examples
-3. Example usage docs for scalar and bulk APIs
+3. Integration-oriented example usage docs for scalar and bulk APIs
 4. Pydantic model generation and parity tests
 5. Generated Pydantic models shipped from `python/<package>/models/generated/`
 6. PyPI/pip publication readiness
 
 ## Dependencies
 
-- Sprints E-1, E-2
+- Sprints A-5, E-1, E-2
 
 ## Unblocks
 

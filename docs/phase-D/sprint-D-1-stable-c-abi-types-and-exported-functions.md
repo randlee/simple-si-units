@@ -14,10 +14,12 @@ Implement the concrete exported ABI layer for scalars and slices.
 2. Slice and mutable-slice ABI structs
 3. Explicit exported conversion and compute functions
 4. Header or ABI documentation generation path
+5. Explicit ABI status/error model for slice and buffer operations
+6. Explicit ownership and destroy-function policy for any non-trivial ABI resources
 
 ## Dependencies
 
-- Sprints B-3, B-4, C-2
+- Sprints A-3, B-2, B-3, B-4, C-2, C-3
 
 ## Unblocks
 

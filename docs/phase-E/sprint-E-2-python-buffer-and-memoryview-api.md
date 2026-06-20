@@ -2,7 +2,7 @@
 
 ## Goal
 
-Implement efficient Python bulk data APIs using buffers and memoryviews instead of Python object-per-element models.
+Implement efficient Python bulk data APIs using buffers and memoryviews instead of Python object-per-element models, with the PyO3-native buffer API as the primary surface.
 
 ## Status
 
@@ -13,10 +13,11 @@ Implement efficient Python bulk data APIs using buffers and memoryviews instead 
 1. Buffer-oriented bulk quantity API
 2. Memoryview-friendly path
 3. Binary and metadata alignment with the project wire format
+4. Clear distinction between the Python bulk API and any optional lower-level C ABI bridge
 
 ## Dependencies
 
-- Sprints B-4, C-2
+- Sprints B-4, C-2, C-3
 
 ## Unblocks
 

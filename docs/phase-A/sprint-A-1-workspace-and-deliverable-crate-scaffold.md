@@ -11,13 +11,13 @@ Convert the repo into the intended multi-surface layout and create the new deliv
 ## Deliverables
 
 1. Root workspace manifest
-2. `reference/` location for legacy `simple-si-units*` crates
-3. `crates/` scaffold for new Rust deliverables
-4. `python/` scaffold for the PyO3/maturin package and generated Pydantic models
+2. `crates/units-x/` crate scaffold with baseline manifest and source tree
+3. `reference/` location for legacy `simple-si-units*` crates
+4. `python/` scaffold for the PyO3/maturin package and generated Pydantic models, including `pyproject.toml`
 5. `dotnet/` scaffold for the C# wrapper/package and `Directory.Build.props`
 6. Local path or workspace dependency wiring for internal crates where appropriate
 7. Baseline crate/package metadata and feature placeholders
-8. Shared version source-of-truth file scaffold
+8. Shared version source-of-truth file scaffold and synchronization mechanism choice
 
 ## Why
 
@@ -40,4 +40,5 @@ The current repository behaves like a consumer of crates.io-published internal c
 1. `cargo metadata` reflects the intended workspace.
 2. Internal crates are no longer accidentally resolved from crates.io during local development.
 3. The repository layout clearly separates legacy reference crates from new shipped deliverables.
-4. The shared version source-of-truth file exists and downstream package metadata paths are identified.
+4. The `crates/units-x`, `python/`, and `dotnet/` delivery roots all exist with baseline publishable metadata files.
+5. The shared version source-of-truth file exists, its location/format are documented, and downstream synchronization paths are identified.

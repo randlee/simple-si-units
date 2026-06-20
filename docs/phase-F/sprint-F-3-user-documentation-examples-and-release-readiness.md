@@ -11,13 +11,14 @@ Prepare the project for initial external use.
 ## Deliverables
 
 1. User-facing docs
-2. Cross-language examples
-3. Python and C# examples
+2. Final user-facing cross-language examples
+3. Final user-facing Python and C# examples
 4. Release checklist
 5. Initial publish readiness review
 6. Cross-language JSON fixture and serialization parity signoff
 7. Publication dry-run checklist for `crates.io`, PyPI/pip, and `nuget.org`
 8. Shared-version lock verification in release readiness
+9. Rust crate packaging and `crates.io` publication readiness
 
 ## Dependencies
 
@@ -27,7 +28,7 @@ Prepare the project for initial external use.
 
 ## Exit Criteria
 
-1. Consumers can understand and use the library from docs and examples alone.
-2. The project is ready for a first release candidate.
+1. User docs cover installation, supported type surfaces, scalar usage, bulk usage, and serialization examples for the shipped platforms.
+2. The release checklist items and publication dry-run criteria are satisfied.
 3. Rust, Python, and C# agree on the canonical JSON wire shape.
 4. Release artifacts agree on one synchronized version.

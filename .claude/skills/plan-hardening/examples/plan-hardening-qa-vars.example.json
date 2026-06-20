@@ -1,0 +1,24 @@
+{
+  "task_id": "phase-x-plan-qa",
+  "sprint": "phase-X",
+  "sprint_doc": "docs/phase-A/phase-A-foundation-and-deliverable-bootstrap.md",
+  "review_mode": "plan",
+  "description": "Focused plan QA for phase-X after consistency hardening",
+  "pr_number": "",
+  "branch": "plan/phase-x",
+  "worktree_path": "/absolute/path/to/worktree",
+  "commits": "HEAD",
+  "review_targets": [
+    "docs/phase-A/phase-A-foundation-and-deliverable-bootstrap.md",
+    "docs/phase-A/sprint-A-1-workspace-and-deliverable-crate-scaffold.md",
+    "docs/phase-A/sprint-A-2-reference-extraction-and-codegen-reuse-plan.md"
+  ],
+  "references": [
+    "docs/project-plan.md",
+    "docs/prd.md",
+    "docs/prd-python.md",
+    "docs/prd-interop.md"
+  ],
+  "changed_files": "",
+  "triage_records": ""
+}

@@ -13,8 +13,9 @@ Define the master catalog and isolate what can be reused from the existing proje
 1. Mapping from current CSV unit definitions to the new crate model
 2. Mapping from current conversion-factor generation to the new storage-preserving model
 3. Master catalog schema
-4. List of codegen components to reuse, adapt, or replace
-5. End-user extension workflow based on catalog edits plus regeneration
+4. Catalog fields covering JSON type ids, human-readable unit symbols, code-facing unit ids, binary schema ids, ABI naming inputs, reserved-word strategy, and offset-conversion metadata
+5. List of codegen components to reuse, adapt, or replace
+6. End-user extension workflow based on catalog edits plus regeneration
 
 ## Why
 

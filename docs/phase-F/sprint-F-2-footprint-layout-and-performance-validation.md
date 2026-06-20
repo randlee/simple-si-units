@@ -11,7 +11,7 @@ Prove the minimum-footprint and ABI/layout claims made by the project.
 ## Deliverables
 
 1. Size assertions for scalar and bulk wrappers
-2. ABI layout assertions
+2. Final repo-wide ABI layout regression assertions
 3. Serialization overhead checks
 4. Focused performance or copy-behavior checks where relevant
 
@@ -29,4 +29,4 @@ Prove the minimum-footprint and ABI/layout claims made by the project.
 
 ## Exit Criteria
 
-1. Footprint and layout requirements are test-backed.
+1. Footprint and final layout regression requirements are test-backed.

@@ -14,6 +14,7 @@ Lock the fundamental naming, layout, and ABI rules for the project.
 2. Concrete rule for type-level unit marker naming and symbol casing
 3. Concrete rule for slice layout and length width
 4. Concrete rule for FFI-safe ownership boundaries
+5. Concrete rule distinguishing in-memory ABI layout from binary wire format
 
 ## Why
 
@@ -37,5 +38,6 @@ This project depends on stable, cross-language behavior. Naming and layout rules
 
 ## Exit Criteria
 
-1. Public ABI naming and layout rules are documented.
+1. Public ABI naming and layout rules are documented, including a fixed-width slice length choice.
 2. Unit marker casing rules cover cases such as `mm`, `Mm`, `degC`, and `degF`.
+3. Wire/display unit symbols are documented separately from safe code identifiers where they differ, such as `C` versus `degC`.
