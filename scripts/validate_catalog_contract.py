@@ -66,6 +66,7 @@ def validate_dimension_invariants(dimension: Any, label: str) -> str:
         require_non_blank_string(unit["unit_code_id"], f"{label}.units[{index}].unit_code_id")
         require_non_blank_string(unit["unit_symbol"], f"{label}.units[{index}].unit_symbol")
         require_non_blank_string(unit["display_name"], f"{label}.units[{index}].display_name")
+        require_non_blank_string(unit["binary_unit_id"], f"{label}.units[{index}].binary_unit_id")
         reserved_word_alias = unit["reserved_word_alias"]
         require(
             reserved_word_alias is None
