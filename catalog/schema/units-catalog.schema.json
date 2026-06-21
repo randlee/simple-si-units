@@ -1,0 +1,206 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://units-x.dev/schema/units-catalog.schema.json",
+  "title": "units-x catalog schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "catalog_version",
+    "dimensions"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "catalog_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "dimensions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/dimension"
+      }
+    }
+  },
+  "$defs": {
+    "conversion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "scale_to_base"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "linear",
+            "affine"
+          ]
+        },
+        "scale_to_base": {
+          "type": "number"
+        },
+        "offset_to_base": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      }
+    },
+    "unit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "unit_code_id",
+        "unit_symbol",
+        "display_name",
+        "binary_unit_id",
+        "conversion"
+      ],
+      "properties": {
+        "unit_code_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "unit_symbol": {
+          "type": "string",
+          "minLength": 1
+        },
+        "display_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "binary_unit_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reserved_word_alias": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "aliases": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "conversion": {
+          "$ref": "#/$defs/conversion"
+        }
+      }
+    },
+    "json_forms": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scalar_type_ids",
+        "small_array_type_id_template",
+        "buffer_type_id_template",
+        "default_encoding"
+      ],
+      "properties": {
+        "scalar_type_ids": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "small_array_type_id_template": {
+          "type": "string",
+          "minLength": 1
+        },
+        "buffer_type_id_template": {
+          "type": "string",
+          "minLength": 1
+        },
+        "default_encoding": {
+          "type": "string",
+          "enum": [
+            "scalar",
+            "array",
+            "base64-le"
+          ]
+        }
+      }
+    },
+    "abi": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "abi_name_stem",
+        "binary_schema_id"
+      ],
+      "properties": {
+        "abi_name_stem": {
+          "type": "string",
+          "minLength": 1
+        },
+        "binary_schema_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "dimension": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "dimension_id",
+        "family",
+        "public_type",
+        "base_unit_code_id",
+        "json_forms",
+        "abi",
+        "units"
+      ],
+      "properties": {
+        "dimension_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "family": {
+          "type": "string",
+          "enum": [
+            "base",
+            "geometry",
+            "mechanical",
+            "electromagnetic",
+            "example"
+          ]
+        },
+        "public_type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "base_unit_code_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "json_forms": {
+          "$ref": "#/$defs/json_forms"
+        },
+        "abi": {
+          "$ref": "#/$defs/abi"
+        },
+        "units": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/unit"
+          }
+        }
+      }
+    }
+  }
+}

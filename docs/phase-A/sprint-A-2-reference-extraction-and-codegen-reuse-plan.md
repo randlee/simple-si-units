@@ -6,7 +6,7 @@ Define the master catalog and isolate what can be reused from the existing proje
 
 ## Status
 
-`Not Started`
+`Done`
 
 ## Scope References
 
