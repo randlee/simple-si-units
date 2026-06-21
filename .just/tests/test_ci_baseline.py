@@ -22,9 +22,16 @@ class CiBaselineTests(unittest.TestCase):
         self.assertIn("ubuntu-latest", workflow)
         self.assertIn("macos-latest", workflow)
         self.assertIn("windows-latest", workflow)
-        self.assertIn('"integration/*"', workflow)
+        self.assertIn('branches: [develop, main, "integrate/*", "integration/*"]', workflow)
+        self.assertIn('branches: [develop, main, "integrate/*", "integration/*", "sprint/*"]', workflow)
         self.assertIn("run: just ci", workflow)
-        self.assertIn("python/requirements-ci.txt", workflow)
+        self.assertIn('toolchain: "1.95.0"', workflow)
+        self.assertIn('python-version: "3.11.9"', workflow)
+        self.assertIn('dotnet-version: "8.0.100"', workflow)
+        self.assertIn("python -m pip install -r python/requirements-ci.txt", workflow)
+        self.assertIn("cargo install just --locked --version 1.49.0", workflow)
+        self.assertIn("cargo install sc-lint --locked --version 0.3.0", workflow)
+        self.assertIn("cargo install sc-lint-boundary --locked --version 0.3.0", workflow)
 
     def test_development_workflow_documents_shipped_scope_exclusion(self) -> None:
         doc = (ROOT / "docs" / "development-workflow.md").read_text(encoding="utf-8")

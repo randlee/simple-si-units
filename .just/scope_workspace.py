@@ -46,7 +46,11 @@ def prepare_boundary_scope(repo_root: Path, scope_root: Path) -> None:
     shutil.copytree(repo_root / "boundaries" / "units-x", boundary_dst, dirs_exist_ok=True)
     shutil.copy2(repo_root / "boundaries" / "planning.toml", boundaries_root / "planning.toml")
 
-    (scope_root / "Cargo.toml").write_text(shipped_workspace_toml(repo_root), encoding="utf-8")
+    (scope_root / "Cargo.toml").write_text(
+        shipped_workspace_toml(repo_root),
+        encoding="utf-8",
+        newline="\n",
+    )
 
 
 @contextmanager
