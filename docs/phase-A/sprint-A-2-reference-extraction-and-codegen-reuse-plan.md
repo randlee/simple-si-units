@@ -77,16 +77,33 @@ Representative catalog shape:
 
 ```json
 {
-  "dimension": "temperature",
-  "unit_code_id": "degC",
-  "unit_symbol": "C",
-  "reserved_word_alias": null,
-  "binary_unit_id": "temperature.degC",
-  "json_type_id": "temperature_f32",
-  "conversion": {
-    "kind": "affine",
-    "scale_to_base": 1.0,
-    "offset_to_base": 273.15
-  }
+  "dimension_id": "temperature",
+  "base_unit_code_id": "K",
+  "json_forms": {
+    "scalar_type_ids": ["temperature_f32", "temperature_f64"],
+    "small_array_type_id_template": "temperature{arity}_{storage}",
+    "buffer_type_id_template": "temperature_buffer_{storage}",
+    "default_encoding": "array"
+  },
+  "units": [
+    {
+      "unit_code_id": "degC",
+      "unit_symbol": "C",
+      "reserved_word_alias": null,
+      "binary_unit_id": "temperature.degC",
+      "aliases": ["celsius"],
+      "conversion": {
+        "kind": "affine",
+        "scale_to_base": 1.0,
+        "offset_to_base": 273.15
+      }
+    }
+  ]
 }
 ```
+
+Source of truth note:
+
+- The authoritative contract remains `catalog/schema/units-catalog.schema.json`
+  plus `catalog/examples/phase-a-sample-catalog.json`. This example is only a
+  schema-aligned excerpt.

@@ -32,7 +32,8 @@
       "additionalProperties": false,
       "required": [
         "kind",
-        "scale_to_base"
+        "scale_to_base",
+        "offset_to_base"
       ],
       "properties": {
         "kind": {
@@ -51,7 +52,41 @@
             "null"
           ]
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "linear"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "offset_to_base": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "affine"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "offset_to_base": {
+                "type": "number"
+              }
+            }
+          }
+        }
+      ]
     },
     "unit": {
       "type": "object",
@@ -61,6 +96,8 @@
         "unit_symbol",
         "display_name",
         "binary_unit_id",
+        "reserved_word_alias",
+        "aliases",
         "conversion"
       ],
       "properties": {
