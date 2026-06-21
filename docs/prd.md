@@ -207,13 +207,13 @@ Representative FFI forms:
 
 ```rust
 #[repr(C)]
-pub struct DistanceMmI32 {
+pub struct distance_mm_i32 {
     pub value_mm: i32,
 }
 
 #[repr(C)]
-pub struct DistanceMmI32Slice {
-    pub ptr: *const DistanceMmI32,
+pub struct distance_mm_i32_slice {
+    pub ptr: *const distance_mm_i32,
     pub len: u64,
 }
 ```
