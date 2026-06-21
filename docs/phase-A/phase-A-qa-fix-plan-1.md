@@ -18,15 +18,19 @@ This document turns the final QA findings for Sprint A-4 and Sprint A-5 into an 
 
 Primary controlling ids:
 
+- `REQ-ROOT-006`
+- `REQ-ROOT-008`
 - `REQ-ROOT-010`
 - `REQ-ROOT-011`
 - `REQ-ROOT-020`
 - `REQ-UX-009`
+- `REQ-UX-030`
 - `REQ-UX-017`
 - `REQ-UX-018`
 - `REQ-UX-021`
 - `REQ-UX-022`
 - `REQ-UX-029`
+- `REQ-UX-036`
 - `REQ-UX-031`
 - `REQ-UX-032`
 - `REQ-UX-033`
@@ -34,6 +38,7 @@ Primary controlling ids:
 - `REQ-UX-035`
 - `REQ-UX-040`
 - `REQ-UX-041`
+- `NFR-UX-004`
 - `NFR-UX-005`
 - `NFR-UX-006`
 - `NFR-UX-009`
