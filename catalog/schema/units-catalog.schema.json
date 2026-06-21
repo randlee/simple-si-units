@@ -211,8 +211,7 @@
             "base",
             "geometry",
             "mechanical",
-            "electromagnetic",
-            "example"
+            "electromagnetic"
           ]
         },
         "public_type": {
