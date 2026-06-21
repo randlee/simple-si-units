@@ -1,0 +1,339 @@
+{
+  "schema_version": "1.0.0",
+  "catalog_version": "0.1.0-phase-a",
+  "dimensions": [
+    {
+      "dimension_id": "distance",
+      "family": "base",
+      "public_type": "Distance",
+      "base_unit_code_id": "m",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "distance_i32",
+            "distance_f32",
+            "distance_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "distance{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "distance_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "distance",
+        "binary_schema_id": "units-x.distance.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "mm",
+          "unit_symbol": "mm",
+          "display_name": "millimeter",
+          "binary_unit_id": "distance.mm",
+          "reserved_word_alias": null,
+          "aliases": [
+            "millimeters"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 0.001,
+            "offset_to_base": null
+          }
+        },
+        {
+          "unit_code_id": "m",
+          "unit_symbol": "m",
+          "display_name": "meter",
+          "binary_unit_id": "distance.m",
+          "reserved_word_alias": null,
+          "aliases": [
+            "meters"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        },
+        {
+          "unit_code_id": "ft",
+          "unit_symbol": "ft",
+          "display_name": "foot",
+          "binary_unit_id": "distance.ft",
+          "reserved_word_alias": null,
+          "aliases": [
+            "feet"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 0.3048,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "time",
+      "family": "base",
+      "public_type": "Time",
+      "base_unit_code_id": "s",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "time_i32",
+            "time_f32",
+            "time_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "time{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "time_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "time",
+        "binary_schema_id": "units-x.time.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "s",
+          "unit_symbol": "s",
+          "display_name": "second",
+          "binary_unit_id": "time.s",
+          "reserved_word_alias": null,
+          "aliases": [
+            "seconds"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        },
+        {
+          "unit_code_id": "ms",
+          "unit_symbol": "ms",
+          "display_name": "millisecond",
+          "binary_unit_id": "time.ms",
+          "reserved_word_alias": null,
+          "aliases": [
+            "milliseconds"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 0.001,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "temperature",
+      "family": "base",
+      "public_type": "Temperature",
+      "base_unit_code_id": "K",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "temperature_f32",
+            "temperature_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "temperature{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "temperature_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "temperature",
+        "binary_schema_id": "units-x.temperature.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "K",
+          "unit_symbol": "K",
+          "display_name": "kelvin",
+          "binary_unit_id": "temperature.K",
+          "reserved_word_alias": null,
+          "aliases": [],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        },
+        {
+          "unit_code_id": "degC",
+          "unit_symbol": "C",
+          "display_name": "celsius",
+          "binary_unit_id": "temperature.degC",
+          "reserved_word_alias": null,
+          "aliases": [
+            "celsius"
+          ],
+          "conversion": {
+            "kind": "affine",
+            "scale_to_base": 1.0,
+            "offset_to_base": 273.15
+          }
+        },
+        {
+          "unit_code_id": "degF",
+          "unit_symbol": "F",
+          "display_name": "fahrenheit",
+          "binary_unit_id": "temperature.degF",
+          "reserved_word_alias": null,
+          "aliases": [
+            "fahrenheit"
+          ],
+          "conversion": {
+            "kind": "affine",
+            "scale_to_base": 0.555555555555556,
+            "offset_to_base": 255.372222222222
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "velocity",
+      "family": "mechanical",
+      "public_type": "Velocity",
+      "base_unit_code_id": "mps",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "velocity_f32",
+            "velocity_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "velocity{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "velocity_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "velocity",
+        "binary_schema_id": "units-x.velocity.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "mps",
+          "unit_symbol": "m/s",
+          "display_name": "meter per second",
+          "binary_unit_id": "velocity.mps",
+          "reserved_word_alias": null,
+          "aliases": [],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "acceleration",
+      "family": "mechanical",
+      "public_type": "Acceleration",
+      "base_unit_code_id": "mps2",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "acceleration_f32",
+            "acceleration_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "acceleration{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "acceleration_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "acceleration",
+        "binary_schema_id": "units-x.acceleration.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "mps2",
+          "unit_symbol": "m/s^2",
+          "display_name": "meter per second squared",
+          "binary_unit_id": "acceleration.mps2",
+          "reserved_word_alias": null,
+          "aliases": [],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "diopter",
+      "family": "base",
+      "public_type": "Diopter",
+      "base_unit_code_id": "dpt",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "diopter_f32",
+            "diopter_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "diopter{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "diopter_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "diopter",
+        "binary_schema_id": "units-x.diopter.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "dpt",
+          "unit_symbol": "dpt",
+          "display_name": "diopter",
+          "binary_unit_id": "diopter.dpt",
+          "reserved_word_alias": null,
+          "aliases": [],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    }
+  ]
+}

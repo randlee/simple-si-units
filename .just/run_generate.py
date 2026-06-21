@@ -22,12 +22,23 @@ def main(argv: list[str]) -> int:
     if toolchain_synchronized.returncode != 0:
         return toolchain_synchronized.returncode
 
-    completed = subprocess.run(
-        [sys.executable or "python3", str(repo_root / "scripts" / "validate_catalog_contract.py")],
+    for catalog_path in (
+        repo_root / "catalog" / "units-catalog.json",
+        repo_root / "catalog" / "examples" / "phase-a-sample-catalog.json",
+    ):
+        completed = subprocess.run(
+            [sys.executable or "python3", str(repo_root / "scripts" / "validate_catalog_contract.py"), str(catalog_path)],
+            cwd=repo_root,
+        )
+        if completed.returncode != 0:
+            return completed.returncode
+
+    catalog_generation = subprocess.run(
+        [sys.executable or "python3", str(repo_root / "scripts/generate_catalog_artifacts.py"), "--mode", "write"],
         cwd=repo_root,
     )
-    if completed.returncode != 0:
-        return completed.returncode
+    if catalog_generation.returncode != 0:
+        return catalog_generation.returncode
 
     formatted = subprocess.run(["cargo", "fmt", "--all"], cwd=repo_root)
     return formatted.returncode

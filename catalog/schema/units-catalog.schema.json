@@ -140,36 +140,84 @@
         }
       }
     },
-    "json_forms": {
+    "json_scalar_form": {
       "type": "object",
       "additionalProperties": false,
       "required": [
-        "scalar_type_ids",
-        "small_array_type_id_template",
-        "buffer_type_id_template",
-        "default_encoding"
+        "type_ids",
+        "encoding"
       ],
       "properties": {
-        "scalar_type_ids": {
+        "type_ids": {
           "type": "array",
           "minItems": 1,
           "items": {
             "$ref": "#/$defs/non_blank_string"
           }
         },
-        "small_array_type_id_template": {
-          "$ref": "#/$defs/non_blank_string"
-        },
-        "buffer_type_id_template": {
-          "$ref": "#/$defs/non_blank_string"
-        },
-        "default_encoding": {
+        "encoding": {
           "type": "string",
           "enum": [
-            "scalar",
-            "array",
+            "object"
+          ]
+        }
+      }
+    },
+    "json_small_array_form": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type_id_template",
+        "encoding"
+      ],
+      "properties": {
+        "type_id_template": {
+          "$ref": "#/$defs/non_blank_string"
+        },
+        "encoding": {
+          "type": "string",
+          "enum": [
+            "array"
+          ]
+        }
+      }
+    },
+    "json_buffer_form": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type_id_template",
+        "encoding"
+      ],
+      "properties": {
+        "type_id_template": {
+          "$ref": "#/$defs/non_blank_string"
+        },
+        "encoding": {
+          "type": "string",
+          "enum": [
             "base64-le"
           ]
+        }
+      }
+    },
+    "json_forms": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scalar",
+        "small_array",
+        "buffer"
+      ],
+      "properties": {
+        "scalar": {
+          "$ref": "#/$defs/json_scalar_form"
+        },
+        "small_array": {
+          "$ref": "#/$defs/json_small_array_form"
+        },
+        "buffer": {
+          "$ref": "#/$defs/json_buffer_form"
         }
       }
     },

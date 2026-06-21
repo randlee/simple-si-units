@@ -35,6 +35,14 @@ class CatalogContractTests(unittest.TestCase):
     def test_sample_catalog_passes_contract_validation(self) -> None:
         validate_catalog(self.load_sample())
 
+    def test_production_catalog_passes_contract_validation(self) -> None:
+        payload = json.loads((ROOT / "catalog" / "units-catalog.json").read_text(encoding="utf-8"))
+        validate_catalog(payload)
+
+    def test_generation_edge_fixture_passes_contract_validation(self) -> None:
+        payload = json.loads((ROOT / "catalog" / "examples" / "generation-edge-catalog.json").read_text(encoding="utf-8"))
+        validate_catalog(payload)
+
     def test_sample_catalog_keeps_case_sensitive_and_offset_units_distinct(self) -> None:
         sample = self.load_sample()
         dimensions = {dimension["dimension_id"]: dimension for dimension in sample["dimensions"]}
@@ -83,9 +91,10 @@ class CatalogContractTests(unittest.TestCase):
             validate_catalog(sample)
 
         sample = self.load_sample()
-        sample["dimensions"][0]["json_forms"]["scalar_type_ids"] = []
-        with self.assertRaises(ValidationError):
+        sample["dimensions"][0]["json_forms"]["scalar"]["type_ids"] = []
+        with self.assertRaises(ValidationError) as context:
             validate_catalog(sample)
+        self.assertEqual(context.exception.code, "schema_validation_failed")
 
         sample = self.load_sample()
         sample["dimensions"][0]["dimension_id"] = "   "
@@ -104,6 +113,11 @@ class CatalogContractTests(unittest.TestCase):
 
         sample = self.load_sample()
         sample["dimensions"][0]["units"][0]["binary_unit_id"] = "   "
+        with self.assertRaises(ValidationError):
+            validate_catalog(sample)
+
+        sample = self.load_sample()
+        sample["dimensions"][0]["units"][0]["binary_unit_id"] = "distance.centimeter"
         with self.assertRaises(ValidationError):
             validate_catalog(sample)
 

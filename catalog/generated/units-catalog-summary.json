@@ -1,0 +1,224 @@
+{
+  "catalog_version": "0.1.0-phase-a",
+  "dimension_count": 6,
+  "dimensions": [
+    {
+      "abi_name_stem": "distance",
+      "binary_schema_id": "units-x.distance.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "distance_buffer_{storage}"
+      },
+      "dimension_id": "distance",
+      "public_type": "Distance",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "distance_i32",
+          "distance_f32",
+          "distance_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "distance{arity}_{storage}"
+      },
+      "unit_ids": [
+        "distance.mm",
+        "distance.m",
+        "distance.ft"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "distance.mm",
+          "reserved_word_alias": null,
+          "unit_code_id": "mm"
+        },
+        {
+          "binary_unit_id": "distance.m",
+          "reserved_word_alias": null,
+          "unit_code_id": "m"
+        },
+        {
+          "binary_unit_id": "distance.ft",
+          "reserved_word_alias": null,
+          "unit_code_id": "ft"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "time",
+      "binary_schema_id": "units-x.time.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "time_buffer_{storage}"
+      },
+      "dimension_id": "time",
+      "public_type": "Time",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "time_i32",
+          "time_f32",
+          "time_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "time{arity}_{storage}"
+      },
+      "unit_ids": [
+        "time.s",
+        "time.ms"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "time.s",
+          "reserved_word_alias": null,
+          "unit_code_id": "s"
+        },
+        {
+          "binary_unit_id": "time.ms",
+          "reserved_word_alias": null,
+          "unit_code_id": "ms"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "temperature",
+      "binary_schema_id": "units-x.temperature.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "temperature_buffer_{storage}"
+      },
+      "dimension_id": "temperature",
+      "public_type": "Temperature",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "temperature_f32",
+          "temperature_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "temperature{arity}_{storage}"
+      },
+      "unit_ids": [
+        "temperature.K",
+        "temperature.degC",
+        "temperature.degF"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "temperature.K",
+          "reserved_word_alias": null,
+          "unit_code_id": "K"
+        },
+        {
+          "binary_unit_id": "temperature.degC",
+          "reserved_word_alias": null,
+          "unit_code_id": "degC"
+        },
+        {
+          "binary_unit_id": "temperature.degF",
+          "reserved_word_alias": null,
+          "unit_code_id": "degF"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "velocity",
+      "binary_schema_id": "units-x.velocity.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "velocity_buffer_{storage}"
+      },
+      "dimension_id": "velocity",
+      "public_type": "Velocity",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "velocity_f32",
+          "velocity_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "velocity{arity}_{storage}"
+      },
+      "unit_ids": [
+        "velocity.mps"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "velocity.mps",
+          "reserved_word_alias": null,
+          "unit_code_id": "mps"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "acceleration",
+      "binary_schema_id": "units-x.acceleration.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "acceleration_buffer_{storage}"
+      },
+      "dimension_id": "acceleration",
+      "public_type": "Acceleration",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "acceleration_f32",
+          "acceleration_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "acceleration{arity}_{storage}"
+      },
+      "unit_ids": [
+        "acceleration.mps2"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "acceleration.mps2",
+          "reserved_word_alias": null,
+          "unit_code_id": "mps2"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "diopter",
+      "binary_schema_id": "units-x.diopter.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "diopter_buffer_{storage}"
+      },
+      "dimension_id": "diopter",
+      "public_type": "Diopter",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "diopter_f32",
+          "diopter_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "diopter{arity}_{storage}"
+      },
+      "unit_ids": [
+        "diopter.dpt"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "diopter.dpt",
+          "reserved_word_alias": null,
+          "unit_code_id": "dpt"
+        }
+      ]
+    }
+  ]
+}

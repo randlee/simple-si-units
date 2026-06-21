@@ -109,16 +109,18 @@ Reference mapping:
 
 The catalog owns machine-readable JSON classification through `json_forms`:
 
-- `scalar_type_ids`
-- `small_array_type_id_template`
-- `buffer_type_id_template`
-- `default_encoding`
+- `scalar.type_ids`
+- `scalar.encoding`
+- `small_array.type_id_template`
+- `small_array.encoding`
+- `buffer.type_id_template`
+- `buffer.encoding`
 
 Phase A decisions:
 
 - scalars use explicit `type` + `unit` + `value`
 - fixed small buffers use JSON arrays
-- arbitrary/large buffers use encoded envelopes
+- arbitrary/large buffers use compact encoded envelopes
 - the chosen form is catalog-owned metadata, not a runtime heuristic
 
 ## First Generated Artifacts This Contract Must Own

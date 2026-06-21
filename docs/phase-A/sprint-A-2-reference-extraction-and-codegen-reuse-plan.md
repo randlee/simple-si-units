@@ -86,10 +86,18 @@ Representative catalog shape:
     "binary_schema_id": "units-x.temperature.v1"
   },
   "json_forms": {
-    "scalar_type_ids": ["temperature_f32", "temperature_f64"],
-    "small_array_type_id_template": "temperature{arity}_{storage}",
-    "buffer_type_id_template": "temperature_buffer_{storage}",
-    "default_encoding": "array"
+    "scalar": {
+      "type_ids": ["temperature_f32", "temperature_f64"],
+      "encoding": "object"
+    },
+    "small_array": {
+      "type_id_template": "temperature{arity}_{storage}",
+      "encoding": "array"
+    },
+    "buffer": {
+      "type_id_template": "temperature_buffer_{storage}",
+      "encoding": "base64-le"
+    }
   },
   "units": [
     {

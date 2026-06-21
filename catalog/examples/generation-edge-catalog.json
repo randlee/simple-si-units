@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "catalog_version": "0.1.0-phase-a-sample",
+  "catalog_version": "0.1.0-phase-a-generation-edge",
   "dimensions": [
     {
       "dimension_id": "distance",
@@ -76,17 +76,17 @@
           }
         },
         {
-          "unit_code_id": "ft",
-          "unit_symbol": "ft",
-          "display_name": "foot",
-          "binary_unit_id": "distance.ft",
-          "reserved_word_alias": null,
+          "unit_code_id": "type",
+          "unit_symbol": "type",
+          "display_name": "reserved alias unit",
+          "binary_unit_id": "distance.type",
+          "reserved_word_alias": "type_",
           "aliases": [
-            "feet"
+            "types"
           ],
           "conversion": {
             "kind": "linear",
-            "scale_to_base": 0.3048,
+            "scale_to_base": 2.0,
             "offset_to_base": null
           }
         }

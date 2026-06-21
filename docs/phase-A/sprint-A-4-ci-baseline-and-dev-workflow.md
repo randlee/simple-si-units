@@ -6,7 +6,7 @@ Create a repeatable build and test baseline for the new crate and workspace.
 
 ## Status
 
-`In Progress`
+`Done`
 
 ## Scope References
 

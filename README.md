@@ -43,6 +43,7 @@ Detailed product and interop planning lives under [`docs/`](docs/), especially:
 - [`reference/`](reference/) contains the legacy `simple-si-units` crates
 - [`crates/`](crates/) is reserved for the new Rust deliverables
 - [`catalog/`](catalog/) contains the master catalog contract and generated-input schema
+- [`catalog/units-catalog.json`](catalog/units-catalog.json) is the initial machine-readable master catalog bootstrap
 - [`python/`](python/) is reserved for the Python package and generated Pydantic models
 - [`dotnet/`](dotnet/) is reserved for the C# wrapper/package and `Directory.Build.props`
 - [`boundaries/`](boundaries/) is the future home for `sc-lint` boundary policy files
