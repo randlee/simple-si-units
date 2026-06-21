@@ -9,6 +9,8 @@ ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from generate_catalog_artifacts import build_summary
+from generate_catalog_artifacts import expected_outputs
+from generate_catalog_artifacts import render_generated_ffi_types
 from generate_catalog_artifacts import render_rust_module
 
 
@@ -21,9 +23,12 @@ class CatalogGenerationTests(unittest.TestCase):
         summary = json.loads((ROOT / "catalog" / "generated" / "units-catalog-summary.json").read_text(encoding="utf-8"))
         dimensions = {dimension["dimension_id"]: dimension for dimension in summary["dimensions"]}
         self.assertIn("distance", dimensions)
-        self.assertIn("distance_i32", dimensions["distance"]["scalar_type_ids"])
-        self.assertEqual(dimensions["distance"]["small_array_type_id_template"], "distance{arity}_{storage}")
-        self.assertEqual(dimensions["distance"]["buffer_type_id_template"], "distance_buffer_{storage}")
+        self.assertIn("distance_i32", dimensions["distance"]["scalar"]["type_ids"])
+        self.assertEqual(dimensions["distance"]["scalar"]["encoding"], "object")
+        self.assertEqual(dimensions["distance"]["small_array"]["type_id_template"], "distance{arity}_{storage}")
+        self.assertEqual(dimensions["distance"]["small_array"]["encoding"], "array")
+        self.assertEqual(dimensions["distance"]["buffer"]["type_id_template"], "distance_buffer_{storage}")
+        self.assertEqual(dimensions["distance"]["buffer"]["encoding"], "base64-le")
         self.assertIn("distance.mm", dimensions["distance"]["unit_ids"])
         self.assertIn("temperature.degC", dimensions["temperature"]["unit_ids"])
 
@@ -45,6 +50,30 @@ class CatalogGenerationTests(unittest.TestCase):
         summary = build_summary(catalog)
         rendered = render_rust_module(summary)
         self.assertIn('public_type: "Caf\\u{e9} \\"Quoted\\" \\\\\\\\ Path"', rendered)
+
+    def test_generated_rust_metadata_uses_typed_catalog_wrappers(self) -> None:
+        catalog = json.loads((ROOT / "catalog" / "units-catalog.json").read_text(encoding="utf-8"))
+        rendered = render_rust_module(build_summary(catalog))
+
+        self.assertIn("pub struct CatalogDimensionId(pub &'static str);", rendered)
+        self.assertIn("pub enum CatalogJsonEncoding {", rendered)
+        self.assertIn('dimension_id: CatalogDimensionId("distance")', rendered)
+        self.assertIn("scalar_type_ids: &[CatalogTypeId(", rendered)
+        self.assertIn("scalar_encoding: CatalogJsonEncoding::Object", rendered)
+
+    def test_generated_ffi_types_are_catalog_owned(self) -> None:
+        catalog = json.loads((ROOT / "catalog" / "units-catalog.json").read_text(encoding="utf-8"))
+        rendered = render_generated_ffi_types(build_summary(catalog))
+
+        self.assertIn("pub struct mm;", rendered)
+        self.assertIn("pub struct degC;", rendered)
+        self.assertIn("pub struct distance_mm_i32 {", rendered)
+        self.assertIn("pub struct distance_mm_i32_slice {", rendered)
+
+    def test_generated_outputs_use_lf_only(self) -> None:
+        for path, expected in expected_outputs().items():
+            self.assertNotIn(b"\r\n", expected.encode("utf-8"))
+            self.assertNotIn(b"\r\n", path.read_bytes())
 
 
 if __name__ == "__main__":

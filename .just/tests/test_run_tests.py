@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 from pathlib import Path
 import subprocess
 import tempfile
@@ -14,21 +15,48 @@ def touch(path: Path) -> None:
     path.write_text("", encoding="utf-8")
 
 
+def isolated_git_env(repo_root: Path) -> dict[str, str]:
+    hooks_dir = repo_root / ".git-hooks-empty"
+    hooks_dir.mkdir(parents=True, exist_ok=True)
+    global_config = repo_root / ".gitconfig"
+    global_config.write_text("", encoding="utf-8")
+
+    env = os.environ.copy()
+    env["GIT_CONFIG_GLOBAL"] = str(global_config)
+    env["GIT_CONFIG_NOSYSTEM"] = "1"
+    env["GIT_TEMPLATE_DIR"] = str(repo_root / ".git-template-empty")
+    env["HOME"] = str(repo_root)
+    env["XDG_CONFIG_HOME"] = str(repo_root / ".xdg-config")
+    env["HUSKY"] = "0"
+    return env
+
+
+def git(
+    command: list[str],
+    repo_root: Path,
+    env: dict[str, str],
+) -> subprocess.CompletedProcess[str]:
+    return subprocess.run(command, cwd=repo_root, check=True, capture_output=True, text=True, env=env)
+
+
 class RunTestsBehaviorTests(unittest.TestCase):
     def test_generated_artifacts_are_dirty_detects_staged_changes(self) -> None:
         with tempfile.TemporaryDirectory(prefix="units-x-run-tests-") as tmpdir:
             repo_root = Path(tmpdir)
-            subprocess.run(["git", "init"], cwd=repo_root, check=True, capture_output=True, text=True)
-            subprocess.run(["git", "config", "user.email", "tests@example.invalid"], cwd=repo_root, check=True)
-            subprocess.run(["git", "config", "user.name", "units-x tests"], cwd=repo_root, check=True)
+            env = isolated_git_env(repo_root)
+            git(["git", "init"], repo_root, env)
+            git(["git", "config", "core.hooksPath", str(repo_root / ".git-hooks-empty")], repo_root, env)
+            git(["git", "config", "commit.gpgsign", "false"], repo_root, env)
+            git(["git", "config", "user.email", "tests@example.invalid"], repo_root, env)
+            git(["git", "config", "user.name", "units-x tests"], repo_root, env)
             for relative_path in run_tests.GENERATED_ARTIFACT_PATHS:
                 touch(repo_root / relative_path)
-            subprocess.run(["git", "add", "."], cwd=repo_root, check=True)
-            subprocess.run(["git", "commit", "-m", "baseline"], cwd=repo_root, check=True, capture_output=True, text=True)
+            git(["git", "add", "."], repo_root, env)
+            git(["git", "commit", "-m", "baseline"], repo_root, env)
 
             target = repo_root / run_tests.GENERATED_ARTIFACT_PATHS[0]
             target.write_text("changed\n", encoding="utf-8")
-            subprocess.run(["git", "add", str(target.relative_to(repo_root))], cwd=repo_root, check=True)
+            git(["git", "add", str(target.relative_to(repo_root))], repo_root, env)
 
             self.assertTrue(run_tests.generated_artifacts_are_dirty(repo_root))
 
@@ -60,6 +88,10 @@ class RunTestsBehaviorTests(unittest.TestCase):
 
             self.assertEqual(code, 0)
             commands = [call.args[0] for call in run_command.call_args_list]
+            self.assertIn(
+                [run_tests.sys.executable or "python3", str(repo_root / "scripts/sync_tool_versions.py"), "--check"],
+                commands,
+            )
             self.assertIn(
                 [run_tests.sys.executable or "python3", str(repo_root / ".just/run_python_package_smoke.py")],
                 commands,

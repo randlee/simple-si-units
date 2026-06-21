@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import json
 from pathlib import Path
+import sys
 from typing import Any
 
 from jsonschema import Draft202012Validator
@@ -16,16 +17,26 @@ CATALOG_SCHEMA = ROOT / "catalog" / "schema" / "units-catalog.schema.json"
 
 
 class ValidationError(ValueError):
-    pass
+    def __init__(self, code: str, message: str, location: str = "<root>") -> None:
+        super().__init__(message)
+        self.code = code
+        self.location = location
+
+    def to_envelope(self) -> dict[str, str]:
+        return {
+            "code": self.code,
+            "location": self.location,
+            "message": str(self),
+        }
 
 
 def read_json(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def require(condition: bool, message: str) -> None:
+def require(condition: bool, message: str, location: str = "<root>") -> None:
     if not condition:
-        raise ValidationError(message)
+        raise ValidationError("catalog_invariant_failed", message, location)
 
 
 def validate_schema(payload: Any) -> None:
@@ -35,7 +46,7 @@ def validate_schema(payload: Any) -> None:
     if errors:
         first = errors[0]
         location = ".".join(str(part) for part in first.path) or "<root>"
-        raise ValidationError(f"schema validation failed at {location}: {first.message}")
+        raise ValidationError("schema_validation_failed", first.message, location)
 
 
 def validate_dimension_invariants(dimension: Any, label: str) -> str:
@@ -49,15 +60,28 @@ def validate_dimension_invariants(dimension: Any, label: str) -> str:
         unit_code_id = str(unit["unit_code_id"])
         binary_unit_id = str(unit["binary_unit_id"])
         expected_binary_id = f"{dimension_id}.{unit_code_id}"
-        require(unit_code_id not in seen_unit_ids, f"{label} contains duplicate unit_code_id `{unit_code_id}`")
-        require(binary_unit_id not in seen_binary_ids, f"{label} contains duplicate binary_unit_id `{binary_unit_id}`")
+        require(
+            unit_code_id not in seen_unit_ids,
+            f"{label} contains duplicate unit_code_id `{unit_code_id}`",
+            f"{label}.units[{index}].unit_code_id",
+        )
+        require(
+            binary_unit_id not in seen_binary_ids,
+            f"{label} contains duplicate binary_unit_id `{binary_unit_id}`",
+            f"{label}.units[{index}].binary_unit_id",
+        )
         require(
             binary_unit_id == expected_binary_id,
             f"{label}.units[{index}].binary_unit_id `{binary_unit_id}` must match `{expected_binary_id}`",
+            f"{label}.units[{index}].binary_unit_id",
         )
         seen_unit_ids.add(unit_code_id)
         seen_binary_ids.add(binary_unit_id)
-    require(base_unit_code_id in seen_unit_ids, f"{label}.base_unit_code_id `{base_unit_code_id}` must exist in units[]")
+    require(
+        base_unit_code_id in seen_unit_ids,
+        f"{label}.base_unit_code_id `{base_unit_code_id}` must exist in units[]",
+        f"{label}.base_unit_code_id",
+    )
     return dimension_id
 
 
@@ -68,7 +92,7 @@ def validate_catalog(payload: Any) -> None:
     seen_dimension_ids: set[str] = set()
     for index, dimension in enumerate(dimensions):
         dimension_id = validate_dimension_invariants(dimension, f"dimensions[{index}]")
-        require(dimension_id not in seen_dimension_ids, f"duplicate dimension_id `{dimension_id}`")
+        require(dimension_id not in seen_dimension_ids, f"duplicate dimension_id `{dimension_id}`", f"dimensions[{index}].dimension_id")
         seen_dimension_ids.add(dimension_id)
 
 
@@ -78,8 +102,12 @@ def main(argv: list[str]) -> int:
     args = parser.parse_args(argv[1:])
 
     path = Path(args.catalog)
-    payload = read_json(path)
-    validate_catalog(payload)
+    try:
+        payload = read_json(path)
+        validate_catalog(payload)
+    except ValidationError as error:
+        print(json.dumps(error.to_envelope(), sort_keys=True), file=sys.stderr)
+        return 1
     try:
         rendered = path.relative_to(ROOT).as_posix()
     except ValueError:
@@ -89,4 +117,4 @@ def main(argv: list[str]) -> int:
 
 
 if __name__ == "__main__":
-    raise SystemExit(main(__import__("sys").argv))
+    raise SystemExit(main(sys.argv))

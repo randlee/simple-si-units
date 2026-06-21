@@ -8,14 +8,22 @@
       "public_type": "Distance",
       "base_unit_code_id": "m",
       "json_forms": {
-        "scalar_type_ids": [
-          "distance_i32",
-          "distance_f32",
-          "distance_f64"
-        ],
-        "small_array_type_id_template": "distance{arity}_{storage}",
-        "buffer_type_id_template": "distance_buffer_{storage}",
-        "default_encoding": "array"
+        "scalar": {
+          "type_ids": [
+            "distance_i32",
+            "distance_f32",
+            "distance_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "distance{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "distance_buffer_{storage}",
+          "encoding": "base64-le"
+        }
       },
       "abi": {
         "abi_name_stem": "distance",
@@ -90,13 +98,21 @@
       "public_type": "Temperature",
       "base_unit_code_id": "K",
       "json_forms": {
-        "scalar_type_ids": [
-          "temperature_f32",
-          "temperature_f64"
-        ],
-        "small_array_type_id_template": "temperature{arity}_{storage}",
-        "buffer_type_id_template": "temperature_buffer_{storage}",
-        "default_encoding": "array"
+        "scalar": {
+          "type_ids": [
+            "temperature_f32",
+            "temperature_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "temperature{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "temperature_buffer_{storage}",
+          "encoding": "base64-le"
+        }
       },
       "abi": {
         "abi_name_stem": "temperature",

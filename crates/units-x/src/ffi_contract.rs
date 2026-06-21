@@ -1,64 +1,18 @@
 #![allow(non_camel_case_types)]
 
-use core::ffi::c_void;
+pub use crate::generated::ffi_contract_types::{
+    degC, degF, distance_mm_i32, distance_mm_i32_slice, distance_mm_i32_slice_mut, m, mm,
+};
+use core::ffi::{c_char, c_void};
 use core::marker::PhantomData;
 use core::slice;
 use std::vec::Vec;
-
-/// Unit marker preserving the lowercase wire/code distinction for millimeters.
-pub struct mm;
-
-/// Unit marker preserving the uppercase/lowercase distinction for megameters.
-pub struct Mm;
-
-/// Code-safe unit marker for Celsius, whose wire symbol remains `C`.
-pub struct degC;
-
-/// Code-safe unit marker for Fahrenheit, whose wire symbol remains `F`.
-pub struct degF;
 
 /// Placeholder generic quantity shape used only to pin the contract direction.
 #[repr(transparent)]
 pub struct quantity<Unit, Storage> {
     pub storage: Storage,
     _unit: PhantomData<Unit>,
-}
-
-/// ABI-facing scalar name pattern: `<dimension>_<unit_code_id>_<storage>`.
-#[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq, Eq)]
-pub struct distance_mm_i32 {
-    pub value_mm: i32,
-}
-
-/// ABI slice pattern: `<abi_scalar_type>_slice`.
-#[repr(C)]
-#[derive(Copy, Clone, Debug)]
-pub struct distance_mm_i32_slice {
-    pub ptr: *const distance_mm_i32,
-    pub len: u64,
-}
-
-impl distance_mm_i32_slice {
-    /// `null + zero` is the only valid empty-slice representation.
-    pub const fn is_contract_valid(self) -> bool {
-        self.ptr.is_null() == (self.len == 0)
-    }
-}
-
-/// Mutable ABI slice pattern: `<abi_scalar_type>_slice_mut`.
-#[repr(C)]
-#[derive(Copy, Clone, Debug)]
-pub struct distance_mm_i32_slice_mut {
-    pub ptr: *mut distance_mm_i32,
-    pub len: u64,
-}
-
-impl distance_mm_i32_slice_mut {
-    /// `null + zero` is the only valid empty-slice representation.
-    pub const fn is_contract_valid(self) -> bool {
-        self.ptr.is_null() == (self.len == 0)
-    }
 }
 
 /// Explicit Rust-owned byte-buffer contract for ABI-returned payloads.
@@ -87,9 +41,112 @@ impl units_x_owned_bytes {
 pub enum units_x_status {
     UNITS_X_STATUS_OK = 0,
     UNITS_X_STATUS_NULL_WITH_LENGTH = 1,
-    UNITS_X_STATUS_LOSSY_CONVERSION = 2,
+    UNITS_X_STATUS_ARITHMETIC_OVERFLOW = 2,
     UNITS_X_STATUS_OWNED_OUTPUT_REQUIRED = 3,
     UNITS_X_STATUS_INVALID_OWNED_BUFFER = 4,
+    UNITS_X_STATUS_SLICE_LENGTH_OVERFLOW = 5,
+    UNITS_X_STATUS_OWNED_BUFFER_RANGE_OVERFLOW = 6,
+}
+
+fn status_from_u32(status: u32) -> Option<units_x_status> {
+    match status {
+        0 => Some(units_x_status::UNITS_X_STATUS_OK),
+        1 => Some(units_x_status::UNITS_X_STATUS_NULL_WITH_LENGTH),
+        2 => Some(units_x_status::UNITS_X_STATUS_ARITHMETIC_OVERFLOW),
+        3 => Some(units_x_status::UNITS_X_STATUS_OWNED_OUTPUT_REQUIRED),
+        4 => Some(units_x_status::UNITS_X_STATUS_INVALID_OWNED_BUFFER),
+        5 => Some(units_x_status::UNITS_X_STATUS_SLICE_LENGTH_OVERFLOW),
+        6 => Some(units_x_status::UNITS_X_STATUS_OWNED_BUFFER_RANGE_OVERFLOW),
+        _ => None,
+    }
+}
+
+fn status_code_ptr(status: u32) -> *const c_char {
+    match status_from_u32(status) {
+        Some(units_x_status::UNITS_X_STATUS_OK) => c"ok".as_ptr(),
+        Some(units_x_status::UNITS_X_STATUS_NULL_WITH_LENGTH) => c"null_with_length".as_ptr(),
+        Some(units_x_status::UNITS_X_STATUS_ARITHMETIC_OVERFLOW) => c"arithmetic_overflow".as_ptr(),
+        Some(units_x_status::UNITS_X_STATUS_OWNED_OUTPUT_REQUIRED) => {
+            c"owned_output_required".as_ptr()
+        }
+        Some(units_x_status::UNITS_X_STATUS_INVALID_OWNED_BUFFER) => {
+            c"invalid_owned_buffer".as_ptr()
+        }
+        Some(units_x_status::UNITS_X_STATUS_SLICE_LENGTH_OVERFLOW) => {
+            c"slice_length_overflow".as_ptr()
+        }
+        Some(units_x_status::UNITS_X_STATUS_OWNED_BUFFER_RANGE_OVERFLOW) => {
+            c"owned_buffer_range_overflow".as_ptr()
+        }
+        None => c"unknown_status".as_ptr(),
+    }
+}
+
+fn status_description_ptr(status: u32) -> *const c_char {
+    match status_from_u32(status) {
+        Some(units_x_status::UNITS_X_STATUS_OK) => c"operation completed successfully".as_ptr(),
+        Some(units_x_status::UNITS_X_STATUS_NULL_WITH_LENGTH) => {
+            c"null pointers must only be paired with zero lengths".as_ptr()
+        }
+        Some(units_x_status::UNITS_X_STATUS_ARITHMETIC_OVERFLOW) => {
+            c"the computed quantity does not fit the requested storage type".as_ptr()
+        }
+        Some(units_x_status::UNITS_X_STATUS_OWNED_OUTPUT_REQUIRED) => {
+            c"the caller must supply a writable output slot".as_ptr()
+        }
+        Some(units_x_status::UNITS_X_STATUS_INVALID_OWNED_BUFFER) => {
+            c"owned buffers must use a pointer with capacity greater than or equal to length"
+                .as_ptr()
+        }
+        Some(units_x_status::UNITS_X_STATUS_SLICE_LENGTH_OVERFLOW) => {
+            c"the incoming slice length does not fit the host usize ABI".as_ptr()
+        }
+        Some(units_x_status::UNITS_X_STATUS_OWNED_BUFFER_RANGE_OVERFLOW) => {
+            c"the owned buffer byte range does not fit the host usize ABI".as_ptr()
+        }
+        None => {
+            c"the supplied status code is outside the published units-x status contract".as_ptr()
+        }
+    }
+}
+
+fn abi_len_to_usize_with_status(
+    len: u64,
+    max_value: u64,
+    overflow_status: units_x_status,
+) -> Result<usize, units_x_status> {
+    if len > max_value {
+        return Err(overflow_status);
+    }
+    Ok(len as usize)
+}
+
+fn abi_slice_len_to_usize(len: u64) -> Result<usize, units_x_status> {
+    abi_len_to_usize_with_status(
+        len,
+        usize::MAX as u64,
+        units_x_status::UNITS_X_STATUS_SLICE_LENGTH_OVERFLOW,
+    )
+}
+
+fn abi_owned_range_to_usize(len: u64) -> Result<usize, units_x_status> {
+    abi_len_to_usize_with_status(
+        len,
+        usize::MAX as u64,
+        units_x_status::UNITS_X_STATUS_OWNED_BUFFER_RANGE_OVERFLOW,
+    )
+}
+
+/// Stable machine-readable status code for foreign-language recovery logic.
+#[unsafe(no_mangle)]
+pub extern "C" fn units_x_status_code(status: u32) -> *const c_char {
+    status_code_ptr(status)
+}
+
+/// Stable human-readable status description for logs and diagnostics.
+#[unsafe(no_mangle)]
+pub extern "C" fn units_x_status_description(status: u32) -> *const c_char {
+    status_description_ptr(status)
 }
 
 /// Representative scalar-returning ABI export shape.
@@ -114,12 +171,15 @@ pub unsafe extern "C" fn units_x_distance_mm_i32_slice_sum(
         unsafe { out.write(distance_mm_i32 { value_mm: 0 }) };
         return units_x_status::UNITS_X_STATUS_OK;
     }
-    let values = unsafe { slice::from_raw_parts(input.ptr, input.len as usize) };
+    let Ok(len) = abi_slice_len_to_usize(input.len) else {
+        return units_x_status::UNITS_X_STATUS_SLICE_LENGTH_OVERFLOW;
+    };
+    let values = unsafe { slice::from_raw_parts(input.ptr, len) };
     let total = values
         .iter()
         .fold(0_i64, |acc, item| acc + i64::from(item.value_mm));
     let Ok(value_mm) = i32::try_from(total) else {
-        return units_x_status::UNITS_X_STATUS_LOSSY_CONVERSION;
+        return units_x_status::UNITS_X_STATUS_ARITHMETIC_OVERFLOW;
     };
     unsafe { out.write(distance_mm_i32 { value_mm }) };
     units_x_status::UNITS_X_STATUS_OK
@@ -148,11 +208,11 @@ pub unsafe extern "C" fn units_x_owned_buffer_destroy(
     if buffer.ptr.is_null() {
         return units_x_status::UNITS_X_STATUS_OK;
     }
-    let Ok(len_bytes) = usize::try_from(buffer.len_bytes) else {
-        return units_x_status::UNITS_X_STATUS_LOSSY_CONVERSION;
+    let Ok(len_bytes) = abi_owned_range_to_usize(buffer.len_bytes) else {
+        return units_x_status::UNITS_X_STATUS_OWNED_BUFFER_RANGE_OVERFLOW;
     };
-    let Ok(capacity_bytes) = usize::try_from(buffer.capacity_bytes) else {
-        return units_x_status::UNITS_X_STATUS_LOSSY_CONVERSION;
+    let Ok(capacity_bytes) = abi_owned_range_to_usize(buffer.capacity_bytes) else {
+        return units_x_status::UNITS_X_STATUS_OWNED_BUFFER_RANGE_OVERFLOW;
     };
     unsafe {
         drop(Vec::from_raw_parts(
@@ -170,6 +230,7 @@ mod tests {
     use core::any::TypeId;
     use core::mem::size_of;
     use core::ptr;
+    use std::ffi::CStr;
 
     #[test]
     fn slice_contract_uses_u64_and_null_zero_rule() {
@@ -197,7 +258,7 @@ mod tests {
 
     #[test]
     fn unit_marker_names_remain_distinct() {
-        assert_ne!(TypeId::of::<mm>(), TypeId::of::<Mm>());
+        assert_ne!(TypeId::of::<mm>(), TypeId::of::<m>());
         assert_ne!(TypeId::of::<degC>(), TypeId::of::<degF>());
     }
 
@@ -226,7 +287,7 @@ mod tests {
     }
 
     #[test]
-    fn slice_sum_reports_lossy_conversion_for_i32_overflow() {
+    fn slice_sum_reports_arithmetic_overflow_for_i32_overflow() {
         let values = [
             distance_mm_i32 { value_mm: i32::MAX },
             distance_mm_i32 { value_mm: 1 },
@@ -239,7 +300,7 @@ mod tests {
 
         let status = unsafe { units_x_distance_mm_i32_slice_sum(input, &mut out) };
 
-        assert_eq!(status, units_x_status::UNITS_X_STATUS_LOSSY_CONVERSION);
+        assert_eq!(status, units_x_status::UNITS_X_STATUS_ARITHMETIC_OVERFLOW);
         assert_eq!(out.value_mm, 0);
     }
 
@@ -302,5 +363,60 @@ mod tests {
         let status = unsafe { units_x_owned_buffer_destroy(buffer) };
 
         assert_eq!(status, units_x_status::UNITS_X_STATUS_OK);
+    }
+
+    #[test]
+    fn abi_slice_len_conversion_reports_overflow_status() {
+        let status = abi_len_to_usize_with_status(
+            5,
+            4,
+            units_x_status::UNITS_X_STATUS_SLICE_LENGTH_OVERFLOW,
+        )
+        .unwrap_err();
+
+        assert_eq!(status, units_x_status::UNITS_X_STATUS_SLICE_LENGTH_OVERFLOW);
+    }
+
+    #[test]
+    fn abi_owned_buffer_conversion_reports_overflow_status() {
+        let status = abi_len_to_usize_with_status(
+            9,
+            8,
+            units_x_status::UNITS_X_STATUS_OWNED_BUFFER_RANGE_OVERFLOW,
+        )
+        .unwrap_err();
+
+        assert_eq!(
+            status,
+            units_x_status::UNITS_X_STATUS_OWNED_BUFFER_RANGE_OVERFLOW
+        );
+    }
+
+    #[test]
+    fn status_code_and_description_exports_are_stable() {
+        let code = unsafe {
+            CStr::from_ptr(units_x_status_code(
+                units_x_status::UNITS_X_STATUS_SLICE_LENGTH_OVERFLOW as u32,
+            ))
+        }
+        .to_str()
+        .unwrap();
+        let description = unsafe {
+            CStr::from_ptr(units_x_status_description(
+                units_x_status::UNITS_X_STATUS_SLICE_LENGTH_OVERFLOW as u32,
+            ))
+        }
+        .to_str()
+        .unwrap();
+        let unknown = unsafe { CStr::from_ptr(units_x_status_code(99)) }
+            .to_str()
+            .unwrap();
+
+        assert_eq!(code, "slice_length_overflow");
+        assert_eq!(
+            description,
+            "the incoming slice length does not fit the host usize ABI"
+        );
+        assert_eq!(unknown, "unknown_status");
     }
 }

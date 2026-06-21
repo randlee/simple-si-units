@@ -91,9 +91,10 @@ class CatalogContractTests(unittest.TestCase):
             validate_catalog(sample)
 
         sample = self.load_sample()
-        sample["dimensions"][0]["json_forms"]["scalar_type_ids"] = []
-        with self.assertRaises(ValidationError):
+        sample["dimensions"][0]["json_forms"]["scalar"]["type_ids"] = []
+        with self.assertRaises(ValidationError) as context:
             validate_catalog(sample)
+        self.assertEqual(context.exception.code, "schema_validation_failed")
 
         sample = self.load_sample()
         sample["dimensions"][0]["dimension_id"] = "   "

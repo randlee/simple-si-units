@@ -13,6 +13,7 @@ VALID_SCOPES = ("all", "unit", "python", "dotnet", "integration", "rust", "help"
 GENERATED_ARTIFACT_PATHS = (
     "catalog/generated/units-catalog-summary.json",
     "crates/units-x/src/generated/catalog_metadata.rs",
+    "crates/units-x/src/generated/ffi_contract_types.rs",
 )
 
 
@@ -67,18 +68,19 @@ def run_all(repo_root: Path) -> int:
         ["just", "clean"],
         [sys.executable or "python3", str(repo_root / ".just/check_version_sync.py")],
         [sys.executable or "python3", str(repo_root / "scripts/generate_catalog_artifacts.py"), "--mode", "check"],
+        [sys.executable or "python3", str(repo_root / "scripts/sync_tool_versions.py"), "--check"],
         ["just", "generate"],
         [sys.executable or "python3", str(repo_root / ".just/run_lint.py"), "fast"],
         ["cargo", "test", "--workspace", "--all-features"],
     ]
     if generated_were_dirty:
         commands.insert(
-            4,
+            5,
             [sys.executable or "python3", str(repo_root / "scripts/generate_catalog_artifacts.py"), "--mode", "check"],
         )
     else:
         commands.insert(
-            4,
+            5,
             [sys.executable or "python3", str(repo_root / "scripts/check_generated_artifacts_clean.py")],
         )
     commands.extend(reference_rust_test_commands(repo_root))

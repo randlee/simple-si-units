@@ -10,10 +10,19 @@ ROOT = Path(__file__).resolve().parent.parent
 GENERATED_PATHS = (
     "catalog/generated/units-catalog-summary.json",
     "crates/units-x/src/generated/catalog_metadata.rs",
+    "crates/units-x/src/generated/ffi_contract_types.rs",
 )
 
 
 def main(argv: list[str]) -> int:
+    generator_check = subprocess.run(
+        [sys.executable or "python3", str(ROOT / "scripts" / "generate_catalog_artifacts.py"), "--mode", "check"],
+        cwd=ROOT,
+        check=False,
+    )
+    if generator_check.returncode != 0:
+        return generator_check.returncode
+
     completed = subprocess.run(
         ["git", "diff", "--exit-code", "HEAD", "--", *GENERATED_PATHS],
         cwd=ROOT,

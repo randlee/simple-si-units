@@ -5,6 +5,7 @@
 
 pub mod ffi_contract;
 pub mod generated;
+pub use ffi_contract::quantity;
 
 /// Current package version exposed for scaffolding and smoke-test use.
 pub const VERSION: &str = env!("CARGO_PKG_VERSION");
@@ -23,6 +24,6 @@ mod tests {
     fn generated_catalog_metadata_is_present() {
         assert!(catalog_metadata::DIMENSIONS
             .iter()
-            .any(|dimension| dimension.dimension_id == "distance"));
+            .any(|dimension| dimension.dimension_id.as_str() == "distance"));
     }
 }
