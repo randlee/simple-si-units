@@ -1,0 +1,18 @@
+[package]
+name = "units-x-python"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+description = "PyO3 extension scaffold for the units-x Python package."
+readme = "README.md"
+
+[lib]
+name = "units_x_python"
+path = "src/lib.rs"
+crate-type = ["cdylib"]
+
+[dependencies]
+pyo3 = { version = "0.22.6", features = ["abi3-py311"] }
+units-x = { path = "../units-x", version = "0.1.0" }
