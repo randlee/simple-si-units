@@ -69,6 +69,7 @@ Phase A uses an enforced shipped-scope lint boundary:
 
 - full-repo tests still include `reference/`
 - shipped-scope `sc-lint` and `sc-lint-boundary` gates run against a synthetic
-  workspace containing only `crates/units-x`, `boundaries/units-x`, and the
-  required `boundaries/planning.toml` sentinel
+  workspace containing `crates/units-x`, `crates/units-x-python`,
+  `boundaries/units-x`, `boundaries/units-x-python`, and the required
+  `boundaries/planning.toml` sentinel
 - the exclusion is documented in `docs/development-workflow.md`

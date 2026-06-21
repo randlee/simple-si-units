@@ -35,8 +35,10 @@ Phase A enforces two different scopes on purpose:
    workspace tests and helper-script tests.
 2. Shipped-scope linting:
    `sc-lint check`, `sc-lint clippy`, and `sc-lint-boundary` are enforced
-   against a synthetic shipped workspace containing only `crates/units-x` and
-   `boundaries/units-x` plus the required `boundaries/planning.toml` sentinel.
+   against a synthetic shipped workspace containing `crates/units-x`,
+   `crates/units-x-python`, `boundaries/units-x`,
+   `boundaries/units-x-python`, and the required
+   `boundaries/planning.toml` sentinel.
 
 This exclusion exists because the legacy reference crates remain parity and
 source-extraction oracles, but they are not the Phase A shipped deliverable and

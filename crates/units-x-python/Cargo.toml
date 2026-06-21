@@ -2,9 +2,11 @@
 name = "units-x-python"
 version.workspace = true
 edition.workspace = true
+authors.workspace = true
 license.workspace = true
 repository.workspace = true
 homepage.workspace = true
+rust-version.workspace = true
 description = "PyO3 extension scaffold for the units-x Python package."
 readme = "README.md"
 
