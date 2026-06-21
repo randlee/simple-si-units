@@ -106,7 +106,7 @@ def render_topic_help(topic: str) -> str:
     if normalized == "ci":
         return (
             "CI commands:\n"
-            "  just ci       Run the local CI-equivalent command set.\n"
+            "  just ci       Run `just test`, then the shipped-scope clippy and sc-boundary gates.\n"
             "  just ci help  Show this CI help.\n"
         )
     if normalized == "test":

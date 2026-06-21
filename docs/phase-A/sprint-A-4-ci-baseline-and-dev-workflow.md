@@ -6,7 +6,7 @@ Create a repeatable build and test baseline for the new crate and workspace.
 
 ## Status
 
-`Not Started`
+`Done`
 
 ## Scope References
 
@@ -60,3 +60,12 @@ The new crate must not repeat the ambiguous build behavior of the current projec
 1. Windows text encoding behavior in generator paths.
 2. Reference-only debt exclusion boundaries.
 3. Empty scaffold repos where Python or `.NET` subtrees exist but have no full product code yet.
+
+## Current Phase A Baseline Decision
+
+Phase A uses an enforced shipped-scope lint boundary:
+
+- full-repo tests still include `reference/`
+- shipped-scope `sc-lint` and `sc-lint-boundary` gates run against a synthetic
+  workspace containing only `crates/units-x`
+- the exclusion is documented in `docs/development-workflow.md`

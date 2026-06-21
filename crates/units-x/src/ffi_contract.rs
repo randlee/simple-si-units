@@ -70,6 +70,12 @@ pub enum units_x_status {
 }
 
 /// Representative scalar-returning ABI export shape.
+///
+/// # Safety
+///
+/// `out` must be either null or point to writable storage for one
+/// `distance_mm_i32` value. `input` must satisfy the slice validity contract:
+/// `null + zero` is allowed, and `null + non-zero` is rejected.
 pub unsafe extern "C" fn units_x_distance_mm_i32_slice_sum(
     input: distance_mm_i32_slice,
     out: *mut distance_mm_i32,
@@ -84,6 +90,12 @@ pub unsafe extern "C" fn units_x_distance_mm_i32_slice_sum(
 }
 
 /// Representative destroy-function signature for any owned output buffers.
+///
+/// # Safety
+///
+/// The caller must pass either `ptr == null && len == 0` or a pointer/length
+/// pair that originated from a future `units-x` owned-output allocation
+/// contract.
 pub unsafe extern "C" fn units_x_owned_buffer_destroy(
     ptr: *mut c_void,
     len: u64,
