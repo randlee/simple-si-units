@@ -210,7 +210,7 @@ def render_generated_ffi_types(summary: dict) -> str:
         for unit in dimension["units"]:
             marker = rust_identifier(unit["reserved_word_alias"] or unit["unit_code_id"])
             if marker in seen_markers:
-                continue
+                raise ValueError(f"duplicate generated Rust marker: {marker}")
             seen_markers.add(marker)
             unit_markers.extend(
                 [
@@ -220,11 +220,11 @@ def render_generated_ffi_types(summary: dict) -> str:
                 ]
             )
 
-    distance = next(dimension for dimension in dimensions if dimension["dimension_id"] == "distance")
-    exemplar_unit = next(unit for unit in distance["units"] if unit["unit_code_id"] == "mm")
-    scalar_type_id = next(value for value in distance["scalar"]["type_ids"] if value.endswith("_i32"))
+    exemplar_dimension = next(dimension for dimension in dimensions if dimension["dimension_id"] == "distance")
+    exemplar_unit = next(unit for unit in exemplar_dimension["units"] if unit["unit_code_id"] == "mm")
+    scalar_type_id = next(value for value in exemplar_dimension["scalar"]["type_ids"] if value.endswith("_i32"))
     storage = scalar_type_id.rsplit("_", maxsplit=1)[1]
-    abi_name_stem = distance["abi_name_stem"]
+    abi_name_stem = exemplar_dimension["abi_name_stem"]
     unit_code_id = exemplar_unit["unit_code_id"]
     type_name = rust_identifier(f"{abi_name_stem}_{unit_code_id}_{storage}")
     field_name = rust_identifier(f"value_{unit_code_id}")

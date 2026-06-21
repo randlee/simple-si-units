@@ -14,6 +14,59 @@ ROOT = Path(__file__).resolve().parent.parent
 PRODUCTION_CATALOG = ROOT / "catalog" / "units-catalog.json"
 SAMPLE_CATALOG = ROOT / "catalog" / "examples" / "phase-a-sample-catalog.json"
 CATALOG_SCHEMA = ROOT / "catalog" / "schema" / "units-catalog.schema.json"
+RUST_KEYWORDS = {
+    "Self",
+    "abstract",
+    "as",
+    "async",
+    "await",
+    "become",
+    "box",
+    "break",
+    "const",
+    "continue",
+    "crate",
+    "do",
+    "dyn",
+    "else",
+    "enum",
+    "extern",
+    "false",
+    "final",
+    "fn",
+    "for",
+    "if",
+    "impl",
+    "in",
+    "let",
+    "loop",
+    "macro",
+    "match",
+    "mod",
+    "move",
+    "mut",
+    "override",
+    "priv",
+    "pub",
+    "ref",
+    "return",
+    "self",
+    "static",
+    "struct",
+    "super",
+    "trait",
+    "true",
+    "try",
+    "type",
+    "typeof",
+    "unsafe",
+    "unsized",
+    "use",
+    "virtual",
+    "where",
+    "while",
+    "yield",
+}
 
 
 class ValidationError(ValueError):
@@ -39,6 +92,16 @@ def require(condition: bool, message: str, location: str = "<root>") -> None:
         raise ValidationError("catalog_invariant_failed", message, location)
 
 
+def is_valid_rust_identifier(value: str) -> bool:
+    if not value:
+        return False
+    if value in RUST_KEYWORDS:
+        return False
+    if value[0].isdigit():
+        return False
+    return all(char.isalnum() or char == "_" for char in value)
+
+
 def validate_schema(payload: Any) -> None:
     schema = read_json(CATALOG_SCHEMA)
     validator = Draft202012Validator(schema)
@@ -49,7 +112,7 @@ def validate_schema(payload: Any) -> None:
         raise ValidationError("schema_validation_failed", first.message, location)
 
 
-def validate_dimension_invariants(dimension: Any, label: str) -> str:
+def validate_dimension_invariants(dimension: Any, label: str) -> tuple[str, str, list[tuple[str, str]]]:
     require(isinstance(dimension, dict), f"{label} must be an object")
     dimension_id = str(dimension["dimension_id"])
     canonical_dimension_id = str(dimension["canonical_dimension_id"])
@@ -57,9 +120,12 @@ def validate_dimension_invariants(dimension: Any, label: str) -> str:
     units = dimension["units"]
     seen_unit_ids: set[str] = set()
     seen_binary_ids: set[str] = set()
+    seen_marker_names: set[str] = set()
+    marker_names: list[tuple[str, str]] = []
     for index, unit in enumerate(units):
         unit_code_id = str(unit["unit_code_id"])
         binary_unit_id = str(unit["binary_unit_id"])
+        marker_name = str(unit["reserved_word_alias"] or unit_code_id)
         expected_binary_id = f"{dimension_id}.{unit_code_id}"
         require(
             unit_code_id not in seen_unit_ids,
@@ -76,14 +142,26 @@ def validate_dimension_invariants(dimension: Any, label: str) -> str:
             f"{label}.units[{index}].binary_unit_id `{binary_unit_id}` must match `{expected_binary_id}`",
             f"{label}.units[{index}].binary_unit_id",
         )
+        require(
+            is_valid_rust_identifier(marker_name),
+            f"{label}.units[{index}] resolves to invalid Rust marker `{marker_name}`; use reserved_word_alias when needed",
+            f"{label}.units[{index}]",
+        )
+        require(
+            marker_name not in seen_marker_names,
+            f"{label} contains duplicate generated Rust marker `{marker_name}`",
+            f"{label}.units[{index}]",
+        )
         seen_unit_ids.add(unit_code_id)
         seen_binary_ids.add(binary_unit_id)
+        seen_marker_names.add(marker_name)
+        marker_names.append((marker_name, f"{label}.units[{index}]"))
     require(
         base_unit_code_id in seen_unit_ids,
         f"{label}.base_unit_code_id `{base_unit_code_id}` must exist in units[]",
         f"{label}.base_unit_code_id",
     )
-    return dimension_id, canonical_dimension_id
+    return dimension_id, canonical_dimension_id, marker_names
 
 
 def validate_catalog(payload: Any) -> None:
@@ -92,11 +170,19 @@ def validate_catalog(payload: Any) -> None:
 
     seen_dimension_ids: set[str] = set()
     canonical_dimension_ids: list[tuple[str, str]] = []
+    seen_marker_names: set[str] = set()
     for index, dimension in enumerate(dimensions):
-        dimension_id, canonical_dimension_id = validate_dimension_invariants(dimension, f"dimensions[{index}]")
+        dimension_id, canonical_dimension_id, marker_names = validate_dimension_invariants(dimension, f"dimensions[{index}]")
         require(dimension_id not in seen_dimension_ids, f"duplicate dimension_id `{dimension_id}`", f"dimensions[{index}].dimension_id")
         seen_dimension_ids.add(dimension_id)
         canonical_dimension_ids.append((canonical_dimension_id, f"dimensions[{index}].canonical_dimension_id"))
+        for marker_name, location in marker_names:
+            require(
+                marker_name not in seen_marker_names,
+                f"duplicate generated Rust marker `{marker_name}` across catalog dimensions",
+                location,
+            )
+            seen_marker_names.add(marker_name)
 
     for canonical_dimension_id, location in canonical_dimension_ids:
         require(
@@ -104,6 +190,19 @@ def validate_catalog(payload: Any) -> None:
             f"{location} `{canonical_dimension_id}` must match an existing dimension_id",
             location,
         )
+
+    distance = next((dimension for dimension in dimensions if dimension["dimension_id"] == "distance"), None)
+    require(distance is not None, "catalog must include the bootstrap `distance` dimension", "dimensions")
+    require(
+        any(unit["unit_code_id"] == "mm" for unit in distance["units"]),
+        "distance dimension must include bootstrap unit_code_id `mm`",
+        "dimensions.distance.units",
+    )
+    require(
+        any(type_id.endswith("_i32") for type_id in distance["json_forms"]["scalar"]["type_ids"]),
+        "distance dimension must include an `_i32` scalar type id for the Phase A FFI bootstrap exemplar",
+        "dimensions.distance.json_forms.scalar.type_ids",
+    )
 
 
 def main(argv: list[str]) -> int:

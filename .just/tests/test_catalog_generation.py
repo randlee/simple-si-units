@@ -78,6 +78,7 @@ class CatalogGenerationTests(unittest.TestCase):
         self.assertIn("pub struct mm;", rendered)
         self.assertIn("pub struct degC;", rendered)
         self.assertIn("pub struct distance_mm_i32 {", rendered)
+        self.assertIn("pub value_mm: i32,", rendered)
         self.assertIn("pub struct distance_mm_i32_slice {", rendered)
 
     def test_generated_outputs_use_lf_only(self) -> None:

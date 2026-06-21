@@ -88,6 +88,14 @@ This allows the required distinctions:
 - `F` versus `degF`
 - first-class public naming versus shared canonical-dimension identity
 
+Rust-generation safety rule:
+
+- `reserved_word_alias` is required whenever `unit_code_id` would not be a
+  legal Rust identifier or would collide with a reserved Rust keyword.
+- the resolved Rust marker name must be unique across the full catalog.
+- Phase A keeps a documented FFI bootstrap exemplar on `distance.mm` with an
+  `_i32` scalar type id so the scaffolded ABI sample remains deterministic.
+
 ## Conversion Rules
 
 The catalog conversion object supports both required forms:

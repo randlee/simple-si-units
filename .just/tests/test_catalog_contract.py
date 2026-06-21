@@ -84,7 +84,35 @@ class CatalogContractTests(unittest.TestCase):
             validate_catalog(sample)
 
         sample = self.load_sample()
+        sample["dimensions"][0]["json_forms"]["scalar"]["type_ids"] = ["distance_f32", "distance_f64"]
+        with self.assertRaises(ValidationError):
+            validate_catalog(sample)
+
+        sample = self.load_sample()
         sample["dimensions"][2]["canonical_dimension_id"] = "no_such_dimension"
+        with self.assertRaises(ValidationError):
+            validate_catalog(sample)
+
+        sample = self.load_sample()
+        sample["dimensions"][0]["units"][0]["unit_code_id"] = "type"
+        sample["dimensions"][0]["units"][0]["binary_unit_id"] = "distance.type"
+        sample["dimensions"][0]["units"][0]["reserved_word_alias"] = None
+        with self.assertRaises(ValidationError):
+            validate_catalog(sample)
+
+        sample = self.load_sample()
+        sample["dimensions"][0]["units"][0]["unit_code_id"] = "m-m"
+        sample["dimensions"][0]["units"][0]["binary_unit_id"] = "distance.m-m"
+        sample["dimensions"][0]["units"][0]["reserved_word_alias"] = "m_m"
+        sample["dimensions"][0]["units"][1]["unit_code_id"] = "m/m"
+        sample["dimensions"][0]["units"][1]["binary_unit_id"] = "distance.m/m"
+        sample["dimensions"][0]["units"][1]["reserved_word_alias"] = "m_m"
+        with self.assertRaises(ValidationError):
+            validate_catalog(sample)
+
+        sample = self.load_sample()
+        sample["dimensions"][0]["units"][0]["reserved_word_alias"] = "shared_marker"
+        sample["dimensions"][1]["units"][0]["reserved_word_alias"] = "shared_marker"
         with self.assertRaises(ValidationError):
             validate_catalog(sample)
 
