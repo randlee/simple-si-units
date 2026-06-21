@@ -71,7 +71,7 @@ Cross-cutting release rule:
 
 | Phase | Focus | Depends On | Status |
 |---|---|---|---|
-| [Phase A](phase-A/phase-A-foundation-and-deliverable-bootstrap.md) | Foundation, repo layout, workspace, catalog/codegen contract, ABI contract, naming contract, dev workflow | None | `Not Started` |
+| [Phase A](phase-A/phase-A-foundation-and-deliverable-bootstrap.md) | Foundation, repo layout, workspace, catalog/codegen contract, ABI contract, naming contract, dev workflow | None | `In Progress` |
 | [Phase B](phase-B/phase-B-core-quantity-model.md) | Core quantity model, conversions, arithmetic, array and buffer model | Phase A | `Not Started` |
 | [Phase C](phase-C/phase-C-serialization-and-binary-contract.md) | JSON schema, binary format, layout and conformance rules | Phase B | `Not Started` |
 | [Phase D](phase-D/phase-D-interop-surfaces.md) | C ABI, C# Interoptopus surface, Go and C interop examples | Phases B-C | `Not Started` |

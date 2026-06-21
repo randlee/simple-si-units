@@ -1,0 +1,18 @@
+[package]
+name = "units-x"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+description = "Compact, unit-preserving quantities with deterministic serialization and cross-language interop scaffolding."
+readme = "README.md"
+
+[lib]
+name = "units_x"
+path = "src/lib.rs"
+
+[features]
+default = []
+
+[dependencies]

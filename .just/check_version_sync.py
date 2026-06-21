@@ -52,9 +52,11 @@ def workspace_manifests() -> list[Path]:
     return manifests
 
 
-def package_version(manifest: dict, label: str) -> str:
+def package_version(manifest: dict, label: str, workspace_fallback: str) -> str:
     package = manifest.get("package", {})
     version = package.get("version")
+    if isinstance(version, dict) and version.get("workspace") is True:
+        return workspace_fallback
     if not isinstance(version, str) or not version.strip():
         fail(f"{label} is missing [package].version")
     return version
@@ -70,6 +72,7 @@ def dependency_sections(manifest: dict) -> list[tuple[str, dict]]:
 
 
 def validate_path_dependency_versions() -> None:
+    fallback = workspace_version()
     manifests = workspace_manifests()
     versions: dict[Path, str] = {}
     parsed: dict[Path, tuple[str, dict]] = {}
@@ -77,7 +80,7 @@ def validate_path_dependency_versions() -> None:
         rel_manifest = manifest_path.relative_to(ROOT).as_posix()
         manifest = load_toml(manifest_path)
         parsed[manifest_path] = (rel_manifest, manifest)
-        versions[manifest_path.parent.resolve()] = package_version(manifest, rel_manifest)
+        versions[manifest_path.parent.resolve()] = package_version(manifest, rel_manifest, fallback)
 
     for manifest_path, (rel_manifest, manifest) in parsed.items():
         for section_name, dependencies in dependency_sections(manifest):

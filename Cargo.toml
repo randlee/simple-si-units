@@ -1,5 +1,6 @@
 [workspace]
 members = [
+    "crates/units-x",
     "reference/simple-si-units-core",
     "reference/simple-si-units-macros",
     "reference/simple-si-units",
@@ -10,5 +11,5 @@ resolver = "2"
 version = "0.1.0"
 edition = "2021"
 license = "MPL-2.0"
-repository = "https://github.com/DrPlantabyte/simple-si-units"
-homepage = "https://github.com/DrPlantabyte/simple-si-units"
+repository = "https://github.com/randlee/simple-si-units"
+homepage = "https://github.com/randlee/simple-si-units"

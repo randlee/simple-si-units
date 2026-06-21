@@ -1,0 +1,39 @@
+from __future__ import annotations
+
+import json
+import subprocess
+from pathlib import Path
+import unittest
+
+
+ROOT = Path(__file__).resolve().parent.parent.parent
+
+
+class WorkspaceScaffoldTests(unittest.TestCase):
+    def test_expected_scaffolds_exist(self) -> None:
+        expected = (
+            ROOT / "crates" / "units-x" / "Cargo.toml",
+            ROOT / "crates" / "units-x" / "src" / "lib.rs",
+            ROOT / "python" / "pyproject.toml",
+            ROOT / "python" / "units_x" / "__init__.py",
+            ROOT / "dotnet" / "Directory.Build.props",
+            ROOT / "dotnet" / "src" / "UnitsX" / "UnitsX.csproj",
+        )
+        for path in expected:
+            self.assertTrue(path.exists(), path.as_posix())
+
+    def test_cargo_metadata_includes_units_x(self) -> None:
+        completed = subprocess.run(
+            ["cargo", "metadata", "--no-deps", "--format-version", "1"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+        payload = json.loads(completed.stdout)
+        package_names = {package["name"] for package in payload["packages"]}
+        self.assertIn("units-x", package_names)
+
+
+if __name__ == "__main__":
+    unittest.main()

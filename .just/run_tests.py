@@ -28,8 +28,8 @@ def run_command(command: list[str], repo_root: Path) -> int:
     return completed.returncode
 
 
-def dotnet_projects(repo_root: Path) -> list[Path]:
-    return sorted((repo_root / "dotnet").rglob("*.csproj"))
+def dotnet_test_projects(repo_root: Path) -> list[Path]:
+    return sorted((repo_root / "dotnet").rglob("*Tests.csproj"))
 
 
 def run_all(repo_root: Path) -> int:
@@ -57,9 +57,9 @@ def run_python(repo_root: Path) -> int:
 
 
 def run_dotnet(repo_root: Path) -> int:
-    projects = dotnet_projects(repo_root)
+    projects = dotnet_test_projects(repo_root)
     if not projects:
-        print("dotnet tests skipped: no .csproj files under dotnet/")
+        print("dotnet tests skipped: no *Tests.csproj files under dotnet/")
         return 0
     return run_command(["dotnet", "test", "dotnet"], repo_root)
 
