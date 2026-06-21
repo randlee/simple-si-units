@@ -94,9 +94,9 @@ pub enum units_x_status {
 ///
 /// # Safety
 ///
-/// `out` must be either null or point to writable storage for one
-/// `distance_mm_i32` value. `input` must satisfy the slice validity contract:
-/// `null + zero` is allowed, and `null + non-zero` is rejected.
+/// `input` must follow the null-plus-zero slice contract documented by
+/// `distance_mm_i32_slice`. `out` must be either null or a valid writable
+/// pointer to a `distance_mm_i32` output slot owned by the caller.
 #[unsafe(no_mangle)]
 pub unsafe extern "C" fn units_x_distance_mm_i32_slice_sum(
     input: distance_mm_i32_slice,
@@ -115,9 +115,9 @@ pub unsafe extern "C" fn units_x_distance_mm_i32_slice_sum(
 ///
 /// # Safety
 ///
-/// The caller must pass either `ptr == null && len == 0` or a pointer/length
-/// pair that originated from a future `units-x` owned-output allocation
-/// contract.
+/// `buffer` must either be the null-plus-zero sentinel or an owned buffer
+/// returned by the `units-x` ABI with matching pointer, length, and capacity
+/// fields expressed in bytes.
 #[unsafe(no_mangle)]
 pub unsafe extern "C" fn units_x_owned_buffer_destroy(
     buffer: units_x_owned_bytes,

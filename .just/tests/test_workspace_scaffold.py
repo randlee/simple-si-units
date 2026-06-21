@@ -14,6 +14,8 @@ class WorkspaceScaffoldTests(unittest.TestCase):
         expected = (
             ROOT / "crates" / "units-x" / "Cargo.toml",
             ROOT / "crates" / "units-x" / "src" / "lib.rs",
+            ROOT / "crates" / "units-x-python" / "Cargo.toml",
+            ROOT / "crates" / "units-x-python" / "src" / "lib.rs",
             ROOT / "python" / "pyproject.toml",
             ROOT / "python" / "requirements-ci.txt",
             ROOT / "python" / "units_x" / "__init__.py",
@@ -38,6 +40,10 @@ class WorkspaceScaffoldTests(unittest.TestCase):
         payload = json.loads(completed.stdout)
         package_names = {package["name"] for package in payload["packages"]}
         self.assertIn("units-x", package_names)
+        self.assertIn("units-x-python", package_names)
+        self.assertNotIn("simple-si-units", package_names)
+        self.assertNotIn("simple-si-units-core", package_names)
+        self.assertNotIn("simple-si-units-macros", package_names)
 
 
 if __name__ == "__main__":

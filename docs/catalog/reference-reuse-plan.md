@@ -61,19 +61,19 @@ The `units-x` catalog preserves the useful numeric data but changes ownership:
 
 ## Mapping Notes For The In-Scope Inventory
 
-The in-scope inventory already lists the required public families:
+The in-scope inventory already lists the required catalog families:
 
 - `base`
 - `geometry`
 - `mechanical`
 - `electromagnetic`
-- `Diopter`
 
 Important mapping notes:
 
 - `AreaPerLumen` maps to the reference quantity named `area per lumen`
 - `VolumePerMass` maps to the reference quantity named `volume per mass`
-- `Diopter` is a `units-x` addition and does not come from the reference CSVs
+- `Diopter` is an additional in-scope reciprocal public type, not a catalog
+  family, and does not come from the reference CSVs
 - `chemical` and `nuclear` rows remain out of MVP scope and are not required to
   close Phase A
 
