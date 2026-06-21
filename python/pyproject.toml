@@ -1,5 +1,5 @@
 [build-system]
-requires = ["maturin>=1.7,<2.0"]
+requires = ["maturin>=1.9.4,<2.0"]
 build-backend = "maturin"
 
 [project]
@@ -19,6 +19,6 @@ classifiers = [
 
 [tool.maturin]
 manifest-path = "../crates/units-x/Cargo.toml"
+bindings = "pyo3"
 module-name = "units_x._native"
 python-source = "."
-
