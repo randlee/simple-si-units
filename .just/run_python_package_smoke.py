@@ -18,30 +18,29 @@ def run(command: list[str], *, cwd: Path, env: dict[str, str] | None = None) -> 
 def build_and_import(repo_root: Path) -> int:
     python = sys.executable or "python3"
     python_root = repo_root / "python"
-    dist_dir = python_root / "dist"
-    dist_dir.mkdir(parents=True, exist_ok=True)
-    for wheel in dist_dir.glob("units_x-*.whl"):
-        wheel.unlink()
-
-    build = [
-        python,
-        "-m",
-        "build",
-        "--wheel",
-        "--no-isolation",
-        "--outdir",
-        str(dist_dir),
-        str(python_root),
-    ]
-    if run(build, cwd=repo_root) != 0:
-        return 1
-
-    wheels = sorted(dist_dir.glob("units_x-*.whl"))
-    if not wheels:
-        print("maturin build did not produce a units_x wheel", file=sys.stderr)
-        return 1
-
     with tempfile.TemporaryDirectory(prefix="units-x-python-smoke-") as tmpdir:
+        temp_root = Path(tmpdir)
+        wheel_dir = temp_root / "wheelhouse"
+        wheel_dir.mkdir(parents=True, exist_ok=True)
+        build = [
+            python,
+            "-m",
+            "build",
+            "--wheel",
+            "--no-isolation",
+            "--outdir",
+            str(wheel_dir),
+            str(python_root),
+        ]
+        if run(build, cwd=repo_root) != 0:
+            return 1
+
+        wheels = sorted(wheel_dir.glob("units_x-*.whl"))
+        if not wheels:
+            print("maturin build did not produce a units_x wheel", file=sys.stderr)
+            return 1
+
+        wheel_path = wheels[-1]
         site_dir = Path(tmpdir) / "site"
         site_dir.mkdir(parents=True, exist_ok=True)
         install = [
@@ -53,7 +52,7 @@ def build_and_import(repo_root: Path) -> int:
             "--no-deps",
             "--target",
             str(site_dir),
-            str(wheels[-1]),
+            str(wheel_path),
         ]
         if run(install, cwd=repo_root) != 0:
             return 1
@@ -70,7 +69,7 @@ def build_and_import(repo_root: Path) -> int:
                 "assert native.__version__ == units_x.__version__"
             ),
         ]
-        return run(smoke, cwd=Path(tmpdir), env=env)
+        return run(smoke, cwd=temp_root, env=env)
 
 
 def main(argv: list[str]) -> int:

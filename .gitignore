@@ -9,3 +9,6 @@ dotnet/**/obj/
 !/.sc/shared-settings.yaml
 __pycache__/
 *.pyc
+python/dist/
+dotnet/**/bin/
+dotnet/**/obj/

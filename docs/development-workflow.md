@@ -31,12 +31,16 @@ This document records the Phase A local workflow and CI baseline for `units-x`.
 Phase A enforces two different scopes on purpose:
 
 1. Full-repo testing:
-   This still covers the legacy `reference/` crates through the normal Rust
-   workspace tests and helper-script tests.
+   The shipped workspace excludes the legacy `reference/` crates, so the full
+   repo pass re-runs them explicitly via `cargo test --manifest-path ...`
+   commands alongside the normal shipped-workspace tests and helper-script
+   checks.
 2. Shipped-scope linting:
    `sc-lint check`, `sc-lint clippy`, and `sc-lint-boundary` are enforced
-   against a synthetic shipped workspace containing only `crates/units-x` and
-   `boundaries/units-x` plus the required `boundaries/planning.toml` sentinel.
+   against a synthetic shipped workspace containing `crates/units-x`,
+   `crates/units-x-python`, `boundaries/units-x`,
+   `boundaries/units-x-python`, and the required
+   `boundaries/planning.toml` sentinel.
 
 This exclusion exists because the legacy reference crates remain parity and
 source-extraction oracles, but they are not the Phase A shipped deliverable and
@@ -46,8 +50,9 @@ baseline.
 ## Enforcement Notes
 
 - The shipped-scope Rust lint wrappers live under `.just/`.
-- `boundaries/units-x/core-surface.toml` is the boundary inventory baseline for
-  the shipped crate.
+- `boundaries/units-x/core-surface.toml` and
+  `boundaries/units-x-python/python-surface.toml` are the boundary inventory
+  baselines for the shipped Rust crates.
 - `just ci` runs the shipped-scope clippy and boundary gates after the full
   repo test pass.
 - CI installs pinned Rust, Python, `.NET`, `just`, `sc-lint`, and
@@ -58,6 +63,9 @@ baseline.
 - Python helper scripts read and write text as UTF-8 only.
 - Generated text files use LF newlines so Windows, macOS, and Linux compare the
   same serialized content in CI.
+- The synthetic shipped workspace must include `crates/units-x`,
+  `crates/units-x-python`, `boundaries/units-x`, and
+  `boundaries/units-x-python`.
 - The shipped-scope workspace helpers must work with paths containing spaces and
   native platform separators.
 - GitHub Actions enforces these assumptions by running `just ci` on

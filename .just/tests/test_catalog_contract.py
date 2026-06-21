@@ -23,6 +23,10 @@ class CatalogContractTests(unittest.TestCase):
         sample = self.load_sample()
         self.assertEqual(schema["title"], "units-x catalog schema")
         self.assertEqual(sample["catalog_version"], "0.1.0-phase-a-sample")
+        self.assertEqual(
+            schema["$defs"]["dimension"]["properties"]["family"]["enum"],
+            ["base", "geometry", "mechanical", "electromagnetic"],
+        )
         conversion = schema["$defs"]["conversion"]
         self.assertIn("allOf", conversion)
         unit_required = set(schema["$defs"]["unit"]["required"])

@@ -17,7 +17,7 @@ def shipped_workspace_toml(repo_root: Path) -> str:
     package = manifest["workspace"]["package"]
     lines = [
         "[workspace]",
-        'members = ["crates/units-x"]',
+        'members = ["crates/units-x", "crates/units-x-python"]',
         'resolver = "2"',
         "",
         "[workspace.package]",
@@ -39,11 +39,21 @@ def prepare_boundary_scope(repo_root: Path, scope_root: Path) -> None:
     crate_dst = scope_root / "crates" / "units-x"
     crate_dst.parent.mkdir(parents=True, exist_ok=True)
     shutil.copytree(repo_root / "crates" / "units-x", crate_dst, dirs_exist_ok=True)
+    shutil.copytree(
+        repo_root / "crates" / "units-x-python",
+        scope_root / "crates" / "units-x-python",
+        dirs_exist_ok=True,
+    )
 
     boundaries_root = scope_root / "boundaries"
     boundary_dst = boundaries_root / "units-x"
     boundaries_root.mkdir(parents=True, exist_ok=True)
     shutil.copytree(repo_root / "boundaries" / "units-x", boundary_dst, dirs_exist_ok=True)
+    shutil.copytree(
+        repo_root / "boundaries" / "units-x-python",
+        boundaries_root / "units-x-python",
+        dirs_exist_ok=True,
+    )
     shutil.copy2(repo_root / "boundaries" / "planning.toml", boundaries_root / "planning.toml")
 
     (scope_root / "Cargo.toml").write_text(

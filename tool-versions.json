@@ -1,0 +1,20 @@
+{
+  "github_actions": {
+    "pull_request_branches": ["develop", "main", "integrate/*", "integration/*"],
+    "push_branches": ["develop", "main", "integrate/*", "integration/*", "sprint/*"],
+    "runner_os": ["ubuntu-latest", "macos-latest", "windows-latest"],
+    "rust_toolchain": "1.95.0",
+    "python": "3.11.9",
+    "dotnet_sdk": "8.0.100",
+    "just": "1.49.0",
+    "sc_lint": "0.3.0",
+    "sc_lint_boundary": "0.3.0"
+  },
+  "python_ci_requirements": [
+    "build==1.3.0",
+    "jsonschema==4.25.1",
+    "maturin==1.14.1",
+    "numpy==2.3.3",
+    "pandas==3.0.2"
+  ]
+}

@@ -2,6 +2,8 @@
 
 use core::ffi::c_void;
 use core::marker::PhantomData;
+use core::slice;
+use std::vec::Vec;
 
 /// Unit marker preserving the lowercase wire/code distinction for millimeters.
 pub struct mm;
@@ -94,9 +96,9 @@ pub enum units_x_status {
 ///
 /// # Safety
 ///
-/// `out` must be either null or point to writable storage for one
-/// `distance_mm_i32` value. `input` must satisfy the slice validity contract:
-/// `null + zero` is allowed, and `null + non-zero` is rejected.
+/// `input` must follow the null-plus-zero slice contract documented by
+/// `distance_mm_i32_slice`. `out` must be either null or a valid writable
+/// pointer to a `distance_mm_i32` output slot owned by the caller.
 #[unsafe(no_mangle)]
 pub unsafe extern "C" fn units_x_distance_mm_i32_slice_sum(
     input: distance_mm_i32_slice,
@@ -108,6 +110,18 @@ pub unsafe extern "C" fn units_x_distance_mm_i32_slice_sum(
     if out.is_null() {
         return units_x_status::UNITS_X_STATUS_OWNED_OUTPUT_REQUIRED;
     }
+    if input.len == 0 {
+        unsafe { out.write(distance_mm_i32 { value_mm: 0 }) };
+        return units_x_status::UNITS_X_STATUS_OK;
+    }
+    let values = unsafe { slice::from_raw_parts(input.ptr, input.len as usize) };
+    let total = values
+        .iter()
+        .fold(0_i64, |acc, item| acc + i64::from(item.value_mm));
+    let Ok(value_mm) = i32::try_from(total) else {
+        return units_x_status::UNITS_X_STATUS_LOSSY_CONVERSION;
+    };
+    unsafe { out.write(distance_mm_i32 { value_mm }) };
     units_x_status::UNITS_X_STATUS_OK
 }
 
@@ -115,9 +129,9 @@ pub unsafe extern "C" fn units_x_distance_mm_i32_slice_sum(
 ///
 /// # Safety
 ///
-/// The caller must pass either `ptr == null && len == 0` or a pointer/length
-/// pair that originated from a future `units-x` owned-output allocation
-/// contract.
+/// `buffer` must either be the null-plus-zero sentinel or an owned buffer
+/// returned by the `units-x` ABI with matching pointer, length, and capacity
+/// fields expressed in bytes.
 #[unsafe(no_mangle)]
 pub unsafe extern "C" fn units_x_owned_buffer_destroy(
     buffer: units_x_owned_bytes,
@@ -131,6 +145,22 @@ pub unsafe extern "C" fn units_x_owned_buffer_destroy(
     if buffer.ptr.is_null() && buffer.len_bytes != 0 {
         return units_x_status::UNITS_X_STATUS_NULL_WITH_LENGTH;
     }
+    if buffer.ptr.is_null() {
+        return units_x_status::UNITS_X_STATUS_OK;
+    }
+    let Ok(len_bytes) = usize::try_from(buffer.len_bytes) else {
+        return units_x_status::UNITS_X_STATUS_LOSSY_CONVERSION;
+    };
+    let Ok(capacity_bytes) = usize::try_from(buffer.capacity_bytes) else {
+        return units_x_status::UNITS_X_STATUS_LOSSY_CONVERSION;
+    };
+    unsafe {
+        drop(Vec::from_raw_parts(
+            buffer.ptr.cast::<u8>(),
+            len_bytes,
+            capacity_bytes,
+        ))
+    };
     units_x_status::UNITS_X_STATUS_OK
 }
 
@@ -177,6 +207,57 @@ mod tests {
     }
 
     #[test]
+    fn slice_sum_writes_result_before_reporting_success() {
+        let values = [
+            distance_mm_i32 { value_mm: 2 },
+            distance_mm_i32 { value_mm: 3 },
+            distance_mm_i32 { value_mm: 5 },
+        ];
+        let input = distance_mm_i32_slice {
+            ptr: values.as_ptr(),
+            len: values.len() as u64,
+        };
+        let mut out = distance_mm_i32 { value_mm: 0 };
+
+        let status = unsafe { units_x_distance_mm_i32_slice_sum(input, &mut out) };
+
+        assert_eq!(status, units_x_status::UNITS_X_STATUS_OK);
+        assert_eq!(out.value_mm, 10);
+    }
+
+    #[test]
+    fn slice_sum_reports_lossy_conversion_for_i32_overflow() {
+        let values = [
+            distance_mm_i32 { value_mm: i32::MAX },
+            distance_mm_i32 { value_mm: 1 },
+        ];
+        let input = distance_mm_i32_slice {
+            ptr: values.as_ptr(),
+            len: values.len() as u64,
+        };
+        let mut out = distance_mm_i32 { value_mm: 0 };
+
+        let status = unsafe { units_x_distance_mm_i32_slice_sum(input, &mut out) };
+
+        assert_eq!(status, units_x_status::UNITS_X_STATUS_LOSSY_CONVERSION);
+        assert_eq!(out.value_mm, 0);
+    }
+
+    #[test]
+    fn slice_sum_accepts_documented_empty_sentinel() {
+        let input = distance_mm_i32_slice {
+            ptr: ptr::null(),
+            len: 0,
+        };
+        let mut out = distance_mm_i32 { value_mm: -1 };
+
+        let status = unsafe { units_x_distance_mm_i32_slice_sum(input, &mut out) };
+
+        assert_eq!(status, units_x_status::UNITS_X_STATUS_OK);
+        assert_eq!(out.value_mm, 0);
+    }
+
+    #[test]
     fn owned_buffer_contract_is_byte_explicit() {
         let empty = units_x_owned_bytes {
             ptr: ptr::null_mut(),
@@ -206,5 +287,20 @@ mod tests {
     #[test]
     fn status_abi_surface_is_fixed_width() {
         assert_eq!(size_of::<units_x_status>(), size_of::<u32>());
+    }
+
+    #[test]
+    fn owned_buffer_destroy_accepts_owned_vec_contract() {
+        let mut bytes = vec![1_u8, 2, 3, 4];
+        let buffer = units_x_owned_bytes {
+            ptr: bytes.as_mut_ptr().cast::<c_void>(),
+            len_bytes: bytes.len() as u64,
+            capacity_bytes: bytes.capacity() as u64,
+        };
+        core::mem::forget(bytes);
+
+        let status = unsafe { units_x_owned_buffer_destroy(buffer) };
+
+        assert_eq!(status, units_x_status::UNITS_X_STATUS_OK);
     }
 }

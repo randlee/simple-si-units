@@ -68,6 +68,10 @@ class RunTestsBehaviorTests(unittest.TestCase):
                 [run_tests.sys.executable or "python3", str(repo_root / "scripts/check_generated_artifacts_clean.py")],
                 commands,
             )
+            self.assertIn(
+                ["cargo", "test", "--manifest-path", str(repo_root / "reference" / "simple-si-units" / "Cargo.toml"), "--all-features"],
+                commands,
+            )
             self.assertLess(
                 commands.index(["just", "generate"]),
                 commands.index(
@@ -99,6 +103,29 @@ class RunTestsBehaviorTests(unittest.TestCase):
             )
             self.assertLess(commands.index(["just", "generate"]), len(commands) - 1)
             self.assertIn(catalog_check, commands[commands.index(["just", "generate"]) + 1 :])
+
+    def test_run_rust_includes_reference_crate_tests(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="units-x-run-tests-") as tmpdir:
+            repo_root = Path(tmpdir)
+
+            with mock.patch.object(run_tests, "run_command", return_value=0) as run_command:
+                code = run_tests.run_rust(repo_root)
+
+            self.assertEqual(code, 0)
+            commands = [call.args[0] for call in run_command.call_args_list]
+            self.assertEqual(commands[0], ["cargo", "test", "--workspace", "--all-features"])
+            self.assertIn(
+                ["cargo", "test", "--manifest-path", str(repo_root / "reference" / "simple-si-units-core" / "Cargo.toml")],
+                commands,
+            )
+            self.assertIn(
+                ["cargo", "test", "--manifest-path", str(repo_root / "reference" / "simple-si-units-macros" / "Cargo.toml")],
+                commands,
+            )
+            self.assertIn(
+                ["cargo", "test", "--manifest-path", str(repo_root / "reference" / "simple-si-units" / "Cargo.toml"), "--all-features"],
+                commands,
+            )
 
     def test_run_dotnet_falls_back_to_project_build_when_no_test_project_exists(self) -> None:
         with tempfile.TemporaryDirectory(prefix="units-x-run-tests-") as tmpdir:
