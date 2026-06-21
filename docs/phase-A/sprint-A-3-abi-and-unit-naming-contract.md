@@ -6,7 +6,7 @@ Lock the fundamental naming, layout, and ABI rules for the project.
 
 ## Status
 
-`Not Started`
+`Done`
 
 ## Scope References
 
@@ -63,12 +63,51 @@ This project depends on stable, cross-language behavior. Naming and layout rules
 4. ABI ownership and error-reporting boundaries are explicit enough for downstream bindings to rely on without inference.
 5. In-memory ABI layout and binary wire format are documented as separate contracts.
 
+## Locked Rules
+
+### Naming
+
+1. ABI scalar type names use `<dimension>_<unit_code_id>_<storage>`.
+2. ABI immutable slice type names use `<abi_scalar_type>_slice`.
+3. ABI mutable slice type names use `<abi_scalar_type>_slice_mut`.
+4. ABI scalar payload fields use `value_<unit_code_id>` for monomorphic scalar wrappers.
+5. Code-safe unit marker ids preserve meaningful case distinctions, including `mm` versus `Mm`.
+6. Human-readable wire/display symbols remain separate from code ids, so `degC` maps to symbol `C` and `degF` maps to symbol `F`.
+
+### Layout
+
+1. Stable ABI slices use `u64` for `len`.
+2. `ptr == null && len == 0` is the only valid empty-slice representation.
+3. `ptr == null && len > 0` is rejected.
+4. Mutable and immutable slice contracts are separate concrete types.
+
+### Ownership And Error Boundaries
+
+1. Borrowed inputs use pointer-plus-length view structs and do not transfer ownership.
+2. APIs that require caller-provided outputs must reject null output pointers explicitly.
+3. Any API that returns Rust-owned memory must pair that allocation surface with a dedicated destroy function.
+4. The destroy function policy is ABI-layer-specific and does not imply anything about the binary wire format.
+
+### ABI vs Wire Format
+
+1. `#[repr(C)]` scalar and slice structs are in-memory ABI contracts only.
+2. Binary envelopes carry serialized metadata and payload bytes and are specified independently.
+3. Shared naming inputs may be catalog-derived across both layers, but the layouts are not interchangeable.
+
 ## Required Validation
 
 1. The chosen ABI examples compile as valid Rust signatures in the final design direction.
 2. At least one scalar ABI example, one slice ABI example, and one status/error example are written in the doc.
 3. Dedicated review confirms the naming rules distinguish human-readable symbols from code-safe identifiers.
 4. The documented ABI contract states the `null ptr + zero len` behavior and the destroy-function policy for owned outputs.
+
+## Compile-Checked Reference
+
+The repository carries a compile-checked placeholder contract module at:
+
+- `crates/units-x/src/ffi_contract.rs`
+
+That module exists to prove the current Phase A naming and signature direction compiles before implementation sprints generate the real ABI surface.
 
 ## Code Samples / Contracts
 
