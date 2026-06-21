@@ -190,7 +190,7 @@ def rust_encoding_variant(value: str) -> str:
 def rust_identifier(value: str) -> str:
     pieces: list[str] = []
     for char in value:
-        if char.isalnum() or char == "_":
+        if char.isascii() and (char.isalnum() or char == "_"):
             pieces.append(char)
         else:
             pieces.append("_")

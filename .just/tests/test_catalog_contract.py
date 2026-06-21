@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import json
+import subprocess
 import sys
+import tempfile
 from pathlib import Path
 import unittest
 
@@ -101,6 +103,13 @@ class CatalogContractTests(unittest.TestCase):
             validate_catalog(sample)
 
         sample = self.load_sample()
+        sample["dimensions"][0]["units"][0]["unit_code_id"] = "m²"
+        sample["dimensions"][0]["units"][0]["binary_unit_id"] = "distance.m²"
+        sample["dimensions"][0]["units"][0]["reserved_word_alias"] = None
+        with self.assertRaises(ValidationError):
+            validate_catalog(sample)
+
+        sample = self.load_sample()
         sample["dimensions"][0]["units"][0]["unit_code_id"] = "m-m"
         sample["dimensions"][0]["units"][0]["binary_unit_id"] = "distance.m-m"
         sample["dimensions"][0]["units"][0]["reserved_word_alias"] = "m_m"
@@ -156,6 +165,33 @@ class CatalogContractTests(unittest.TestCase):
         sample["dimensions"][0]["units"][0]["binary_unit_id"] = "distance.centimeter"
         with self.assertRaises(ValidationError):
             validate_catalog(sample)
+
+    def test_validator_cli_emits_machine_readable_envelope_for_file_errors(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="units-x-catalog-cli-") as tmpdir:
+            tmpdir_path = Path(tmpdir)
+            missing = tmpdir_path / "missing.json"
+            malformed = tmpdir_path / "malformed.json"
+            malformed.write_text("{ invalid json", encoding="utf-8", newline="\n")
+
+            missing_run = subprocess.run(
+                [sys.executable, str(ROOT / "scripts" / "validate_catalog_contract.py"), str(missing)],
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+            self.assertEqual(missing_run.returncode, 1)
+            missing_envelope = json.loads(missing_run.stderr.strip())
+            self.assertEqual(missing_envelope["code"], "catalog_read_failed")
+
+            malformed_run = subprocess.run(
+                [sys.executable, str(ROOT / "scripts" / "validate_catalog_contract.py"), str(malformed)],
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+            self.assertEqual(malformed_run.returncode, 1)
+            malformed_envelope = json.loads(malformed_run.stderr.strip())
+            self.assertEqual(malformed_envelope["code"], "catalog_json_decode_failed")
 
 
 if __name__ == "__main__":

@@ -92,6 +92,8 @@ Rust-generation safety rule:
 
 - `reserved_word_alias` is required whenever `unit_code_id` would not be a
   legal Rust identifier or would collide with a reserved Rust keyword.
+- legal Rust identifiers for generated markers are treated as ASCII-only for
+  the Phase A generator surface.
 - the resolved Rust marker name must be unique across the full catalog.
 - Phase A keeps a documented FFI bootstrap exemplar on `distance.mm` with an
   `_i32` scalar type id so the scaffolded ABI sample remains deterministic.

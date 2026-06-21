@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import json
+from json import JSONDecodeError
 from pathlib import Path
 import sys
 from typing import Any
@@ -99,7 +100,7 @@ def is_valid_rust_identifier(value: str) -> bool:
         return False
     if value[0].isdigit():
         return False
-    return all(char.isalnum() or char == "_" for char in value)
+    return all(char.isascii() and (char.isalnum() or char == "_") for char in value)
 
 
 def validate_schema(payload: Any) -> None:
@@ -216,6 +217,14 @@ def main(argv: list[str]) -> int:
         validate_catalog(payload)
     except ValidationError as error:
         print(json.dumps(error.to_envelope(), sort_keys=True), file=sys.stderr)
+        return 1
+    except FileNotFoundError as error:
+        envelope = ValidationError("catalog_read_failed", str(error), path.as_posix()).to_envelope()
+        print(json.dumps(envelope, sort_keys=True), file=sys.stderr)
+        return 1
+    except JSONDecodeError as error:
+        envelope = ValidationError("catalog_json_decode_failed", error.msg, path.as_posix()).to_envelope()
+        print(json.dumps(envelope, sort_keys=True), file=sys.stderr)
         return 1
     try:
         rendered = path.relative_to(ROOT).as_posix()
