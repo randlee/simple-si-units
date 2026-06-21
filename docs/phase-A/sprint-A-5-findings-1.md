@@ -28,6 +28,7 @@ Relevant requirement and ADR ids for this findings set:
 - `REQ-UX-021`
 - `REQ-UX-022`
 - `REQ-UX-029`
+- `REQ-UX-031`
 - `REQ-UX-032`
 - `REQ-UX-033`
 - `REQ-UX-034`
@@ -37,10 +38,13 @@ Relevant requirement and ADR ids for this findings set:
 - `REQ-UX-041`
 - `NFR-UX-005`
 - `NFR-UX-006`
+- `NFR-UX-004`
 - `NFR-UX-009`
+- `ADR-ROOT-005`
 - `ADR-UX-003`
 - `ADR-UX-004`
 - `ADR-UX-005`
+- `ADR-UX-011`
 - `ADR-UX-010`
 - `ADR-UX-012`
 - `ADR-UX-014`

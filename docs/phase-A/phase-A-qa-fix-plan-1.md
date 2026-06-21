@@ -122,7 +122,7 @@ Primary controlling ids:
 
 ## Workstream A5-4: Synchronize Boundary And Sprint Metadata
 
-- Findings addressed: `SC-QA-001`, `SC-QA-002`, `ARCH-004`
+- Findings addressed: `SC-QA-001`, `SC-QA-002`
 - Scope: [planning.toml](/Volumes/Extreme%20Pro/github/simple-si-units-worktrees/sprint/phase-A-5-catalog-and-generation-bootstrap/boundaries/planning.toml:2), [core-surface.toml](/Volumes/Extreme%20Pro/github/simple-si-units-worktrees/sprint/phase-A-5-catalog-and-generation-bootstrap/boundaries/units-x/core-surface.toml:16), [lib.rs](/Volumes/Extreme%20Pro/github/simple-si-units-worktrees/sprint/phase-A-5-catalog-and-generation-bootstrap/crates/units-x/src/lib.rs:6)
 - Required changes:
 1. Advance the planning sentinel to the actual sprint state, or formally remove sprint-state coupling from the boundary record.
