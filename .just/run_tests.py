@@ -36,6 +36,14 @@ def python_checks(repo_root: Path) -> list[list[str]]:
     ]
 
 
+def reference_rust_test_commands(repo_root: Path) -> list[list[str]]:
+    return [
+        ["cargo", "test", "--manifest-path", str(repo_root / "reference" / "simple-si-units-core" / "Cargo.toml")],
+        ["cargo", "test", "--manifest-path", str(repo_root / "reference" / "simple-si-units-macros" / "Cargo.toml")],
+        ["cargo", "test", "--manifest-path", str(repo_root / "reference" / "simple-si-units" / "Cargo.toml"), "--all-features"],
+    ]
+
+
 def dotnet_test_projects(repo_root: Path) -> list[Path]:
     return sorted((repo_root / "dotnet").rglob("*Tests.csproj"))
 
@@ -48,6 +56,7 @@ def run_all(repo_root: Path) -> int:
         [sys.executable or "python3", str(repo_root / ".just/run_lint.py"), "fast"],
         ["cargo", "test", "--workspace", "--all-features"],
     ]
+    commands.extend(reference_rust_test_commands(repo_root))
     commands.extend(python_checks(repo_root))
     for command in commands:
         code = run_command(command, repo_root)
@@ -84,7 +93,13 @@ def run_integration(repo_root: Path) -> int:
 
 
 def run_rust(repo_root: Path) -> int:
-    return run_command(["cargo", "test", "--workspace", "--all-features"], repo_root)
+    commands = [["cargo", "test", "--workspace", "--all-features"]]
+    commands.extend(reference_rust_test_commands(repo_root))
+    for command in commands:
+        code = run_command(command, repo_root)
+        if code != 0:
+            return code
+    return 0
 
 
 def main(argv: list[str]) -> int:
