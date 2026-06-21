@@ -2,6 +2,7 @@
 /.just/logs/
 /artifacts/
 /.DS_Store
-/.sc/
+/.sc/*
+!/.sc/shared-settings.yaml
 __pycache__/
 *.pyc

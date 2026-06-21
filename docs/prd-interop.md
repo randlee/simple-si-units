@@ -39,7 +39,7 @@ The generated or maintained `.NET` wrapper/package is a first-class deliverable 
 2. Ensure public structs are ABI-compatible across C#/Go/C/Rust.
 3. Enable ergonomic generated or partly generated bindings for C# and Go.
 4. Preserve minimum-footprint storage at the ABI boundary.
-5. Ensure C# public types can participate directly in `System.Text.Json` serialization using the same canonical wire shape used by Rust and Python.
+5. Ensure C# can expose the same canonical JSON wire shape used by Rust and Python, either through ABI-compatible structs where practical or through generated adjacent DTOs.
 
 ### Secondary goals
 
@@ -161,13 +161,17 @@ Recommended approach:
 
 Examples of desired C# usage:
 
-- `DistanceMetersF64 value`
-- `Span<DistanceMetersF64> values`
-- `ReadOnlySpan<DistanceMetersF64> input`
+- `DistanceMF64 value`
+- `Span<DistanceMF64> values`
+- `ReadOnlySpan<DistanceMF64> input`
 
 The public C# quantity structs should be layout-compatible with the ABI structs so they can be pinned and passed efficiently.
 
-The public C# quantity structs or directly adjacent DTO types must also be usable with `System.Text.Json` without requiring a different wire shape than the canonical JSON schema used by Rust and Python.
+The `.NET` package must also expose user-facing C# interfaces so application
+code can depend on stable, ergonomic contracts rather than directly on raw
+blittable structs alone.
+
+Generated or adjacent DTO types are acceptable for `System.Text.Json` when that produces a cleaner or more maintainable surface, as long as the canonical wire shape does not drift.
 
 ## 3. Go
 
@@ -208,10 +212,11 @@ Recommended layers:
 Examples of ergonomic C# features:
 
 - `Value` property
+- C# interfaces for scalar and bulk quantity contracts
 - unit-aware `ToString()`
 - static constructors
 - span-based batch APIs
-- direct `System.Text.Json` compatibility for the canonical wire shape
+- generated or adjacent `System.Text.Json` compatibility for the canonical wire shape
 - NuGet-ready packaging metadata
 
 ## Span requirements for C#
@@ -226,14 +231,14 @@ Requirements:
 
 This allows clean projections like:
 
-- `Span<DistanceMetersF64>`
+- `Span<DistanceMF64>`
 - `ReadOnlySpan<TemperatureDegCF64>`
 
 without exposing span types in the ABI itself.
 
 ## Serialization and ABI relationship
 
-The interop ABI and the binary serialization format should align closely.
+The interop ABI and the binary serialization format must be deliberately related but explicitly separate contracts.
 
 Goals:
 
@@ -242,20 +247,34 @@ Goals:
 - explicit unit and storage schema
 - one canonical JSON wire shape across languages
 
+Clarification:
+
+- in-memory ABI structs define how languages call functions and share process memory
+- binary wire formats define on-wire and on-disk payloads
+- pointer-plus-length ABI structs are never themselves the serialized wire image
+- the two contracts should share schema ids and semantics, but they must not be conflated
+
 ## JSON Interop Requirements
 
-For JSON-facing interop, C# must be able to serialize and deserialize the canonical wire shape directly.
+For JSON-facing interop, C# must be able to serialize and deserialize the canonical wire shape through ABI-compatible types where practical or through generated adjacent DTOs where that is cleaner.
 
 Requirements:
 
-1. The C# surface used for JSON must align exactly with the Rust canonical schema.
-2. `System.Text.Json` serialization output must match the Python Pydantic output and Rust reference fixtures exactly.
+1. The C# JSON surface must align exactly with the Rust canonical schema.
+2. `System.Text.Json` serialization must match the Python Pydantic output and Rust reference fixtures semantically against canonical fixtures.
 3. If separate ABI structs and JSON DTO structs are needed in C#, the mapping between them must be generated or trivial and must not change the wire shape.
+4. Canonical JSON parity does not require byte-for-byte serializer identity or key-order identity.
+5. Non-finite floating-point values are out of scope for canonical JSON unless a later explicit policy is added.
+6. For selected large or opaque types, a Rust-backed converter path is acceptable if it preserves the same canonical wire shape and remains operationally maintainable.
 
 Binary payloads for arrays should be representable as:
 
 - metadata envelope plus raw contiguous numeric payload
 - or raw payload plus out-of-band schema where appropriate
+
+The preferred in-memory ABI bulk representation is a slice of ABI-facing scalar quantity wrappers, while the preferred binary wire representation is metadata plus raw numeric payload bytes.
+
+C# JSON DTOs target the canonical wire representation rather than the in-memory ABI wrapper layout.
 
 ## Validation Requirements
 

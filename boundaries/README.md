@@ -1,5 +1,5 @@
 # Boundaries
 
-This directory exists as the future home for `sc-lint` boundary inventory and policy files.
+This directory exists as the future home for `units-x` boundary inventory and policy files.
 
-It also acts as a repo sentinel for `sc-lint` root discovery.
+It also acts as a repo sentinel for `units-x` root discovery.

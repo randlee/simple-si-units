@@ -150,21 +150,31 @@ Recommended scalar shape:
 
 ```json
 {
-  "dimension": "distance",
+  "type": "distance_i32",
   "unit": "mm",
-  "storage_type": "i32",
   "value": 1250
 }
 ```
 
-Recommended array shape:
+Recommended fixed small-array shape:
 
 ```json
 {
-  "dimension": "distance",
+  "type": "distance3_f32",
   "unit": "cm",
-  "storage_type": "f32",
   "values": [12.0, 15.0, 18.0]
+}
+```
+
+Recommended large/arbitrary-buffer shape:
+
+```json
+{
+  "type": "distance_buffer_i16",
+  "unit": "cm",
+  "encoding": "base64-le",
+  "count": 16384,
+  "values_b64": "..."
 }
 ```
 
@@ -174,7 +184,16 @@ Python requirements:
 2. JSON should not depend on implicit Rust field names
 3. JSON round-trip tests must be part of validation
 4. A Pydantic model must exist for every public JSON shape
-5. Pydantic serialization output must match the canonical cross-language wire shape exactly
+5. Pydantic serialization output must match the canonical cross-language wire shape semantically against shared fixtures
+6. Human-readable unit symbols such as `C` may differ from safe code identifiers such as `degC`
+
+Canonical JSON policy for Python:
+
+- scalars use the compact `type` + `unit` + `value` shape
+- fixed small buffers may use JSON arrays
+- large or arbitrary buffers use encoded payload envelopes
+- the chosen JSON form is a machine-readable property of the public type, not a runtime serializer heuristic
+- non-finite floating-point values are out of scope for canonical JSON unless a later explicit policy is added
 
 ## Pydantic Requirements
 
@@ -206,8 +225,10 @@ Python high-level objects do not need to match the raw C ABI quantity struct lay
 However:
 
 - the Python implementation may internally call the same Rust core logic
-- Python may optionally use the same raw binary formats for arrays and buffers
+- Python may consume the same binary wire-format semantics for arrays and buffers
 - advanced Python integrations may expose or consume the raw C ABI through separate mechanisms if needed
+- the primary Python bulk API is still PyO3-native and buffer-oriented rather than a direct projection of pointer-plus-length ABI structs
+- Python JSON DTOs and buffer-facing APIs target the wire/raw-numeric representation, not the in-memory ABI wrapper layout
 
 ## Validation Requirements
 

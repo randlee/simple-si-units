@@ -8,13 +8,22 @@ Create a repeatable build and test baseline for the new crate and workspace.
 
 `Not Started`
 
+## Scope References
+
+- REQ-UX-030
+- REQ-UX-031
+- NFR-UX-005
+- NFR-UX-011
+- NFR-UX-012
+
 ## Deliverables
 
 1. Baseline CI jobs
 2. Standard local dev commands
-3. Minimal test matrix for Linux, macOS, and Windows where practical
+3. Minimal test matrix covering Linux, macOS, and Windows for the shipped scope
 4. Formatting and linting baseline
 5. Shared-version drift check included in normal test entrypoints
+6. Required `sc-lint` baseline for the shipped scope
 
 ## Why
 
@@ -32,8 +41,22 @@ The new crate must not repeat the ambiguous build behavior of the current projec
 
 - Can run in parallel with Sprints A-2 and A-3
 
-## Exit Criteria
+## Acceptance Criteria
 
-1. Baseline build passes in CI for the new workspace shape.
-2. Standard developer entrypoints are documented and stable.
-3. `just test` and the default CI path fail on version drift across Rust, Python, and `.NET` package metadata.
+1. Baseline build and test entrypoints are documented and runnable from repo root.
+2. CI includes Linux, macOS, and Windows coverage for the shipped scope.
+3. `just test` includes generation, version-lock verification, linting, and tests.
+4. The Phase A shipped scope has an explicit lint baseline, including any documented exclusions for legacy reference-only debt.
+5. Platform-sensitive generation or serialization helpers document their encoding/path assumptions explicitly.
+
+## Required Validation
+
+1. `just test` fails on version drift.
+2. CI baseline exercises Windows text/encoding-sensitive paths.
+3. `sc-lint check`, `sc-lint clippy`, and `sc-lint-boundary` are either green for the shipped scope or the exclusion boundary is documented and enforced.
+
+## Edge / Corner Conditions Requiring Dedicated Tests
+
+1. Windows text encoding behavior in generator paths.
+2. Reference-only debt exclusion boundaries.
+3. Empty scaffold repos where Python or `.NET` subtrees exist but have no full product code yet.

@@ -18,7 +18,43 @@ This plan covers the new deliverable crate for unit-preserving quantities with:
 - Python integration via PyO3/maturin
 - master-catalog-driven code generation and test generation
 
+The MVP public type surface is the authoritative inventory in
+[docs/crates/units-x/in-scope-type-inventory.md](/Volumes/Extreme%20Pro/github/simple-si-units/docs/crates/units-x/in-scope-type-inventory.md),
+covering the `base`, `geometry`, `mechanical`, and `electromagnetic` families
+plus `Diopter`.
+
 The existing `simple-si-units` crates remain reference and validation oracles under `reference/`, not the primary deliverable.
+
+## Scope References
+
+- REQ-ROOT-006
+- REQ-ROOT-007
+- REQ-ROOT-008
+- REQ-ROOT-010
+- REQ-ROOT-011
+- REQ-ROOT-012
+- REQ-ROOT-013
+- REQ-ROOT-014
+- REQ-ROOT-015
+- REQ-ROOT-020
+- REQ-UX-042
+- REQ-UX-043
+- REQ-UX-044
+- REQ-UX-045
+- ADR-ROOT-003
+- ADR-ROOT-005
+- ADR-ROOT-006
+- ADR-ROOT-007
+- ADR-ROOT-008
+- ADR-ROOT-009
+- ADR-UX-001
+- ADR-UX-003
+- ADR-UX-004
+- ADR-UX-005
+- ADR-UX-008
+- ADR-UX-009
+- ADR-UX-020
+- ADR-UX-021
 
 Target repository shape:
 
@@ -40,11 +76,14 @@ Cross-cutting release rule:
 | [Phase C](phase-C/phase-C-serialization-and-binary-contract.md) | JSON schema, binary format, layout and conformance rules | Phase B | `Not Started` |
 | [Phase D](phase-D/phase-D-interop-surfaces.md) | C ABI, C# Interoptopus surface, Go and C interop examples | Phases B-C | `Not Started` |
 | [Phase E](phase-E/phase-E-python-integration.md) | PyO3/maturin scalar and buffer APIs plus Pydantic models | Phases B-C | `Not Started` |
-| [Phase F](phase-F/phase-F-validation-documentation-and-release.md) | Parity, footprint validation, docs, examples, release readiness | Phases D-E | `Not Started` |
+| [Phase F](phase-F/phase-F-validation-documentation-and-release.md) | Parity, footprint validation, docs, examples, and release readiness | Phases D-E | `Not Started` |
 
 ## Execution Model
 
 - Phase A is the main prerequisite phase.
+- Phase A must end with real delivery scaffolds present and the required lint/build/test baseline green for the shipped scope.
+- Sprint dependency lists are the authoritative executable DAG. Phase dependency rows are coarse thematic ordering only.
+- Sprint plans must follow `.claude/skills/plan-hardening/sprint-planning-guidelines.md`.
 - Within each phase, some sprints are serial and some can run in parallel.
 - Phase D and Phase E are intentionally separable after the core model and serialization contract are stable.
 - Phase F consolidates cross-language validation and release readiness.
