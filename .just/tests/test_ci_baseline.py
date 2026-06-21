@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from pathlib import Path
 import tempfile
 import unittest
@@ -9,6 +10,7 @@ from scope_workspace import prepare_boundary_scope
 
 
 ROOT = Path(__file__).resolve().parent.parent.parent
+TOOL_VERSIONS = json.loads((ROOT / "tool-versions.json").read_text(encoding="utf-8"))
 
 
 class CiBaselineTests(unittest.TestCase):
@@ -19,19 +21,21 @@ class CiBaselineTests(unittest.TestCase):
 
     def test_ci_workflow_matrix_covers_all_platforms(self) -> None:
         workflow = (ROOT / ".github" / "workflows" / "ci.yml").read_text(encoding="utf-8")
-        self.assertIn("ubuntu-latest", workflow)
-        self.assertIn("macos-latest", workflow)
-        self.assertIn("windows-latest", workflow)
-        self.assertIn('branches: [develop, main, "integrate/*", "integration/*"]', workflow)
-        self.assertIn('branches: [develop, main, "integrate/*", "integration/*", "sprint/*"]', workflow)
+        actions = TOOL_VERSIONS["github_actions"]
+        for runner in actions["runner_os"]:
+            self.assertIn(runner, workflow)
+        pr_branches = ", ".join(f'"{branch}"' if "*" in branch or "/" in branch else branch for branch in actions["pull_request_branches"])
+        push_branches = ", ".join(f'"{branch}"' if "*" in branch or "/" in branch else branch for branch in actions["push_branches"])
+        self.assertIn(f"branches: [{pr_branches}]", workflow)
+        self.assertIn(f"branches: [{push_branches}]", workflow)
         self.assertIn("run: just ci", workflow)
-        self.assertIn('toolchain: "1.95.0"', workflow)
-        self.assertIn('python-version: "3.11.9"', workflow)
-        self.assertIn('dotnet-version: "8.0.100"', workflow)
+        self.assertIn(f'toolchain: "{actions["rust_toolchain"]}"', workflow)
+        self.assertIn(f'python-version: "{actions["python"]}"', workflow)
+        self.assertIn(f'dotnet-version: "{actions["dotnet_sdk"]}"', workflow)
         self.assertIn("python -m pip install -r python/requirements-ci.txt", workflow)
-        self.assertIn("cargo install just --locked --version 1.49.0", workflow)
-        self.assertIn("cargo install sc-lint --locked --version 0.3.0", workflow)
-        self.assertIn("cargo install sc-lint-boundary --locked --version 0.3.0", workflow)
+        self.assertIn(f'cargo install just --locked --version {actions["just"]}', workflow)
+        self.assertIn(f'cargo install sc-lint --locked --version {actions["sc_lint"]}', workflow)
+        self.assertIn(f'cargo install sc-lint-boundary --locked --version {actions["sc_lint_boundary"]}', workflow)
 
     def test_development_workflow_documents_shipped_scope_exclusion(self) -> None:
         doc = (ROOT / "docs" / "development-workflow.md").read_text(encoding="utf-8")
@@ -46,13 +50,7 @@ class CiBaselineTests(unittest.TestCase):
         requirements = (ROOT / "python" / "requirements-ci.txt").read_text(encoding="utf-8").splitlines()
         self.assertEqual(
             [line.strip() for line in requirements if line.strip()],
-            [
-                "build==1.3.0",
-                "jsonschema==4.25.1",
-                "maturin==1.14.1",
-                "numpy==2.3.1",
-                "pandas==3.0.2",
-            ],
+            TOOL_VERSIONS["python_ci_requirements"],
         )
 
     def test_shipped_scope_workspace_excludes_reference_and_uses_utf8_lf(self) -> None:
