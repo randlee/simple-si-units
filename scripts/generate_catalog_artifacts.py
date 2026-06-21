@@ -47,7 +47,28 @@ def build_summary(catalog: dict) -> dict:
 
 
 def rust_string_literal(value: str) -> str:
-    return json.dumps(value)
+    pieces = ['"']
+    for char in value:
+        if char == "\\":
+            pieces.append("\\\\")
+        elif char == '"':
+            pieces.append('\\"')
+        elif char == "\n":
+            pieces.append("\\n")
+        elif char == "\r":
+            pieces.append("\\r")
+        elif char == "\t":
+            pieces.append("\\t")
+        else:
+            codepoint = ord(char)
+            if codepoint < 0x20 or codepoint == 0x7F:
+                pieces.append(f"\\x{codepoint:02x}")
+            elif codepoint > 0x7E:
+                pieces.append(f"\\u{{{codepoint:x}}}")
+            else:
+                pieces.append(char)
+    pieces.append('"')
+    return "".join(pieces)
 
 
 def render_rust_module(summary: dict) -> str:

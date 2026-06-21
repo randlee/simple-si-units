@@ -41,10 +41,10 @@ class CatalogGenerationTests(unittest.TestCase):
 
     def test_render_rust_module_escapes_catalog_strings(self) -> None:
         catalog = json.loads((ROOT / "catalog" / "examples" / "generation-edge-catalog.json").read_text(encoding="utf-8"))
-        catalog["dimensions"][0]["public_type"] = 'Distance "Quoted" \\\\ Path'
+        catalog["dimensions"][0]["public_type"] = 'Café "Quoted" \\\\ Path'
         summary = build_summary(catalog)
         rendered = render_rust_module(summary)
-        self.assertIn('public_type: "Distance \\"Quoted\\" \\\\\\\\ Path"', rendered)
+        self.assertIn('public_type: "Caf\\u{e9} \\"Quoted\\" \\\\\\\\ Path"', rendered)
 
 
 if __name__ == "__main__":

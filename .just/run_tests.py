@@ -34,7 +34,7 @@ def run_command(command: list[str], repo_root: Path) -> int:
 
 def generated_artifacts_are_dirty(repo_root: Path) -> bool:
     completed = subprocess.run(
-        ["git", "diff", "--quiet", "--", *GENERATED_ARTIFACT_PATHS],
+        ["git", "diff", "--quiet", "HEAD", "--", *GENERATED_ARTIFACT_PATHS],
         cwd=repo_root,
         check=False,
     )

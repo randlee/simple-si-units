@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+import subprocess
 import tempfile
 import unittest
 from unittest import mock
@@ -14,6 +15,23 @@ def touch(path: Path) -> None:
 
 
 class RunTestsBehaviorTests(unittest.TestCase):
+    def test_generated_artifacts_are_dirty_detects_staged_changes(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="units-x-run-tests-") as tmpdir:
+            repo_root = Path(tmpdir)
+            subprocess.run(["git", "init"], cwd=repo_root, check=True, capture_output=True, text=True)
+            subprocess.run(["git", "config", "user.email", "tests@example.invalid"], cwd=repo_root, check=True)
+            subprocess.run(["git", "config", "user.name", "units-x tests"], cwd=repo_root, check=True)
+            for relative_path in run_tests.GENERATED_ARTIFACT_PATHS:
+                touch(repo_root / relative_path)
+            subprocess.run(["git", "add", "."], cwd=repo_root, check=True)
+            subprocess.run(["git", "commit", "-m", "baseline"], cwd=repo_root, check=True, capture_output=True, text=True)
+
+            target = repo_root / run_tests.GENERATED_ARTIFACT_PATHS[0]
+            target.write_text("changed\n", encoding="utf-8")
+            subprocess.run(["git", "add", str(target.relative_to(repo_root))], cwd=repo_root, check=True)
+
+            self.assertTrue(run_tests.generated_artifacts_are_dirty(repo_root))
+
     def test_run_python_invokes_helper_tests_and_native_smoke(self) -> None:
         with tempfile.TemporaryDirectory(prefix="units-x-run-tests-") as tmpdir:
             repo_root = Path(tmpdir)
@@ -69,10 +87,18 @@ class RunTestsBehaviorTests(unittest.TestCase):
 
             self.assertEqual(code, 0)
             commands = [call.args[0] for call in run_command.call_args_list]
-            self.assertIn(
-                [run_tests.sys.executable or "python3", str(repo_root / "scripts/generate_catalog_artifacts.py"), "--mode", "check"],
-                commands,
+            catalog_check = [
+                run_tests.sys.executable or "python3",
+                str(repo_root / "scripts/generate_catalog_artifacts.py"),
+                "--mode",
+                "check",
+            ]
+            self.assertEqual(
+                sum(1 for command in commands if command == catalog_check),
+                2,
             )
+            self.assertLess(commands.index(["just", "generate"]), len(commands) - 1)
+            self.assertIn(catalog_check, commands[commands.index(["just", "generate"]) + 1 :])
 
     def test_run_dotnet_falls_back_to_project_build_when_no_test_project_exists(self) -> None:
         with tempfile.TemporaryDirectory(prefix="units-x-run-tests-") as tmpdir:

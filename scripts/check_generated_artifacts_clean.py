@@ -15,7 +15,7 @@ GENERATED_PATHS = (
 
 def main(argv: list[str]) -> int:
     completed = subprocess.run(
-        ["git", "diff", "--exit-code", "--", *GENERATED_PATHS],
+        ["git", "diff", "--exit-code", "HEAD", "--", *GENERATED_PATHS],
         cwd=ROOT,
         check=False,
     )
