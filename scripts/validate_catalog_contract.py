@@ -27,6 +27,10 @@ def require(condition: bool, message: str) -> None:
         raise ValidationError(message)
 
 
+def require_non_blank_string(value: Any, label: str) -> None:
+    require(isinstance(value, str) and value.strip(), f"{label} must be a non-blank string")
+
+
 def validate_schema(payload: Any) -> None:
     schema = read_json(CATALOG_SCHEMA)
     validator = Draft202012Validator(schema)
@@ -39,12 +43,37 @@ def validate_schema(payload: Any) -> None:
 
 def validate_dimension_invariants(dimension: Any, label: str) -> str:
     require(isinstance(dimension, dict), f"{label} must be an object")
+    require_non_blank_string(dimension["dimension_id"], f"{label}.dimension_id")
+    require_non_blank_string(dimension["public_type"], f"{label}.public_type")
+    require_non_blank_string(dimension["base_unit_code_id"], f"{label}.base_unit_code_id")
     dimension_id = str(dimension["dimension_id"])
     base_unit_code_id = str(dimension["base_unit_code_id"])
+    json_forms = dimension["json_forms"]
+    require_non_blank_string(json_forms["small_array_type_id_template"], f"{label}.json_forms.small_array_type_id_template")
+    require_non_blank_string(json_forms["buffer_type_id_template"], f"{label}.json_forms.buffer_type_id_template")
+    require_non_blank_string(json_forms["default_encoding"], f"{label}.json_forms.default_encoding")
+    for index, scalar_type_id in enumerate(json_forms["scalar_type_ids"]):
+        require_non_blank_string(scalar_type_id, f"{label}.json_forms.scalar_type_ids[{index}]")
+
+    abi = dimension["abi"]
+    require_non_blank_string(abi["abi_name_stem"], f"{label}.abi.abi_name_stem")
+    require_non_blank_string(abi["binary_schema_id"], f"{label}.abi.binary_schema_id")
+
     units = dimension["units"]
     seen_unit_ids: set[str] = set()
     seen_binary_ids: set[str] = set()
     for index, unit in enumerate(units):
+        require_non_blank_string(unit["unit_code_id"], f"{label}.units[{index}].unit_code_id")
+        require_non_blank_string(unit["unit_symbol"], f"{label}.units[{index}].unit_symbol")
+        require_non_blank_string(unit["display_name"], f"{label}.units[{index}].display_name")
+        reserved_word_alias = unit["reserved_word_alias"]
+        require(
+            reserved_word_alias is None
+            or (isinstance(reserved_word_alias, str) and reserved_word_alias.strip()),
+            f"{label}.units[{index}].reserved_word_alias must be null or a non-blank string",
+        )
+        for alias_index, alias in enumerate(unit["aliases"]):
+            require_non_blank_string(alias, f"{label}.units[{index}].aliases[{alias_index}]")
         unit_code_id = str(unit["unit_code_id"])
         binary_unit_id = str(unit["binary_unit_id"])
         require(unit_code_id not in seen_unit_ids, f"{label} contains duplicate unit_code_id `{unit_code_id}`")
@@ -57,6 +86,8 @@ def validate_dimension_invariants(dimension: Any, label: str) -> str:
 
 def validate_catalog(payload: Any) -> None:
     validate_schema(payload)
+    require_non_blank_string(payload["schema_version"], "schema_version")
+    require_non_blank_string(payload["catalog_version"], "catalog_version")
     dimensions = payload["dimensions"]
 
     seen_dimension_ids: set[str] = set()

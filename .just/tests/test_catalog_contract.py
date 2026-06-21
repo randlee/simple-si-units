@@ -83,6 +83,21 @@ class CatalogContractTests(unittest.TestCase):
         with self.assertRaises(ValidationError):
             validate_catalog(sample)
 
+        sample = self.load_sample()
+        sample["dimensions"][0]["dimension_id"] = "   "
+        with self.assertRaises(ValidationError):
+            validate_catalog(sample)
+
+        sample = self.load_sample()
+        sample["dimensions"][1]["units"][0]["display_name"] = "   "
+        with self.assertRaises(ValidationError):
+            validate_catalog(sample)
+
+        sample = self.load_sample()
+        sample["dimensions"][0]["units"][0]["reserved_word_alias"] = ""
+        with self.assertRaises(ValidationError):
+            validate_catalog(sample)
+
 
 if __name__ == "__main__":
     unittest.main()
