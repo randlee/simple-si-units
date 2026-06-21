@@ -27,6 +27,13 @@ def local_venv_python(repo_root: Path) -> Path | None:
 
 def main(argv: list[str]) -> int:
     repo_root = Path(__file__).resolve().parent.parent
+    synchronized = subprocess.run(
+        [sys.executable or "python3", str(repo_root / "scripts" / "sync_version_files.py")],
+        cwd=repo_root,
+    )
+    if synchronized.returncode != 0:
+        return synchronized.returncode
+
     missing = missing_modules()
     if missing:
         venv_python = local_venv_python(repo_root)
