@@ -61,18 +61,18 @@ Every exported quantity type must be concrete and monomorphic.
 
 Examples:
 
-- `DistanceMmI32`
-- `DistanceMF64`
-- `TimeSF64`
-- `VelocityMpsF64`
-- `TemperatureDegCF64`
+- `distance_mm_i32`
+- `distance_m_f64`
+- `time_s_f64`
+- `velocity_mps_f64`
+- `temperature_degC_f64`
 
 Representative shape:
 
 ```rust
 #[repr(C)]
 #[derive(Copy, Clone)]
-pub struct DistanceMmI32 {
+pub struct distance_mm_i32 {
     pub value_mm: i32,
 }
 ```
@@ -87,14 +87,14 @@ Representative shapes:
 
 ```rust
 #[repr(C)]
-pub struct DistanceMF64Slice {
-    pub ptr: *const DistanceMF64,
+pub struct distance_m_f64_slice {
+    pub ptr: *const distance_m_f64,
     pub len: u64,
 }
 
 #[repr(C)]
-pub struct DistanceMF64SliceMut {
-    pub ptr: *mut DistanceMF64,
+pub struct distance_m_f64_slice_mut {
+    pub ptr: *mut distance_m_f64,
     pub len: u64,
 }
 ```

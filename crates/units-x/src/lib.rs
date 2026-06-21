@@ -3,6 +3,8 @@
 //! Phase A provides scaffolding only. The quantity model, catalog-driven
 //! generation, serialization, and interop surfaces land in later phases.
 
+pub mod ffi_contract;
+
 /// Current package version exposed for scaffolding and smoke-test use.
 pub const VERSION: &str = env!("CARGO_PKG_VERSION");
 

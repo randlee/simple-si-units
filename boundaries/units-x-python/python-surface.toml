@@ -1,23 +1,23 @@
-boundary_id = "BOUNDARY-UnitsXCore"
-owner_package = "units-x"
-owner_crate_path = "units_x"
-name = "UnitsXCore"
+boundary_id = "BOUNDARY-UnitsXPython"
+owner_package = "units-x-python"
+owner_crate_path = "units_x_python"
+name = "UnitsXPython"
 
 [public]
-facade = "lib"
+facade = "_native"
 
 [implementation]
-type = "VERSION"
-module = "units_x"
+type = "_native"
+module = "units_x_python"
 visibility = "public"
 constructor = "none"
 
 [composition]
-roots = ["VERSION", "ffi_contract"]
+roots = ["_native", "version"]
 
 [dependencies]
-allowed_dependents = ["units-x-python"]
-allowed_dependencies = []
+allowed_dependents = []
+allowed_dependencies = ["units-x"]
 forbidden_edges = []
 
 [references]
