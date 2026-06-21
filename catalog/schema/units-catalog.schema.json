@@ -11,12 +11,10 @@
   ],
   "properties": {
     "schema_version": {
-      "type": "string",
-      "minLength": 1
+      "$ref": "#/$defs/non_blank_string"
     },
     "catalog_version": {
-      "type": "string",
-      "minLength": 1
+      "$ref": "#/$defs/non_blank_string"
     },
     "dimensions": {
       "type": "array",
