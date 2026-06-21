@@ -8,6 +8,35 @@ Establish the new repository layout, deliverable crate location, workspace struc
 
 `Not Started`
 
+## Scope References
+
+- REQ-ROOT-010
+- REQ-ROOT-011
+- REQ-ROOT-013
+- REQ-ROOT-016
+- REQ-ROOT-019
+- REQ-ROOT-020
+- REQ-UX-009
+- REQ-UX-018
+- REQ-UX-029
+- REQ-UX-030
+- REQ-UX-031
+- REQ-UX-034
+- REQ-UX-035
+- NFR-UX-012
+- NFR-UX-013
+- ADR-ROOT-006
+- ADR-ROOT-007
+- ADR-ROOT-008
+- ADR-ROOT-009
+- ADR-UX-001
+- ADR-UX-003
+- ADR-UX-008
+- ADR-UX-010
+- ADR-UX-011
+- ADR-UX-012
+- ADR-UX-015
+
 ## Phase Dependencies
 
 - None

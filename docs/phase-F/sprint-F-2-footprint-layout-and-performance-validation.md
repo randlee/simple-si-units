@@ -8,12 +8,20 @@ Prove the minimum-footprint and ABI/layout claims made by the project.
 
 `Not Started`
 
+## Scope References
+
+- NFR-UX-001
+- NFR-UX-002
+- NFR-UX-003
+- NFR-UX-004
+- ADR-UX-011
+
 ## Deliverables
 
 1. Size assertions for scalar and bulk wrappers
 2. Final repo-wide ABI layout regression assertions
 3. Serialization overhead checks
-4. Focused performance or copy-behavior checks where relevant
+4. Focused performance or copy-behavior checks for Rust bulk encode/decode, C ABI slice pass-through, Python memoryview ingestion, and C# `Span<T>` consumption
 
 ## Dependencies
 
@@ -27,6 +35,16 @@ Prove the minimum-footprint and ABI/layout claims made by the project.
 
 - Can run in parallel with Sprint F-1
 
-## Exit Criteria
+## Acceptance Criteria
 
-1. Footprint and final layout regression requirements are test-backed.
+1. Scalar and bulk wrapper footprint claims are backed by executable assertions.
+2. Final ABI layout regressions are guarded by tests.
+3. Serialization/copy-overhead checks exist for Rust bulk encode/decode, C ABI slice pass-through, Python memoryview ingestion, and C# `Span<T>` consumption.
+
+## Required Validation
+
+1. `size_of` assertions cover every unique wrapper/storage layout class used by
+   the authoritative in-scope type inventory, and validation maps each public
+   type to one of those checked layout classes.
+2. Dedicated layout regression tests cover exported ABI structs.
+3. Dedicated checks cover zero-copy or copy-count expectations where the plan makes that claim.

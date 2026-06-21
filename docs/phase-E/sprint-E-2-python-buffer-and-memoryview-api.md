@@ -8,12 +8,25 @@ Implement efficient Python bulk data APIs using buffers and memoryviews instead 
 
 `Not Started`
 
+## Scope References
+
+- REQ-UX-003
+- REQ-UX-004
+- REQ-UX-013
+- REQ-UX-016
+- REQ-UX-021
+- NFR-UX-002
+- NFR-UX-003
+- NFR-UX-007
+- ADR-UX-004
+- ADR-UX-005
+
 ## Deliverables
 
 1. Buffer-oriented bulk quantity API
 2. Memoryview-friendly path
 3. Binary and metadata alignment with the project wire format
-4. Clear distinction between the Python bulk API and any optional lower-level C ABI bridge
+4. Clear distinction between the primary Python bulk API and any retained lower-level C ABI bridge for advanced use only
 
 ## Dependencies
 
@@ -23,7 +36,29 @@ Implement efficient Python bulk data APIs using buffers and memoryviews instead 
 
 - Sprint E-3
 
-## Exit Criteria
+## Acceptance Criteria
 
-1. Bulk Python APIs avoid per-element Python object overhead.
-2. Buffer semantics are documented and testable.
+1. The primary Python bulk surface uses buffer-oriented APIs rather than Python object-per-element models.
+2. Memoryview-friendly consumption is supported for the planned bulk surface.
+3. The Python bulk contract is explicitly related to, but distinct from, the raw C ABI surface.
+4. Bulk metadata and payload behavior align with the canonical wire rules.
+
+## Required Validation
+
+1. Dedicated tests prove no per-element Python object wrapping is required for the primary path.
+2. Dedicated tests cover zero-length buffers.
+3. Dedicated tests cover read-only versus mutable buffer semantics where both are exposed.
+4. Dedicated tests reject non-contiguous or shape-mismatched inputs when the primary API requires contiguous typed buffers.
+
+## Code Samples / Contracts
+
+```python
+arr = DistanceArray.cm_f32.from_buffer(memoryview(raw_values))
+readonly_mv = arr.memoryview()
+
+mutable = MutableDistanceArray.cm_f32.from_writable_buffer(memoryview(raw_mut))
+mutable_mv = mutable.memoryview()
+
+with pytest.raises(ValueError):
+    DistanceArray.cm_f32.from_buffer(non_contiguous_values)
+```

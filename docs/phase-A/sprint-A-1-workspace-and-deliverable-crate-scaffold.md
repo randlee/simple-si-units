@@ -8,6 +8,25 @@ Convert the repo into the intended multi-surface layout and create the new deliv
 
 `Not Started`
 
+## Scope References
+
+- REQ-ROOT-001
+- REQ-ROOT-013
+- REQ-ROOT-016
+- REQ-ROOT-019
+- REQ-ROOT-020
+- REQ-UX-030
+- REQ-UX-031
+- NFR-UX-011
+- NFR-UX-012
+- ADR-ROOT-006
+- ADR-ROOT-007
+- ADR-ROOT-008
+- ADR-ROOT-009
+- ADR-UX-001
+- ADR-UX-008
+- ADR-UX-009
+
 ## Deliverables
 
 1. Root workspace manifest
@@ -15,9 +34,9 @@ Convert the repo into the intended multi-surface layout and create the new deliv
 3. `reference/` location for legacy `simple-si-units*` crates
 4. `python/` scaffold for the PyO3/maturin package and generated Pydantic models, including `pyproject.toml`
 5. `dotnet/` scaffold for the C# wrapper/package and `Directory.Build.props`
-6. Local path or workspace dependency wiring for internal crates where appropriate
+6. Local path or workspace dependency wiring for every intended internal Rust deliverable crate
 7. Baseline crate/package metadata and feature placeholders
-8. Shared version source-of-truth file scaffold and synchronization mechanism choice
+8. Shared version source-of-truth file plus initial synchronization wiring for Cargo, Python, and `.NET` metadata
 
 ## Why
 
@@ -35,10 +54,24 @@ The current repository behaves like a consumer of crates.io-published internal c
 
 - Must run first in the project
 
-## Exit Criteria
+## Acceptance Criteria
 
-1. `cargo metadata` reflects the intended workspace.
-2. Internal crates are no longer accidentally resolved from crates.io during local development.
-3. The repository layout clearly separates legacy reference crates from new shipped deliverables.
-4. The `crates/units-x`, `python/`, and `dotnet/` delivery roots all exist with baseline publishable metadata files.
-5. The shared version source-of-truth file exists, its location/format are documented, and downstream synchronization paths are identified.
+1. `crates/units-x/` exists with a baseline Cargo manifest and source tree.
+2. `python/` contains a baseline package skeleton and `pyproject.toml`.
+3. `dotnet/` contains a baseline package skeleton and `Directory.Build.props`.
+4. `reference/` remains clearly separated from new deliverable ownership.
+5. Workspace-local dependency wiring is explicit and does not accidentally resolve intended internal deliverables from crates.io.
+6. The shared version source-of-truth file is present, its synchronization targets are wired, and normal repo tooling can discover the mapping from the source version to Cargo, Python, and `.NET` metadata.
+
+## Required Validation
+
+1. `cargo metadata` completes successfully from repo root.
+2. Workspace inspection shows `crates/units-x` is part of the intended local structure.
+3. A dedicated test or script proves the shared version source is discoverable from normal repo tooling.
+4. A dedicated test or script proves the initial synchronization wiring reaches Cargo, Python, and `.NET` metadata targets.
+
+## Non-Closure / Out Of Scope
+
+- Implementing the `units-x` quantity model
+- Implementing conversions
+- Implementing serialization contracts

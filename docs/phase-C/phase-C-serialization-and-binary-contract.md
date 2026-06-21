@@ -8,6 +8,28 @@ Define and implement explicit JSON and binary serialization paths with strong la
 
 `Not Started`
 
+## Scope References
+
+- REQ-UX-012
+- REQ-UX-013
+- REQ-UX-014
+- REQ-UX-015
+- REQ-UX-016
+- REQ-UX-017
+- REQ-UX-018
+- REQ-UX-021
+- REQ-UX-032
+- REQ-UX-033
+- REQ-UX-036
+- NFR-UX-003
+- NFR-UX-004
+- NFR-UX-005
+- ADR-UX-005
+- ADR-UX-010
+- ADR-UX-011
+- ADR-UX-012
+- ADR-UX-014
+
 ## Phase Dependencies
 
 - [Phase B](../phase-B/phase-B-core-quantity-model.md)

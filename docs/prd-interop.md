@@ -167,6 +167,10 @@ Examples of desired C# usage:
 
 The public C# quantity structs should be layout-compatible with the ABI structs so they can be pinned and passed efficiently.
 
+The `.NET` package must also expose user-facing C# interfaces so application
+code can depend on stable, ergonomic contracts rather than directly on raw
+blittable structs alone.
+
 Generated or adjacent DTO types are acceptable for `System.Text.Json` when that produces a cleaner or more maintainable surface, as long as the canonical wire shape does not drift.
 
 ## 3. Go
@@ -208,6 +212,7 @@ Recommended layers:
 Examples of ergonomic C# features:
 
 - `Value` property
+- C# interfaces for scalar and bulk quantity contracts
 - unit-aware `ToString()`
 - static constructors
 - span-based batch APIs

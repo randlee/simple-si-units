@@ -51,7 +51,7 @@ That is useful for Rust computations, but it does not satisfy the desired requir
 
 ### Secondary goals
 
-1. Reuse unit metadata and conversion relationships from the current project where practical.
+1. Reuse unit metadata and conversion relationships from the current project unless a documented incompatibility requires replacement.
 2. Allow easy bridging to canonical compute types for derivative math.
 3. Keep the design appropriate for PyO3/maturin and Interoptopus.
 4. Make it easy for maintainers and end users to extend the unit set by editing catalog data and regenerating artifacts.
@@ -199,7 +199,7 @@ The project must support a clean stable ABI for C-family interop.
 Requirements:
 
 1. FFI-facing scalar wrapper types must use `#[repr(C)]` or `#[repr(transparent)]`.
-2. FFI-facing array/buffer forms must use explicit pointer-plus-length or equivalent ABI-safe forms.
+2. FFI-facing array/buffer forms must use explicit pointer-plus-length structs.
 3. Generic Rust-only types may exist internally, but the public foreign boundary must use concrete monomorphic types.
 4. Endianness, numeric width, and field order must be explicitly documented for binary interchange.
 
@@ -224,16 +224,19 @@ These ABI slice structs are in-memory interop views only. They are not themselve
 
 ## 1. Supported unit categories
 
-V1 will support unit markers for base quantities and selected derived quantities.
+V1 will support unit markers for the full unit families currently considered in
+scope from the reference project:
 
-Examples:
+- `base`
+- `geometry`
+- `mechanical`
+- `electromagnetic`
 
-- distance
-- time
-- temperature
-- mass
-- velocity
-- acceleration
+This includes both base quantities and derived quantities across those
+families.
+
+The exact MVP public type inventory is defined in
+[docs/crates/units-x/in-scope-type-inventory.md](/Volumes/Extreme%20Pro/github/simple-si-units/docs/crates/units-x/in-scope-type-inventory.md).
 
 ## 2. Support for non-SI units
 
@@ -268,11 +271,23 @@ Examples for temperature:
 - code id `degC`, wire/display unit `C`
 - code id `degF`, wire/display unit `F`
 
-Mass remains an important catalog and extension target, but the core V1 implementation scope is the smaller set defined later in this document unless mass fits cleanly without displacing that MVP.
-
 V1 should prioritize multiplicative units with scale-only conversion, but the MVP/V1 scope must also include Celsius and Fahrenheit as the initial offset-unit set.
 
 Other offset units remain deferred unless deliberately added later.
+
+## 2a. Reciprocal and domain-specific public units
+
+Reciprocal quantities are required when they correspond to real public domain
+units rather than only algebra artifacts.
+
+Example:
+
+- inverse distance must support `Diopter` as a first-class public quantity
+- `1 dpt = 1 / m`
+
+The public API should therefore expose the domain unit name when one exists,
+while the catalog and dimensional model preserve the underlying reciprocal
+relationship.
 
 ## 3. Unit marker naming
 
@@ -299,7 +314,9 @@ pub trait DistanceUnit {
 }
 ```
 
-Scale-only constants are sufficient for multiplicative units. Offset units in V1, specifically Celsius and Fahrenheit, also require an additive offset or equivalent explicit conversion logic relative to the canonical temperature unit.
+Scale-only constants are sufficient for multiplicative units. Offset units in
+V1, specifically Celsius and Fahrenheit, require explicit additive-offset
+conversion logic relative to the canonical temperature unit.
 
 These conversion rules should be derived from the master catalog, not duplicated manually across language surfaces.
 
@@ -353,6 +370,14 @@ Recommended behavior:
 
 This avoids combinatorial API explosion and order-dependent result-type surprises.
 
+Full legacy operator-graph parity for every possible unit combination is not
+required for V1, as long as:
+
+- all in-scope unit families are cataloged and exposed
+- conversion and serialization work for those units
+- explicitly documented derived calculations are supported
+- domain-important reciprocal units such as `Diopter` are first-class public types
+
 ## Arrays And Buffers
 
 The crate must support arrays and buffers as first-class payloads.
@@ -362,7 +387,7 @@ Examples:
 - `Quantity<cm, [i16; N]>`
 - `Quantity<cm, Vec<i32>>`
 - `Quantity<cm, Box<[f32]>>`
-- borrowed slice views where appropriate in Rust-only APIs
+- borrowed slice views for the planned Rust-only bulk APIs
 
 Goals:
 
@@ -534,11 +559,11 @@ It must be used to generate or assist generation of:
 
 1. unit marker definitions
 2. conversion tables
-3. ABI type names and exported function inventories where practical
+3. ABI type names and exported function inventories
 4. JSON schemas and fixtures
 5. Pydantic models or their inputs
 6. C# JSON DTOs or their inputs
-7. C# convenience bindings where practical
+7. C# convenience bindings
 8. reference-based tests driven from catalog data
 
 The generation pipeline must be structured so that end users can extend the unit set with minimal manual work, ideally by editing the master catalog and rerunning generation.
@@ -574,8 +599,9 @@ Examples:
 V1 must include:
 
 1. New crate with unit-preserving quantity design
-2. Distance, time, temperature, velocity, and acceleration support
-3. SI and selected non-SI multiplicative units, plus Celsius and Fahrenheit in the initial offset-temperature set
+2. Public type coverage matching
+   [docs/crates/units-x/in-scope-type-inventory.md](/Volumes/Extreme%20Pro/github/simple-si-units/docs/crates/units-x/in-scope-type-inventory.md)
+3. Catalog-declared SI and non-SI multiplicative units, plus Celsius and Fahrenheit in the initial offset-temperature set
 4. Scalar and array/buffer storage forms
 5. JSON serialization path
 6. Binary serialization path
@@ -583,13 +609,15 @@ V1 must include:
 8. Bridge into canonical compute operations
 9. Canonical JSON wire-shape generation artifacts for Python and C#
 10. Master catalog plus generation pipeline for code, wrappers, and tests
+11. `Diopter` as a first-class public reciprocal domain unit
 
 ## Deferred from V1
 
 1. Offset units beyond Celsius and Fahrenheit
 2. Arbitrary dimension algebra for every possible unit combination
 3. Rich NumPy integration
-4. Full generated coverage for every unit in the current repository unless it remains tractable
+4. `chemical` and `nuclear` unit families
+5. Full legacy operator-graph parity for every possible unit combination
 
 ## Success Criteria
 

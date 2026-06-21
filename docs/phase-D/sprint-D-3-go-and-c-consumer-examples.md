@@ -8,6 +8,16 @@ Demonstrate that the same ABI works cleanly for Go and C.
 
 `Not Started`
 
+## Scope References
+
+- REQ-UX-019
+- REQ-UX-020
+- REQ-UX-021
+- NFR-UX-003
+- NFR-UX-007
+- ADR-UX-004
+- ADR-UX-011
+
 ## Deliverables
 
 1. C consumer smoke examples
@@ -26,6 +36,14 @@ Demonstrate that the same ABI works cleanly for Go and C.
 
 - Can run in parallel with Sprint D-2
 
-## Exit Criteria
+## Acceptance Criteria
 
-1. Go and C can consume the ABI without Rust-specific assumptions.
+1. A C consumer example builds and uses the exported ABI successfully.
+2. A Go consumer example builds and uses the exported ABI successfully.
+3. The examples rely only on the documented C ABI contract, not Rust-specific assumptions.
+
+## Required Validation
+
+1. C compile smoke tests exist for at least one scalar and one slice case.
+2. Go/cgo smoke tests exist for at least one scalar and one slice case.
+3. Dedicated tests cover zero-length slice handling at the consumer boundary.
