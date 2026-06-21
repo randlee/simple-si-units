@@ -1,6 +1,9 @@
 /target/
 /.just/logs/
 /artifacts/
+python/dist/
+dotnet/**/bin/
+dotnet/**/obj/
 /.DS_Store
 /.sc/*
 !/.sc/shared-settings.yaml

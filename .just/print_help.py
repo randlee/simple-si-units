@@ -115,7 +115,7 @@ def render_topic_help(topic: str) -> str:
             "  just test           Run the full repo test pass.\n"
             "  just test all       Alias for the full repo test pass.\n"
             "  just test unit      Run Rust unit tests.\n"
-            "  just test python    Run Python helper-script tests.\n"
+            "  just test python    Run Python helper-script tests and native wheel smoke.\n"
             "  just test dotnet    Run .NET tests when configured.\n"
             "  just test integration  Run integration-style tests.\n"
             "  just test rust      Run all Rust workspace tests.\n"

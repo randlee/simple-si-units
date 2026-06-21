@@ -15,7 +15,6 @@ This project was inspired by the original `simple-si-units` work:
 `units-x` is intended to ship as:
 
 - a Rust crate on `crates.io` as `units-x`
-- a Homebrew package as `units-x`
 - a NuGet package on `nuget.org` as `units-x`
 - a Python package for normal `pip install` consumption
 
@@ -74,7 +73,8 @@ Common commands:
 - Rust lint/build checks are wired through `sc-lint` where practical.
 - The boundary analyzer is exposed as `just lint sc-boundary`.
 - The string-duplication / canonical literal lint is exposed as `just lint identity-literals`.
-- Code generation currently depends on Python packages used by the legacy generator.
+- `just generate` validates the catalog contract and shared version wiring for the
+  shipped `units-x` scope.
 
 ## Current status
 

@@ -5,7 +5,7 @@ on:
   pull_request:
     branches: [develop, main, "integrate/*", "integration/*"]
   push:
-    branches: [develop, main, "integrate/*", "sprint/*"]
+    branches: [develop, main, "integrate/*", "integration/*", "sprint/*"]
 
 jobs:
   repo-ci:
@@ -24,25 +24,30 @@ jobs:
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@stable
         with:
-          toolchain: "stable"
+          toolchain: "1.95.0"
           components: clippy, rustfmt
 
       - name: Install Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.x"
+          python-version: "3.11.9"
 
-      - name: Install Python generator dependencies
-        run: python -m pip install numpy pandas
+      - name: Install .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.100"
+
+      - name: Install Python CI dependencies
+        run: python -m pip install -r python/requirements-ci.txt
 
       - name: Install just
-        run: cargo install just --locked
+        run: cargo install just --locked --version 1.49.0
 
       - name: Install sc-lint
-        run: cargo install sc-lint --locked
+        run: cargo install sc-lint --locked --version 0.3.0
 
       - name: Install sc-lint-boundary
-        run: cargo install sc-lint-boundary --locked
+        run: cargo install sc-lint-boundary --locked --version 0.3.0
 
       - name: Run repo CI
         run: just ci
