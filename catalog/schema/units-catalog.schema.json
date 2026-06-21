@@ -27,6 +27,21 @@
     }
   },
   "$defs": {
+    "non_blank_string": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^.*\\S.*$"
+    },
+    "nullable_non_blank_string": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/non_blank_string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "conversion": {
       "type": "object",
       "additionalProperties": false,
@@ -102,32 +117,24 @@
       ],
       "properties": {
         "unit_code_id": {
-          "type": "string",
-          "minLength": 1
+          "$ref": "#/$defs/non_blank_string"
         },
         "unit_symbol": {
-          "type": "string",
-          "minLength": 1
+          "$ref": "#/$defs/non_blank_string"
         },
         "display_name": {
-          "type": "string",
-          "minLength": 1
+          "$ref": "#/$defs/non_blank_string"
         },
         "binary_unit_id": {
-          "type": "string",
-          "minLength": 1
+          "$ref": "#/$defs/non_blank_string"
         },
         "reserved_word_alias": {
-          "type": [
-            "string",
-            "null"
-          ]
+          "$ref": "#/$defs/nullable_non_blank_string"
         },
         "aliases": {
           "type": "array",
           "items": {
-            "type": "string",
-            "minLength": 1
+            "$ref": "#/$defs/non_blank_string"
           }
         },
         "conversion": {
@@ -149,17 +156,14 @@
           "type": "array",
           "minItems": 1,
           "items": {
-            "type": "string",
-            "minLength": 1
+            "$ref": "#/$defs/non_blank_string"
           }
         },
         "small_array_type_id_template": {
-          "type": "string",
-          "minLength": 1
+          "$ref": "#/$defs/non_blank_string"
         },
         "buffer_type_id_template": {
-          "type": "string",
-          "minLength": 1
+          "$ref": "#/$defs/non_blank_string"
         },
         "default_encoding": {
           "type": "string",
@@ -180,12 +184,10 @@
       ],
       "properties": {
         "abi_name_stem": {
-          "type": "string",
-          "minLength": 1
+          "$ref": "#/$defs/non_blank_string"
         },
         "binary_schema_id": {
-          "type": "string",
-          "minLength": 1
+          "$ref": "#/$defs/non_blank_string"
         }
       }
     },
@@ -203,8 +205,7 @@
       ],
       "properties": {
         "dimension_id": {
-          "type": "string",
-          "minLength": 1
+          "$ref": "#/$defs/non_blank_string"
         },
         "family": {
           "type": "string",
@@ -217,12 +218,10 @@
           ]
         },
         "public_type": {
-          "type": "string",
-          "minLength": 1
+          "$ref": "#/$defs/non_blank_string"
         },
         "base_unit_code_id": {
-          "type": "string",
-          "minLength": 1
+          "$ref": "#/$defs/non_blank_string"
         },
         "json_forms": {
           "$ref": "#/$defs/json_forms"
