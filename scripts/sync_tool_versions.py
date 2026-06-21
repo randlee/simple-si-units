@@ -50,7 +50,7 @@ jobs:
       PYTHONUTF8: "1"
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@{actions["checkout_action_ref"]}
 
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@{actions["rust_toolchain_action_ref"]}
@@ -59,12 +59,12 @@ jobs:
           components: clippy, rustfmt
 
       - name: Install Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@{actions["setup_python_action_ref"]}
         with:
           python-version: "{actions["python"]}"
 
       - name: Install .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@{actions["setup_dotnet_action_ref"]}
         with:
           dotnet-version: "{actions["dotnet_sdk"]}"
 
