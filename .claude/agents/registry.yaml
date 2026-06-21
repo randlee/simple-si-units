@@ -38,7 +38,31 @@ agents:
   rust-service-hardening-agent:
     version: 0.11.0
     path: .claude/agents/rust-service-hardening-agent.md
+  sc-git-worktree-create:
+    version: 0.9.0
+    path: .claude/agents/sc-git-worktree-create.md
+  sc-git-worktree-scan:
+    version: 0.9.0
+    path: .claude/agents/sc-git-worktree-scan.md
+  sc-git-worktree-cleanup:
+    version: 0.9.0
+    path: .claude/agents/sc-git-worktree-cleanup.md
+  sc-git-worktree-abort:
+    version: 0.9.0
+    path: .claude/agents/sc-git-worktree-abort.md
+  sc-git-worktree-update:
+    version: 0.9.0
+    path: .claude/agents/sc-git-worktree-update.md
 skills:
+  sc-git-worktree:
+    version: 0.9.0
+    path: .claude/skills/sc-git-worktree/SKILL.md
+    depends_on:
+      - sc-git-worktree-create
+      - sc-git-worktree-scan
+      - sc-git-worktree-cleanup
+      - sc-git-worktree-abort
+      - sc-git-worktree-update
   codex-orchestration:
     version: 0.1.0
     depends_on:
@@ -84,3 +108,8 @@ skills:
       rust-code-reviewer: 0.x
       rust-code-explorer: 0.x
       rust-qa-agent: 0.x
+commands:
+  sc-git-worktree:
+    version: 0.9.0
+    path: .claude/commands/sc-git-worktree.md
+    skill: sc-git-worktree

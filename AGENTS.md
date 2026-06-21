@@ -1,12 +1,17 @@
-# AGENTS Instructions for sc-lint
+# AGENTS Instructions for unit-x
 
 ## MUST READ
 
-Before participating in sc-lint team work, read:
+Before participating in unit-x team work, read:
 - `docs/team-protocol.md`
+- `.claude/skills/sc-git-worktree/SKILL.md`
 
 The messaging protocol in that document is mandatory for all team
 communications.
+
+All implementation work must be done in a git worktree created via
+`.claude/skills/sc-git-worktree/SKILL.md`. Do not do development work
+directly on the `develop` branch.
 
 ## Quick Rule
 
