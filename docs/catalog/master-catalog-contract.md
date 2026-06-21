@@ -58,6 +58,13 @@ Each `units[]` entry owns:
 - `aliases`
 - `conversion`
 
+Allowed `family` values in the production catalog are:
+
+- `base`
+- `geometry`
+- `mechanical`
+- `electromagnetic`
+
 ## Naming Rules Captured By The Catalog
 
 The catalog deliberately separates naming layers:

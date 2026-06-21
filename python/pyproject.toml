@@ -18,7 +18,7 @@ classifiers = [
 ]
 
 [tool.maturin]
-manifest-path = "../crates/units-x/Cargo.toml"
+manifest-path = "../crates/units-x-python/Cargo.toml"
 bindings = "pyo3"
 module-name = "units_x._native"
 python-source = "."
