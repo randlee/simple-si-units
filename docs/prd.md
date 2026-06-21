@@ -533,7 +533,7 @@ Representative exported functions:
 
 - `distance_mm_i32_to_m_f64`
 - `distance_cm_i16_add_distance_m_f64_as_cm_f64`
-- `velocity_mps_from_distance_m_and_time_s`
+- `velocity_mps_f64_from_distance_m_f64_and_time_s_f64`
 
 ## Relationship To Existing Project
 
