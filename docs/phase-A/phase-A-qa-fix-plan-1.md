@@ -24,6 +24,7 @@ Primary controlling ids:
 - `REQ-ROOT-011`
 - `REQ-ROOT-020`
 - `REQ-UX-009`
+- `REQ-UX-019`
 - `REQ-UX-030`
 - `REQ-UX-017`
 - `REQ-UX-018`
@@ -38,6 +39,7 @@ Primary controlling ids:
 - `REQ-UX-035`
 - `REQ-UX-040`
 - `REQ-UX-041`
+- `NFR-UX-003`
 - `NFR-UX-004`
 - `NFR-UX-005`
 - `NFR-UX-006`
