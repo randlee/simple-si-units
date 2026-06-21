@@ -7,6 +7,8 @@ from pathlib import Path
 import subprocess
 import sys
 
+from validate_catalog_contract import is_valid_rust_identifier
+
 
 ROOT = Path(__file__).resolve().parent.parent
 CATALOG_PATH = ROOT / "catalog" / "units-catalog.json"
@@ -208,7 +210,10 @@ def render_generated_ffi_types(summary: dict) -> str:
     seen_markers: set[str] = set()
     for dimension in dimensions:
         for unit in dimension["units"]:
-            marker = rust_identifier(unit["reserved_word_alias"] or unit["unit_code_id"])
+            marker_source = unit["reserved_word_alias"] or unit["unit_code_id"]
+            if not is_valid_rust_identifier(marker_source):
+                raise ValueError(f"invalid generated Rust marker: {marker_source}")
+            marker = rust_identifier(marker_source)
             if marker in seen_markers:
                 raise ValueError(f"duplicate generated Rust marker: {marker}")
             seen_markers.add(marker)

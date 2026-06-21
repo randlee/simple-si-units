@@ -81,6 +81,13 @@ class CatalogGenerationTests(unittest.TestCase):
         self.assertIn("pub value_mm: i32,", rendered)
         self.assertIn("pub struct distance_mm_i32_slice {", rendered)
 
+    def test_generated_ffi_types_reject_invalid_marker_names(self) -> None:
+        summary = json.loads((ROOT / "catalog" / "generated" / "units-catalog-summary.json").read_text(encoding="utf-8"))
+        summary["dimensions"][0]["units"][0]["unit_code_id"] = "m²"
+        summary["dimensions"][0]["units"][0]["reserved_word_alias"] = None
+        with self.assertRaises(ValueError):
+            render_generated_ffi_types(summary)
+
     def test_generated_outputs_use_lf_only(self) -> None:
         for path, expected in expected_outputs().items():
             self.assertNotIn(b"\r\n", expected.encode("utf-8"))
