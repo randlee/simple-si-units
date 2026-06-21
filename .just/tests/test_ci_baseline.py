@@ -53,6 +53,19 @@ class CiBaselineTests(unittest.TestCase):
             TOOL_VERSIONS["python_ci_requirements"],
         )
 
+    def test_tool_version_generated_files_are_in_sync(self) -> None:
+        workflow = (ROOT / ".github" / "workflows" / "ci.yml").read_text(encoding="utf-8")
+        requirements = (ROOT / "python" / "requirements-ci.txt").read_text(encoding="utf-8")
+        rust_toolchain = (ROOT / "rust-toolchain.toml").read_text(encoding="utf-8")
+        global_json = (ROOT / "global.json").read_text(encoding="utf-8")
+
+        import sync_tool_versions
+
+        self.assertEqual(workflow, sync_tool_versions.render_ci_workflow(TOOL_VERSIONS))
+        self.assertEqual(requirements, sync_tool_versions.render_requirements(TOOL_VERSIONS))
+        self.assertEqual(rust_toolchain, sync_tool_versions.render_rust_toolchain(TOOL_VERSIONS))
+        self.assertEqual(global_json, sync_tool_versions.render_global_json(TOOL_VERSIONS))
+
     def test_shipped_scope_workspace_excludes_reference_and_uses_utf8_lf(self) -> None:
         with tempfile.TemporaryDirectory(prefix="units x scope ") as tmpdir:
             scope_root = Path(tmpdir) / "scope with spaces"
