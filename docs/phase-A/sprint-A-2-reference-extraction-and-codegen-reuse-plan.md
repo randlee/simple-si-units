@@ -78,7 +78,13 @@ Representative catalog shape:
 ```json
 {
   "dimension_id": "temperature",
+  "family": "base",
+  "public_type": "Temperature",
   "base_unit_code_id": "K",
+  "abi": {
+    "abi_name_stem": "temperature",
+    "binary_schema_id": "units-x.temperature.v1"
+  },
   "json_forms": {
     "scalar_type_ids": ["temperature_f32", "temperature_f64"],
     "small_array_type_id_template": "temperature{arity}_{storage}",
@@ -89,6 +95,7 @@ Representative catalog shape:
     {
       "unit_code_id": "degC",
       "unit_symbol": "C",
+      "display_name": "celsius",
       "reserved_word_alias": null,
       "binary_unit_id": "temperature.degC",
       "aliases": ["celsius"],
@@ -105,5 +112,5 @@ Representative catalog shape:
 Source of truth note:
 
 - The authoritative contract remains `catalog/schema/units-catalog.schema.json`
-  plus `catalog/examples/phase-a-sample-catalog.json`. This example is only a
-  schema-aligned excerpt.
+  plus `catalog/examples/phase-a-sample-catalog.json`. This example is a valid
+  schema-aligned excerpt, not an alternate contract.

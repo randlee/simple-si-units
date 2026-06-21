@@ -68,6 +68,21 @@ class CatalogContractTests(unittest.TestCase):
         with self.assertRaises(ValidationError):
             validate_catalog(sample)
 
+        sample = self.load_sample()
+        sample["unexpected"] = True
+        with self.assertRaises(ValidationError):
+            validate_catalog(sample)
+
+        sample = self.load_sample()
+        sample["dimensions"][0]["units"][0]["unexpected"] = "value"
+        with self.assertRaises(ValidationError):
+            validate_catalog(sample)
+
+        sample = self.load_sample()
+        sample["dimensions"][0]["json_forms"]["scalar_type_ids"] = []
+        with self.assertRaises(ValidationError):
+            validate_catalog(sample)
+
 
 if __name__ == "__main__":
     unittest.main()
