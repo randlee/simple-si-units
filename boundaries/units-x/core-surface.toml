@@ -4,16 +4,16 @@ owner_crate_path = "units_x"
 name = "UnitsXCore"
 
 [public]
-facade = "lib"
+facade = "ffi_contract"
 
 [implementation]
-type = "VERSION"
+type = "quantity"
 module = "units_x"
 visibility = "public"
 constructor = "none"
 
 [composition]
-roots = ["VERSION", "ffi_contract"]
+roots = ["ffi_contract", "quantity", "VERSION"]
 
 [dependencies]
 allowed_dependents = ["units-x-python"]

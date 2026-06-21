@@ -17,7 +17,7 @@ def print_help() -> None:
     print("  just test           Run the full repo test pass.")
     print("  just test all       Alias for the full repo test pass.")
     print("  just test unit      Run Rust unit tests.")
-    print("  just test python    Run Python helper-script tests.")
+    print("  just test python    Run Python helper-script tests and native wheel smoke.")
     print("  just test dotnet    Run .NET tests when configured.")
     print("  just test integration  Run integration-style tests.")
     print("  just test rust      Run all Rust workspace tests.")
@@ -28,6 +28,22 @@ def run_command(command: list[str], repo_root: Path) -> int:
     return completed.returncode
 
 
+def python_checks(repo_root: Path) -> list[list[str]]:
+    python = sys.executable or "python3"
+    return [
+        [python, str(repo_root / ".just/run_pytests.py")],
+        [python, str(repo_root / ".just/run_python_package_smoke.py")],
+    ]
+
+
+def reference_rust_test_commands(repo_root: Path) -> list[list[str]]:
+    return [
+        ["cargo", "test", "--manifest-path", str(repo_root / "reference" / "simple-si-units-core" / "Cargo.toml")],
+        ["cargo", "test", "--manifest-path", str(repo_root / "reference" / "simple-si-units-macros" / "Cargo.toml")],
+        ["cargo", "test", "--manifest-path", str(repo_root / "reference" / "simple-si-units" / "Cargo.toml"), "--all-features"],
+    ]
+
+
 def dotnet_test_projects(repo_root: Path) -> list[Path]:
     return sorted((repo_root / "dotnet").rglob("*Tests.csproj"))
 
@@ -36,11 +52,13 @@ def run_all(repo_root: Path) -> int:
     commands = [
         ["just", "clean"],
         [sys.executable or "python3", str(repo_root / ".just/check_version_sync.py")],
+        [sys.executable or "python3", str(repo_root / "scripts/sync_tool_versions.py"), "--check"],
         ["just", "generate"],
         [sys.executable or "python3", str(repo_root / ".just/run_lint.py"), "fast"],
         ["cargo", "test", "--workspace", "--all-features"],
-        [sys.executable or "python3", str(repo_root / ".just/run_pytests.py")],
     ]
+    commands.extend(reference_rust_test_commands(repo_root))
+    commands.extend(python_checks(repo_root))
     for command in commands:
         code = run_command(command, repo_root)
         if code != 0:
@@ -53,7 +71,11 @@ def run_unit(repo_root: Path) -> int:
 
 
 def run_python(repo_root: Path) -> int:
-    return run_command([sys.executable or "python3", str(repo_root / ".just/run_pytests.py")], repo_root)
+    for command in python_checks(repo_root):
+        code = run_command(command, repo_root)
+        if code != 0:
+            return code
+    return 0
 
 
 def run_dotnet(repo_root: Path) -> int:
@@ -72,7 +94,13 @@ def run_integration(repo_root: Path) -> int:
 
 
 def run_rust(repo_root: Path) -> int:
-    return run_command(["cargo", "test", "--workspace", "--all-features"], repo_root)
+    commands = [["cargo", "test", "--workspace", "--all-features"]]
+    commands.extend(reference_rust_test_commands(repo_root))
+    for command in commands:
+        code = run_command(command, repo_root)
+        if code != 0:
+            return code
+    return 0
 
 
 def main(argv: list[str]) -> int:

@@ -15,6 +15,13 @@ def main(argv: list[str]) -> int:
     if synchronized.returncode != 0:
         return synchronized.returncode
 
+    toolchain_synchronized = subprocess.run(
+        [sys.executable or "python3", str(repo_root / "scripts" / "sync_tool_versions.py")],
+        cwd=repo_root,
+    )
+    if toolchain_synchronized.returncode != 0:
+        return toolchain_synchronized.returncode
+
     completed = subprocess.run(
         [sys.executable or "python3", str(repo_root / "scripts" / "validate_catalog_contract.py")],
         cwd=repo_root,

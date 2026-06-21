@@ -39,7 +39,11 @@ def run_action(action: str, repo_root: Path) -> int:
         ],
         "clean": [["cargo", "clean"]],
         "version": [[python, str(repo_root / ".just/check_version_sync.py")]],
-        "ci": [[python, str(repo_root / ".just/run_tests.py"), "all"]],
+        "ci": [
+            [python, str(repo_root / ".just/run_tests.py"), "all"],
+            [python, str(repo_root / ".just/run_lint.py"), "clippy"],
+            [python, str(repo_root / ".just/run_lint.py"), "sc-boundary"],
+        ],
     }
     for command in actions[action]:
         code = run_command(command, repo_root)

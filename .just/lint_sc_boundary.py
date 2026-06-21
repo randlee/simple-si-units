@@ -12,6 +12,7 @@ import time
 from lint_common import build_report
 from lint_common import discover_repo_root
 from lint_common import print_report
+from scope_workspace import shipped_scope_workspace
 
 
 def command(repo_root: Path) -> list[str]:
@@ -28,15 +29,16 @@ def command(repo_root: Path) -> list[str]:
 def run(repo_root: Path) -> int:
     started_at = datetime.now(timezone.utc)
     start_time = time.perf_counter()
-    cmd = command(repo_root)
-    result = subprocess.run(
-        cmd,
-        cwd=repo_root,
-        capture_output=True,
-        text=True,
-        encoding="utf-8",
-        check=False,
-    )
+    with shipped_scope_workspace(repo_root) as scope_root:
+        cmd = command(scope_root)
+        result = subprocess.run(
+            cmd,
+            cwd=repo_root,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            check=False,
+        )
     duration_seconds = time.perf_counter() - start_time
 
     transcript = [

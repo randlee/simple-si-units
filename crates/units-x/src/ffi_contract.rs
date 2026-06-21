@@ -2,6 +2,8 @@
 
 use core::ffi::c_void;
 use core::marker::PhantomData;
+use core::slice;
+use std::vec::Vec;
 
 /// Unit marker preserving the lowercase wire/code distinction for millimeters.
 pub struct mm;
@@ -85,9 +87,38 @@ impl units_x_owned_bytes {
 pub enum units_x_status {
     UNITS_X_STATUS_OK = 0,
     UNITS_X_STATUS_NULL_WITH_LENGTH = 1,
-    UNITS_X_STATUS_LOSSY_CONVERSION = 2,
+    UNITS_X_STATUS_ARITHMETIC_OVERFLOW = 2,
     UNITS_X_STATUS_OWNED_OUTPUT_REQUIRED = 3,
     UNITS_X_STATUS_INVALID_OWNED_BUFFER = 4,
+    UNITS_X_STATUS_SLICE_LENGTH_OVERFLOW = 5,
+    UNITS_X_STATUS_OWNED_BUFFER_RANGE_OVERFLOW = 6,
+}
+
+fn abi_len_to_usize_with_status(
+    len: u64,
+    max_value: u64,
+    overflow_status: units_x_status,
+) -> Result<usize, units_x_status> {
+    if len > max_value {
+        return Err(overflow_status);
+    }
+    Ok(len as usize)
+}
+
+fn abi_slice_len_to_usize(len: u64) -> Result<usize, units_x_status> {
+    abi_len_to_usize_with_status(
+        len,
+        usize::MAX as u64,
+        units_x_status::UNITS_X_STATUS_SLICE_LENGTH_OVERFLOW,
+    )
+}
+
+fn abi_owned_range_to_usize(len: u64) -> Result<usize, units_x_status> {
+    abi_len_to_usize_with_status(
+        len,
+        usize::MAX as u64,
+        units_x_status::UNITS_X_STATUS_OWNED_BUFFER_RANGE_OVERFLOW,
+    )
 }
 
 /// Representative scalar-returning ABI export shape.
@@ -108,6 +139,21 @@ pub unsafe extern "C" fn units_x_distance_mm_i32_slice_sum(
     if out.is_null() {
         return units_x_status::UNITS_X_STATUS_OWNED_OUTPUT_REQUIRED;
     }
+    if input.len == 0 {
+        unsafe { out.write(distance_mm_i32 { value_mm: 0 }) };
+        return units_x_status::UNITS_X_STATUS_OK;
+    }
+    let Ok(len) = abi_slice_len_to_usize(input.len) else {
+        return units_x_status::UNITS_X_STATUS_SLICE_LENGTH_OVERFLOW;
+    };
+    let values = unsafe { slice::from_raw_parts(input.ptr, len) };
+    let total = values
+        .iter()
+        .fold(0_i64, |acc, item| acc + i64::from(item.value_mm));
+    let Ok(value_mm) = i32::try_from(total) else {
+        return units_x_status::UNITS_X_STATUS_ARITHMETIC_OVERFLOW;
+    };
+    unsafe { out.write(distance_mm_i32 { value_mm }) };
     units_x_status::UNITS_X_STATUS_OK
 }
 
@@ -131,6 +177,22 @@ pub unsafe extern "C" fn units_x_owned_buffer_destroy(
     if buffer.ptr.is_null() && buffer.len_bytes != 0 {
         return units_x_status::UNITS_X_STATUS_NULL_WITH_LENGTH;
     }
+    if buffer.ptr.is_null() {
+        return units_x_status::UNITS_X_STATUS_OK;
+    }
+    let Ok(len_bytes) = abi_owned_range_to_usize(buffer.len_bytes) else {
+        return units_x_status::UNITS_X_STATUS_OWNED_BUFFER_RANGE_OVERFLOW;
+    };
+    let Ok(capacity_bytes) = abi_owned_range_to_usize(buffer.capacity_bytes) else {
+        return units_x_status::UNITS_X_STATUS_OWNED_BUFFER_RANGE_OVERFLOW;
+    };
+    unsafe {
+        drop(Vec::from_raw_parts(
+            buffer.ptr.cast::<u8>(),
+            len_bytes,
+            capacity_bytes,
+        ))
+    };
     units_x_status::UNITS_X_STATUS_OK
 }
 
@@ -177,6 +239,57 @@ mod tests {
     }
 
     #[test]
+    fn slice_sum_writes_result_before_reporting_success() {
+        let values = [
+            distance_mm_i32 { value_mm: 2 },
+            distance_mm_i32 { value_mm: 3 },
+            distance_mm_i32 { value_mm: 5 },
+        ];
+        let input = distance_mm_i32_slice {
+            ptr: values.as_ptr(),
+            len: values.len() as u64,
+        };
+        let mut out = distance_mm_i32 { value_mm: 0 };
+
+        let status = unsafe { units_x_distance_mm_i32_slice_sum(input, &mut out) };
+
+        assert_eq!(status, units_x_status::UNITS_X_STATUS_OK);
+        assert_eq!(out.value_mm, 10);
+    }
+
+    #[test]
+    fn slice_sum_reports_arithmetic_overflow_for_i32_overflow() {
+        let values = [
+            distance_mm_i32 { value_mm: i32::MAX },
+            distance_mm_i32 { value_mm: 1 },
+        ];
+        let input = distance_mm_i32_slice {
+            ptr: values.as_ptr(),
+            len: values.len() as u64,
+        };
+        let mut out = distance_mm_i32 { value_mm: 0 };
+
+        let status = unsafe { units_x_distance_mm_i32_slice_sum(input, &mut out) };
+
+        assert_eq!(status, units_x_status::UNITS_X_STATUS_ARITHMETIC_OVERFLOW);
+        assert_eq!(out.value_mm, 0);
+    }
+
+    #[test]
+    fn slice_sum_accepts_documented_empty_sentinel() {
+        let input = distance_mm_i32_slice {
+            ptr: ptr::null(),
+            len: 0,
+        };
+        let mut out = distance_mm_i32 { value_mm: -1 };
+
+        let status = unsafe { units_x_distance_mm_i32_slice_sum(input, &mut out) };
+
+        assert_eq!(status, units_x_status::UNITS_X_STATUS_OK);
+        assert_eq!(out.value_mm, 0);
+    }
+
+    #[test]
     fn owned_buffer_contract_is_byte_explicit() {
         let empty = units_x_owned_bytes {
             ptr: ptr::null_mut(),
@@ -206,5 +319,47 @@ mod tests {
     #[test]
     fn status_abi_surface_is_fixed_width() {
         assert_eq!(size_of::<units_x_status>(), size_of::<u32>());
+    }
+
+    #[test]
+    fn owned_buffer_destroy_accepts_owned_vec_contract() {
+        let mut bytes = vec![1_u8, 2, 3, 4];
+        let buffer = units_x_owned_bytes {
+            ptr: bytes.as_mut_ptr().cast::<c_void>(),
+            len_bytes: bytes.len() as u64,
+            capacity_bytes: bytes.capacity() as u64,
+        };
+        core::mem::forget(bytes);
+
+        let status = unsafe { units_x_owned_buffer_destroy(buffer) };
+
+        assert_eq!(status, units_x_status::UNITS_X_STATUS_OK);
+    }
+
+    #[test]
+    fn abi_slice_len_conversion_reports_overflow_status() {
+        let status = abi_len_to_usize_with_status(
+            5,
+            4,
+            units_x_status::UNITS_X_STATUS_SLICE_LENGTH_OVERFLOW,
+        )
+        .unwrap_err();
+
+        assert_eq!(status, units_x_status::UNITS_X_STATUS_SLICE_LENGTH_OVERFLOW);
+    }
+
+    #[test]
+    fn abi_owned_buffer_conversion_reports_overflow_status() {
+        let status = abi_len_to_usize_with_status(
+            9,
+            8,
+            units_x_status::UNITS_X_STATUS_OWNED_BUFFER_RANGE_OVERFLOW,
+        )
+        .unwrap_err();
+
+        assert_eq!(
+            status,
+            units_x_status::UNITS_X_STATUS_OWNED_BUFFER_RANGE_OVERFLOW
+        );
     }
 }

@@ -1,10 +1,11 @@
 name: CI
 
 on:
+  workflow_dispatch:
   pull_request:
     branches: [develop, main, "sprint/**", "integrate/*", "integration/*"]
   push:
-    branches: [develop, main]
+    branches: [develop, main, "integrate/*", "integration/*", "sprint/*"]
 
 jobs:
   repo-ci:
@@ -21,9 +22,9 @@ jobs:
       - uses: actions/checkout@v5
 
       - name: Install Rust toolchain
-        uses: dtolnay/rust-toolchain@stable
+        uses: dtolnay/rust-toolchain@efa25f7f19611383d5b0ccf2d1c8914531636bf9
         with:
-          toolchain: "stable"
+          toolchain: "1.96.0"
           components: clippy, rustfmt
 
       - name: Install Python
@@ -34,19 +35,19 @@ jobs:
       - name: Install .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: "8.0.x"
+          dotnet-version: "8.0.414"
 
       - name: Install Python CI dependencies
         run: python -m pip install -r python/requirements-ci.txt
 
       - name: Install just
-        run: cargo install just --locked
+        run: cargo install just --locked --version 1.53.0
 
       - name: Install sc-lint
-        run: cargo install sc-lint --locked
+        run: cargo install sc-lint --locked --version 0.3.0
 
       - name: Install sc-lint-boundary
-        run: cargo install sc-lint-boundary --locked
+        run: cargo install sc-lint-boundary --locked --version 0.3.0
 
       - name: Run repo CI
         run: just ci
