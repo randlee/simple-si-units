@@ -1,0 +1,239 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://units-x.dev/schema/units-catalog.schema.json",
+  "title": "units-x catalog schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "catalog_version",
+    "dimensions"
+  ],
+  "properties": {
+    "schema_version": {
+      "$ref": "#/$defs/non_blank_string"
+    },
+    "catalog_version": {
+      "$ref": "#/$defs/non_blank_string"
+    },
+    "dimensions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/dimension"
+      }
+    }
+  },
+  "$defs": {
+    "non_blank_string": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^.*\\S.*$"
+    },
+    "nullable_non_blank_string": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/non_blank_string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "conversion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "scale_to_base",
+        "offset_to_base"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "linear",
+            "affine"
+          ]
+        },
+        "scale_to_base": {
+          "type": "number"
+        },
+        "offset_to_base": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "linear"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "offset_to_base": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "affine"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "offset_to_base": {
+                "type": "number"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "unit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "unit_code_id",
+        "unit_symbol",
+        "display_name",
+        "binary_unit_id",
+        "reserved_word_alias",
+        "aliases",
+        "conversion"
+      ],
+      "properties": {
+        "unit_code_id": {
+          "$ref": "#/$defs/non_blank_string"
+        },
+        "unit_symbol": {
+          "$ref": "#/$defs/non_blank_string"
+        },
+        "display_name": {
+          "$ref": "#/$defs/non_blank_string"
+        },
+        "binary_unit_id": {
+          "$ref": "#/$defs/non_blank_string"
+        },
+        "reserved_word_alias": {
+          "$ref": "#/$defs/nullable_non_blank_string"
+        },
+        "aliases": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/non_blank_string"
+          }
+        },
+        "conversion": {
+          "$ref": "#/$defs/conversion"
+        }
+      }
+    },
+    "json_forms": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scalar_type_ids",
+        "small_array_type_id_template",
+        "buffer_type_id_template",
+        "default_encoding"
+      ],
+      "properties": {
+        "scalar_type_ids": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/non_blank_string"
+          }
+        },
+        "small_array_type_id_template": {
+          "$ref": "#/$defs/non_blank_string"
+        },
+        "buffer_type_id_template": {
+          "$ref": "#/$defs/non_blank_string"
+        },
+        "default_encoding": {
+          "type": "string",
+          "enum": [
+            "scalar",
+            "array",
+            "base64-le"
+          ]
+        }
+      }
+    },
+    "abi": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "abi_name_stem",
+        "binary_schema_id"
+      ],
+      "properties": {
+        "abi_name_stem": {
+          "$ref": "#/$defs/non_blank_string"
+        },
+        "binary_schema_id": {
+          "$ref": "#/$defs/non_blank_string"
+        }
+      }
+    },
+    "dimension": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "dimension_id",
+        "family",
+        "public_type",
+        "base_unit_code_id",
+        "json_forms",
+        "abi",
+        "units"
+      ],
+      "properties": {
+        "dimension_id": {
+          "$ref": "#/$defs/non_blank_string"
+        },
+        "family": {
+          "type": "string",
+          "enum": [
+            "base",
+            "geometry",
+            "mechanical",
+            "electromagnetic"
+          ]
+        },
+        "public_type": {
+          "$ref": "#/$defs/non_blank_string"
+        },
+        "base_unit_code_id": {
+          "$ref": "#/$defs/non_blank_string"
+        },
+        "json_forms": {
+          "$ref": "#/$defs/json_forms"
+        },
+        "abi": {
+          "$ref": "#/$defs/abi"
+        },
+        "units": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/unit"
+          }
+        }
+      }
+    }
+  }
+}
