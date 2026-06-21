@@ -6,7 +6,7 @@ Lock the fundamental naming, layout, and ABI rules for the project.
 
 ## Status
 
-`In Progress`
+`Done`
 
 ## Scope References
 
