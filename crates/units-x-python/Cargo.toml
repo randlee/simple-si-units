@@ -16,5 +16,5 @@ path = "src/lib.rs"
 crate-type = ["cdylib"]
 
 [dependencies]
-pyo3 = { version = "0.22.6", features = ["abi3-py311"] }
+pyo3 = { version = "0.22.6", features = ["abi3-py311", "extension-module"] }
 units-x = { path = "../units-x", version = "0.1.0" }

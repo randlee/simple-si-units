@@ -110,6 +110,10 @@ pub unsafe extern "C" fn units_x_distance_mm_i32_slice_sum(
     if out.is_null() {
         return units_x_status::UNITS_X_STATUS_OWNED_OUTPUT_REQUIRED;
     }
+    if input.len == 0 {
+        unsafe { out.write(distance_mm_i32 { value_mm: 0 }) };
+        return units_x_status::UNITS_X_STATUS_OK;
+    }
     let values = unsafe { slice::from_raw_parts(input.ptr, input.len as usize) };
     let total = values
         .iter()
@@ -236,6 +240,20 @@ mod tests {
         let status = unsafe { units_x_distance_mm_i32_slice_sum(input, &mut out) };
 
         assert_eq!(status, units_x_status::UNITS_X_STATUS_LOSSY_CONVERSION);
+        assert_eq!(out.value_mm, 0);
+    }
+
+    #[test]
+    fn slice_sum_accepts_documented_empty_sentinel() {
+        let input = distance_mm_i32_slice {
+            ptr: ptr::null(),
+            len: 0,
+        };
+        let mut out = distance_mm_i32 { value_mm: -1 };
+
+        let status = unsafe { units_x_distance_mm_i32_slice_sum(input, &mut out) };
+
+        assert_eq!(status, units_x_status::UNITS_X_STATUS_OK);
         assert_eq!(out.value_mm, 0);
     }
 
