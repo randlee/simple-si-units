@@ -1,0 +1,24 @@
+[build-system]
+requires = ["maturin>=1.9.4,<2.0"]
+build-backend = "maturin"
+
+[project]
+name = "units-x"
+version = "0.1.0"
+description = "Python package scaffold for units-x."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MPL-2.0" }
+authors = [{ name = "unit-x contributors" }]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Rust",
+]
+
+[tool.maturin]
+manifest-path = "../crates/units-x-python/Cargo.toml"
+bindings = "pyo3"
+module-name = "units_x._native"
+python-source = "."

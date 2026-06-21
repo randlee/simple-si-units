@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <PackageId>units-x</PackageId>
+    <AssemblyName>UnitsX</AssemblyName>
+    <RootNamespace>UnitsX</RootNamespace>
+    <Description>.NET package scaffold for units-x.</Description>
+  </PropertyGroup>
+</Project>

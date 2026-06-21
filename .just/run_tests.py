@@ -28,15 +28,15 @@ def run_command(command: list[str], repo_root: Path) -> int:
     return completed.returncode
 
 
-def dotnet_projects(repo_root: Path) -> list[Path]:
-    return sorted((repo_root / "dotnet").rglob("*.csproj"))
+def dotnet_test_projects(repo_root: Path) -> list[Path]:
+    return sorted((repo_root / "dotnet").rglob("*Tests.csproj"))
 
 
 def run_all(repo_root: Path) -> int:
     commands = [
         ["just", "clean"],
-        ["just", "generate"],
         [sys.executable or "python3", str(repo_root / ".just/check_version_sync.py")],
+        ["just", "generate"],
         [sys.executable or "python3", str(repo_root / ".just/run_lint.py"), "fast"],
         ["cargo", "test", "--workspace", "--all-features"],
         [sys.executable or "python3", str(repo_root / ".just/run_pytests.py")],
@@ -57,10 +57,13 @@ def run_python(repo_root: Path) -> int:
 
 
 def run_dotnet(repo_root: Path) -> int:
-    projects = dotnet_projects(repo_root)
+    projects = dotnet_test_projects(repo_root)
     if not projects:
-        print("dotnet tests skipped: no .csproj files under dotnet/")
-        return 0
+        project = repo_root / "dotnet" / "src" / "UnitsX" / "UnitsX.csproj"
+        if not project.exists():
+            print("dotnet tests skipped: no .NET project files under dotnet/")
+            return 0
+        return run_command(["dotnet", "build", str(project), "--nologo"], repo_root)
     return run_command(["dotnet", "test", "dotnet"], repo_root)
 
 

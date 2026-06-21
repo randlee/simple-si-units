@@ -1,0 +1,16 @@
+<Project>
+  <PropertyGroup>
+    <UnitsXVersion>0.1.0</UnitsXVersion>
+    <UnitsXAssemblyVersion>0.1.0.0</UnitsXAssemblyVersion>
+    <Version>$(UnitsXVersion)</Version>
+    <PackageVersion>$(UnitsXVersion)</PackageVersion>
+    <AssemblyVersion>$(UnitsXAssemblyVersion)</AssemblyVersion>
+    <FileVersion>$(UnitsXAssemblyVersion)</FileVersion>
+    <InformationalVersion>$(UnitsXVersion)</InformationalVersion>
+    <RepositoryUrl>https://github.com/randlee/simple-si-units</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/randlee/simple-si-units</PackageProjectUrl>
+    <PackageLicenseExpression>MPL-2.0</PackageLicenseExpression>
+    <Authors>unit-x contributors</Authors>
+    <Company>unit-x</Company>
+  </PropertyGroup>
+</Project>

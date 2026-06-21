@@ -1,0 +1,36 @@
+boundary_id = "BOUNDARY-UnitsXCore"
+owner_package = "units-x"
+owner_crate_path = "units_x"
+name = "UnitsXCore"
+
+[public]
+facade = "lib"
+
+[implementation]
+type = "VERSION"
+module = "units_x"
+visibility = "public"
+constructor = "none"
+
+[composition]
+roots = ["VERSION", "_native", "version"]
+
+[dependencies]
+allowed_dependents = []
+allowed_dependencies = []
+forbidden_edges = []
+
+[references]
+scope = "outside_owner_crate"
+forbidden = []
+
+[testing]
+allowed_test_double_paths = []
+forbidden_test_bypasses = []
+
+[enforcement]
+lint_rules = []
+review_gates = []
+
+[status]
+state = "concrete_landed"

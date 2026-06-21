@@ -5,6 +5,7 @@ import json
 import re
 import sys
 import tomllib
+import xml.etree.ElementTree as ET
 from pathlib import Path
 
 
@@ -52,9 +53,11 @@ def workspace_manifests() -> list[Path]:
     return manifests
 
 
-def package_version(manifest: dict, label: str) -> str:
+def package_version(manifest: dict, label: str, workspace_fallback: str) -> str:
     package = manifest.get("package", {})
     version = package.get("version")
+    if isinstance(version, dict) and version.get("workspace") is True:
+        return workspace_fallback
     if not isinstance(version, str) or not version.strip():
         fail(f"{label} is missing [package].version")
     return version
@@ -70,6 +73,7 @@ def dependency_sections(manifest: dict) -> list[tuple[str, dict]]:
 
 
 def validate_path_dependency_versions() -> None:
+    fallback = workspace_version()
     manifests = workspace_manifests()
     versions: dict[Path, str] = {}
     parsed: dict[Path, tuple[str, dict]] = {}
@@ -77,7 +81,7 @@ def validate_path_dependency_versions() -> None:
         rel_manifest = manifest_path.relative_to(ROOT).as_posix()
         manifest = load_toml(manifest_path)
         parsed[manifest_path] = (rel_manifest, manifest)
-        versions[manifest_path.parent.resolve()] = package_version(manifest, rel_manifest)
+        versions[manifest_path.parent.resolve()] = package_version(manifest, rel_manifest, fallback)
 
     for manifest_path, (rel_manifest, manifest) in parsed.items():
         for section_name, dependencies in dependency_sections(manifest):
@@ -110,22 +114,53 @@ def validate_python_version(expected_version: str) -> bool:
             f"python/pyproject.toml project.version ({project_version}) "
             f"does not match version.json ({expected_version})"
         )
+    version_module = ROOT / "python" / "units_x" / "_version.py"
+    text = read_text(version_module)
+    match = re.search(r'__version__ = "([^"]+)"', text)
+    if match is None:
+        fail("python/units_x/_version.py is missing a __version__ assignment")
+    if match.group(1) != expected_version:
+        fail(
+            f"python/units_x/_version.py __version__ ({match.group(1)}) "
+            f"does not match version.json ({expected_version})"
+        )
     return True
+
+
+def expected_assembly_version(version: str) -> str:
+    match = re.fullmatch(r"(\d+)\.(\d+)\.(\d+)", version.strip())
+    if match is None:
+        fail(f"unsupported semantic version for assembly conversion: {version}")
+    major, minor, patch = match.groups()
+    return f"{major}.{minor}.{patch}.0"
 
 
 def validate_dotnet_version(expected_version: str) -> bool:
     props_path = ROOT / "dotnet" / "Directory.Build.props"
     if not props_path.exists():
         return False
-    text = read_text(props_path)
-    match = re.search(r"<Version>([^<]+)</Version>", text)
-    if match is None:
-        fail("dotnet/Directory.Build.props is missing a <Version> element")
-    if match.group(1).strip() != expected_version:
-        fail(
-            f"dotnet/Directory.Build.props Version ({match.group(1).strip()}) "
-            f"does not match version.json ({expected_version})"
-        )
+    root = ET.fromstring(read_text(props_path))
+    property_group = root.find("PropertyGroup")
+    if property_group is None:
+        fail("dotnet/Directory.Build.props is missing a PropertyGroup")
+
+    expected_values = {
+        "UnitsXVersion": expected_version,
+        "UnitsXAssemblyVersion": expected_assembly_version(expected_version),
+        "Version": "$(UnitsXVersion)",
+        "PackageVersion": "$(UnitsXVersion)",
+        "AssemblyVersion": "$(UnitsXAssemblyVersion)",
+        "FileVersion": "$(UnitsXAssemblyVersion)",
+        "InformationalVersion": "$(UnitsXVersion)",
+    }
+    for tag, expected_value in expected_values.items():
+        node = property_group.find(tag)
+        if node is None or (node.text or "").strip() != expected_value:
+            actual_value = None if node is None else (node.text or "").strip()
+            fail(
+                f"dotnet/Directory.Build.props {tag} ({actual_value}) "
+                f"does not match expected value ({expected_value})"
+            )
     return True
 
 
@@ -139,7 +174,7 @@ def main() -> int:
 
     checked = ["version.json", "Cargo.toml", "workspace path dependency versions"]
     if validate_python_version(expected):
-        checked.append("python/pyproject.toml")
+        checked.extend(["python/pyproject.toml", "python/units_x/_version.py"])
     if validate_dotnet_version(expected):
         checked.append("dotnet/Directory.Build.props")
 
