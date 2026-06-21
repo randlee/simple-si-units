@@ -31,8 +31,10 @@ This document records the Phase A local workflow and CI baseline for `units-x`.
 Phase A enforces two different scopes on purpose:
 
 1. Full-repo testing:
-   This still covers the legacy `reference/` crates through the normal Rust
-   workspace tests and helper-script tests.
+   The shipped workspace excludes the legacy `reference/` crates, so the full
+   repo pass re-runs them explicitly via `cargo test --manifest-path ...`
+   commands alongside the normal shipped-workspace tests and helper-script
+   checks.
 2. Shipped-scope linting:
    `sc-lint check`, `sc-lint clippy`, and `sc-lint-boundary` are enforced
    against a synthetic shipped workspace containing `crates/units-x`,

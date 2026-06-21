@@ -68,6 +68,9 @@ The new crate must not repeat the ambiguous build behavior of the current projec
 Phase A uses an enforced shipped-scope lint boundary:
 
 - full-repo tests still include `reference/`
+- the full-repo pass covers `reference/` through explicit
+  `cargo test --manifest-path ...` commands because those crates are excluded
+  from the shipped workspace
 - shipped-scope `sc-lint` and `sc-lint-boundary` gates run against a synthetic
   workspace containing `crates/units-x`, `crates/units-x-python`,
   `boundaries/units-x`, `boundaries/units-x-python`, and the required
