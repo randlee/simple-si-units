@@ -27,6 +27,7 @@ def build_summary(catalog: dict) -> dict:
         "dimensions": [
             {
                 "dimension_id": dimension["dimension_id"],
+                "canonical_dimension_id": dimension["canonical_dimension_id"],
                 "public_type": dimension["public_type"],
                 "scalar": dimension["json_forms"]["scalar"],
                 "small_array": dimension["json_forms"]["small_array"],
@@ -134,6 +135,7 @@ def render_rust_module(summary: dict) -> str:
         "#[derive(Copy, Clone, Debug, PartialEq, Eq)]",
         "pub struct CatalogDimensionMetadata {",
         "    pub dimension_id: CatalogDimensionId,",
+        "    pub canonical_dimension_id: CatalogDimensionId,",
         "    pub public_type: &'static str,",
         "    pub scalar_type_ids: &'static [CatalogTypeId],",
         "    pub scalar_encoding: CatalogJsonEncoding,",
@@ -159,6 +161,7 @@ def render_rust_module(summary: dict) -> str:
             [
                 "    CatalogDimensionMetadata {",
                 f"        dimension_id: CatalogDimensionId({rust_string_literal(dimension['dimension_id'])}),",
+                f"        canonical_dimension_id: CatalogDimensionId({rust_string_literal(dimension['canonical_dimension_id'])}),",
                 f"        public_type: {rust_string_literal(dimension['public_type'])},",
                 f"        scalar_type_ids: &[{scalar_literals}],",
                 f"        scalar_encoding: CatalogJsonEncoding::{scalar_encoding},",

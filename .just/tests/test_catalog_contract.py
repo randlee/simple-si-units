@@ -27,6 +27,7 @@ class CatalogContractTests(unittest.TestCase):
             schema["$defs"]["dimension"]["properties"]["family"]["enum"],
             ["base", "geometry", "mechanical", "electromagnetic"],
         )
+        self.assertIn("canonical_dimension_id", schema["$defs"]["dimension"]["required"])
         conversion = schema["$defs"]["conversion"]
         self.assertIn("allOf", conversion)
         unit_required = set(schema["$defs"]["unit"]["required"])
@@ -59,6 +60,7 @@ class CatalogContractTests(unittest.TestCase):
             unit["unit_code_id"]: unit
             for unit in dimensions["temperature"]["units"]
         }
+        self.assertEqual(dimensions["diopter"]["canonical_dimension_id"], "inverse_distance")
         self.assertEqual(temperature_units["degC"]["unit_symbol"], "C")
         self.assertEqual(temperature_units["degF"]["unit_symbol"], "F")
         self.assertEqual(temperature_units["degC"]["conversion"]["kind"], "affine")
@@ -71,12 +73,18 @@ class CatalogContractTests(unittest.TestCase):
             validate_catalog(sample)
 
         sample = self.load_sample()
-        sample["dimensions"][1]["units"][1]["conversion"]["offset_to_base"] = None
+        temperature = next(dimension for dimension in sample["dimensions"] if dimension["dimension_id"] == "temperature")
+        temperature["units"][1]["conversion"]["offset_to_base"] = None
         with self.assertRaises(ValidationError):
             validate_catalog(sample)
 
         sample = self.load_sample()
         sample["dimensions"][0]["base_unit_code_id"] = "km"
+        with self.assertRaises(ValidationError):
+            validate_catalog(sample)
+
+        sample = self.load_sample()
+        sample["dimensions"][2]["canonical_dimension_id"] = "no_such_dimension"
         with self.assertRaises(ValidationError):
             validate_catalog(sample)
 
@@ -102,7 +110,7 @@ class CatalogContractTests(unittest.TestCase):
             validate_catalog(sample)
 
         sample = self.load_sample()
-        sample["dimensions"][1]["units"][0]["display_name"] = "   "
+        sample["dimensions"][2]["units"][0]["display_name"] = "   "
         with self.assertRaises(ValidationError):
             validate_catalog(sample)
 

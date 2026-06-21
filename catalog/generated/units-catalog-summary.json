@@ -1,7 +1,71 @@
 {
   "catalog_version": "0.1.0-phase-a",
-  "dimension_count": 6,
+  "dimension_count": 69,
   "dimensions": [
+    {
+      "abi_name_stem": "amount",
+      "binary_schema_id": "units-x.amount.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "amount_buffer_{storage}"
+      },
+      "canonical_dimension_id": "amount",
+      "dimension_id": "amount",
+      "public_type": "Amount",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "amount_f32",
+          "amount_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "amount{arity}_{storage}"
+      },
+      "unit_ids": [
+        "amount.mol"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "amount.mol",
+          "reserved_word_alias": null,
+          "unit_code_id": "mol"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "current",
+      "binary_schema_id": "units-x.current.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "current_buffer_{storage}"
+      },
+      "canonical_dimension_id": "current",
+      "dimension_id": "current",
+      "public_type": "Current",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "current_f32",
+          "current_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "current{arity}_{storage}"
+      },
+      "unit_ids": [
+        "current.A"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "current.A",
+          "reserved_word_alias": null,
+          "unit_code_id": "A"
+        }
+      ]
+    },
     {
       "abi_name_stem": "distance",
       "binary_schema_id": "units-x.distance.v1",
@@ -9,6 +73,7 @@
         "encoding": "base64-le",
         "type_id_template": "distance_buffer_{storage}"
       },
+      "canonical_dimension_id": "distance",
       "dimension_id": "distance",
       "public_type": "Distance",
       "scalar": {
@@ -47,40 +112,258 @@
       ]
     },
     {
-      "abi_name_stem": "time",
-      "binary_schema_id": "units-x.time.v1",
+      "abi_name_stem": "inverse_amount",
+      "binary_schema_id": "units-x.inverse_amount.v1",
       "buffer": {
         "encoding": "base64-le",
-        "type_id_template": "time_buffer_{storage}"
+        "type_id_template": "inverse_amount_buffer_{storage}"
       },
-      "dimension_id": "time",
-      "public_type": "Time",
+      "canonical_dimension_id": "inverse_amount",
+      "dimension_id": "inverse_amount",
+      "public_type": "InverseAmount",
       "scalar": {
         "encoding": "object",
         "type_ids": [
-          "time_i32",
-          "time_f32",
-          "time_f64"
+          "inverse_amount_f32",
+          "inverse_amount_f64"
         ]
       },
       "small_array": {
         "encoding": "array",
-        "type_id_template": "time{arity}_{storage}"
+        "type_id_template": "inverse_amount{arity}_{storage}"
       },
       "unit_ids": [
-        "time.s",
-        "time.ms"
+        "inverse_amount.per_mol"
       ],
       "units": [
         {
-          "binary_unit_id": "time.s",
+          "binary_unit_id": "inverse_amount.per_mol",
           "reserved_word_alias": null,
-          "unit_code_id": "s"
-        },
+          "unit_code_id": "per_mol"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "inverse_current",
+      "binary_schema_id": "units-x.inverse_current.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "inverse_current_buffer_{storage}"
+      },
+      "canonical_dimension_id": "inverse_current",
+      "dimension_id": "inverse_current",
+      "public_type": "InverseCurrent",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "inverse_current_f32",
+          "inverse_current_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "inverse_current{arity}_{storage}"
+      },
+      "unit_ids": [
+        "inverse_current.per_A"
+      ],
+      "units": [
         {
-          "binary_unit_id": "time.ms",
+          "binary_unit_id": "inverse_current.per_A",
           "reserved_word_alias": null,
-          "unit_code_id": "ms"
+          "unit_code_id": "per_A"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "inverse_distance",
+      "binary_schema_id": "units-x.inverse_distance.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "inverse_distance_buffer_{storage}"
+      },
+      "canonical_dimension_id": "inverse_distance",
+      "dimension_id": "inverse_distance",
+      "public_type": "InverseDistance",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "inverse_distance_f32",
+          "inverse_distance_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "inverse_distance{arity}_{storage}"
+      },
+      "unit_ids": [
+        "inverse_distance.per_m"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "inverse_distance.per_m",
+          "reserved_word_alias": null,
+          "unit_code_id": "per_m"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "inverse_luminosity",
+      "binary_schema_id": "units-x.inverse_luminosity.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "inverse_luminosity_buffer_{storage}"
+      },
+      "canonical_dimension_id": "inverse_luminosity",
+      "dimension_id": "inverse_luminosity",
+      "public_type": "InverseLuminosity",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "inverse_luminosity_f32",
+          "inverse_luminosity_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "inverse_luminosity{arity}_{storage}"
+      },
+      "unit_ids": [
+        "inverse_luminosity.per_cd"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "inverse_luminosity.per_cd",
+          "reserved_word_alias": null,
+          "unit_code_id": "per_cd"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "inverse_mass",
+      "binary_schema_id": "units-x.inverse_mass.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "inverse_mass_buffer_{storage}"
+      },
+      "canonical_dimension_id": "inverse_mass",
+      "dimension_id": "inverse_mass",
+      "public_type": "InverseMass",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "inverse_mass_f32",
+          "inverse_mass_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "inverse_mass{arity}_{storage}"
+      },
+      "unit_ids": [
+        "inverse_mass.per_kg"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "inverse_mass.per_kg",
+          "reserved_word_alias": null,
+          "unit_code_id": "per_kg"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "inverse_temperature",
+      "binary_schema_id": "units-x.inverse_temperature.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "inverse_temperature_buffer_{storage}"
+      },
+      "canonical_dimension_id": "inverse_temperature",
+      "dimension_id": "inverse_temperature",
+      "public_type": "InverseTemperature",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "inverse_temperature_f32",
+          "inverse_temperature_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "inverse_temperature{arity}_{storage}"
+      },
+      "unit_ids": [
+        "inverse_temperature.per_K"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "inverse_temperature.per_K",
+          "reserved_word_alias": null,
+          "unit_code_id": "per_K"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "luminosity",
+      "binary_schema_id": "units-x.luminosity.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "luminosity_buffer_{storage}"
+      },
+      "canonical_dimension_id": "luminosity",
+      "dimension_id": "luminosity",
+      "public_type": "Luminosity",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "luminosity_f32",
+          "luminosity_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "luminosity{arity}_{storage}"
+      },
+      "unit_ids": [
+        "luminosity.cd"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "luminosity.cd",
+          "reserved_word_alias": null,
+          "unit_code_id": "cd"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "mass",
+      "binary_schema_id": "units-x.mass.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "mass_buffer_{storage}"
+      },
+      "canonical_dimension_id": "mass",
+      "dimension_id": "mass",
+      "public_type": "Mass",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "mass_f32",
+          "mass_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "mass{arity}_{storage}"
+      },
+      "unit_ids": [
+        "mass.kg"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "mass.kg",
+          "reserved_word_alias": null,
+          "unit_code_id": "kg"
         }
       ]
     },
@@ -91,6 +374,7 @@
         "encoding": "base64-le",
         "type_id_template": "temperature_buffer_{storage}"
       },
+      "canonical_dimension_id": "temperature",
       "dimension_id": "temperature",
       "public_type": "Temperature",
       "scalar": {
@@ -128,33 +412,297 @@
       ]
     },
     {
-      "abi_name_stem": "velocity",
-      "binary_schema_id": "units-x.velocity.v1",
+      "abi_name_stem": "time",
+      "binary_schema_id": "units-x.time.v1",
       "buffer": {
         "encoding": "base64-le",
-        "type_id_template": "velocity_buffer_{storage}"
+        "type_id_template": "time_buffer_{storage}"
       },
-      "dimension_id": "velocity",
-      "public_type": "Velocity",
+      "canonical_dimension_id": "time",
+      "dimension_id": "time",
+      "public_type": "Time",
       "scalar": {
         "encoding": "object",
         "type_ids": [
-          "velocity_f32",
-          "velocity_f64"
+          "time_i32",
+          "time_f32",
+          "time_f64"
         ]
       },
       "small_array": {
         "encoding": "array",
-        "type_id_template": "velocity{arity}_{storage}"
+        "type_id_template": "time{arity}_{storage}"
       },
       "unit_ids": [
-        "velocity.mps"
+        "time.s",
+        "time.ms"
       ],
       "units": [
         {
-          "binary_unit_id": "velocity.mps",
+          "binary_unit_id": "time.s",
           "reserved_word_alias": null,
-          "unit_code_id": "mps"
+          "unit_code_id": "s"
+        },
+        {
+          "binary_unit_id": "time.ms",
+          "reserved_word_alias": null,
+          "unit_code_id": "ms"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "angle",
+      "binary_schema_id": "units-x.angle.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "angle_buffer_{storage}"
+      },
+      "canonical_dimension_id": "angle",
+      "dimension_id": "angle",
+      "public_type": "Angle",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "angle_f32",
+          "angle_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "angle{arity}_{storage}"
+      },
+      "unit_ids": [
+        "angle.rad"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "angle.rad",
+          "reserved_word_alias": null,
+          "unit_code_id": "rad"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "area",
+      "binary_schema_id": "units-x.area.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "area_buffer_{storage}"
+      },
+      "canonical_dimension_id": "area",
+      "dimension_id": "area",
+      "public_type": "Area",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "area_f32",
+          "area_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "area{arity}_{storage}"
+      },
+      "unit_ids": [
+        "area.m2"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "area.m2",
+          "reserved_word_alias": null,
+          "unit_code_id": "m2"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "inverse_angle",
+      "binary_schema_id": "units-x.inverse_angle.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "inverse_angle_buffer_{storage}"
+      },
+      "canonical_dimension_id": "inverse_angle",
+      "dimension_id": "inverse_angle",
+      "public_type": "InverseAngle",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "inverse_angle_f32",
+          "inverse_angle_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "inverse_angle{arity}_{storage}"
+      },
+      "unit_ids": [
+        "inverse_angle.per_rad"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "inverse_angle.per_rad",
+          "reserved_word_alias": null,
+          "unit_code_id": "per_rad"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "inverse_area",
+      "binary_schema_id": "units-x.inverse_area.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "inverse_area_buffer_{storage}"
+      },
+      "canonical_dimension_id": "inverse_area",
+      "dimension_id": "inverse_area",
+      "public_type": "InverseArea",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "inverse_area_f32",
+          "inverse_area_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "inverse_area{arity}_{storage}"
+      },
+      "unit_ids": [
+        "inverse_area.per_m2"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "inverse_area.per_m2",
+          "reserved_word_alias": null,
+          "unit_code_id": "per_m2"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "inverse_solid_angle",
+      "binary_schema_id": "units-x.inverse_solid_angle.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "inverse_solid_angle_buffer_{storage}"
+      },
+      "canonical_dimension_id": "inverse_solid_angle",
+      "dimension_id": "inverse_solid_angle",
+      "public_type": "InverseSolidAngle",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "inverse_solid_angle_f32",
+          "inverse_solid_angle_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "inverse_solid_angle{arity}_{storage}"
+      },
+      "unit_ids": [
+        "inverse_solid_angle.per_sr"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "inverse_solid_angle.per_sr",
+          "reserved_word_alias": null,
+          "unit_code_id": "per_sr"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "inverse_volume",
+      "binary_schema_id": "units-x.inverse_volume.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "inverse_volume_buffer_{storage}"
+      },
+      "canonical_dimension_id": "inverse_volume",
+      "dimension_id": "inverse_volume",
+      "public_type": "InverseVolume",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "inverse_volume_f32",
+          "inverse_volume_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "inverse_volume{arity}_{storage}"
+      },
+      "unit_ids": [
+        "inverse_volume.per_m3"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "inverse_volume.per_m3",
+          "reserved_word_alias": null,
+          "unit_code_id": "per_m3"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "solid_angle",
+      "binary_schema_id": "units-x.solid_angle.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "solid_angle_buffer_{storage}"
+      },
+      "canonical_dimension_id": "solid_angle",
+      "dimension_id": "solid_angle",
+      "public_type": "SolidAngle",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "solid_angle_f32",
+          "solid_angle_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "solid_angle{arity}_{storage}"
+      },
+      "unit_ids": [
+        "solid_angle.sr"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "solid_angle.sr",
+          "reserved_word_alias": null,
+          "unit_code_id": "sr"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "volume",
+      "binary_schema_id": "units-x.volume.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "volume_buffer_{storage}"
+      },
+      "canonical_dimension_id": "volume",
+      "dimension_id": "volume",
+      "public_type": "Volume",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "volume_f32",
+          "volume_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "volume{arity}_{storage}"
+      },
+      "unit_ids": [
+        "volume.m3"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "volume.m3",
+          "reserved_word_alias": null,
+          "unit_code_id": "m3"
         }
       ]
     },
@@ -165,6 +713,7 @@
         "encoding": "base64-le",
         "type_id_template": "acceleration_buffer_{storage}"
       },
+      "canonical_dimension_id": "acceleration",
       "dimension_id": "acceleration",
       "public_type": "Acceleration",
       "scalar": {
@@ -190,12 +739,1485 @@
       ]
     },
     {
+      "abi_name_stem": "angular_acceleration",
+      "binary_schema_id": "units-x.angular_acceleration.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "angular_acceleration_buffer_{storage}"
+      },
+      "canonical_dimension_id": "angular_acceleration",
+      "dimension_id": "angular_acceleration",
+      "public_type": "AngularAcceleration",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "angular_acceleration_f32",
+          "angular_acceleration_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "angular_acceleration{arity}_{storage}"
+      },
+      "unit_ids": [
+        "angular_acceleration.radps2"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "angular_acceleration.radps2",
+          "reserved_word_alias": null,
+          "unit_code_id": "radps2"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "angular_momentum",
+      "binary_schema_id": "units-x.angular_momentum.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "angular_momentum_buffer_{storage}"
+      },
+      "canonical_dimension_id": "angular_momentum",
+      "dimension_id": "angular_momentum",
+      "public_type": "AngularMomentum",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "angular_momentum_f32",
+          "angular_momentum_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "angular_momentum{arity}_{storage}"
+      },
+      "unit_ids": [
+        "angular_momentum.kgm2ps"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "angular_momentum.kgm2ps",
+          "reserved_word_alias": null,
+          "unit_code_id": "kgm2ps"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "angular_velocity",
+      "binary_schema_id": "units-x.angular_velocity.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "angular_velocity_buffer_{storage}"
+      },
+      "canonical_dimension_id": "angular_velocity",
+      "dimension_id": "angular_velocity",
+      "public_type": "AngularVelocity",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "angular_velocity_f32",
+          "angular_velocity_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "angular_velocity{arity}_{storage}"
+      },
+      "unit_ids": [
+        "angular_velocity.radps"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "angular_velocity.radps",
+          "reserved_word_alias": null,
+          "unit_code_id": "radps"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "area_density",
+      "binary_schema_id": "units-x.area_density.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "area_density_buffer_{storage}"
+      },
+      "canonical_dimension_id": "area_density",
+      "dimension_id": "area_density",
+      "public_type": "AreaDensity",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "area_density_f32",
+          "area_density_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "area_density{arity}_{storage}"
+      },
+      "unit_ids": [
+        "area_density.kgpm2"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "area_density.kgpm2",
+          "reserved_word_alias": null,
+          "unit_code_id": "kgpm2"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "area_per_mass",
+      "binary_schema_id": "units-x.area_per_mass.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "area_per_mass_buffer_{storage}"
+      },
+      "canonical_dimension_id": "area_per_mass",
+      "dimension_id": "area_per_mass",
+      "public_type": "AreaPerMass",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "area_per_mass_f32",
+          "area_per_mass_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "area_per_mass{arity}_{storage}"
+      },
+      "unit_ids": [
+        "area_per_mass.m2pkg"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "area_per_mass.m2pkg",
+          "reserved_word_alias": null,
+          "unit_code_id": "m2pkg"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "density",
+      "binary_schema_id": "units-x.density.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "density_buffer_{storage}"
+      },
+      "canonical_dimension_id": "density",
+      "dimension_id": "density",
+      "public_type": "Density",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "density_f32",
+          "density_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "density{arity}_{storage}"
+      },
+      "unit_ids": [
+        "density.kgpm3"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "density.kgpm3",
+          "reserved_word_alias": null,
+          "unit_code_id": "kgpm3"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "energy",
+      "binary_schema_id": "units-x.energy.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "energy_buffer_{storage}"
+      },
+      "canonical_dimension_id": "energy",
+      "dimension_id": "energy",
+      "public_type": "Energy",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "energy_f32",
+          "energy_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "energy{arity}_{storage}"
+      },
+      "unit_ids": [
+        "energy.J"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "energy.J",
+          "reserved_word_alias": null,
+          "unit_code_id": "J"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "force",
+      "binary_schema_id": "units-x.force.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "force_buffer_{storage}"
+      },
+      "canonical_dimension_id": "force",
+      "dimension_id": "force",
+      "public_type": "Force",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "force_f32",
+          "force_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "force{arity}_{storage}"
+      },
+      "unit_ids": [
+        "force.N"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "force.N",
+          "reserved_word_alias": null,
+          "unit_code_id": "N"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "frequency",
+      "binary_schema_id": "units-x.frequency.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "frequency_buffer_{storage}"
+      },
+      "canonical_dimension_id": "frequency",
+      "dimension_id": "frequency",
+      "public_type": "Frequency",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "frequency_f32",
+          "frequency_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "frequency{arity}_{storage}"
+      },
+      "unit_ids": [
+        "frequency.Hz"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "frequency.Hz",
+          "reserved_word_alias": null,
+          "unit_code_id": "Hz"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "inverse_acceleration",
+      "binary_schema_id": "units-x.inverse_acceleration.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "inverse_acceleration_buffer_{storage}"
+      },
+      "canonical_dimension_id": "inverse_acceleration",
+      "dimension_id": "inverse_acceleration",
+      "public_type": "InverseAcceleration",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "inverse_acceleration_f32",
+          "inverse_acceleration_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "inverse_acceleration{arity}_{storage}"
+      },
+      "unit_ids": [
+        "inverse_acceleration.per_mps2"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "inverse_acceleration.per_mps2",
+          "reserved_word_alias": null,
+          "unit_code_id": "per_mps2"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "inverse_angular_acceleration",
+      "binary_schema_id": "units-x.inverse_angular_acceleration.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "inverse_angular_acceleration_buffer_{storage}"
+      },
+      "canonical_dimension_id": "inverse_angular_acceleration",
+      "dimension_id": "inverse_angular_acceleration",
+      "public_type": "InverseAngularAcceleration",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "inverse_angular_acceleration_f32",
+          "inverse_angular_acceleration_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "inverse_angular_acceleration{arity}_{storage}"
+      },
+      "unit_ids": [
+        "inverse_angular_acceleration.per_radps2"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "inverse_angular_acceleration.per_radps2",
+          "reserved_word_alias": null,
+          "unit_code_id": "per_radps2"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "inverse_angular_momentum",
+      "binary_schema_id": "units-x.inverse_angular_momentum.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "inverse_angular_momentum_buffer_{storage}"
+      },
+      "canonical_dimension_id": "inverse_angular_momentum",
+      "dimension_id": "inverse_angular_momentum",
+      "public_type": "InverseAngularMomentum",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "inverse_angular_momentum_f32",
+          "inverse_angular_momentum_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "inverse_angular_momentum{arity}_{storage}"
+      },
+      "unit_ids": [
+        "inverse_angular_momentum.per_kgm2ps"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "inverse_angular_momentum.per_kgm2ps",
+          "reserved_word_alias": null,
+          "unit_code_id": "per_kgm2ps"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "inverse_angular_velocity",
+      "binary_schema_id": "units-x.inverse_angular_velocity.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "inverse_angular_velocity_buffer_{storage}"
+      },
+      "canonical_dimension_id": "inverse_angular_velocity",
+      "dimension_id": "inverse_angular_velocity",
+      "public_type": "InverseAngularVelocity",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "inverse_angular_velocity_f32",
+          "inverse_angular_velocity_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "inverse_angular_velocity{arity}_{storage}"
+      },
+      "unit_ids": [
+        "inverse_angular_velocity.per_radps"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "inverse_angular_velocity.per_radps",
+          "reserved_word_alias": null,
+          "unit_code_id": "per_radps"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "inverse_energy",
+      "binary_schema_id": "units-x.inverse_energy.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "inverse_energy_buffer_{storage}"
+      },
+      "canonical_dimension_id": "inverse_energy",
+      "dimension_id": "inverse_energy",
+      "public_type": "InverseEnergy",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "inverse_energy_f32",
+          "inverse_energy_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "inverse_energy{arity}_{storage}"
+      },
+      "unit_ids": [
+        "inverse_energy.per_J"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "inverse_energy.per_J",
+          "reserved_word_alias": null,
+          "unit_code_id": "per_J"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "inverse_force",
+      "binary_schema_id": "units-x.inverse_force.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "inverse_force_buffer_{storage}"
+      },
+      "canonical_dimension_id": "inverse_force",
+      "dimension_id": "inverse_force",
+      "public_type": "InverseForce",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "inverse_force_f32",
+          "inverse_force_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "inverse_force{arity}_{storage}"
+      },
+      "unit_ids": [
+        "inverse_force.per_N"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "inverse_force.per_N",
+          "reserved_word_alias": null,
+          "unit_code_id": "per_N"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "inverse_moment_of_inertia",
+      "binary_schema_id": "units-x.inverse_moment_of_inertia.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "inverse_moment_of_inertia_buffer_{storage}"
+      },
+      "canonical_dimension_id": "inverse_moment_of_inertia",
+      "dimension_id": "inverse_moment_of_inertia",
+      "public_type": "InverseMomentOfInertia",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "inverse_moment_of_inertia_f32",
+          "inverse_moment_of_inertia_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "inverse_moment_of_inertia{arity}_{storage}"
+      },
+      "unit_ids": [
+        "inverse_moment_of_inertia.per_kgm2"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "inverse_moment_of_inertia.per_kgm2",
+          "reserved_word_alias": null,
+          "unit_code_id": "per_kgm2"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "inverse_momentum",
+      "binary_schema_id": "units-x.inverse_momentum.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "inverse_momentum_buffer_{storage}"
+      },
+      "canonical_dimension_id": "inverse_momentum",
+      "dimension_id": "inverse_momentum",
+      "public_type": "InverseMomentum",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "inverse_momentum_f32",
+          "inverse_momentum_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "inverse_momentum{arity}_{storage}"
+      },
+      "unit_ids": [
+        "inverse_momentum.per_kgmps"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "inverse_momentum.per_kgmps",
+          "reserved_word_alias": null,
+          "unit_code_id": "per_kgmps"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "inverse_power",
+      "binary_schema_id": "units-x.inverse_power.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "inverse_power_buffer_{storage}"
+      },
+      "canonical_dimension_id": "inverse_power",
+      "dimension_id": "inverse_power",
+      "public_type": "InversePower",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "inverse_power_f32",
+          "inverse_power_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "inverse_power{arity}_{storage}"
+      },
+      "unit_ids": [
+        "inverse_power.per_W"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "inverse_power.per_W",
+          "reserved_word_alias": null,
+          "unit_code_id": "per_W"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "inverse_pressure",
+      "binary_schema_id": "units-x.inverse_pressure.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "inverse_pressure_buffer_{storage}"
+      },
+      "canonical_dimension_id": "inverse_pressure",
+      "dimension_id": "inverse_pressure",
+      "public_type": "InversePressure",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "inverse_pressure_f32",
+          "inverse_pressure_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "inverse_pressure{arity}_{storage}"
+      },
+      "unit_ids": [
+        "inverse_pressure.per_Pa"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "inverse_pressure.per_Pa",
+          "reserved_word_alias": null,
+          "unit_code_id": "per_Pa"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "inverse_torque",
+      "binary_schema_id": "units-x.inverse_torque.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "inverse_torque_buffer_{storage}"
+      },
+      "canonical_dimension_id": "inverse_torque",
+      "dimension_id": "inverse_torque",
+      "public_type": "InverseTorque",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "inverse_torque_f32",
+          "inverse_torque_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "inverse_torque{arity}_{storage}"
+      },
+      "unit_ids": [
+        "inverse_torque.per_Nm"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "inverse_torque.per_Nm",
+          "reserved_word_alias": null,
+          "unit_code_id": "per_Nm"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "moment_of_inertia",
+      "binary_schema_id": "units-x.moment_of_inertia.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "moment_of_inertia_buffer_{storage}"
+      },
+      "canonical_dimension_id": "moment_of_inertia",
+      "dimension_id": "moment_of_inertia",
+      "public_type": "MomentOfInertia",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "moment_of_inertia_f32",
+          "moment_of_inertia_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "moment_of_inertia{arity}_{storage}"
+      },
+      "unit_ids": [
+        "moment_of_inertia.kgm2"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "moment_of_inertia.kgm2",
+          "reserved_word_alias": null,
+          "unit_code_id": "kgm2"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "momentum",
+      "binary_schema_id": "units-x.momentum.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "momentum_buffer_{storage}"
+      },
+      "canonical_dimension_id": "momentum",
+      "dimension_id": "momentum",
+      "public_type": "Momentum",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "momentum_f32",
+          "momentum_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "momentum{arity}_{storage}"
+      },
+      "unit_ids": [
+        "momentum.kgmps"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "momentum.kgmps",
+          "reserved_word_alias": null,
+          "unit_code_id": "kgmps"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "power",
+      "binary_schema_id": "units-x.power.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "power_buffer_{storage}"
+      },
+      "canonical_dimension_id": "power",
+      "dimension_id": "power",
+      "public_type": "Power",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "power_f32",
+          "power_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "power{arity}_{storage}"
+      },
+      "unit_ids": [
+        "power.W"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "power.W",
+          "reserved_word_alias": null,
+          "unit_code_id": "W"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "pressure",
+      "binary_schema_id": "units-x.pressure.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "pressure_buffer_{storage}"
+      },
+      "canonical_dimension_id": "pressure",
+      "dimension_id": "pressure",
+      "public_type": "Pressure",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "pressure_f32",
+          "pressure_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "pressure{arity}_{storage}"
+      },
+      "unit_ids": [
+        "pressure.Pa"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "pressure.Pa",
+          "reserved_word_alias": null,
+          "unit_code_id": "Pa"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "time_per_distance",
+      "binary_schema_id": "units-x.time_per_distance.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "time_per_distance_buffer_{storage}"
+      },
+      "canonical_dimension_id": "time_per_distance",
+      "dimension_id": "time_per_distance",
+      "public_type": "TimePerDistance",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "time_per_distance_f32",
+          "time_per_distance_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "time_per_distance{arity}_{storage}"
+      },
+      "unit_ids": [
+        "time_per_distance.spm"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "time_per_distance.spm",
+          "reserved_word_alias": null,
+          "unit_code_id": "spm"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "torque",
+      "binary_schema_id": "units-x.torque.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "torque_buffer_{storage}"
+      },
+      "canonical_dimension_id": "torque",
+      "dimension_id": "torque",
+      "public_type": "Torque",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "torque_f32",
+          "torque_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "torque{arity}_{storage}"
+      },
+      "unit_ids": [
+        "torque.Nm"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "torque.Nm",
+          "reserved_word_alias": null,
+          "unit_code_id": "Nm"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "velocity",
+      "binary_schema_id": "units-x.velocity.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "velocity_buffer_{storage}"
+      },
+      "canonical_dimension_id": "velocity",
+      "dimension_id": "velocity",
+      "public_type": "Velocity",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "velocity_f32",
+          "velocity_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "velocity{arity}_{storage}"
+      },
+      "unit_ids": [
+        "velocity.mps"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "velocity.mps",
+          "reserved_word_alias": null,
+          "unit_code_id": "mps"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "volume_per_mass",
+      "binary_schema_id": "units-x.volume_per_mass.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "volume_per_mass_buffer_{storage}"
+      },
+      "canonical_dimension_id": "volume_per_mass",
+      "dimension_id": "volume_per_mass",
+      "public_type": "VolumePerMass",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "volume_per_mass_f32",
+          "volume_per_mass_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "volume_per_mass{arity}_{storage}"
+      },
+      "unit_ids": [
+        "volume_per_mass.m3pkg"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "volume_per_mass.m3pkg",
+          "reserved_word_alias": null,
+          "unit_code_id": "m3pkg"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "area_per_lumen",
+      "binary_schema_id": "units-x.area_per_lumen.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "area_per_lumen_buffer_{storage}"
+      },
+      "canonical_dimension_id": "area_per_lumen",
+      "dimension_id": "area_per_lumen",
+      "public_type": "AreaPerLumen",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "area_per_lumen_f32",
+          "area_per_lumen_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "area_per_lumen{arity}_{storage}"
+      },
+      "unit_ids": [
+        "area_per_lumen.m2plm"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "area_per_lumen.m2plm",
+          "reserved_word_alias": null,
+          "unit_code_id": "m2plm"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "capacitance",
+      "binary_schema_id": "units-x.capacitance.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "capacitance_buffer_{storage}"
+      },
+      "canonical_dimension_id": "capacitance",
+      "dimension_id": "capacitance",
+      "public_type": "Capacitance",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "capacitance_f32",
+          "capacitance_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "capacitance{arity}_{storage}"
+      },
+      "unit_ids": [
+        "capacitance.F"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "capacitance.F",
+          "reserved_word_alias": null,
+          "unit_code_id": "F"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "charge",
+      "binary_schema_id": "units-x.charge.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "charge_buffer_{storage}"
+      },
+      "canonical_dimension_id": "charge",
+      "dimension_id": "charge",
+      "public_type": "Charge",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "charge_f32",
+          "charge_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "charge{arity}_{storage}"
+      },
+      "unit_ids": [
+        "charge.C"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "charge.C",
+          "reserved_word_alias": null,
+          "unit_code_id": "C"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "conductance",
+      "binary_schema_id": "units-x.conductance.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "conductance_buffer_{storage}"
+      },
+      "canonical_dimension_id": "conductance",
+      "dimension_id": "conductance",
+      "public_type": "Conductance",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "conductance_f32",
+          "conductance_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "conductance{arity}_{storage}"
+      },
+      "unit_ids": [
+        "conductance.S"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "conductance.S",
+          "reserved_word_alias": null,
+          "unit_code_id": "S"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "elastance",
+      "binary_schema_id": "units-x.elastance.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "elastance_buffer_{storage}"
+      },
+      "canonical_dimension_id": "elastance",
+      "dimension_id": "elastance",
+      "public_type": "Elastance",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "elastance_f32",
+          "elastance_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "elastance{arity}_{storage}"
+      },
+      "unit_ids": [
+        "elastance.per_F"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "elastance.per_F",
+          "reserved_word_alias": null,
+          "unit_code_id": "per_F"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "illuminance",
+      "binary_schema_id": "units-x.illuminance.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "illuminance_buffer_{storage}"
+      },
+      "canonical_dimension_id": "illuminance",
+      "dimension_id": "illuminance",
+      "public_type": "Illuminance",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "illuminance_f32",
+          "illuminance_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "illuminance{arity}_{storage}"
+      },
+      "unit_ids": [
+        "illuminance.lx"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "illuminance.lx",
+          "reserved_word_alias": null,
+          "unit_code_id": "lx"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "inductance",
+      "binary_schema_id": "units-x.inductance.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "inductance_buffer_{storage}"
+      },
+      "canonical_dimension_id": "inductance",
+      "dimension_id": "inductance",
+      "public_type": "Inductance",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "inductance_f32",
+          "inductance_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "inductance{arity}_{storage}"
+      },
+      "unit_ids": [
+        "inductance.H"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "inductance.H",
+          "reserved_word_alias": null,
+          "unit_code_id": "H"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "inverse_charge",
+      "binary_schema_id": "units-x.inverse_charge.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "inverse_charge_buffer_{storage}"
+      },
+      "canonical_dimension_id": "inverse_charge",
+      "dimension_id": "inverse_charge",
+      "public_type": "InverseCharge",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "inverse_charge_f32",
+          "inverse_charge_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "inverse_charge{arity}_{storage}"
+      },
+      "unit_ids": [
+        "inverse_charge.per_C"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "inverse_charge.per_C",
+          "reserved_word_alias": null,
+          "unit_code_id": "per_C"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "inverse_inductance",
+      "binary_schema_id": "units-x.inverse_inductance.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "inverse_inductance_buffer_{storage}"
+      },
+      "canonical_dimension_id": "inverse_inductance",
+      "dimension_id": "inverse_inductance",
+      "public_type": "InverseInductance",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "inverse_inductance_f32",
+          "inverse_inductance_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "inverse_inductance{arity}_{storage}"
+      },
+      "unit_ids": [
+        "inverse_inductance.per_H"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "inverse_inductance.per_H",
+          "reserved_word_alias": null,
+          "unit_code_id": "per_H"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "inverse_luminous_flux",
+      "binary_schema_id": "units-x.inverse_luminous_flux.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "inverse_luminous_flux_buffer_{storage}"
+      },
+      "canonical_dimension_id": "inverse_luminous_flux",
+      "dimension_id": "inverse_luminous_flux",
+      "public_type": "InverseLuminousFlux",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "inverse_luminous_flux_f32",
+          "inverse_luminous_flux_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "inverse_luminous_flux{arity}_{storage}"
+      },
+      "unit_ids": [
+        "inverse_luminous_flux.per_lm"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "inverse_luminous_flux.per_lm",
+          "reserved_word_alias": null,
+          "unit_code_id": "per_lm"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "inverse_magnetic_flux",
+      "binary_schema_id": "units-x.inverse_magnetic_flux.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "inverse_magnetic_flux_buffer_{storage}"
+      },
+      "canonical_dimension_id": "inverse_magnetic_flux",
+      "dimension_id": "inverse_magnetic_flux",
+      "public_type": "InverseMagneticFlux",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "inverse_magnetic_flux_f32",
+          "inverse_magnetic_flux_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "inverse_magnetic_flux{arity}_{storage}"
+      },
+      "unit_ids": [
+        "inverse_magnetic_flux.per_Wb"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "inverse_magnetic_flux.per_Wb",
+          "reserved_word_alias": null,
+          "unit_code_id": "per_Wb"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "inverse_magnetic_flux_density",
+      "binary_schema_id": "units-x.inverse_magnetic_flux_density.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "inverse_magnetic_flux_density_buffer_{storage}"
+      },
+      "canonical_dimension_id": "inverse_magnetic_flux_density",
+      "dimension_id": "inverse_magnetic_flux_density",
+      "public_type": "InverseMagneticFluxDensity",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "inverse_magnetic_flux_density_f32",
+          "inverse_magnetic_flux_density_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "inverse_magnetic_flux_density{arity}_{storage}"
+      },
+      "unit_ids": [
+        "inverse_magnetic_flux_density.per_T"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "inverse_magnetic_flux_density.per_T",
+          "reserved_word_alias": null,
+          "unit_code_id": "per_T"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "inverse_voltage",
+      "binary_schema_id": "units-x.inverse_voltage.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "inverse_voltage_buffer_{storage}"
+      },
+      "canonical_dimension_id": "inverse_voltage",
+      "dimension_id": "inverse_voltage",
+      "public_type": "InverseVoltage",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "inverse_voltage_f32",
+          "inverse_voltage_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "inverse_voltage{arity}_{storage}"
+      },
+      "unit_ids": [
+        "inverse_voltage.per_V"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "inverse_voltage.per_V",
+          "reserved_word_alias": null,
+          "unit_code_id": "per_V"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "luminous_flux",
+      "binary_schema_id": "units-x.luminous_flux.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "luminous_flux_buffer_{storage}"
+      },
+      "canonical_dimension_id": "luminous_flux",
+      "dimension_id": "luminous_flux",
+      "public_type": "LuminousFlux",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "luminous_flux_f32",
+          "luminous_flux_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "luminous_flux{arity}_{storage}"
+      },
+      "unit_ids": [
+        "luminous_flux.lm"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "luminous_flux.lm",
+          "reserved_word_alias": null,
+          "unit_code_id": "lm"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "magnetic_flux",
+      "binary_schema_id": "units-x.magnetic_flux.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "magnetic_flux_buffer_{storage}"
+      },
+      "canonical_dimension_id": "magnetic_flux",
+      "dimension_id": "magnetic_flux",
+      "public_type": "MagneticFlux",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "magnetic_flux_f32",
+          "magnetic_flux_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "magnetic_flux{arity}_{storage}"
+      },
+      "unit_ids": [
+        "magnetic_flux.Wb"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "magnetic_flux.Wb",
+          "reserved_word_alias": null,
+          "unit_code_id": "Wb"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "magnetic_flux_density",
+      "binary_schema_id": "units-x.magnetic_flux_density.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "magnetic_flux_density_buffer_{storage}"
+      },
+      "canonical_dimension_id": "magnetic_flux_density",
+      "dimension_id": "magnetic_flux_density",
+      "public_type": "MagneticFluxDensity",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "magnetic_flux_density_f32",
+          "magnetic_flux_density_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "magnetic_flux_density{arity}_{storage}"
+      },
+      "unit_ids": [
+        "magnetic_flux_density.T"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "magnetic_flux_density.T",
+          "reserved_word_alias": null,
+          "unit_code_id": "T"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "resistance",
+      "binary_schema_id": "units-x.resistance.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "resistance_buffer_{storage}"
+      },
+      "canonical_dimension_id": "resistance",
+      "dimension_id": "resistance",
+      "public_type": "Resistance",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "resistance_f32",
+          "resistance_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "resistance{arity}_{storage}"
+      },
+      "unit_ids": [
+        "resistance.Ohm"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "resistance.Ohm",
+          "reserved_word_alias": null,
+          "unit_code_id": "Ohm"
+        }
+      ]
+    },
+    {
+      "abi_name_stem": "voltage",
+      "binary_schema_id": "units-x.voltage.v1",
+      "buffer": {
+        "encoding": "base64-le",
+        "type_id_template": "voltage_buffer_{storage}"
+      },
+      "canonical_dimension_id": "voltage",
+      "dimension_id": "voltage",
+      "public_type": "Voltage",
+      "scalar": {
+        "encoding": "object",
+        "type_ids": [
+          "voltage_f32",
+          "voltage_f64"
+        ]
+      },
+      "small_array": {
+        "encoding": "array",
+        "type_id_template": "voltage{arity}_{storage}"
+      },
+      "unit_ids": [
+        "voltage.V"
+      ],
+      "units": [
+        {
+          "binary_unit_id": "voltage.V",
+          "reserved_word_alias": null,
+          "unit_code_id": "V"
+        }
+      ]
+    },
+    {
       "abi_name_stem": "diopter",
       "binary_schema_id": "units-x.diopter.v1",
       "buffer": {
         "encoding": "base64-le",
         "type_id_template": "diopter_buffer_{storage}"
       },
+      "canonical_dimension_id": "inverse_distance",
       "dimension_id": "diopter",
       "public_type": "Diopter",
       "scalar": {

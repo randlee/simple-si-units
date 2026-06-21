@@ -41,6 +41,7 @@ The catalog root contains:
 Each `dimensions[]` entry owns:
 
 - `dimension_id`
+- `canonical_dimension_id`
 - `family`
 - `public_type`
 - `base_unit_code_id`
@@ -76,12 +77,16 @@ The catalog deliberately separates naming layers:
 - `binary_unit_id` is the schema-safe wire id such as `distance.mm` or
   `temperature.degC`.
 - `abi.abi_name_stem` is the dimension-level input to ABI type/function naming.
+- `canonical_dimension_id` is the underlying physical-dimension identity used
+  when a public quantity maps to another canonical dimension, for example
+  `Diopter -> inverse_distance`.
 
 This allows the required distinctions:
 
 - `mm` versus `Mm`
 - `C` versus `degC`
 - `F` versus `degF`
+- first-class public naming versus shared canonical-dimension identity
 
 ## Conversion Rules
 

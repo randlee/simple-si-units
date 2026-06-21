@@ -52,6 +52,7 @@ def validate_schema(payload: Any) -> None:
 def validate_dimension_invariants(dimension: Any, label: str) -> str:
     require(isinstance(dimension, dict), f"{label} must be an object")
     dimension_id = str(dimension["dimension_id"])
+    canonical_dimension_id = str(dimension["canonical_dimension_id"])
     base_unit_code_id = str(dimension["base_unit_code_id"])
     units = dimension["units"]
     seen_unit_ids: set[str] = set()
@@ -82,7 +83,7 @@ def validate_dimension_invariants(dimension: Any, label: str) -> str:
         f"{label}.base_unit_code_id `{base_unit_code_id}` must exist in units[]",
         f"{label}.base_unit_code_id",
     )
-    return dimension_id
+    return dimension_id, canonical_dimension_id
 
 
 def validate_catalog(payload: Any) -> None:
@@ -90,10 +91,19 @@ def validate_catalog(payload: Any) -> None:
     dimensions = payload["dimensions"]
 
     seen_dimension_ids: set[str] = set()
+    canonical_dimension_ids: list[tuple[str, str]] = []
     for index, dimension in enumerate(dimensions):
-        dimension_id = validate_dimension_invariants(dimension, f"dimensions[{index}]")
+        dimension_id, canonical_dimension_id = validate_dimension_invariants(dimension, f"dimensions[{index}]")
         require(dimension_id not in seen_dimension_ids, f"duplicate dimension_id `{dimension_id}`", f"dimensions[{index}].dimension_id")
         seen_dimension_ids.add(dimension_id)
+        canonical_dimension_ids.append((canonical_dimension_id, f"dimensions[{index}].canonical_dimension_id"))
+
+    for canonical_dimension_id, location in canonical_dimension_ids:
+        require(
+            canonical_dimension_id in seen_dimension_ids,
+            f"{location} `{canonical_dimension_id}` must match an existing dimension_id",
+            location,
+        )
 
 
 def main(argv: list[str]) -> int:
