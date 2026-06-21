@@ -36,8 +36,8 @@ jobs:
         with:
           dotnet-version: "8.0.x"
 
-      - name: Install Python generator dependencies
-        run: python -m pip install numpy pandas
+      - name: Install Python CI dependencies
+        run: python -m pip install -r python/requirements-ci.txt
 
       - name: Install just
         run: cargo install just --locked
