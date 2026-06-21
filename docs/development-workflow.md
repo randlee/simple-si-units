@@ -23,6 +23,8 @@ This document records the Phase A local workflow and CI baseline for `units-x`.
 - `just test` is the full repo test pass.
 - `just ci` is the strict local CI-equivalent command set.
 - GitHub Actions runs the same `just ci` entrypoint on Linux, macOS, and Windows.
+- The Python lane includes helper-script tests plus a wheel-build/import smoke test
+  for `units_x._native`.
 
 ## Shipped-Scope Lint Boundary
 
@@ -34,7 +36,7 @@ Phase A enforces two different scopes on purpose:
 2. Shipped-scope linting:
    `sc-lint check`, `sc-lint clippy`, and `sc-lint-boundary` are enforced
    against a synthetic shipped workspace containing only `crates/units-x` and
-   its boundary metadata.
+   `boundaries/units-x` plus the required `boundaries/planning.toml` sentinel.
 
 This exclusion exists because the legacy reference crates remain parity and
 source-extraction oracles, but they are not the Phase A shipped deliverable and
@@ -48,3 +50,15 @@ baseline.
   the shipped crate.
 - `just ci` runs the shipped-scope clippy and boundary gates after the full
   repo test pass.
+- CI installs pinned Rust, Python, `.NET`, `just`, `sc-lint`, and
+  `sc-lint-boundary` versions from checked-in workflow metadata.
+
+## Windows / Encoding Assumptions
+
+- Python helper scripts read and write text as UTF-8 only.
+- Generated text files use LF newlines so Windows, macOS, and Linux compare the
+  same serialized content in CI.
+- The shipped-scope workspace helpers must work with paths containing spaces and
+  native platform separators.
+- GitHub Actions enforces these assumptions by running `just ci` on
+  `windows-latest` with `PYTHONUTF8=1`.

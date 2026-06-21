@@ -6,7 +6,7 @@ Create a repeatable build and test baseline for the new crate and workspace.
 
 ## Status
 
-`Done`
+`In Progress`
 
 ## Scope References
 
@@ -45,15 +45,17 @@ The new crate must not repeat the ambiguous build behavior of the current projec
 
 1. Baseline build and test entrypoints are documented and runnable from repo root.
 2. CI includes Linux, macOS, and Windows coverage for the shipped scope.
-3. `just test` includes generation, version-lock verification, linting, and tests.
+3. `just test` includes generation, version-lock verification, linting, Rust tests, Python wheel smoke, and `.NET` scaffold validation.
 4. The Phase A shipped scope has an explicit lint baseline, including any documented exclusions for legacy reference-only debt.
 5. Platform-sensitive generation or serialization helpers document their encoding/path assumptions explicitly.
+6. CI installs pinned tool and package versions rather than floating channels.
 
 ## Required Validation
 
 1. `just test` fails on version drift.
 2. CI baseline exercises Windows text/encoding-sensitive paths.
 3. `sc-lint check`, `sc-lint clippy`, and `sc-lint-boundary` are either green for the shipped scope or the exclusion boundary is documented and enforced.
+4. The Python publish lane can build a wheel from `python/` and import `units_x._native`.
 
 ## Edge / Corner Conditions Requiring Dedicated Tests
 
@@ -67,5 +69,6 @@ Phase A uses an enforced shipped-scope lint boundary:
 
 - full-repo tests still include `reference/`
 - shipped-scope `sc-lint` and `sc-lint-boundary` gates run against a synthetic
-  workspace containing only `crates/units-x`
+  workspace containing only `crates/units-x`, `boundaries/units-x`, and the
+  required `boundaries/planning.toml` sentinel
 - the exclusion is documented in `docs/development-workflow.md`

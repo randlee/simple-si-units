@@ -13,8 +13,10 @@ readme = "README.md"
 [lib]
 name = "units_x"
 path = "src/lib.rs"
+crate-type = ["cdylib", "rlib"]
 
 [features]
 default = []
 
 [dependencies]
+pyo3 = { version = "0.22.6", features = ["abi3-py311"] }

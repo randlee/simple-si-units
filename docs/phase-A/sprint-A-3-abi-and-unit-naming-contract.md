@@ -6,7 +6,7 @@ Lock the fundamental naming, layout, and ABI rules for the project.
 
 ## Status
 
-`Done`
+`In Progress`
 
 ## Scope References
 
@@ -84,8 +84,8 @@ This project depends on stable, cross-language behavior. Naming and layout rules
 ### Ownership And Error Boundaries
 
 1. Borrowed inputs use pointer-plus-length view structs and do not transfer ownership.
-2. APIs that require caller-provided outputs must reject null output pointers explicitly.
-3. Any API that returns Rust-owned memory must pair that allocation surface with a dedicated destroy function.
+2. APIs that require caller-provided outputs must reject null output pointers explicitly with `UNITS_X_STATUS_OWNED_OUTPUT_REQUIRED`.
+3. Any API that returns Rust-owned memory must surface an explicit ownership shape with enough deallocation metadata for foreign callers to pass that object back unchanged.
 4. The destroy function policy is ABI-layer-specific and does not imply anything about the binary wire format.
 
 ### ABI vs Wire Format
@@ -125,30 +125,69 @@ pub struct distance_mm_i32_slice {
     pub len: u64,
 }
 
-#[repr(C)]
+#[repr(u32)]
 pub enum units_x_status {
     UNITS_X_STATUS_OK = 0,
     UNITS_X_STATUS_NULL_WITH_LENGTH = 1,
     UNITS_X_STATUS_LOSSY_CONVERSION = 2,
+    UNITS_X_STATUS_OWNED_OUTPUT_REQUIRED = 3,
+    UNITS_X_STATUS_INVALID_OWNED_BUFFER = 4,
 }
 
-pub extern "C" fn units_x_distance_mm_i32_slice_sum(
+#[repr(C)]
+pub struct units_x_owned_bytes {
+    pub ptr: *mut core::ffi::c_void,
+    pub len_bytes: u64,
+    pub capacity_bytes: u64,
+}
+
+impl distance_mm_i32_slice {
+    pub const fn is_contract_valid(self) -> bool {
+        self.ptr.is_null() == (self.len == 0)
+    }
+}
+
+#[unsafe(no_mangle)]
+pub unsafe extern "C" fn units_x_distance_mm_i32_slice_sum(
     input: distance_mm_i32_slice,
     out: *mut distance_mm_i32,
-) -> units_x_status;
+) -> units_x_status {
+    if !input.is_contract_valid() {
+        return units_x_status::UNITS_X_STATUS_NULL_WITH_LENGTH;
+    }
+    if out.is_null() {
+        return units_x_status::UNITS_X_STATUS_OWNED_OUTPUT_REQUIRED;
+    }
+    units_x_status::UNITS_X_STATUS_OK
+}
 
-pub extern "C" fn units_x_owned_buffer_destroy(
-    ptr: *mut core::ffi::c_void,
-    len: u64,
-) -> units_x_status;
+#[unsafe(no_mangle)]
+pub unsafe extern "C" fn units_x_owned_buffer_destroy(
+    buffer: units_x_owned_bytes,
+) -> units_x_status {
+    if buffer.ptr.is_null() {
+        return if buffer.len_bytes == 0 && buffer.capacity_bytes == 0 {
+            units_x_status::UNITS_X_STATUS_OK
+        } else {
+            units_x_status::UNITS_X_STATUS_NULL_WITH_LENGTH
+        };
+    }
+    if buffer.capacity_bytes < buffer.len_bytes {
+        return units_x_status::UNITS_X_STATUS_INVALID_OWNED_BUFFER;
+    }
+    units_x_status::UNITS_X_STATUS_OK
+}
 
 pub struct mm;
 pub struct Mm;
 pub struct degC;
+pub struct degF;
 ```
 
 Contract note:
 
 - `ptr == null && len == 0` is the only valid empty-slice representation.
 - `ptr == null && len > 0` is rejected.
+- `out == null` is rejected with `UNITS_X_STATUS_OWNED_OUTPUT_REQUIRED`.
+- Rust-owned output buffers use `units_x_owned_bytes`, and both `len_bytes` and `capacity_bytes` are byte counts.
 - binary wire envelopes remain a separate serialized contract and are not ABI structs.
