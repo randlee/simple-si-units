@@ -41,6 +41,19 @@ class CiBaselineTests(unittest.TestCase):
         self.assertIn("LF", doc)
         self.assertIn("paths containing spaces", doc)
 
+    def test_python_ci_requirements_are_exactly_pinned(self) -> None:
+        requirements = (ROOT / "python" / "requirements-ci.txt").read_text(encoding="utf-8").splitlines()
+        self.assertEqual(
+            [line.strip() for line in requirements if line.strip()],
+            [
+                "build==1.3.0",
+                "jsonschema==4.25.1",
+                "maturin==1.14.1",
+                "numpy==2.3.1",
+                "pandas==3.0.2",
+            ],
+        )
+
     def test_shipped_scope_workspace_excludes_reference_and_uses_utf8_lf(self) -> None:
         with tempfile.TemporaryDirectory(prefix="units x scope ") as tmpdir:
             scope_root = Path(tmpdir) / "scope with spaces"

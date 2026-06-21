@@ -28,6 +28,7 @@ def build_and_import(repo_root: Path) -> int:
         "-m",
         "build",
         "--wheel",
+        "--no-isolation",
         "--outdir",
         str(dist_dir),
         str(python_root),
