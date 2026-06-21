@@ -37,6 +37,7 @@ class CiBaselineTests(unittest.TestCase):
         doc = (ROOT / "docs" / "development-workflow.md").read_text(encoding="utf-8")
         self.assertIn("synthetic shipped workspace", doc)
         self.assertIn("reference/", doc)
+        self.assertIn("units-x-python", doc)
         self.assertIn("UTF-8", doc)
         self.assertIn("LF", doc)
         self.assertIn("paths containing spaces", doc)
@@ -64,6 +65,10 @@ class CiBaselineTests(unittest.TestCase):
             self.assertTrue((scope_root / "boundaries" / "planning.toml").exists())
             self.assertTrue((scope_root / "boundaries" / "units-x" / "core-surface.toml").exists())
             self.assertTrue((scope_root / "crates" / "units-x").exists())
+            self.assertTrue((scope_root / "boundaries" / "units-x-python" / "python-surface.toml").exists())
+            self.assertTrue((scope_root / "crates" / "units-x-python").exists())
+            manifest_text = manifest_bytes.decode("utf-8")
+            self.assertIn('members = ["crates/units-x", "crates/units-x-python"]', manifest_text)
 
 
 if __name__ == "__main__":

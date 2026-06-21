@@ -25,6 +25,7 @@ class WorkspaceScaffoldTests(unittest.TestCase):
             ROOT / ".just" / "run_python_package_smoke.py",
             ROOT / "scripts" / "sync_version_files.py",
             ROOT / "boundaries" / "units-x" / "core-surface.toml",
+            ROOT / "boundaries" / "units-x-python" / "python-surface.toml",
         )
         for path in expected:
             self.assertTrue(path.exists(), path.as_posix())

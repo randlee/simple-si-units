@@ -46,8 +46,9 @@ baseline.
 ## Enforcement Notes
 
 - The shipped-scope Rust lint wrappers live under `.just/`.
-- `boundaries/units-x/core-surface.toml` is the boundary inventory baseline for
-  the shipped crate.
+- `boundaries/units-x/core-surface.toml` and
+  `boundaries/units-x-python/python-surface.toml` are the boundary inventory
+  baselines for the shipped Rust crates.
 - `just ci` runs the shipped-scope clippy and boundary gates after the full
   repo test pass.
 - CI installs pinned Rust, Python, `.NET`, `just`, `sc-lint`, and
@@ -58,6 +59,9 @@ baseline.
 - Python helper scripts read and write text as UTF-8 only.
 - Generated text files use LF newlines so Windows, macOS, and Linux compare the
   same serialized content in CI.
+- The synthetic shipped workspace must include `crates/units-x`,
+  `crates/units-x-python`, `boundaries/units-x`, and
+  `boundaries/units-x-python`.
 - The shipped-scope workspace helpers must work with paths containing spaces and
   native platform separators.
 - GitHub Actions enforces these assumptions by running `just ci` on
