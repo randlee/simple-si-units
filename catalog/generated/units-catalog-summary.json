@@ -1,0 +1,71 @@
+{
+  "catalog_version": "0.1.0-phase-a",
+  "dimension_count": 6,
+  "dimensions": [
+    {
+      "binary_schema_id": "units-x.distance.v1",
+      "buffer_type_id_template": "distance_buffer_{storage}",
+      "default_encoding": "array",
+      "dimension_id": "distance",
+      "public_type": "Distance",
+      "unit_ids": [
+        "distance.mm",
+        "distance.m",
+        "distance.ft"
+      ]
+    },
+    {
+      "binary_schema_id": "units-x.time.v1",
+      "buffer_type_id_template": "time_buffer_{storage}",
+      "default_encoding": "array",
+      "dimension_id": "time",
+      "public_type": "Time",
+      "unit_ids": [
+        "time.s",
+        "time.ms"
+      ]
+    },
+    {
+      "binary_schema_id": "units-x.temperature.v1",
+      "buffer_type_id_template": "temperature_buffer_{storage}",
+      "default_encoding": "array",
+      "dimension_id": "temperature",
+      "public_type": "Temperature",
+      "unit_ids": [
+        "temperature.K",
+        "temperature.degC",
+        "temperature.degF"
+      ]
+    },
+    {
+      "binary_schema_id": "units-x.velocity.v1",
+      "buffer_type_id_template": "velocity_buffer_{storage}",
+      "default_encoding": "array",
+      "dimension_id": "velocity",
+      "public_type": "Velocity",
+      "unit_ids": [
+        "velocity.mps"
+      ]
+    },
+    {
+      "binary_schema_id": "units-x.acceleration.v1",
+      "buffer_type_id_template": "acceleration_buffer_{storage}",
+      "default_encoding": "array",
+      "dimension_id": "acceleration",
+      "public_type": "Acceleration",
+      "unit_ids": [
+        "acceleration.mps2"
+      ]
+    },
+    {
+      "binary_schema_id": "units-x.diopter.v1",
+      "buffer_type_id_template": "diopter_buffer_{storage}",
+      "default_encoding": "array",
+      "dimension_id": "diopter",
+      "public_type": "Diopter",
+      "unit_ids": [
+        "diopter.dpt"
+      ]
+    }
+  ]
+}

@@ -53,6 +53,13 @@ def main(argv: list[str]) -> int:
             print(completed.stderr, end="", file=sys.stderr)
         return completed.returncode
 
+    catalog_generation = subprocess.run(
+        [sys.executable or "python3", str(repo_root / "scripts/generate_catalog_artifacts.py"), "--mode", "write"],
+        cwd=repo_root,
+    )
+    if catalog_generation.returncode != 0:
+        return catalog_generation.returncode
+
     formatted = subprocess.run(["cargo", "fmt", "--all"], cwd=repo_root)
     return formatted.returncode
 
