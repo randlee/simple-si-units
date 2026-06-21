@@ -1,6 +1,6 @@
 [build-system]
-requires = ["setuptools>=69", "wheel"]
-build-backend = "setuptools.build_meta"
+requires = ["maturin>=1.9.4,<2.0"]
+build-backend = "maturin"
 
 [project]
 name = "units-x"
@@ -14,4 +14,11 @@ classifiers = [
     "Development Status :: 3 - Alpha",
     "License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)",
     "Programming Language :: Python :: 3",
+    "Programming Language :: Rust",
 ]
+
+[tool.maturin]
+manifest-path = "../crates/units-x/Cargo.toml"
+bindings = "pyo3"
+module-name = "units_x._native"
+python-source = "."

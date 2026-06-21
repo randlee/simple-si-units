@@ -35,8 +35,8 @@ def dotnet_test_projects(repo_root: Path) -> list[Path]:
 def run_all(repo_root: Path) -> int:
     commands = [
         ["just", "clean"],
-        ["just", "generate"],
         [sys.executable or "python3", str(repo_root / ".just/check_version_sync.py")],
+        ["just", "generate"],
         [sys.executable or "python3", str(repo_root / ".just/run_lint.py"), "fast"],
         ["cargo", "test", "--workspace", "--all-features"],
         [sys.executable or "python3", str(repo_root / ".just/run_pytests.py")],
