@@ -26,14 +26,28 @@ def build_summary(catalog: dict) -> dict:
             {
                 "dimension_id": dimension["dimension_id"],
                 "public_type": dimension["public_type"],
+                "scalar_type_ids": dimension["json_forms"]["scalar_type_ids"],
+                "small_array_type_id_template": dimension["json_forms"]["small_array_type_id_template"],
                 "default_encoding": dimension["json_forms"]["default_encoding"],
                 "buffer_type_id_template": dimension["json_forms"]["buffer_type_id_template"],
                 "binary_schema_id": dimension["abi"]["binary_schema_id"],
+                "units": [
+                    {
+                        "unit_code_id": unit["unit_code_id"],
+                        "binary_unit_id": unit["binary_unit_id"],
+                        "reserved_word_alias": unit["reserved_word_alias"],
+                    }
+                    for unit in dimension["units"]
+                ],
                 "unit_ids": [unit["binary_unit_id"] for unit in dimension["units"]],
             }
             for dimension in dimensions
         ],
     }
+
+
+def rust_string_literal(value: str) -> str:
+    return json.dumps(value)
 
 
 def render_rust_module(summary: dict) -> str:
@@ -45,36 +59,33 @@ def render_rust_module(summary: dict) -> str:
         "pub struct CatalogDimensionMetadata {",
         "    pub dimension_id: &'static str,",
         "    pub public_type: &'static str,",
+        "    pub scalar_type_ids: &'static [&'static str],",
+        "    pub small_array_type_id_template: &'static str,",
         "    pub default_encoding: &'static str,",
         "    pub buffer_type_id_template: &'static str,",
         "    pub binary_schema_id: &'static str,",
         "}",
         "",
-        f'pub const CATALOG_VERSION: &str = "{summary["catalog_version"]}";',
+        f"pub const CATALOG_VERSION: &str = {rust_string_literal(summary['catalog_version'])};",
         f"pub const DIMENSION_COUNT: usize = {summary['dimension_count']};",
         "pub const DIMENSIONS: &[CatalogDimensionMetadata] = &[",
     ]
     for dimension in dimensions:
+        scalar_literals = ", ".join(rust_string_literal(value) for value in dimension["scalar_type_ids"])
         lines.extend(
             [
                 "    CatalogDimensionMetadata {",
-                f'        dimension_id: "{dimension["dimension_id"]}",',
-                f'        public_type: "{dimension["public_type"]}",',
-                f'        default_encoding: "{dimension["default_encoding"]}",',
-                f'        buffer_type_id_template: "{dimension["buffer_type_id_template"]}",',
-                f'        binary_schema_id: "{dimension["binary_schema_id"]}",',
+                f"        dimension_id: {rust_string_literal(dimension['dimension_id'])},",
+                f"        public_type: {rust_string_literal(dimension['public_type'])},",
+                f"        scalar_type_ids: &[{scalar_literals}],",
+                f"        small_array_type_id_template: {rust_string_literal(dimension['small_array_type_id_template'])},",
+                f"        default_encoding: {rust_string_literal(dimension['default_encoding'])},",
+                f"        buffer_type_id_template: {rust_string_literal(dimension['buffer_type_id_template'])},",
+                f"        binary_schema_id: {rust_string_literal(dimension['binary_schema_id'])},",
                 "    },",
             ]
         )
-    lines.extend(
-        [
-            "];",
-            "",
-            "pub const DISTANCE_BUFFER_TYPE_ID_TEMPLATE: &str = \"distance_buffer_{storage}\";",
-            "pub const TEMPERATURE_BUFFER_TYPE_ID_TEMPLATE: &str = \"temperature_buffer_{storage}\";",
-            "",
-        ]
-    )
+    lines.extend(["];", ""])
     return "\n".join(lines)
 
 

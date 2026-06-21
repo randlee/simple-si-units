@@ -10,6 +10,10 @@ from lint_common import discover_repo_root
 
 
 VALID_SCOPES = ("all", "unit", "python", "dotnet", "integration", "rust", "help")
+GENERATED_ARTIFACT_PATHS = (
+    "catalog/generated/units-catalog-summary.json",
+    "crates/units-x/src/generated/catalog_metadata.rs",
+)
 
 
 def print_help() -> None:
@@ -28,6 +32,15 @@ def run_command(command: list[str], repo_root: Path) -> int:
     return completed.returncode
 
 
+def generated_artifacts_are_dirty(repo_root: Path) -> bool:
+    completed = subprocess.run(
+        ["git", "diff", "--quiet", "--", *GENERATED_ARTIFACT_PATHS],
+        cwd=repo_root,
+        check=False,
+    )
+    return completed.returncode == 1
+
+
 def python_checks(repo_root: Path) -> list[list[str]]:
     python = sys.executable or "python3"
     return [
@@ -41,6 +54,7 @@ def dotnet_test_projects(repo_root: Path) -> list[Path]:
 
 
 def run_all(repo_root: Path) -> int:
+    generated_were_dirty = generated_artifacts_are_dirty(repo_root)
     commands = [
         ["just", "clean"],
         [sys.executable or "python3", str(repo_root / ".just/check_version_sync.py")],
@@ -49,6 +63,16 @@ def run_all(repo_root: Path) -> int:
         [sys.executable or "python3", str(repo_root / ".just/run_lint.py"), "fast"],
         ["cargo", "test", "--workspace", "--all-features"],
     ]
+    if generated_were_dirty:
+        commands.insert(
+            4,
+            [sys.executable or "python3", str(repo_root / "scripts/generate_catalog_artifacts.py"), "--mode", "check"],
+        )
+    else:
+        commands.insert(
+            4,
+            [sys.executable or "python3", str(repo_root / "scripts/check_generated_artifacts_clean.py")],
+        )
     commands.extend(python_checks(repo_root))
     for command in commands:
         code = run_command(command, repo_root)

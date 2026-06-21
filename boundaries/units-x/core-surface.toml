@@ -13,7 +13,7 @@ visibility = "public"
 constructor = "none"
 
 [composition]
-roots = ["ffi_contract", "quantity", "VERSION", "_native", "version"]
+roots = ["ffi_contract", "generated", "quantity", "VERSION", "_native", "version"]
 
 [dependencies]
 allowed_dependents = []

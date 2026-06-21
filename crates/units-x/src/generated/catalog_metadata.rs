@@ -4,6 +4,8 @@
 pub struct CatalogDimensionMetadata {
     pub dimension_id: &'static str,
     pub public_type: &'static str,
+    pub scalar_type_ids: &'static [&'static str],
+    pub small_array_type_id_template: &'static str,
     pub default_encoding: &'static str,
     pub buffer_type_id_template: &'static str,
     pub binary_schema_id: &'static str,
@@ -15,6 +17,8 @@ pub const DIMENSIONS: &[CatalogDimensionMetadata] = &[
     CatalogDimensionMetadata {
         dimension_id: "distance",
         public_type: "Distance",
+        scalar_type_ids: &["distance_i32", "distance_f32", "distance_f64"],
+        small_array_type_id_template: "distance{arity}_{storage}",
         default_encoding: "array",
         buffer_type_id_template: "distance_buffer_{storage}",
         binary_schema_id: "units-x.distance.v1",
@@ -22,6 +26,8 @@ pub const DIMENSIONS: &[CatalogDimensionMetadata] = &[
     CatalogDimensionMetadata {
         dimension_id: "time",
         public_type: "Time",
+        scalar_type_ids: &["time_i32", "time_f32", "time_f64"],
+        small_array_type_id_template: "time{arity}_{storage}",
         default_encoding: "array",
         buffer_type_id_template: "time_buffer_{storage}",
         binary_schema_id: "units-x.time.v1",
@@ -29,6 +35,8 @@ pub const DIMENSIONS: &[CatalogDimensionMetadata] = &[
     CatalogDimensionMetadata {
         dimension_id: "temperature",
         public_type: "Temperature",
+        scalar_type_ids: &["temperature_f32", "temperature_f64"],
+        small_array_type_id_template: "temperature{arity}_{storage}",
         default_encoding: "array",
         buffer_type_id_template: "temperature_buffer_{storage}",
         binary_schema_id: "units-x.temperature.v1",
@@ -36,6 +44,8 @@ pub const DIMENSIONS: &[CatalogDimensionMetadata] = &[
     CatalogDimensionMetadata {
         dimension_id: "velocity",
         public_type: "Velocity",
+        scalar_type_ids: &["velocity_f32", "velocity_f64"],
+        small_array_type_id_template: "velocity{arity}_{storage}",
         default_encoding: "array",
         buffer_type_id_template: "velocity_buffer_{storage}",
         binary_schema_id: "units-x.velocity.v1",
@@ -43,6 +53,8 @@ pub const DIMENSIONS: &[CatalogDimensionMetadata] = &[
     CatalogDimensionMetadata {
         dimension_id: "acceleration",
         public_type: "Acceleration",
+        scalar_type_ids: &["acceleration_f32", "acceleration_f64"],
+        small_array_type_id_template: "acceleration{arity}_{storage}",
         default_encoding: "array",
         buffer_type_id_template: "acceleration_buffer_{storage}",
         binary_schema_id: "units-x.acceleration.v1",
@@ -50,11 +62,10 @@ pub const DIMENSIONS: &[CatalogDimensionMetadata] = &[
     CatalogDimensionMetadata {
         dimension_id: "diopter",
         public_type: "Diopter",
+        scalar_type_ids: &["diopter_f32", "diopter_f64"],
+        small_array_type_id_template: "diopter{arity}_{storage}",
         default_encoding: "array",
         buffer_type_id_template: "diopter_buffer_{storage}",
         binary_schema_id: "units-x.diopter.v1",
     },
 ];
-
-pub const DISTANCE_BUFFER_TYPE_ID_TEMPLATE: &str = "distance_buffer_{storage}";
-pub const TEMPERATURE_BUFFER_TYPE_ID_TEMPLATE: &str = "temperature_buffer_{storage}";

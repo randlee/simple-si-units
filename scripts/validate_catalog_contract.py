@@ -10,6 +10,7 @@ from jsonschema import Draft202012Validator
 
 
 ROOT = Path(__file__).resolve().parent.parent
+PRODUCTION_CATALOG = ROOT / "catalog" / "units-catalog.json"
 SAMPLE_CATALOG = ROOT / "catalog" / "examples" / "phase-a-sample-catalog.json"
 CATALOG_SCHEMA = ROOT / "catalog" / "schema" / "units-catalog.schema.json"
 
@@ -47,8 +48,13 @@ def validate_dimension_invariants(dimension: Any, label: str) -> str:
     for index, unit in enumerate(units):
         unit_code_id = str(unit["unit_code_id"])
         binary_unit_id = str(unit["binary_unit_id"])
+        expected_binary_id = f"{dimension_id}.{unit_code_id}"
         require(unit_code_id not in seen_unit_ids, f"{label} contains duplicate unit_code_id `{unit_code_id}`")
         require(binary_unit_id not in seen_binary_ids, f"{label} contains duplicate binary_unit_id `{binary_unit_id}`")
+        require(
+            binary_unit_id == expected_binary_id,
+            f"{label}.units[{index}].binary_unit_id `{binary_unit_id}` must match `{expected_binary_id}`",
+        )
         seen_unit_ids.add(unit_code_id)
         seen_binary_ids.add(binary_unit_id)
     require(base_unit_code_id in seen_unit_ids, f"{label}.base_unit_code_id `{base_unit_code_id}` must exist in units[]")
@@ -68,7 +74,7 @@ def validate_catalog(payload: Any) -> None:
 
 def main(argv: list[str]) -> int:
     parser = argparse.ArgumentParser(description="Validate the units-x Phase A catalog contract.")
-    parser.add_argument("catalog", nargs="?", default=SAMPLE_CATALOG.as_posix())
+    parser.add_argument("catalog", nargs="?", default=PRODUCTION_CATALOG.as_posix())
     args = parser.parse_args(argv[1:])
 
     path = Path(args.catalog)

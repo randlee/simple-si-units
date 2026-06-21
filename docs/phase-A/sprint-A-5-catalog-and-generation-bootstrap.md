@@ -6,7 +6,7 @@ Build the first real catalog-driven generation baseline so later phases do not d
 
 ## Status
 
-`Done`
+`In Progress`
 
 ## Scope References
 

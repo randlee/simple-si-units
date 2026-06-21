@@ -35,13 +35,42 @@ class RunTestsBehaviorTests(unittest.TestCase):
             repo_root = Path(tmpdir)
             touch(repo_root / "dotnet" / "src" / "UnitsX" / "UnitsX.csproj")
 
-            with mock.patch.object(run_tests, "run_command", return_value=0) as run_command:
+            with mock.patch.object(run_tests, "generated_artifacts_are_dirty", return_value=False), mock.patch.object(
+                run_tests, "run_command", return_value=0
+            ) as run_command:
                 code = run_tests.run_all(repo_root)
 
             self.assertEqual(code, 0)
             commands = [call.args[0] for call in run_command.call_args_list]
             self.assertIn(
                 [run_tests.sys.executable or "python3", str(repo_root / ".just/run_python_package_smoke.py")],
+                commands,
+            )
+            self.assertIn(
+                [run_tests.sys.executable or "python3", str(repo_root / "scripts/check_generated_artifacts_clean.py")],
+                commands,
+            )
+            self.assertLess(
+                commands.index(["just", "generate"]),
+                commands.index(
+                    [run_tests.sys.executable or "python3", str(repo_root / "scripts/check_generated_artifacts_clean.py")]
+                ),
+            )
+
+    def test_run_all_uses_post_generate_catalog_check_when_generated_files_were_already_dirty(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="units-x-run-tests-") as tmpdir:
+            repo_root = Path(tmpdir)
+            touch(repo_root / "dotnet" / "src" / "UnitsX" / "UnitsX.csproj")
+
+            with mock.patch.object(run_tests, "generated_artifacts_are_dirty", return_value=True), mock.patch.object(
+                run_tests, "run_command", return_value=0
+            ) as run_command:
+                code = run_tests.run_all(repo_root)
+
+            self.assertEqual(code, 0)
+            commands = [call.args[0] for call in run_command.call_args_list]
+            self.assertIn(
+                [run_tests.sys.executable or "python3", str(repo_root / "scripts/generate_catalog_artifacts.py"), "--mode", "check"],
                 commands,
             )
 
