@@ -52,6 +52,7 @@ def run_all(repo_root: Path) -> int:
     commands = [
         ["just", "clean"],
         [sys.executable or "python3", str(repo_root / ".just/check_version_sync.py")],
+        [sys.executable or "python3", str(repo_root / "scripts/sync_tool_versions.py"), "--check"],
         ["just", "generate"],
         [sys.executable or "python3", str(repo_root / ".just/run_lint.py"), "fast"],
         ["cargo", "test", "--workspace", "--all-features"],

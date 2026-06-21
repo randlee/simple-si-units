@@ -53,7 +53,7 @@ jobs:
       - uses: actions/checkout@v5
 
       - name: Install Rust toolchain
-        uses: dtolnay/rust-toolchain@stable
+        uses: dtolnay/rust-toolchain@{actions["rust_toolchain_action_ref"]}
         with:
           toolchain: "{actions["rust_toolchain"]}"
           components: clippy, rustfmt

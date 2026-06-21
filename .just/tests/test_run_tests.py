@@ -41,6 +41,10 @@ class RunTestsBehaviorTests(unittest.TestCase):
             self.assertEqual(code, 0)
             commands = [call.args[0] for call in run_command.call_args_list]
             self.assertIn(
+                [run_tests.sys.executable or "python3", str(repo_root / "scripts/sync_tool_versions.py"), "--check"],
+                commands,
+            )
+            self.assertIn(
                 [run_tests.sys.executable or "python3", str(repo_root / ".just/run_python_package_smoke.py")],
                 commands,
             )

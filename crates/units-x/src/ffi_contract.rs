@@ -87,9 +87,38 @@ impl units_x_owned_bytes {
 pub enum units_x_status {
     UNITS_X_STATUS_OK = 0,
     UNITS_X_STATUS_NULL_WITH_LENGTH = 1,
-    UNITS_X_STATUS_LOSSY_CONVERSION = 2,
+    UNITS_X_STATUS_ARITHMETIC_OVERFLOW = 2,
     UNITS_X_STATUS_OWNED_OUTPUT_REQUIRED = 3,
     UNITS_X_STATUS_INVALID_OWNED_BUFFER = 4,
+    UNITS_X_STATUS_SLICE_LENGTH_OVERFLOW = 5,
+    UNITS_X_STATUS_OWNED_BUFFER_RANGE_OVERFLOW = 6,
+}
+
+fn abi_len_to_usize_with_status(
+    len: u64,
+    max_value: u64,
+    overflow_status: units_x_status,
+) -> Result<usize, units_x_status> {
+    if len > max_value {
+        return Err(overflow_status);
+    }
+    Ok(len as usize)
+}
+
+fn abi_slice_len_to_usize(len: u64) -> Result<usize, units_x_status> {
+    abi_len_to_usize_with_status(
+        len,
+        usize::MAX as u64,
+        units_x_status::UNITS_X_STATUS_SLICE_LENGTH_OVERFLOW,
+    )
+}
+
+fn abi_owned_range_to_usize(len: u64) -> Result<usize, units_x_status> {
+    abi_len_to_usize_with_status(
+        len,
+        usize::MAX as u64,
+        units_x_status::UNITS_X_STATUS_OWNED_BUFFER_RANGE_OVERFLOW,
+    )
 }
 
 /// Representative scalar-returning ABI export shape.
@@ -114,12 +143,15 @@ pub unsafe extern "C" fn units_x_distance_mm_i32_slice_sum(
         unsafe { out.write(distance_mm_i32 { value_mm: 0 }) };
         return units_x_status::UNITS_X_STATUS_OK;
     }
-    let values = unsafe { slice::from_raw_parts(input.ptr, input.len as usize) };
+    let Ok(len) = abi_slice_len_to_usize(input.len) else {
+        return units_x_status::UNITS_X_STATUS_SLICE_LENGTH_OVERFLOW;
+    };
+    let values = unsafe { slice::from_raw_parts(input.ptr, len) };
     let total = values
         .iter()
         .fold(0_i64, |acc, item| acc + i64::from(item.value_mm));
     let Ok(value_mm) = i32::try_from(total) else {
-        return units_x_status::UNITS_X_STATUS_LOSSY_CONVERSION;
+        return units_x_status::UNITS_X_STATUS_ARITHMETIC_OVERFLOW;
     };
     unsafe { out.write(distance_mm_i32 { value_mm }) };
     units_x_status::UNITS_X_STATUS_OK
@@ -148,11 +180,11 @@ pub unsafe extern "C" fn units_x_owned_buffer_destroy(
     if buffer.ptr.is_null() {
         return units_x_status::UNITS_X_STATUS_OK;
     }
-    let Ok(len_bytes) = usize::try_from(buffer.len_bytes) else {
-        return units_x_status::UNITS_X_STATUS_LOSSY_CONVERSION;
+    let Ok(len_bytes) = abi_owned_range_to_usize(buffer.len_bytes) else {
+        return units_x_status::UNITS_X_STATUS_OWNED_BUFFER_RANGE_OVERFLOW;
     };
-    let Ok(capacity_bytes) = usize::try_from(buffer.capacity_bytes) else {
-        return units_x_status::UNITS_X_STATUS_LOSSY_CONVERSION;
+    let Ok(capacity_bytes) = abi_owned_range_to_usize(buffer.capacity_bytes) else {
+        return units_x_status::UNITS_X_STATUS_OWNED_BUFFER_RANGE_OVERFLOW;
     };
     unsafe {
         drop(Vec::from_raw_parts(
@@ -226,7 +258,7 @@ mod tests {
     }
 
     #[test]
-    fn slice_sum_reports_lossy_conversion_for_i32_overflow() {
+    fn slice_sum_reports_arithmetic_overflow_for_i32_overflow() {
         let values = [
             distance_mm_i32 { value_mm: i32::MAX },
             distance_mm_i32 { value_mm: 1 },
@@ -239,7 +271,7 @@ mod tests {
 
         let status = unsafe { units_x_distance_mm_i32_slice_sum(input, &mut out) };
 
-        assert_eq!(status, units_x_status::UNITS_X_STATUS_LOSSY_CONVERSION);
+        assert_eq!(status, units_x_status::UNITS_X_STATUS_ARITHMETIC_OVERFLOW);
         assert_eq!(out.value_mm, 0);
     }
 
@@ -302,5 +334,32 @@ mod tests {
         let status = unsafe { units_x_owned_buffer_destroy(buffer) };
 
         assert_eq!(status, units_x_status::UNITS_X_STATUS_OK);
+    }
+
+    #[test]
+    fn abi_slice_len_conversion_reports_overflow_status() {
+        let status = abi_len_to_usize_with_status(
+            5,
+            4,
+            units_x_status::UNITS_X_STATUS_SLICE_LENGTH_OVERFLOW,
+        )
+        .unwrap_err();
+
+        assert_eq!(status, units_x_status::UNITS_X_STATUS_SLICE_LENGTH_OVERFLOW);
+    }
+
+    #[test]
+    fn abi_owned_buffer_conversion_reports_overflow_status() {
+        let status = abi_len_to_usize_with_status(
+            9,
+            8,
+            units_x_status::UNITS_X_STATUS_OWNED_BUFFER_RANGE_OVERFLOW,
+        )
+        .unwrap_err();
+
+        assert_eq!(
+            status,
+            units_x_status::UNITS_X_STATUS_OWNED_BUFFER_RANGE_OVERFLOW
+        );
     }
 }
