@@ -7,7 +7,7 @@ scalar type set.
 
 ## Status
 
-`Not Started`
+`Complete`
 
 ## Scope References
 
@@ -34,8 +34,8 @@ scalar type set.
 
 1. Core transparent quantity container separating unit marker and storage payload
 2. Foundational unit marker traits
-3. Public type definitions for every item in
-   [docs/crates/units-x/in-scope-type-inventory.md](/Volumes/Extreme%20Pro/github/simple-si-units/docs/crates/units-x/in-scope-type-inventory.md)
+3. Public type definitions for every catalog-defined public type in
+   `catalog/generated/units-catalog-summary.json`
 4. `Diopter` public type mapped to the inverse-distance dimension
 5. Size assertions demonstrating zero additional storage overhead
 6. Catalog-metadata-backed type/unit generation or parity checks for the public
@@ -60,8 +60,8 @@ scalar type set.
 ## Acceptance Criteria
 
 1. The primary quantity container shape is implemented with explicit unit marker and storage payload separation.
-2. Foundational unit markers exist for every item in the authoritative
-   inventory.
+2. Foundational unit markers exist for every public type and unit row captured
+   by the authoritative catalog-derived summary.
 3. Scalar wrappers demonstrate zero additional storage overhead over their payloads.
 4. Unit marker naming rules are enforceable in code for case-sensitive units.
 5. No in-scope type may be omitted from closure on the basis that its family was “implicitly covered.”
@@ -78,8 +78,8 @@ scalar type set.
 1. `size_of::<Quantity<mm, i32>>() == size_of::<i32>()` test exists.
 2. Dedicated type-level tests distinguish `mm` from `Mm`.
 3. Dedicated type-level tests cover `degC` and `degF` naming.
-4. Validation references the authoritative inventory and confirms every
-   in-scope type in this sprint is implemented exactly once.
+4. Validation references the authoritative catalog-derived summary and confirms
+   every in-scope public type in this sprint is implemented exactly once.
 5. Regeneration or parity validation confirms the implemented public scalar
    surface matches `catalog/generated/units-catalog-summary.json` and
    `crates/units-x/src/generated/catalog_metadata.rs` without drift.
@@ -113,10 +113,12 @@ pub trait UnitMarker: private::SealedUnit + Copy + 'static {
 
 ## Closure Gate
 
-The authoritative inventory gate for this sprint is
-[docs/crates/units-x/in-scope-type-inventory.md](/Volumes/Extreme%20Pro/github/simple-si-units/docs/crates/units-x/in-scope-type-inventory.md).
-This sprint does not close until every item in that checklist is implemented
-and the resulting scalar surface matches
+The authoritative public-type coverage gate for this sprint is
+`catalog/generated/units-catalog-summary.json`.
+This sprint does not close until every public type row in that summary is
+implemented and the resulting scalar surface matches
 `catalog/generated/units-catalog-summary.json` for public type and unit
 coverage plus `crates/units-x/src/generated/catalog_metadata.rs` for
-Rust-consumable catalog metadata parity.
+Rust-consumable catalog metadata parity. The markdown inventory checklist is a
+derived review aid and must remain in parity without becoming a second source
+of truth.

@@ -60,6 +60,24 @@ class RunTestsBehaviorTests(unittest.TestCase):
 
             self.assertTrue(run_tests.generated_artifacts_are_dirty(repo_root))
 
+    def test_generated_artifacts_are_dirty_detects_untracked_generated_files(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="units-x-run-tests-") as tmpdir:
+            repo_root = Path(tmpdir)
+            env = isolated_git_env(repo_root)
+            git(["git", "init"], repo_root, env)
+            git(["git", "config", "core.hooksPath", str(repo_root / ".git-hooks-empty")], repo_root, env)
+            git(["git", "config", "commit.gpgsign", "false"], repo_root, env)
+            git(["git", "config", "user.email", "tests@example.invalid"], repo_root, env)
+            git(["git", "config", "user.name", "units-x tests"], repo_root, env)
+            for relative_path in run_tests.GENERATED_ARTIFACT_PATHS[:-1]:
+                touch(repo_root / relative_path)
+            git(["git", "add", "."], repo_root, env)
+            git(["git", "commit", "-m", "baseline"], repo_root, env)
+
+            touch(repo_root / run_tests.GENERATED_ARTIFACT_PATHS[-1])
+
+            self.assertTrue(run_tests.generated_artifacts_are_dirty(repo_root))
+
     def test_run_python_invokes_helper_tests_and_native_smoke(self) -> None:
         with tempfile.TemporaryDirectory(prefix="units-x-run-tests-") as tmpdir:
             repo_root = Path(tmpdir)
