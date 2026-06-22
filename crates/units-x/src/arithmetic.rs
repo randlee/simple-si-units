@@ -3,6 +3,11 @@ use crate::generated::public_types::*;
 use crate::model::{Quantity, QuantityType, UnitMarker};
 use core::ops::{Add, Div, Mul, Sub};
 
+mod private {
+    pub trait SealedArithmeticPolicy {}
+    pub trait SealedArithmeticStorage {}
+}
+
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum ArithmeticError {
     DivisionByZero,
@@ -25,25 +30,25 @@ pub trait CheckedScalarArithmeticOps<Rhs = Self> {
     fn checked_div(self, rhs: Rhs) -> Result<Self::Output, ArithmeticError>;
 }
 
-pub trait AddSubPromotion<Rhs>: ValueStorage {
-    type Output: ArithmeticStorage;
+pub trait AddSubPromotion<Rhs>: private::SealedArithmeticPolicy + ValueStorage {
+    type Output: CheckedArithmeticStorage;
 }
 
 pub trait InfallibleAddSubPromotion<Rhs>: AddSubPromotion<Rhs> {}
 
-pub trait MulPromotion<Rhs>: ValueStorage {
-    type Output: ArithmeticStorage;
+pub trait MulPromotion<Rhs>: private::SealedArithmeticPolicy + ValueStorage {
+    type Output: CheckedArithmeticStorage;
 }
 
 pub trait InfallibleMulPromotion<Rhs>: MulPromotion<Rhs> {}
 
-pub trait DivPromotion<Rhs>: ValueStorage {
-    type Output: ArithmeticStorage;
+pub trait DivPromotion<Rhs>: private::SealedArithmeticPolicy + ValueStorage {
+    type Output: CheckedArithmeticStorage;
 }
 
 pub trait InfallibleDivPromotion<Rhs>: DivPromotion<Rhs> {}
 
-pub trait ArithmeticStorage: ValueStorage {
+pub trait CheckedArithmeticStorage: private::SealedArithmeticStorage + ValueStorage {
     fn from_f64_for_arithmetic(value: f64) -> Result<Self, ArithmeticError>;
     fn checked_add(lhs: Self, rhs: Self) -> Result<Self, ArithmeticError>;
     fn checked_sub(lhs: Self, rhs: Self) -> Result<Self, ArithmeticError>;
@@ -51,7 +56,23 @@ pub trait ArithmeticStorage: ValueStorage {
     fn checked_div(lhs: Self, rhs: Self) -> Result<Self, ArithmeticError>;
 }
 
-impl ArithmeticStorage for f64 {
+pub trait InfallibleArithmeticStorage: CheckedArithmeticStorage {
+    fn from_f64_for_arithmetic_infallible(value: f64) -> Self;
+    fn add_infallible(lhs: Self, rhs: Self) -> Self;
+    fn sub_infallible(lhs: Self, rhs: Self) -> Self;
+    fn mul_infallible(lhs: Self, rhs: Self) -> Self;
+    fn div_infallible(lhs: Self, rhs: Self) -> Self;
+}
+
+impl private::SealedArithmeticPolicy for f64 {}
+impl private::SealedArithmeticPolicy for f32 {}
+impl private::SealedArithmeticPolicy for i32 {}
+
+impl private::SealedArithmeticStorage for f64 {}
+impl private::SealedArithmeticStorage for f32 {}
+impl private::SealedArithmeticStorage for i32 {}
+
+impl CheckedArithmeticStorage for f64 {
     fn from_f64_for_arithmetic(value: f64) -> Result<Self, ArithmeticError> {
         Ok(value)
     }
@@ -73,7 +94,29 @@ impl ArithmeticStorage for f64 {
     }
 }
 
-impl ArithmeticStorage for f32 {
+impl InfallibleArithmeticStorage for f64 {
+    fn from_f64_for_arithmetic_infallible(value: f64) -> Self {
+        value
+    }
+
+    fn add_infallible(lhs: Self, rhs: Self) -> Self {
+        lhs + rhs
+    }
+
+    fn sub_infallible(lhs: Self, rhs: Self) -> Self {
+        lhs - rhs
+    }
+
+    fn mul_infallible(lhs: Self, rhs: Self) -> Self {
+        lhs * rhs
+    }
+
+    fn div_infallible(lhs: Self, rhs: Self) -> Self {
+        lhs / rhs
+    }
+}
+
+impl CheckedArithmeticStorage for f32 {
     fn from_f64_for_arithmetic(value: f64) -> Result<Self, ArithmeticError> {
         if value.is_nan() {
             return Ok(f32::NAN);
@@ -101,7 +144,29 @@ impl ArithmeticStorage for f32 {
     }
 }
 
-impl ArithmeticStorage for i32 {
+impl InfallibleArithmeticStorage for f32 {
+    fn from_f64_for_arithmetic_infallible(value: f64) -> Self {
+        value as f32
+    }
+
+    fn add_infallible(lhs: Self, rhs: Self) -> Self {
+        lhs + rhs
+    }
+
+    fn sub_infallible(lhs: Self, rhs: Self) -> Self {
+        lhs - rhs
+    }
+
+    fn mul_infallible(lhs: Self, rhs: Self) -> Self {
+        lhs * rhs
+    }
+
+    fn div_infallible(lhs: Self, rhs: Self) -> Self {
+        lhs / rhs
+    }
+}
+
+impl CheckedArithmeticStorage for i32 {
     fn from_f64_for_arithmetic(value: f64) -> Result<Self, ArithmeticError> {
         if !value.is_finite() {
             return Err(ArithmeticError::Overflow);
@@ -181,36 +246,6 @@ macro_rules! impl_div_rule {
     };
 }
 
-impl_add_sub_rule!(f64, f64 => f64, infallible);
-impl_add_sub_rule!(f64, f32 => f64, infallible);
-impl_add_sub_rule!(f64, i32 => f64, infallible);
-impl_add_sub_rule!(f32, f64 => f64, infallible);
-impl_add_sub_rule!(f32, f32 => f32, infallible);
-impl_add_sub_rule!(f32, i32 => f32, infallible);
-impl_add_sub_rule!(i32, f64 => f64, infallible);
-impl_add_sub_rule!(i32, f32 => f32, infallible);
-impl_add_sub_rule!(i32, i32 => i32, checked);
-
-impl_mul_rule!(f64, f64 => f64, infallible);
-impl_mul_rule!(f64, f32 => f64, infallible);
-impl_mul_rule!(f64, i32 => f64, infallible);
-impl_mul_rule!(f32, f64 => f64, infallible);
-impl_mul_rule!(f32, f32 => f32, infallible);
-impl_mul_rule!(f32, i32 => f32, infallible);
-impl_mul_rule!(i32, f64 => f64, infallible);
-impl_mul_rule!(i32, f32 => f32, infallible);
-impl_mul_rule!(i32, i32 => i32, checked);
-
-impl_div_rule!(f64, f64 => f64, infallible);
-impl_div_rule!(f64, f32 => f64, infallible);
-impl_div_rule!(f64, i32 => f64, infallible);
-impl_div_rule!(f32, f64 => f64, infallible);
-impl_div_rule!(f32, f32 => f32, infallible);
-impl_div_rule!(f32, i32 => f32, infallible);
-impl_div_rule!(i32, f64 => f64, infallible);
-impl_div_rule!(i32, f32 => f32, infallible);
-impl_div_rule!(i32, i32 => i32, checked);
-
 fn checked_add_quantities<Lhs, Rhs, OutStorage>(
     lhs: Lhs,
     rhs: Rhs,
@@ -221,7 +256,7 @@ where
     Lhs::Storage: ValueStorage + AddSubPromotion<Rhs::Storage, Output = OutStorage>,
     Lhs::Unit: QuantityForStorage<OutStorage>,
     Rhs::Storage: ValueStorage,
-    OutStorage: ArithmeticStorage,
+    OutStorage: CheckedArithmeticStorage,
 {
     let lhs_value = convert_quantity_for_arithmetic::<
         Lhs,
@@ -246,7 +281,7 @@ where
     Lhs::Storage: ValueStorage + AddSubPromotion<Rhs::Storage, Output = OutStorage>,
     Lhs::Unit: QuantityForStorage<OutStorage>,
     Rhs::Storage: ValueStorage,
-    OutStorage: ArithmeticStorage,
+    OutStorage: CheckedArithmeticStorage,
 {
     let lhs_value = convert_quantity_for_arithmetic::<
         Lhs,
@@ -270,7 +305,7 @@ where
     Lhs::Storage: ValueStorage + MulPromotion<Rhs, Output = OutStorage>,
     Lhs::Unit: QuantityForStorage<OutStorage>,
     Rhs: ValueStorage,
-    OutStorage: ArithmeticStorage,
+    OutStorage: CheckedArithmeticStorage,
 {
     let lhs_value = convert_quantity_for_arithmetic::<
         Lhs,
@@ -290,7 +325,7 @@ where
     Lhs::Storage: ValueStorage + DivPromotion<Rhs, Output = OutStorage>,
     Lhs::Unit: QuantityForStorage<OutStorage>,
     Rhs: ValueStorage,
-    OutStorage: ArithmeticStorage,
+    OutStorage: CheckedArithmeticStorage,
 {
     let lhs_value = convert_quantity_for_arithmetic::<
         Lhs,
@@ -299,6 +334,96 @@ where
     let rhs_value = OutStorage::from_f64_for_arithmetic(rhs.to_f64())?;
     let result = OutStorage::checked_div(lhs_value.quantity().storage, rhs_value)?;
     Ok(<Lhs::Unit as QuantityForStorage<OutStorage>>::wrap(result))
+}
+
+fn add_quantities_infallible<Lhs, Rhs, OutStorage>(
+    lhs: Lhs,
+    rhs: Rhs,
+) -> <Lhs::Unit as QuantityForStorage<OutStorage>>::Quantity
+where
+    Lhs: QuantityType,
+    Rhs: QuantityType,
+    Lhs::Storage: ValueStorage + AddSubPromotion<Rhs::Storage, Output = OutStorage>,
+    Lhs::Unit: QuantityForStorage<OutStorage>,
+    Rhs::Storage: ValueStorage,
+    OutStorage: InfallibleArithmeticStorage,
+{
+    let lhs_value = convert_quantity_for_arithmetic_infallible::<
+        Lhs,
+        <Lhs::Unit as QuantityForStorage<OutStorage>>::Quantity,
+    >(lhs);
+    let rhs_value = convert_quantity_for_arithmetic_infallible::<
+        Rhs,
+        <Lhs::Unit as QuantityForStorage<OutStorage>>::Quantity,
+    >(rhs);
+    let result =
+        OutStorage::add_infallible(lhs_value.quantity().storage, rhs_value.quantity().storage);
+    <Lhs::Unit as QuantityForStorage<OutStorage>>::wrap(result)
+}
+
+fn sub_quantities_infallible<Lhs, Rhs, OutStorage>(
+    lhs: Lhs,
+    rhs: Rhs,
+) -> <Lhs::Unit as QuantityForStorage<OutStorage>>::Quantity
+where
+    Lhs: QuantityType,
+    Rhs: QuantityType,
+    Lhs::Storage: ValueStorage + AddSubPromotion<Rhs::Storage, Output = OutStorage>,
+    Lhs::Unit: QuantityForStorage<OutStorage>,
+    Rhs::Storage: ValueStorage,
+    OutStorage: InfallibleArithmeticStorage,
+{
+    let lhs_value = convert_quantity_for_arithmetic_infallible::<
+        Lhs,
+        <Lhs::Unit as QuantityForStorage<OutStorage>>::Quantity,
+    >(lhs);
+    let rhs_value = convert_quantity_for_arithmetic_infallible::<
+        Rhs,
+        <Lhs::Unit as QuantityForStorage<OutStorage>>::Quantity,
+    >(rhs);
+    let result =
+        OutStorage::sub_infallible(lhs_value.quantity().storage, rhs_value.quantity().storage);
+    <Lhs::Unit as QuantityForStorage<OutStorage>>::wrap(result)
+}
+
+fn mul_scalar_infallible<Lhs, Rhs, OutStorage>(
+    lhs: Lhs,
+    rhs: Rhs,
+) -> <Lhs::Unit as QuantityForStorage<OutStorage>>::Quantity
+where
+    Lhs: QuantityType,
+    Lhs::Storage: ValueStorage + MulPromotion<Rhs, Output = OutStorage>,
+    Lhs::Unit: QuantityForStorage<OutStorage>,
+    Rhs: ValueStorage,
+    OutStorage: InfallibleArithmeticStorage,
+{
+    let lhs_value = convert_quantity_for_arithmetic_infallible::<
+        Lhs,
+        <Lhs::Unit as QuantityForStorage<OutStorage>>::Quantity,
+    >(lhs);
+    let rhs_value = OutStorage::from_f64_for_arithmetic_infallible(rhs.to_f64());
+    let result = OutStorage::mul_infallible(lhs_value.quantity().storage, rhs_value);
+    <Lhs::Unit as QuantityForStorage<OutStorage>>::wrap(result)
+}
+
+fn div_scalar_infallible<Lhs, Rhs, OutStorage>(
+    lhs: Lhs,
+    rhs: Rhs,
+) -> <Lhs::Unit as QuantityForStorage<OutStorage>>::Quantity
+where
+    Lhs: QuantityType,
+    Lhs::Storage: ValueStorage + DivPromotion<Rhs, Output = OutStorage>,
+    Lhs::Unit: QuantityForStorage<OutStorage>,
+    Rhs: ValueStorage,
+    OutStorage: InfallibleArithmeticStorage,
+{
+    let lhs_value = convert_quantity_for_arithmetic_infallible::<
+        Lhs,
+        <Lhs::Unit as QuantityForStorage<OutStorage>>::Quantity,
+    >(lhs);
+    let rhs_value = OutStorage::from_f64_for_arithmetic_infallible(rhs.to_f64());
+    let result = OutStorage::div_infallible(lhs_value.quantity().storage, rhs_value);
+    <Lhs::Unit as QuantityForStorage<OutStorage>>::wrap(result)
 }
 
 pub fn velocity_from_distance_and_time<DistanceStorage, DistanceMeasure, TimeStorage, TimeMeasure>(
@@ -311,10 +436,10 @@ where
     TimeStorage: ValueStorage,
     TimeMeasure: TimeUnit,
 {
-    let distance_canonical = convert_quantity_for_arithmetic::<_, Distance<f64, m>>(distance)
-        .expect("f64 compute canonicalization must be infallible");
-    let duration_canonical = convert_quantity_for_arithmetic::<_, Time<f64, s>>(duration)
-        .expect("f64 compute canonicalization must be infallible");
+    let distance_canonical =
+        convert_quantity_for_arithmetic_infallible::<_, Distance<f64, m>>(distance);
+    let duration_canonical =
+        convert_quantity_for_arithmetic_infallible::<_, Time<f64, s>>(duration);
     if duration_canonical.value() == 0.0 {
         return Err(ComputeError::ZeroDuration);
     }
@@ -338,10 +463,10 @@ where
     TimeStorage: ValueStorage,
     TimeMeasure: TimeUnit,
 {
-    let velocity_canonical = convert_quantity_for_arithmetic::<_, Velocity<f64, mps>>(velocity)
-        .expect("f64 compute canonicalization must be infallible");
-    let duration_canonical = convert_quantity_for_arithmetic::<_, Time<f64, s>>(duration)
-        .expect("f64 compute canonicalization must be infallible");
+    let velocity_canonical =
+        convert_quantity_for_arithmetic_infallible::<_, Velocity<f64, mps>>(velocity);
+    let duration_canonical =
+        convert_quantity_for_arithmetic_infallible::<_, Time<f64, s>>(duration);
     if duration_canonical.value() == 0.0 {
         return Err(ComputeError::ZeroDuration);
     }
@@ -357,7 +482,7 @@ where
     SourceQuantity: QuantityType,
     SourceQuantity::Storage: ValueStorage,
     TargetQuantity: QuantityType,
-    TargetQuantity::Storage: ArithmeticStorage,
+    TargetQuantity::Storage: CheckedArithmeticStorage,
 {
     let source_meta = lookup_unit_metadata(
         SourceQuantity::PUBLIC_TYPE,
@@ -379,8 +504,45 @@ where
         from_base_value(base_value, target_meta)
     };
     let target_storage =
-        <TargetQuantity::Storage as ArithmeticStorage>::from_f64_for_arithmetic(converted_value)?;
+        <TargetQuantity::Storage as CheckedArithmeticStorage>::from_f64_for_arithmetic(
+            converted_value,
+        )?;
     Ok(TargetQuantity::from_quantity(Quantity::new(target_storage)))
+}
+
+fn convert_quantity_for_arithmetic_infallible<SourceQuantity, TargetQuantity>(
+    source: SourceQuantity,
+) -> TargetQuantity
+where
+    SourceQuantity: QuantityType,
+    SourceQuantity::Storage: ValueStorage,
+    TargetQuantity: QuantityType,
+    TargetQuantity::Storage: InfallibleArithmeticStorage,
+{
+    let source_meta = lookup_unit_metadata(
+        SourceQuantity::PUBLIC_TYPE,
+        <SourceQuantity::Unit as UnitMarker>::UNIT_CODE_ID,
+    )
+    .expect("generated source unit metadata must exist");
+    let target_meta = lookup_unit_metadata(
+        TargetQuantity::PUBLIC_TYPE,
+        <TargetQuantity::Unit as UnitMarker>::UNIT_CODE_ID,
+    )
+    .expect("generated target unit metadata must exist");
+    let converted_value = if SourceQuantity::PUBLIC_TYPE == TargetQuantity::PUBLIC_TYPE
+        && <SourceQuantity::Unit as UnitMarker>::UNIT_CODE_ID
+            == <TargetQuantity::Unit as UnitMarker>::UNIT_CODE_ID
+    {
+        source.quantity().storage.to_f64()
+    } else {
+        let base_value = to_base_value(source.quantity().storage.to_f64(), source_meta);
+        from_base_value(base_value, target_meta)
+    };
+    let target_storage =
+        <TargetQuantity::Storage as InfallibleArithmeticStorage>::from_f64_for_arithmetic_infallible(
+            converted_value,
+        );
+    TargetQuantity::from_quantity(Quantity::new(target_storage))
 }
 
 macro_rules! impl_same_public_type_arithmetic {
@@ -399,7 +561,7 @@ macro_rules! impl_same_public_type_arithmetic {
                 RhsStorage: ValueStorage,
                 RhsUnit: $unit_trait,
                 LhsUnit: QuantityForStorage<OutStorage>,
-                OutStorage: ArithmeticStorage,
+                OutStorage: CheckedArithmeticStorage,
             {
                 checked_add_quantities::<Self, $public_type<RhsStorage, RhsUnit>, OutStorage>(
                     self, rhs,
@@ -415,7 +577,7 @@ macro_rules! impl_same_public_type_arithmetic {
                 RhsStorage: ValueStorage,
                 RhsUnit: $unit_trait,
                 LhsUnit: QuantityForStorage<OutStorage>,
-                OutStorage: ArithmeticStorage,
+                OutStorage: CheckedArithmeticStorage,
             {
                 checked_sub_quantities::<Self, $public_type<RhsStorage, RhsUnit>, OutStorage>(
                     self, rhs,
@@ -431,19 +593,18 @@ macro_rules! impl_same_public_type_arithmetic {
             LhsUnit: $unit_trait
                 + QuantityForStorage<<LhsStorage as AddSubPromotion<RhsStorage>>::Output>,
             RhsUnit: $unit_trait,
-            <LhsStorage as AddSubPromotion<RhsStorage>>::Output: ArithmeticStorage,
+            <LhsStorage as AddSubPromotion<RhsStorage>>::Output: InfallibleArithmeticStorage,
         {
             type Output = <LhsUnit as QuantityForStorage<
                 <LhsStorage as AddSubPromotion<RhsStorage>>::Output,
             >>::Quantity;
 
             fn add(self, rhs: $public_type<RhsStorage, RhsUnit>) -> Self::Output {
-                checked_add_quantities::<
+                add_quantities_infallible::<
                     Self,
                     $public_type<RhsStorage, RhsUnit>,
                     <LhsStorage as AddSubPromotion<RhsStorage>>::Output,
                 >(self, rhs)
-                .expect("infallible add path must succeed")
             }
         }
 
@@ -455,19 +616,18 @@ macro_rules! impl_same_public_type_arithmetic {
             LhsUnit: $unit_trait
                 + QuantityForStorage<<LhsStorage as AddSubPromotion<RhsStorage>>::Output>,
             RhsUnit: $unit_trait,
-            <LhsStorage as AddSubPromotion<RhsStorage>>::Output: ArithmeticStorage,
+            <LhsStorage as AddSubPromotion<RhsStorage>>::Output: InfallibleArithmeticStorage,
         {
             type Output = <LhsUnit as QuantityForStorage<
                 <LhsStorage as AddSubPromotion<RhsStorage>>::Output,
             >>::Quantity;
 
             fn sub(self, rhs: $public_type<RhsStorage, RhsUnit>) -> Self::Output {
-                checked_sub_quantities::<
+                sub_quantities_infallible::<
                     Self,
                     $public_type<RhsStorage, RhsUnit>,
                     <LhsStorage as AddSubPromotion<RhsStorage>>::Output,
                 >(self, rhs)
-                .expect("infallible sub path must succeed")
             }
         }
     };
@@ -488,7 +648,7 @@ macro_rules! impl_scalar_arithmetic {
                 LhsStorage: MulPromotion<Rhs, Output = OutStorage>,
                 Rhs: ValueStorage,
                 LhsUnit: QuantityForStorage<OutStorage>,
-                OutStorage: ArithmeticStorage,
+                OutStorage: CheckedArithmeticStorage,
             {
                 checked_mul_scalar::<Self, Rhs, OutStorage>(self, rhs)
             }
@@ -501,7 +661,7 @@ macro_rules! impl_scalar_arithmetic {
                 LhsStorage: DivPromotion<Rhs, Output = OutStorage>,
                 Rhs: ValueStorage,
                 LhsUnit: QuantityForStorage<OutStorage>,
-                OutStorage: ArithmeticStorage,
+                OutStorage: CheckedArithmeticStorage,
             {
                 checked_div_scalar::<Self, Rhs, OutStorage>(self, rhs)
             }
@@ -512,17 +672,16 @@ macro_rules! impl_scalar_arithmetic {
             LhsStorage: ValueStorage + InfallibleMulPromotion<Rhs>,
             Rhs: ValueStorage,
             LhsUnit: $unit_trait + QuantityForStorage<<LhsStorage as MulPromotion<Rhs>>::Output>,
-            <LhsStorage as MulPromotion<Rhs>>::Output: ArithmeticStorage,
+            <LhsStorage as MulPromotion<Rhs>>::Output: InfallibleArithmeticStorage,
         {
             type Output = <LhsUnit as QuantityForStorage<
                 <LhsStorage as MulPromotion<Rhs>>::Output,
             >>::Quantity;
 
             fn mul(self, rhs: Rhs) -> Self::Output {
-                checked_mul_scalar::<Self, Rhs, <LhsStorage as MulPromotion<Rhs>>::Output>(
+                mul_scalar_infallible::<Self, Rhs, <LhsStorage as MulPromotion<Rhs>>::Output>(
                     self, rhs,
                 )
-                .expect("infallible mul path must succeed")
             }
         }
 
@@ -531,17 +690,16 @@ macro_rules! impl_scalar_arithmetic {
             LhsStorage: ValueStorage + InfallibleDivPromotion<Rhs>,
             Rhs: ValueStorage,
             LhsUnit: $unit_trait + QuantityForStorage<<LhsStorage as DivPromotion<Rhs>>::Output>,
-            <LhsStorage as DivPromotion<Rhs>>::Output: ArithmeticStorage,
+            <LhsStorage as DivPromotion<Rhs>>::Output: InfallibleArithmeticStorage,
         {
             type Output = <LhsUnit as QuantityForStorage<
                 <LhsStorage as DivPromotion<Rhs>>::Output,
             >>::Quantity;
 
             fn div(self, rhs: Rhs) -> Self::Output {
-                checked_div_scalar::<Self, Rhs, <LhsStorage as DivPromotion<Rhs>>::Output>(
+                div_scalar_infallible::<Self, Rhs, <LhsStorage as DivPromotion<Rhs>>::Output>(
                     self, rhs,
                 )
-                .expect("infallible div path must succeed")
             }
         }
     };
@@ -557,19 +715,18 @@ macro_rules! impl_cross_public_add_sub {
             LhsUnit: $lhs_unit_trait
                 + QuantityForStorage<<LhsStorage as AddSubPromotion<RhsStorage>>::Output>,
             RhsUnit: $rhs_unit_trait,
-            <LhsStorage as AddSubPromotion<RhsStorage>>::Output: ArithmeticStorage,
+            <LhsStorage as AddSubPromotion<RhsStorage>>::Output: InfallibleArithmeticStorage,
         {
             type Output = <LhsUnit as QuantityForStorage<
                 <LhsStorage as AddSubPromotion<RhsStorage>>::Output,
             >>::Quantity;
 
             fn add(self, rhs: $rhs_type<RhsStorage, RhsUnit>) -> Self::Output {
-                checked_add_quantities::<
+                add_quantities_infallible::<
                     Self,
                     $rhs_type<RhsStorage, RhsUnit>,
                     <LhsStorage as AddSubPromotion<RhsStorage>>::Output,
                 >(self, rhs)
-                .expect("infallible cross-type add path must succeed")
             }
         }
 
@@ -581,168 +738,32 @@ macro_rules! impl_cross_public_add_sub {
             LhsUnit: $lhs_unit_trait
                 + QuantityForStorage<<LhsStorage as AddSubPromotion<RhsStorage>>::Output>,
             RhsUnit: $rhs_unit_trait,
-            <LhsStorage as AddSubPromotion<RhsStorage>>::Output: ArithmeticStorage,
+            <LhsStorage as AddSubPromotion<RhsStorage>>::Output: InfallibleArithmeticStorage,
         {
             type Output = <LhsUnit as QuantityForStorage<
                 <LhsStorage as AddSubPromotion<RhsStorage>>::Output,
             >>::Quantity;
 
             fn sub(self, rhs: $rhs_type<RhsStorage, RhsUnit>) -> Self::Output {
-                checked_sub_quantities::<
+                sub_quantities_infallible::<
                     Self,
                     $rhs_type<RhsStorage, RhsUnit>,
                     <LhsStorage as AddSubPromotion<RhsStorage>>::Output,
                 >(self, rhs)
-                .expect("infallible cross-type sub path must succeed")
             }
         }
     };
 }
 
-impl_same_public_type_arithmetic!(Amount, AmountUnit);
-impl_scalar_arithmetic!(Amount, AmountUnit);
-impl_same_public_type_arithmetic!(Current, CurrentUnit);
-impl_scalar_arithmetic!(Current, CurrentUnit);
-impl_same_public_type_arithmetic!(Distance, DistanceUnit);
-impl_scalar_arithmetic!(Distance, DistanceUnit);
-impl_same_public_type_arithmetic!(InverseAmount, InverseAmountUnit);
-impl_scalar_arithmetic!(InverseAmount, InverseAmountUnit);
-impl_same_public_type_arithmetic!(InverseCurrent, InverseCurrentUnit);
-impl_scalar_arithmetic!(InverseCurrent, InverseCurrentUnit);
-impl_same_public_type_arithmetic!(InverseDistance, InverseDistanceUnit);
-impl_scalar_arithmetic!(InverseDistance, InverseDistanceUnit);
-impl_same_public_type_arithmetic!(InverseLuminosity, InverseLuminosityUnit);
-impl_scalar_arithmetic!(InverseLuminosity, InverseLuminosityUnit);
-impl_same_public_type_arithmetic!(InverseMass, InverseMassUnit);
-impl_scalar_arithmetic!(InverseMass, InverseMassUnit);
-impl_same_public_type_arithmetic!(InverseTemperature, InverseTemperatureUnit);
-impl_scalar_arithmetic!(InverseTemperature, InverseTemperatureUnit);
-impl_same_public_type_arithmetic!(Luminosity, LuminosityUnit);
-impl_scalar_arithmetic!(Luminosity, LuminosityUnit);
-impl_same_public_type_arithmetic!(Mass, MassUnit);
-impl_scalar_arithmetic!(Mass, MassUnit);
-impl_same_public_type_arithmetic!(Time, TimeUnit);
-impl_scalar_arithmetic!(Time, TimeUnit);
-impl_same_public_type_arithmetic!(Acceleration, AccelerationUnit);
-impl_scalar_arithmetic!(Acceleration, AccelerationUnit);
-impl_same_public_type_arithmetic!(Angle, AngleUnit);
-impl_scalar_arithmetic!(Angle, AngleUnit);
-impl_same_public_type_arithmetic!(AngularAcceleration, AngularAccelerationUnit);
-impl_scalar_arithmetic!(AngularAcceleration, AngularAccelerationUnit);
-impl_same_public_type_arithmetic!(AngularMomentum, AngularMomentumUnit);
-impl_scalar_arithmetic!(AngularMomentum, AngularMomentumUnit);
-impl_same_public_type_arithmetic!(AngularVelocity, AngularVelocityUnit);
-impl_scalar_arithmetic!(AngularVelocity, AngularVelocityUnit);
-impl_same_public_type_arithmetic!(Area, AreaUnit);
-impl_scalar_arithmetic!(Area, AreaUnit);
-impl_same_public_type_arithmetic!(InverseAngle, InverseAngleUnit);
-impl_scalar_arithmetic!(InverseAngle, InverseAngleUnit);
-impl_same_public_type_arithmetic!(InverseAngularAcceleration, InverseAngularAccelerationUnit);
-impl_scalar_arithmetic!(InverseAngularAcceleration, InverseAngularAccelerationUnit);
-impl_same_public_type_arithmetic!(InverseAngularMomentum, InverseAngularMomentumUnit);
-impl_scalar_arithmetic!(InverseAngularMomentum, InverseAngularMomentumUnit);
-impl_same_public_type_arithmetic!(InverseAngularVelocity, InverseAngularVelocityUnit);
-impl_scalar_arithmetic!(InverseAngularVelocity, InverseAngularVelocityUnit);
-impl_same_public_type_arithmetic!(InverseArea, InverseAreaUnit);
-impl_scalar_arithmetic!(InverseArea, InverseAreaUnit);
-impl_same_public_type_arithmetic!(InverseSolidAngle, InverseSolidAngleUnit);
-impl_scalar_arithmetic!(InverseSolidAngle, InverseSolidAngleUnit);
-impl_same_public_type_arithmetic!(SolidAngle, SolidAngleUnit);
-impl_scalar_arithmetic!(SolidAngle, SolidAngleUnit);
-impl_same_public_type_arithmetic!(Velocity, VelocityUnit);
-impl_scalar_arithmetic!(Velocity, VelocityUnit);
-impl_same_public_type_arithmetic!(AreaDensity, AreaDensityUnit);
-impl_scalar_arithmetic!(AreaDensity, AreaDensityUnit);
-impl_same_public_type_arithmetic!(AreaPerLumen, AreaPerLumenUnit);
-impl_scalar_arithmetic!(AreaPerLumen, AreaPerLumenUnit);
-impl_same_public_type_arithmetic!(AreaPerMass, AreaPerMassUnit);
-impl_scalar_arithmetic!(AreaPerMass, AreaPerMassUnit);
-impl_same_public_type_arithmetic!(Capacitance, CapacitanceUnit);
-impl_scalar_arithmetic!(Capacitance, CapacitanceUnit);
-impl_same_public_type_arithmetic!(Charge, ChargeUnit);
-impl_scalar_arithmetic!(Charge, ChargeUnit);
-impl_same_public_type_arithmetic!(Conductance, ConductanceUnit);
-impl_scalar_arithmetic!(Conductance, ConductanceUnit);
-impl_same_public_type_arithmetic!(Density, DensityUnit);
-impl_scalar_arithmetic!(Density, DensityUnit);
-impl_same_public_type_arithmetic!(Diopter, DiopterUnit);
-impl_scalar_arithmetic!(Diopter, DiopterUnit);
-impl_same_public_type_arithmetic!(Elastance, ElastanceUnit);
-impl_scalar_arithmetic!(Elastance, ElastanceUnit);
-impl_same_public_type_arithmetic!(Energy, EnergyUnit);
-impl_scalar_arithmetic!(Energy, EnergyUnit);
-impl_same_public_type_arithmetic!(Force, ForceUnit);
-impl_scalar_arithmetic!(Force, ForceUnit);
-impl_same_public_type_arithmetic!(Frequency, FrequencyUnit);
-impl_scalar_arithmetic!(Frequency, FrequencyUnit);
-impl_same_public_type_arithmetic!(Illuminance, IlluminanceUnit);
-impl_scalar_arithmetic!(Illuminance, IlluminanceUnit);
-impl_same_public_type_arithmetic!(Inductance, InductanceUnit);
-impl_scalar_arithmetic!(Inductance, InductanceUnit);
-impl_same_public_type_arithmetic!(InverseAcceleration, InverseAccelerationUnit);
-impl_scalar_arithmetic!(InverseAcceleration, InverseAccelerationUnit);
-impl_same_public_type_arithmetic!(InverseCharge, InverseChargeUnit);
-impl_scalar_arithmetic!(InverseCharge, InverseChargeUnit);
-impl_same_public_type_arithmetic!(InverseEnergy, InverseEnergyUnit);
-impl_scalar_arithmetic!(InverseEnergy, InverseEnergyUnit);
-impl_same_public_type_arithmetic!(InverseForce, InverseForceUnit);
-impl_scalar_arithmetic!(InverseForce, InverseForceUnit);
-impl_same_public_type_arithmetic!(InverseInductance, InverseInductanceUnit);
-impl_scalar_arithmetic!(InverseInductance, InverseInductanceUnit);
-impl_same_public_type_arithmetic!(InverseLuminousFlux, InverseLuminousFluxUnit);
-impl_scalar_arithmetic!(InverseLuminousFlux, InverseLuminousFluxUnit);
-impl_same_public_type_arithmetic!(InverseMagneticFlux, InverseMagneticFluxUnit);
-impl_scalar_arithmetic!(InverseMagneticFlux, InverseMagneticFluxUnit);
-impl_same_public_type_arithmetic!(InverseMagneticFluxDensity, InverseMagneticFluxDensityUnit);
-impl_scalar_arithmetic!(InverseMagneticFluxDensity, InverseMagneticFluxDensityUnit);
-impl_same_public_type_arithmetic!(InverseMomentOfInertia, InverseMomentOfInertiaUnit);
-impl_scalar_arithmetic!(InverseMomentOfInertia, InverseMomentOfInertiaUnit);
-impl_same_public_type_arithmetic!(InverseMomentum, InverseMomentumUnit);
-impl_scalar_arithmetic!(InverseMomentum, InverseMomentumUnit);
-impl_same_public_type_arithmetic!(InversePower, InversePowerUnit);
-impl_scalar_arithmetic!(InversePower, InversePowerUnit);
-impl_same_public_type_arithmetic!(InversePressure, InversePressureUnit);
-impl_scalar_arithmetic!(InversePressure, InversePressureUnit);
-impl_same_public_type_arithmetic!(InverseTorque, InverseTorqueUnit);
-impl_scalar_arithmetic!(InverseTorque, InverseTorqueUnit);
-impl_same_public_type_arithmetic!(InverseVoltage, InverseVoltageUnit);
-impl_scalar_arithmetic!(InverseVoltage, InverseVoltageUnit);
-impl_same_public_type_arithmetic!(InverseVolume, InverseVolumeUnit);
-impl_scalar_arithmetic!(InverseVolume, InverseVolumeUnit);
-impl_same_public_type_arithmetic!(LuminousFlux, LuminousFluxUnit);
-impl_scalar_arithmetic!(LuminousFlux, LuminousFluxUnit);
-impl_same_public_type_arithmetic!(MagneticFlux, MagneticFluxUnit);
-impl_scalar_arithmetic!(MagneticFlux, MagneticFluxUnit);
-impl_same_public_type_arithmetic!(MagneticFluxDensity, MagneticFluxDensityUnit);
-impl_scalar_arithmetic!(MagneticFluxDensity, MagneticFluxDensityUnit);
-impl_same_public_type_arithmetic!(MomentOfInertia, MomentOfInertiaUnit);
-impl_scalar_arithmetic!(MomentOfInertia, MomentOfInertiaUnit);
-impl_same_public_type_arithmetic!(Momentum, MomentumUnit);
-impl_scalar_arithmetic!(Momentum, MomentumUnit);
-impl_same_public_type_arithmetic!(Power, PowerUnit);
-impl_scalar_arithmetic!(Power, PowerUnit);
-impl_same_public_type_arithmetic!(Pressure, PressureUnit);
-impl_scalar_arithmetic!(Pressure, PressureUnit);
-impl_same_public_type_arithmetic!(Resistance, ResistanceUnit);
-impl_scalar_arithmetic!(Resistance, ResistanceUnit);
-impl_same_public_type_arithmetic!(TimePerDistance, TimePerDistanceUnit);
-impl_scalar_arithmetic!(TimePerDistance, TimePerDistanceUnit);
-impl_same_public_type_arithmetic!(Torque, TorqueUnit);
-impl_scalar_arithmetic!(Torque, TorqueUnit);
-impl_same_public_type_arithmetic!(Voltage, VoltageUnit);
-impl_scalar_arithmetic!(Voltage, VoltageUnit);
-impl_same_public_type_arithmetic!(Volume, VolumeUnit);
-impl_scalar_arithmetic!(Volume, VolumeUnit);
-impl_same_public_type_arithmetic!(VolumePerMass, VolumePerMassUnit);
-impl_scalar_arithmetic!(VolumePerMass, VolumePerMassUnit);
-
-impl_cross_public_add_sub!(Diopter, DiopterUnit, InverseDistance, InverseDistanceUnit);
-impl_cross_public_add_sub!(InverseDistance, InverseDistanceUnit, Diopter, DiopterUnit);
+include!(concat!(
+    env!("CARGO_MANIFEST_DIR"),
+    "/src/generated/arithmetic_impls.rs"
+));
 
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::generated::public_types::{dpt, per_m, Diopter, InverseDistance};
+    use crate::generated::public_types::{dpt, Diopter, InverseDistance};
 
     fn assert_close(left: f64, right: f64) {
         assert!((left - right).abs() < 1.0e-6, "left={left}, right={right}");
@@ -826,9 +847,9 @@ mod tests {
 
     #[test]
     fn reciprocal_canonical_pair_supports_subtraction() {
-        let lhs = InverseDistance::per_m(3.0_f64);
-        let rhs = Diopter::dpt(1.5_f64);
-        let out: InverseDistance<f64, per_m> = lhs - rhs;
+        let lhs = Diopter::dpt(3.0_f64);
+        let rhs = InverseDistance::per_m(1.5_f64);
+        let out: Diopter<f64, dpt> = lhs - rhs;
         assert_close(out.value(), 1.5);
     }
 }

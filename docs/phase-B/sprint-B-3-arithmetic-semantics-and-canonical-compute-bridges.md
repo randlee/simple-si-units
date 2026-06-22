@@ -242,6 +242,20 @@ Result-identity rule:
 - unsupported type pairs and unsupported storage pairs are absent from the
   infallible and checked arithmetic traits rather than returning runtime
   `UnsupportedTypePair` or `UnsupportedStoragePair` variants
+- storage-promotion traits and storage canonicalization traits are internal
+  implementation detail; downstream crates may not extend the arithmetic
+  matrix by implementing additional storage/operator policy outside the
+  catalog-owned generation path
+
+## Error Inventory
+
+| Error type | Variant | Trigger | Caller-visible cause | Recovery guidance |
+|---|---|---|---|---|
+| `ArithmeticError` | `DivisionByZero` | checked integer scalar division with rhs `== 0` | integer division is undefined for zero divisor | validate divisors before checked integer division or route through a floating path if IEEE-754 behavior is desired |
+| `ArithmeticError` | `NonIntegralDivision` | checked integer scalar division where lhs `%` rhs `!= 0` | selected integer result storage cannot represent the exact quotient | widen to `f32`/`f64`, choose a documented floating path, or avoid integer division when remainder is possible |
+| `ArithmeticError` | `Overflow` | checked integer add/sub/mul exceeds result storage or checked numeric canonicalization cannot fit destination storage | selected result storage is too narrow for the documented path | select the widened storage named by the authoritative matrix or use a checked API and handle overflow explicitly |
+| `ArithmeticError` | `PrecisionLoss` | checked arithmetic canonicalization into integer storage would discard fractional information | selected integer result storage cannot preserve the converted arithmetic value exactly | widen to `f32`/`f64` or choose an exact integer path only when the matrix documents it |
+| `ComputeError` | `ZeroDuration` | `velocity_from_distance_and_time` or `acceleration_from_velocity_and_time` receives a zero-duration rhs | V1 compute bridge rejects division by zero duration before producing canonical output | reject zero durations before calling the bridge or branch on zero-duration business rules upstream |
 
 Representative cross-public-type example:
 

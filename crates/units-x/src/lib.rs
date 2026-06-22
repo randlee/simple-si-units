@@ -53,8 +53,7 @@ pub use arithmetic::{
     CheckedScalarArithmeticOps, ComputeError,
 };
 pub use conversion::{
-    ConversionError, ConvertUnit, InfallibleUnitStorage, ReciprocalBridge, TryConvertQuantity,
-    TryConvertUnit, ValueStorage,
+    ConversionError, ConvertUnit, ReciprocalBridge, TryConvertQuantity, TryConvertUnit,
 };
 pub use generated::public_types::*;
 pub use model::{Quantity, QuantityType, UnitMarker};

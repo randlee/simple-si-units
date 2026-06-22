@@ -3,6 +3,10 @@ use crate::generated::conversion_metadata::{
 };
 use crate::model::{Quantity, QuantityType, UnitMarker};
 
+mod private {
+    pub trait SealedValueStorage {}
+}
+
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum ConversionError {
     IncompatibleCanonicalDimension,
@@ -33,7 +37,7 @@ pub trait ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> {
     fn to_reciprocal_quantity(self) -> Result<TargetQuantity, ConversionError>;
 }
 
-pub trait ValueStorage: Copy + 'static {
+pub trait ValueStorage: private::SealedValueStorage + Copy + 'static {
     fn to_f64(self) -> f64;
     fn try_from_f64(value: f64) -> Result<Self, ConversionError>;
 }
@@ -41,6 +45,8 @@ pub trait ValueStorage: Copy + 'static {
 pub trait InfallibleUnitStorage: ValueStorage {
     fn from_f64_infallible(value: f64) -> Self;
 }
+
+impl private::SealedValueStorage for f64 {}
 
 impl ValueStorage for f64 {
     fn to_f64(self) -> f64 {
@@ -57,6 +63,8 @@ impl InfallibleUnitStorage for f64 {
         value
     }
 }
+
+impl private::SealedValueStorage for f32 {}
 
 impl ValueStorage for f32 {
     fn to_f64(self) -> f64 {
@@ -84,6 +92,8 @@ impl InfallibleUnitStorage for f32 {
         value as f32
     }
 }
+
+impl private::SealedValueStorage for i32 {}
 
 impl ValueStorage for i32 {
     fn to_f64(self) -> f64 {
