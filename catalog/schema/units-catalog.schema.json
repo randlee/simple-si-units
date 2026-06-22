@@ -8,6 +8,7 @@
     "schema_version",
     "catalog_version",
     "conversion_policies",
+    "arithmetic_policies",
     "dimensions",
     "bridges"
   ],
@@ -33,6 +34,9 @@
     },
     "conversion_policies": {
       "$ref": "#/$defs/conversion_policies"
+    },
+    "arithmetic_policies": {
+      "$ref": "#/$defs/arithmetic_policies"
     }
   },
   "$defs": {
@@ -88,6 +92,21 @@
         "try_to_unit",
         "try_to_quantity",
         "to_reciprocal_quantity"
+      ]
+    },
+    "arithmetic_api_mode": {
+      "type": "string",
+      "enum": [
+        "infallible",
+        "checked",
+        "absent"
+      ]
+    },
+    "exact_division_policy": {
+      "type": "string",
+      "enum": [
+        "not-applicable",
+        "exact-only"
       ]
     },
     "infallibility_guard": {
@@ -226,6 +245,218 @@
           "minItems": 1,
           "items": {
             "$ref": "#/$defs/conversion_policy_entry"
+          }
+        }
+      }
+    },
+    "arithmetic_same_dimension_storage_pair": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "lhs_storage",
+        "rhs_storage",
+        "result_storage",
+        "api_mode",
+        "expected_failure"
+      ],
+      "properties": {
+        "lhs_storage": {
+          "$ref": "#/$defs/storage_name"
+        },
+        "rhs_storage": {
+          "$ref": "#/$defs/storage_name"
+        },
+        "result_storage": {
+          "$ref": "#/$defs/storage_name"
+        },
+        "api_mode": {
+          "$ref": "#/$defs/arithmetic_api_mode"
+        },
+        "expected_failure": {
+          "$ref": "#/$defs/nullable_expected_failure_string"
+        }
+      }
+    },
+    "scalar_arithmetic_storage_pair": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operator",
+        "lhs_storage",
+        "rhs_storage",
+        "result_storage",
+        "api_mode",
+        "exact_division_policy",
+        "expected_failure"
+      ],
+      "properties": {
+        "operator": {
+          "type": "string",
+          "enum": [
+            "mul",
+            "div"
+          ]
+        },
+        "lhs_storage": {
+          "$ref": "#/$defs/storage_name"
+        },
+        "rhs_storage": {
+          "$ref": "#/$defs/storage_name"
+        },
+        "result_storage": {
+          "$ref": "#/$defs/storage_name"
+        },
+        "api_mode": {
+          "$ref": "#/$defs/arithmetic_api_mode"
+        },
+        "exact_division_policy": {
+          "$ref": "#/$defs/exact_division_policy"
+        },
+        "expected_failure": {
+          "$ref": "#/$defs/nullable_expected_failure_string"
+        }
+      }
+    },
+    "cross_public_type_add_sub_pair": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "left_public_type",
+        "right_public_type",
+        "supported_api_modes"
+      ],
+      "properties": {
+        "left_public_type": {
+          "$ref": "#/$defs/non_blank_string"
+        },
+        "right_public_type": {
+          "$ref": "#/$defs/non_blank_string"
+        },
+        "supported_api_modes": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/arithmetic_api_mode"
+          }
+        }
+      }
+    },
+    "compute_bridge_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operator",
+        "lhs_public_type",
+        "rhs_public_type",
+        "result_public_type",
+        "result_unit_code_id",
+        "result_storage",
+        "api_mode",
+        "expected_failure"
+      ],
+      "properties": {
+        "operator": {
+          "type": "string",
+          "enum": [
+            "velocity_from_time",
+            "acceleration_from_time"
+          ]
+        },
+        "lhs_public_type": {
+          "$ref": "#/$defs/non_blank_string"
+        },
+        "rhs_public_type": {
+          "$ref": "#/$defs/non_blank_string"
+        },
+        "result_public_type": {
+          "$ref": "#/$defs/non_blank_string"
+        },
+        "result_unit_code_id": {
+          "$ref": "#/$defs/non_blank_string"
+        },
+        "result_storage": {
+          "$ref": "#/$defs/storage_name"
+        },
+        "api_mode": {
+          "$ref": "#/$defs/arithmetic_api_mode"
+        },
+        "expected_failure": {
+          "$ref": "#/$defs/non_blank_string"
+        }
+      }
+    },
+    "arithmetic_same_dimension_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "unsupported_public_types",
+        "storage_pair_policies"
+      ],
+      "properties": {
+        "unsupported_public_types": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/non_blank_string"
+          }
+        },
+        "storage_pair_policies": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/arithmetic_same_dimension_storage_pair"
+          }
+        }
+      }
+    },
+    "scalar_arithmetic_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "unsupported_public_types",
+        "storage_pair_policies"
+      ],
+      "properties": {
+        "unsupported_public_types": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/non_blank_string"
+          }
+        },
+        "storage_pair_policies": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/scalar_arithmetic_storage_pair"
+          }
+        }
+      }
+    },
+    "arithmetic_policies": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "same_dimension_add_sub",
+        "scalar_arithmetic",
+        "cross_public_type_add_sub",
+        "compute_bridges"
+      ],
+      "properties": {
+        "same_dimension_add_sub": {
+          "$ref": "#/$defs/arithmetic_same_dimension_policy"
+        },
+        "scalar_arithmetic": {
+          "$ref": "#/$defs/scalar_arithmetic_policy"
+        },
+        "cross_public_type_add_sub": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/cross_public_type_add_sub_pair"
+          }
+        },
+        "compute_bridges": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/compute_bridge_policy"
           }
         }
       }

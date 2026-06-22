@@ -194,8 +194,6 @@ pub enum ArithmeticError {
 
 pub enum ComputeError {
     ZeroDuration,
-    Overflow,
-    PrecisionLoss,
 }
 
 pub fn velocity_from_distance_and_time(
@@ -217,6 +215,8 @@ Authoritative compute-bridge rule:
 - if later phases add convenience methods, those methods are derivative shims
   over the same free-function boundary rather than a second normative contract
 - compute bridges return canonical compute units in fixed `f64` storage in V1
+- because the V1 compute bridges canonicalize into fixed `f64` outputs, the
+  only runtime `ComputeError` in scope for this sprint is `ZeroDuration`
 
 Result-identity rule:
 
@@ -225,6 +225,10 @@ Result-identity rule:
 - same-canonical-dimension cross-public-type arithmetic also preserves the
   left-hand public quantity type and left-hand unit when the authoritative
   matrix marks that exact path supported
+- the authoritative matrix is generated from catalog-owned arithmetic policy;
+  it may mark a same-canonical-dimension public-type pair supported for
+  infallible paths while marking checked-only storage combinations intentionally
+  unsupported until a later API expansion closes that surface
 - floating-point scalar division follows Rust IEEE-754 semantics for supported
   infallible paths; `ArithmeticError::DivisionByZero` is reserved for checked
   integer-division paths

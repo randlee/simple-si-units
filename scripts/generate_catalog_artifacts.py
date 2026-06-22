@@ -32,6 +32,7 @@ def build_summary(catalog: dict) -> dict:
         "catalog_version": catalog["catalog_version"],
         "bridges": catalog["bridges"],
         "conversion_policies": catalog["conversion_policies"],
+        "arithmetic_policies": catalog["arithmetic_policies"],
         "dimension_count": len(dimensions),
         "dimensions": [
             {
@@ -836,6 +837,30 @@ def resolve_policy(
     raise ValueError(f"unsupported infallibility guard `{guard}`")
 
 
+def arithmetic_same_dimension_policy(
+    summary: dict, lhs_storage: str, rhs_storage: str
+) -> dict[str, object]:
+    for row in summary["arithmetic_policies"]["same_dimension_add_sub"]["storage_pair_policies"]:
+        if row["lhs_storage"] == lhs_storage and row["rhs_storage"] == rhs_storage:
+            return row
+    raise ValueError(f"missing arithmetic same-dimension policy for {lhs_storage}->{rhs_storage}")
+
+
+def scalar_arithmetic_policy(
+    summary: dict, operator: str, lhs_storage: str, rhs_storage: str
+) -> dict[str, object]:
+    for row in summary["arithmetic_policies"]["scalar_arithmetic"]["storage_pair_policies"]:
+        if (
+            row["operator"] == operator
+            and row["lhs_storage"] == lhs_storage
+            and row["rhs_storage"] == rhs_storage
+        ):
+            return row
+    raise ValueError(
+        f"missing scalar arithmetic policy for {operator}:{lhs_storage}->{rhs_storage}"
+    )
+
+
 def storage_bounds(storage: str) -> tuple[float, float]:
     if storage == "i32":
         return (float(-(2**31)), float(2**31 - 1))
@@ -1028,43 +1053,34 @@ def conversion_coverage_rows(summary: dict) -> list[dict[str, str | None]]:
     return rows
 
 
-def promoted_storage(lhs_storage: str, rhs_storage: str) -> str:
-    if "f64" in {lhs_storage, rhs_storage}:
-        return "f64"
-    if "f32" in {lhs_storage, rhs_storage}:
-        return "f32"
-    return "i32"
-
-
-def arithmetic_api_mode(operator: str, lhs_storage: str, rhs_storage: str) -> tuple[str, str | None, str]:
-    if operator in {"add", "sub", "mul"} and lhs_storage == rhs_storage == "i32":
-        return ("checked", "not-applicable", "Overflow")
-    if operator == "div" and lhs_storage == rhs_storage == "i32":
-        return ("checked", "exact-only", "DivisionByZero|NonIntegralDivision")
-    return ("infallible", "not-applicable", None)
-
-
 def arithmetic_support_rows(summary: dict) -> list[dict[str, str | None]]:
     dimensions = summary["dimensions"]
     rows: list[dict[str, str | None]] = []
+    arithmetic_policies = summary["arithmetic_policies"]
+    same_dimension_policy = arithmetic_policies["same_dimension_add_sub"]
+    same_dimension_unsupported = set(same_dimension_policy["unsupported_public_types"])
+    scalar_policy = arithmetic_policies["scalar_arithmetic"]
+    scalar_unsupported = set(scalar_policy["unsupported_public_types"])
+    supported_cross_public_pairs = {
+        tuple(sorted((row["left_public_type"], row["right_public_type"]))): set(row["supported_api_modes"])
+        for row in arithmetic_policies["cross_public_type_add_sub"]
+    }
+    scalar_rhs_storages = sorted(
+        {row["rhs_storage"] for row in scalar_policy["storage_pair_policies"]}
+    )
 
     for dimension in dimensions:
         public_type = dimension["public_type"]
         storages = [scalar_storage_name(type_id) for type_id in dimension["scalar"]["type_ids"]]
         units = [unit["unit_code_id"] for unit in dimension["units"]]
-        temperature_unsupported = public_type == "Temperature"
 
         for lhs_storage in storages:
             for rhs_storage in storages:
-                result_storage = promoted_storage(lhs_storage, rhs_storage)
+                row_policy = arithmetic_same_dimension_policy(summary, lhs_storage, rhs_storage)
                 for lhs_unit in units:
                     for rhs_unit in units:
                         for operator in ("add", "sub"):
-                            api_mode, exact_division_policy, expected_failure = arithmetic_api_mode(
-                                operator,
-                                lhs_storage,
-                                rhs_storage,
-                            )
+                            unsupported = public_type in same_dimension_unsupported
                             rows.append(
                                 {
                                     "lhs_public_type": public_type,
@@ -1076,81 +1092,97 @@ def arithmetic_support_rows(summary: dict) -> list[dict[str, str | None]]:
                                     "rhs_storage": rhs_storage,
                                     "result_public_type": public_type,
                                     "result_unit_rule": "lhs_unit",
-                                    "result_storage": result_storage,
+                                    "result_storage": row_policy["result_storage"],
                                     "path_family": "same_canonical_add_sub",
-                                    "api_mode": "absent" if temperature_unsupported else api_mode,
-                                    "exact_division_policy": exact_division_policy,
-                                    "support_status": "unsupported" if temperature_unsupported else "supported",
-                                    "expected_failure": "IntentionallyUnsupported" if temperature_unsupported else expected_failure,
-                                }
-                            )
-
-                for lhs_unit in units:
-                    for rhs_storage_scalar in ("i32", "f32", "f64"):
-                        for operator in ("mul", "div"):
-                            api_mode, exact_division_policy, expected_failure = arithmetic_api_mode(
-                                operator,
-                                lhs_storage,
-                                rhs_storage_scalar,
-                            )
-                            rows.append(
-                                {
-                                    "lhs_public_type": public_type,
-                                    "lhs_unit": lhs_unit,
-                                    "lhs_storage": lhs_storage,
-                                    "operator": operator,
-                                    "rhs_public_type": "Scalar",
-                                    "rhs_unit": "scalar",
-                                    "rhs_storage": rhs_storage_scalar,
-                                    "result_public_type": public_type,
-                                    "result_unit_rule": "lhs_unit",
-                                    "result_storage": promoted_storage(lhs_storage, rhs_storage_scalar),
-                                    "path_family": "scalar_arithmetic",
-                                    "api_mode": "absent" if temperature_unsupported else api_mode,
-                                    "exact_division_policy": exact_division_policy,
-                                    "support_status": "unsupported" if temperature_unsupported else "supported",
-                                    "expected_failure": "IntentionallyUnsupported" if temperature_unsupported else expected_failure,
-                                }
-                            )
-
-    diopter = next(dimension for dimension in dimensions if dimension["public_type"] == "Diopter")
-    inverse_distance = next(dimension for dimension in dimensions if dimension["public_type"] == "InverseDistance")
-    for lhs_dimension, rhs_dimension in ((diopter, inverse_distance), (inverse_distance, diopter)):
-        lhs_storages = [scalar_storage_name(type_id) for type_id in lhs_dimension["scalar"]["type_ids"]]
-        rhs_storages = [scalar_storage_name(type_id) for type_id in rhs_dimension["scalar"]["type_ids"]]
-        for lhs_storage in lhs_storages:
-            for rhs_storage in rhs_storages:
-                for lhs_unit in [unit["unit_code_id"] for unit in lhs_dimension["units"]]:
-                    for rhs_unit in [unit["unit_code_id"] for unit in rhs_dimension["units"]]:
-                        for operator in ("add", "sub"):
-                            rows.append(
-                                {
-                                    "lhs_public_type": lhs_dimension["public_type"],
-                                    "lhs_unit": lhs_unit,
-                                    "lhs_storage": lhs_storage,
-                                    "operator": operator,
-                                    "rhs_public_type": rhs_dimension["public_type"],
-                                    "rhs_unit": rhs_unit,
-                                    "rhs_storage": rhs_storage,
-                                    "result_public_type": lhs_dimension["public_type"],
-                                    "result_unit_rule": "lhs_unit",
-                                    "result_storage": promoted_storage(lhs_storage, rhs_storage),
-                                    "path_family": "same_canonical_add_sub",
-                                    "api_mode": "infallible",
+                                    "api_mode": "absent" if unsupported else row_policy["api_mode"],
                                     "exact_division_policy": "not-applicable",
-                                    "support_status": "supported",
-                                    "expected_failure": None,
+                                    "support_status": "unsupported" if unsupported else "supported",
+                                    "expected_failure": (
+                                        "IntentionallyUnsupported"
+                                        if unsupported
+                                        else row_policy["expected_failure"]
+                                    ),
                                 }
                             )
 
-    distance = next(dimension for dimension in dimensions if dimension["public_type"] == "Distance")
-    time = next(dimension for dimension in dimensions if dimension["public_type"] == "Time")
-    velocity = next(dimension for dimension in dimensions if dimension["public_type"] == "Velocity")
-    acceleration = next(dimension for dimension in dimensions if dimension["public_type"] == "Acceleration")
-    for lhs_dimension, operator, rhs_dimension, result_dimension in (
-        (distance, "velocity_from_time", time, velocity),
-        (velocity, "acceleration_from_time", time, acceleration),
-    ):
+            for lhs_unit in units:
+                for rhs_storage_scalar in scalar_rhs_storages:
+                    for operator in ("mul", "div"):
+                        row_policy = scalar_arithmetic_policy(
+                            summary, operator, lhs_storage, rhs_storage_scalar
+                        )
+                        unsupported = public_type in scalar_unsupported
+                        rows.append(
+                            {
+                                "lhs_public_type": public_type,
+                                "lhs_unit": lhs_unit,
+                                "lhs_storage": lhs_storage,
+                                "operator": operator,
+                                "rhs_public_type": "Scalar",
+                                "rhs_unit": "scalar",
+                                "rhs_storage": rhs_storage_scalar,
+                                "result_public_type": public_type,
+                                "result_unit_rule": "lhs_unit",
+                                "result_storage": row_policy["result_storage"],
+                                "path_family": "scalar_arithmetic",
+                                "api_mode": "absent" if unsupported else row_policy["api_mode"],
+                                "exact_division_policy": row_policy["exact_division_policy"],
+                                "support_status": "unsupported" if unsupported else "supported",
+                                "expected_failure": (
+                                    "IntentionallyUnsupported"
+                                    if unsupported
+                                    else row_policy["expected_failure"]
+                                ),
+                            }
+                        )
+
+    public_types = {dimension["public_type"]: dimension for dimension in dimensions}
+    for pair_key, supported_api_modes in supported_cross_public_pairs.items():
+        left_dimension = public_types[pair_key[0]]
+        right_dimension = public_types[pair_key[1]]
+        for lhs_dimension, rhs_dimension in (
+            (left_dimension, right_dimension),
+            (right_dimension, left_dimension),
+        ):
+            lhs_storages = [scalar_storage_name(type_id) for type_id in lhs_dimension["scalar"]["type_ids"]]
+            rhs_storages = [scalar_storage_name(type_id) for type_id in rhs_dimension["scalar"]["type_ids"]]
+            for lhs_storage in lhs_storages:
+                for rhs_storage in rhs_storages:
+                    for lhs_unit in [unit["unit_code_id"] for unit in lhs_dimension["units"]]:
+                        for rhs_unit in [unit["unit_code_id"] for unit in rhs_dimension["units"]]:
+                            for operator in ("add", "sub"):
+                                row_policy = arithmetic_same_dimension_policy(
+                                    summary, lhs_storage, rhs_storage
+                                )
+                                supported = row_policy["api_mode"] in supported_api_modes
+                                rows.append(
+                                    {
+                                        "lhs_public_type": lhs_dimension["public_type"],
+                                        "lhs_unit": lhs_unit,
+                                        "lhs_storage": lhs_storage,
+                                        "operator": operator,
+                                        "rhs_public_type": rhs_dimension["public_type"],
+                                        "rhs_unit": rhs_unit,
+                                        "rhs_storage": rhs_storage,
+                                        "result_public_type": lhs_dimension["public_type"],
+                                        "result_unit_rule": "lhs_unit",
+                                        "result_storage": row_policy["result_storage"],
+                                        "path_family": "same_canonical_add_sub",
+                                        "api_mode": row_policy["api_mode"] if supported else "absent",
+                                        "exact_division_policy": "not-applicable",
+                                        "support_status": "supported" if supported else "unsupported",
+                                        "expected_failure": (
+                                            row_policy["expected_failure"]
+                                            if supported
+                                            else "IntentionallyUnsupported"
+                                        ),
+                                    }
+                                )
+
+    for bridge in arithmetic_policies["compute_bridges"]:
+        lhs_dimension = public_types[bridge["lhs_public_type"]]
+        rhs_dimension = public_types[bridge["rhs_public_type"]]
+        result_dimension = public_types[bridge["result_public_type"]]
         lhs_storages = [scalar_storage_name(type_id) for type_id in lhs_dimension["scalar"]["type_ids"]]
         rhs_storages = [scalar_storage_name(type_id) for type_id in rhs_dimension["scalar"]["type_ids"]]
         for lhs_storage in lhs_storages:
@@ -1162,18 +1194,18 @@ def arithmetic_support_rows(summary: dict) -> list[dict[str, str | None]]:
                                 "lhs_public_type": lhs_dimension["public_type"],
                                 "lhs_unit": lhs_unit,
                                 "lhs_storage": lhs_storage,
-                                "operator": operator,
+                                "operator": bridge["operator"],
                                 "rhs_public_type": rhs_dimension["public_type"],
                                 "rhs_unit": rhs_unit,
                                 "rhs_storage": rhs_storage,
                                 "result_public_type": result_dimension["public_type"],
                                 "result_unit_rule": "canonical_compute_unit",
-                                "result_storage": "f64",
+                                "result_storage": bridge["result_storage"],
                                 "path_family": "compute_bridge",
-                                "api_mode": "checked",
+                                "api_mode": bridge["api_mode"],
                                 "exact_division_policy": "not-applicable",
                                 "support_status": "supported",
-                                "expected_failure": "ZeroDuration",
+                                "expected_failure": bridge["expected_failure"],
                             }
                         )
 

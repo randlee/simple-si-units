@@ -52,6 +52,14 @@ class CatalogGenerationTests(unittest.TestCase):
             summary["conversion_policies"]["reciprocal_bridge"]["api_surface"],
             "to_reciprocal_quantity",
         )
+        self.assertEqual(
+            summary["arithmetic_policies"]["same_dimension_add_sub"]["storage_pair_policies"][0]["api_mode"],
+            "checked",
+        )
+        self.assertEqual(
+            summary["arithmetic_policies"]["compute_bridges"][1]["operator"],
+            "acceleration_from_time",
+        )
         dimensions = {dimension["dimension_id"]: dimension for dimension in summary["dimensions"]}
         self.assertIn("distance", dimensions)
         self.assertIn("distance_i32", dimensions["distance"]["scalar"]["type_ids"])
@@ -234,6 +242,42 @@ class CatalogGenerationTests(unittest.TestCase):
         self.assertTrue(any(row["path_family"] == "same_canonical_add_sub" and row["lhs_public_type"] == "Diopter" and row["rhs_public_type"] == "InverseDistance" for row in support))
         self.assertTrue(any(row["path_family"] == "compute_bridge" and row["result_public_type"] == "Velocity" for row in support))
         self.assertTrue(any(row["lhs_public_type"] == "Temperature" and row["support_status"] == "unsupported" for row in support))
+        scalar_keys = [
+            (
+                row["lhs_public_type"],
+                row["lhs_unit"],
+                row["lhs_storage"],
+                row["operator"],
+                row["rhs_public_type"],
+                row["rhs_storage"],
+            )
+            for row in support
+            if row["path_family"] == "scalar_arithmetic"
+        ]
+        self.assertEqual(len(scalar_keys), len(set(scalar_keys)))
+
+        cross_pair = next(
+            row
+            for row in support
+            if row["lhs_public_type"] == "Diopter"
+            and row["lhs_storage"] == "f32"
+            and row["operator"] == "add"
+            and row["rhs_public_type"] == "InverseDistance"
+            and row["rhs_storage"] == "f32"
+        )
+        self.assertEqual(cross_pair["api_mode"], "infallible")
+        self.assertEqual(cross_pair["support_status"], "supported")
+        self.assertIsNone(cross_pair["expected_failure"])
+
+        compute_bridge = next(
+            row
+            for row in support
+            if row["lhs_public_type"] == "Distance"
+            and row["operator"] == "velocity_from_time"
+            and row["rhs_public_type"] == "Time"
+        )
+        self.assertEqual(compute_bridge["result_storage"], "f64")
+        self.assertEqual(compute_bridge["expected_failure"], "ZeroDuration")
 
     def test_generated_public_types_reject_invalid_marker_names(self) -> None:
         summary = json.loads((ROOT / "catalog" / "generated" / "units-catalog-summary.json").read_text(encoding="utf-8"))
