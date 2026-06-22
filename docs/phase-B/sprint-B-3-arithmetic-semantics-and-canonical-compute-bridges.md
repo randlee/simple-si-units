@@ -6,7 +6,7 @@ Define and implement scalar arithmetic, mixed-unit addition/subtraction, and bri
 
 ## Status
 
-`In Progress`
+`Done`
 
 ## Scope References
 
