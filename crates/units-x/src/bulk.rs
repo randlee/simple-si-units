@@ -52,6 +52,7 @@ pub const BULK_REVIEW_ARITIES: &[usize] = &[0, 2, 3, 4];
 pub struct QuantityArray<Unit, T, const N: usize>
 where
     Unit: UnitMarker,
+    T: BulkStorageFor<Unit>,
 {
     pub values: [T; N],
     _unit: PhantomData<Unit>,
@@ -62,6 +63,7 @@ where
 pub struct QuantityBuffer<Unit, T>
 where
     Unit: UnitMarker,
+    T: BulkStorageFor<Unit>,
 {
     pub values: Vec<T>,
     _unit: PhantomData<Unit>,
@@ -72,6 +74,7 @@ where
 pub struct QuantityBufferView<'a, Unit, T>
 where
     Unit: UnitMarker,
+    T: BulkStorageFor<Unit>,
 {
     pub values: &'a [T],
     _unit: PhantomData<Unit>,

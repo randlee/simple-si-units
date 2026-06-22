@@ -43,9 +43,11 @@
 //! ```
 //!
 //! ```compile_fail
-//! use units_x::{mol, QuantityArray};
+//! use units_x::{mol, QuantityArray, QuantityBuffer, QuantityBufferView};
 //!
-//! let _ = QuantityArray::<mol, i32, 2>::new([1, 2]);
+//! fn takes_array(_: QuantityArray<mol, i32, 2>) {}
+//! fn takes_buffer(_: QuantityBuffer<mol, i32>) {}
+//! fn takes_view(_: QuantityBufferView<'static, mol, i32>) {}
 //! ```
 
 pub mod arithmetic;
