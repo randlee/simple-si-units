@@ -1,6 +1,13 @@
 {
   "schema_version": "1.0.0",
   "catalog_version": "0.1.0-phase-a",
+  "bridges": [
+    {
+      "kind": "reciprocal",
+      "left_public_type": "Distance",
+      "right_public_type": "Diopter"
+    }
+  ],
   "dimensions": [
     {
       "dimension_id": "amount",

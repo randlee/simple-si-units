@@ -7,7 +7,8 @@
   "required": [
     "schema_version",
     "catalog_version",
-    "dimensions"
+    "dimensions",
+    "bridges"
   ],
   "properties": {
     "schema_version": {
@@ -22,6 +23,12 @@
       "items": {
         "$ref": "#/$defs/dimension"
       }
+    },
+    "bridges": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/bridge"
+      }
     }
   },
   "$defs": {
@@ -29,6 +36,29 @@
       "type": "string",
       "minLength": 1,
       "pattern": "^.*\\S.*$"
+    },
+    "bridge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "left_public_type",
+        "right_public_type"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "reciprocal"
+          ]
+        },
+        "left_public_type": {
+          "$ref": "#/$defs/non_blank_string"
+        },
+        "right_public_type": {
+          "$ref": "#/$defs/non_blank_string"
+        }
+      }
     },
     "nullable_non_blank_string": {
       "anyOf": [

@@ -11,6 +11,16 @@
 //! assert_eq!(distance.unit(), "mm");
 //! ```
 //!
+//! ```rust
+//! use units_x::{degC, degF, m, Distance, Temperature};
+//!
+//! let meters = Distance::mm(1250.0_f64).to_unit::<m>();
+//! assert_eq!(meters.value(), 1.25);
+//!
+//! let freezing = Temperature::degC(0.0_f64).to_unit::<degF>();
+//! assert!((freezing.value() - 32.0).abs() < 1.0e-9);
+//! ```
+//!
 //! ```compile_fail
 //! use units_x::{degC, mm, Distance, Temperature};
 //!
@@ -18,10 +28,15 @@
 //! let _ = Temperature::<f64, mm>::new(1.0);
 //! ```
 
+pub mod conversion;
 pub mod ffi_contract;
 pub mod generated;
 pub mod model;
 
+pub use conversion::{
+    ConversionError, ConvertUnit, InfallibleUnitStorage, ReciprocalBridge, TryConvertQuantity,
+    TryConvertUnit, ValueStorage,
+};
 pub use generated::public_types::*;
 pub use model::{Quantity, QuantityType, UnitMarker};
 

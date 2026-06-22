@@ -25,6 +25,8 @@ class CatalogContractTests(unittest.TestCase):
         sample = self.load_sample()
         self.assertEqual(schema["title"], "units-x catalog schema")
         self.assertEqual(sample["catalog_version"], "0.1.0-phase-a-sample")
+        self.assertIn("bridges", schema["required"])
+        self.assertIn("bridge", schema["$defs"])
         self.assertEqual(
             schema["$defs"]["dimension"]["properties"]["family"]["enum"],
             ["base", "geometry", "mechanical", "electromagnetic"],
@@ -48,6 +50,16 @@ class CatalogContractTests(unittest.TestCase):
 
     def test_sample_catalog_keeps_case_sensitive_and_offset_units_distinct(self) -> None:
         sample = self.load_sample()
+        self.assertEqual(
+            sample["bridges"],
+            [
+                {
+                    "kind": "reciprocal",
+                    "left_public_type": "Distance",
+                    "right_public_type": "Diopter",
+                }
+            ],
+        )
         dimensions = {dimension["dimension_id"]: dimension for dimension in sample["dimensions"]}
 
         distance_units = {
@@ -163,6 +175,16 @@ class CatalogContractTests(unittest.TestCase):
 
         sample = self.load_sample()
         sample["dimensions"][0]["units"][0]["binary_unit_id"] = "distance.centimeter"
+        with self.assertRaises(ValidationError):
+            validate_catalog(sample)
+
+        sample = self.load_sample()
+        sample["bridges"][0]["left_public_type"] = "UnknownDistance"
+        with self.assertRaises(ValidationError):
+            validate_catalog(sample)
+
+        sample = self.load_sample()
+        sample["bridges"].append(dict(sample["bridges"][0]))
         with self.assertRaises(ValidationError):
             validate_catalog(sample)
 

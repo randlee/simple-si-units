@@ -9,7 +9,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 GENERATED_PATHS = (
     "catalog/generated/units-catalog-summary.json",
+    "catalog/generated/phase-b-conversion-coverage.json",
     "crates/units-x/src/generated/catalog_metadata.rs",
+    "crates/units-x/src/generated/conversion_metadata.rs",
     "crates/units-x/src/generated/ffi_contract_types.rs",
     "crates/units-x/src/generated/public_types.rs",
 )

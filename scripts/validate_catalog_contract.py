@@ -168,14 +168,23 @@ def validate_dimension_invariants(dimension: Any, label: str) -> tuple[str, str,
 def validate_catalog(payload: Any) -> None:
     validate_schema(payload)
     dimensions = payload["dimensions"]
+    bridges = payload["bridges"]
 
     seen_dimension_ids: set[str] = set()
     canonical_dimension_ids: list[tuple[str, str]] = []
     seen_marker_names: set[str] = set()
+    seen_public_types: set[str] = set()
     for index, dimension in enumerate(dimensions):
         dimension_id, canonical_dimension_id, marker_names = validate_dimension_invariants(dimension, f"dimensions[{index}]")
+        public_type = str(dimension["public_type"])
         require(dimension_id not in seen_dimension_ids, f"duplicate dimension_id `{dimension_id}`", f"dimensions[{index}].dimension_id")
+        require(
+            public_type not in seen_public_types,
+            f"duplicate public_type `{public_type}`",
+            f"dimensions[{index}].public_type",
+        )
         seen_dimension_ids.add(dimension_id)
+        seen_public_types.add(public_type)
         canonical_dimension_ids.append((canonical_dimension_id, f"dimensions[{index}].canonical_dimension_id"))
         for marker_name, location in marker_names:
             require(
@@ -192,6 +201,34 @@ def validate_catalog(payload: Any) -> None:
             location,
         )
 
+    seen_bridges: set[tuple[str, str, str]] = set()
+    for index, bridge in enumerate(bridges):
+        kind = str(bridge["kind"])
+        left_public_type = str(bridge["left_public_type"])
+        right_public_type = str(bridge["right_public_type"])
+        require(
+            left_public_type in seen_public_types,
+            f"bridges[{index}].left_public_type `{left_public_type}` must reference an existing public_type",
+            f"bridges[{index}].left_public_type",
+        )
+        require(
+            right_public_type in seen_public_types,
+            f"bridges[{index}].right_public_type `{right_public_type}` must reference an existing public_type",
+            f"bridges[{index}].right_public_type",
+        )
+        require(
+            left_public_type != right_public_type,
+            f"bridges[{index}] must connect two distinct public types",
+            f"bridges[{index}]",
+        )
+        bridge_key = (kind, *sorted((left_public_type, right_public_type)))
+        require(
+            bridge_key not in seen_bridges,
+            f"duplicate bridge `{kind}` between `{left_public_type}` and `{right_public_type}`",
+            f"bridges[{index}]",
+        )
+        seen_bridges.add(bridge_key)
+
     distance = next((dimension for dimension in dimensions if dimension["dimension_id"] == "distance"), None)
     require(distance is not None, "catalog must include the bootstrap `distance` dimension", "dimensions")
     require(
@@ -203,6 +240,15 @@ def validate_catalog(payload: Any) -> None:
         any(type_id.endswith("_i32") for type_id in distance["json_forms"]["scalar"]["type_ids"]),
         "distance dimension must include an `_i32` scalar type id for the Phase A FFI bootstrap exemplar",
         "dimensions.distance.json_forms.scalar.type_ids",
+    )
+    require(
+        any(
+            bridge["kind"] == "reciprocal"
+            and {bridge["left_public_type"], bridge["right_public_type"]} == {"Distance", "Diopter"}
+            for bridge in bridges
+        ),
+        "catalog must include the reciprocal bridge between Distance and Diopter",
+        "bridges",
     )
 
 
