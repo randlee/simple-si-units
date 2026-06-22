@@ -169,11 +169,11 @@ class CatalogGenerationTests(unittest.TestCase):
             "impl_cross_public_add_sub!(Diopter, DiopterUnit, InverseDistance, InverseDistanceUnit);",
             rendered,
         )
-        self.assertNotIn("impl_same_public_type_arithmetic!(Temperature, TemperatureUnit);", rendered)
-        self.assertNotIn(
+        self.assertIn(
             "impl_cross_public_add_sub!(InverseDistance, InverseDistanceUnit, Diopter, DiopterUnit);",
             rendered,
         )
+        self.assertNotIn("impl_same_public_type_arithmetic!(Temperature, TemperatureUnit);", rendered)
 
     def test_conversion_coverage_report_is_complete_for_b2_scope(self) -> None:
         summary = build_summary(json.loads((ROOT / "catalog" / "units-catalog.json").read_text(encoding="utf-8")))

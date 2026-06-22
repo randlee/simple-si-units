@@ -35,18 +35,21 @@ pub trait AddSubPromotion<Rhs>: private::SealedArithmeticPolicy + ValueStorage {
 }
 
 pub trait InfallibleAddSubPromotion<Rhs>: AddSubPromotion<Rhs> {}
+pub trait CheckedAddSubPromotion<Rhs>: AddSubPromotion<Rhs> {}
 
 pub trait MulPromotion<Rhs>: private::SealedArithmeticPolicy + ValueStorage {
     type Output: CheckedArithmeticStorage;
 }
 
 pub trait InfallibleMulPromotion<Rhs>: MulPromotion<Rhs> {}
+pub trait CheckedMulPromotion<Rhs>: MulPromotion<Rhs> {}
 
 pub trait DivPromotion<Rhs>: private::SealedArithmeticPolicy + ValueStorage {
     type Output: CheckedArithmeticStorage;
 }
 
 pub trait InfallibleDivPromotion<Rhs>: DivPromotion<Rhs> {}
+pub trait CheckedDivPromotion<Rhs>: DivPromotion<Rhs> {}
 
 pub trait CheckedArithmeticStorage: private::SealedArithmeticStorage + ValueStorage {
     fn from_f64_for_arithmetic(value: f64) -> Result<Self, ArithmeticError>;
@@ -215,6 +218,7 @@ macro_rules! impl_add_sub_rule {
         impl AddSubPromotion<$rhs> for $lhs {
             type Output = $out;
         }
+        impl CheckedAddSubPromotion<$rhs> for $lhs {}
     };
 }
 
@@ -229,6 +233,7 @@ macro_rules! impl_mul_rule {
         impl MulPromotion<$rhs> for $lhs {
             type Output = $out;
         }
+        impl CheckedMulPromotion<$rhs> for $lhs {}
     };
 }
 
@@ -243,6 +248,7 @@ macro_rules! impl_div_rule {
         impl DivPromotion<$rhs> for $lhs {
             type Output = $out;
         }
+        impl CheckedDivPromotion<$rhs> for $lhs {}
     };
 }
 
@@ -253,7 +259,7 @@ fn checked_add_quantities<Lhs, Rhs, OutStorage>(
 where
     Lhs: QuantityType,
     Rhs: QuantityType,
-    Lhs::Storage: ValueStorage + AddSubPromotion<Rhs::Storage, Output = OutStorage>,
+    Lhs::Storage: ValueStorage + CheckedAddSubPromotion<Rhs::Storage, Output = OutStorage>,
     Lhs::Unit: QuantityForStorage<OutStorage>,
     Rhs::Storage: ValueStorage,
     OutStorage: CheckedArithmeticStorage,
@@ -278,7 +284,7 @@ fn checked_sub_quantities<Lhs, Rhs, OutStorage>(
 where
     Lhs: QuantityType,
     Rhs: QuantityType,
-    Lhs::Storage: ValueStorage + AddSubPromotion<Rhs::Storage, Output = OutStorage>,
+    Lhs::Storage: ValueStorage + CheckedAddSubPromotion<Rhs::Storage, Output = OutStorage>,
     Lhs::Unit: QuantityForStorage<OutStorage>,
     Rhs::Storage: ValueStorage,
     OutStorage: CheckedArithmeticStorage,
@@ -302,7 +308,7 @@ fn checked_mul_scalar<Lhs, Rhs, OutStorage>(
 ) -> Result<<Lhs::Unit as QuantityForStorage<OutStorage>>::Quantity, ArithmeticError>
 where
     Lhs: QuantityType,
-    Lhs::Storage: ValueStorage + MulPromotion<Rhs, Output = OutStorage>,
+    Lhs::Storage: ValueStorage + CheckedMulPromotion<Rhs, Output = OutStorage>,
     Lhs::Unit: QuantityForStorage<OutStorage>,
     Rhs: ValueStorage,
     OutStorage: CheckedArithmeticStorage,
@@ -322,7 +328,7 @@ fn checked_div_scalar<Lhs, Rhs, OutStorage>(
 ) -> Result<<Lhs::Unit as QuantityForStorage<OutStorage>>::Quantity, ArithmeticError>
 where
     Lhs: QuantityType,
-    Lhs::Storage: ValueStorage + DivPromotion<Rhs, Output = OutStorage>,
+    Lhs::Storage: ValueStorage + CheckedDivPromotion<Rhs, Output = OutStorage>,
     Lhs::Unit: QuantityForStorage<OutStorage>,
     Rhs: ValueStorage,
     OutStorage: CheckedArithmeticStorage,
@@ -557,7 +563,7 @@ macro_rules! impl_same_public_type_arithmetic {
                 rhs: $public_type<RhsStorage, RhsUnit>,
             ) -> Result<<LhsUnit as QuantityForStorage<OutStorage>>::Quantity, ArithmeticError>
             where
-                LhsStorage: AddSubPromotion<RhsStorage, Output = OutStorage>,
+                LhsStorage: CheckedAddSubPromotion<RhsStorage, Output = OutStorage>,
                 RhsStorage: ValueStorage,
                 RhsUnit: $unit_trait,
                 LhsUnit: QuantityForStorage<OutStorage>,
@@ -573,7 +579,7 @@ macro_rules! impl_same_public_type_arithmetic {
                 rhs: $public_type<RhsStorage, RhsUnit>,
             ) -> Result<<LhsUnit as QuantityForStorage<OutStorage>>::Quantity, ArithmeticError>
             where
-                LhsStorage: AddSubPromotion<RhsStorage, Output = OutStorage>,
+                LhsStorage: CheckedAddSubPromotion<RhsStorage, Output = OutStorage>,
                 RhsStorage: ValueStorage,
                 RhsUnit: $unit_trait,
                 LhsUnit: QuantityForStorage<OutStorage>,
@@ -645,7 +651,7 @@ macro_rules! impl_scalar_arithmetic {
                 rhs: Rhs,
             ) -> Result<<LhsUnit as QuantityForStorage<OutStorage>>::Quantity, ArithmeticError>
             where
-                LhsStorage: MulPromotion<Rhs, Output = OutStorage>,
+                LhsStorage: CheckedMulPromotion<Rhs, Output = OutStorage>,
                 Rhs: ValueStorage,
                 LhsUnit: QuantityForStorage<OutStorage>,
                 OutStorage: CheckedArithmeticStorage,
@@ -658,7 +664,7 @@ macro_rules! impl_scalar_arithmetic {
                 rhs: Rhs,
             ) -> Result<<LhsUnit as QuantityForStorage<OutStorage>>::Quantity, ArithmeticError>
             where
-                LhsStorage: DivPromotion<Rhs, Output = OutStorage>,
+                LhsStorage: CheckedDivPromotion<Rhs, Output = OutStorage>,
                 Rhs: ValueStorage,
                 LhsUnit: QuantityForStorage<OutStorage>,
                 OutStorage: CheckedArithmeticStorage,
@@ -763,7 +769,7 @@ include!(concat!(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::generated::public_types::{dpt, Diopter, InverseDistance};
+    use crate::generated::public_types::{dpt, per_m, Diopter, InverseDistance};
 
     fn assert_close(left: f64, right: f64) {
         assert!((left - right).abs() < 1.0e-6, "left={left}, right={right}");
@@ -847,9 +853,9 @@ mod tests {
 
     #[test]
     fn reciprocal_canonical_pair_supports_subtraction() {
-        let lhs = Diopter::dpt(3.0_f64);
-        let rhs = InverseDistance::per_m(1.5_f64);
-        let out: Diopter<f64, dpt> = lhs - rhs;
+        let lhs = InverseDistance::per_m(3.0_f64);
+        let rhs = Diopter::dpt(1.5_f64);
+        let out: InverseDistance<f64, per_m> = lhs - rhs;
         assert_close(out.value(), 1.5);
     }
 }
