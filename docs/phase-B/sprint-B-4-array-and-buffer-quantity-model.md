@@ -70,6 +70,9 @@ views.
 8. The authoritative bulk-support artifact uses the review arity set
    `{0, 2, 3, 4}` in V1; the runtime `QuantityArray<Unit, T, N>` surface
    remains generic over any `N`.
+9. Bulk wrappers only compile for unit/storage combinations published by the
+   catalog-derived bulk-support contract; unsupported combinations are absent
+   at compile time rather than synthesized ad hoc.
 
 ## Required Validation
 
@@ -115,6 +118,8 @@ Authoritative bulk-boundary rule:
   Rust bulk wrapper
 - `QuantityBufferView<'a, Unit, T>` is the authoritative borrowed
   variable-length public Rust bulk wrapper
+- a generated `BulkStorageFor<Unit>` gate constrains those wrappers to the
+  storage set published for each unit family in the catalog
 - `Vec<T>` and `&[T]` are payload/storage details of those wrappers, not
   competing public quantity boundary shapes
 

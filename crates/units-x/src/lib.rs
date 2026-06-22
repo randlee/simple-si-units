@@ -41,6 +41,12 @@
 //!
 //! let _ = Distance::mm(1.0_f32).to_unit::<m>();
 //! ```
+//!
+//! ```compile_fail
+//! use units_x::{mol, QuantityArray};
+//!
+//! let _ = QuantityArray::<mol, i32, 2>::new([1, 2]);
+//! ```
 
 pub mod arithmetic;
 mod bulk;

@@ -20,6 +20,13 @@ pub trait BulkStorage: Copy + 'static {
     const STORAGE_ID: &'static str;
 }
 
+#[doc(hidden)]
+pub trait BulkStorageFor<Unit>: BulkStorage
+where
+    Unit: UnitMarker,
+{
+}
+
 impl BulkStorage for i32 {
     const STORAGE_ID: &'static str = "i32";
 }
@@ -31,6 +38,11 @@ impl BulkStorage for f32 {
 impl BulkStorage for f64 {
     const STORAGE_ID: &'static str = "f64";
 }
+
+include!(concat!(
+    env!("CARGO_MANIFEST_DIR"),
+    "/src/generated/bulk_storage_impls.rs"
+));
 
 #[allow(dead_code)]
 pub const BULK_REVIEW_ARITIES: &[usize] = &[0, 2, 3, 4];
@@ -65,10 +77,10 @@ where
     _unit: PhantomData<Unit>,
 }
 
-impl<Unit, T, const N: usize> QuantityArray<Unit, T, N>
+impl<Unit, T, const N: usize> QuantityArray<Unit, T, { N }>
 where
     Unit: UnitMarker,
-    T: BulkStorage,
+    T: BulkStorageFor<Unit>,
 {
     pub const fn new(values: [T; N]) -> Self {
         Self {
@@ -117,7 +129,7 @@ where
 impl<Unit, T> QuantityBuffer<Unit, T>
 where
     Unit: UnitMarker,
-    T: BulkStorage,
+    T: BulkStorageFor<Unit>,
 {
     pub fn new(values: Vec<T>) -> Self {
         Self {
@@ -166,7 +178,7 @@ where
 impl<'a, Unit, T> QuantityBufferView<'a, Unit, T>
 where
     Unit: UnitMarker,
-    T: BulkStorage,
+    T: BulkStorageFor<Unit>,
 {
     pub const fn new(values: &'a [T]) -> Self {
         Self {
@@ -226,7 +238,7 @@ where
 pub fn render_small_array_type_id<Unit, T>(arity: usize) -> String
 where
     Unit: UnitMarker,
-    T: BulkStorage,
+    T: BulkStorageFor<Unit>,
 {
     let dimension = DIMENSIONS
         .iter()
@@ -242,7 +254,7 @@ where
 pub fn render_buffer_type_id<Unit, T>() -> String
 where
     Unit: UnitMarker,
-    T: BulkStorage,
+    T: BulkStorageFor<Unit>,
 {
     let dimension = DIMENSIONS
         .iter()

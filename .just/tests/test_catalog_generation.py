@@ -15,6 +15,7 @@ from generate_catalog_artifacts import bulk_support_rows
 from generate_catalog_artifacts import conversion_coverage_rows
 from generate_catalog_artifacts import expected_outputs
 from generate_catalog_artifacts import render_generated_arithmetic_impls
+from generate_catalog_artifacts import render_generated_bulk_storage_impls
 from generate_catalog_artifacts import render_generated_conversion_metadata
 from generate_catalog_artifacts import render_generated_ffi_types
 from generate_catalog_artifacts import render_generated_public_types
@@ -176,6 +177,14 @@ class CatalogGenerationTests(unittest.TestCase):
             rendered,
         )
         self.assertNotIn("impl_same_public_type_arithmetic!(Temperature, TemperatureUnit);", rendered)
+
+    def test_generated_bulk_storage_impls_are_catalog_owned(self) -> None:
+        catalog = json.loads((ROOT / "catalog" / "units-catalog.json").read_text(encoding="utf-8"))
+        rendered = render_generated_bulk_storage_impls(build_summary(catalog))
+
+        self.assertIn("impl BulkStorageFor<mm> for i32 {}", rendered)
+        self.assertIn("impl BulkStorageFor<mol> for f32 {}", rendered)
+        self.assertNotIn("impl BulkStorageFor<mol> for i32 {}", rendered)
 
     def test_conversion_coverage_report_is_complete_for_b2_scope(self) -> None:
         summary = build_summary(json.loads((ROOT / "catalog" / "units-catalog.json").read_text(encoding="utf-8")))
