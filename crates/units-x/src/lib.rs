@@ -55,8 +55,7 @@ pub use arithmetic::{
 };
 pub use bulk::{QuantityArray, QuantityBuffer, QuantityBufferView};
 pub use conversion::{
-    ConversionError, ConvertUnit, InfallibleUnitStorage, ReciprocalBridge, TryConvertQuantity,
-    TryConvertUnit, ValueStorage,
+    ConversionError, ConvertUnit, ReciprocalBridge, TryConvertQuantity, TryConvertUnit,
 };
 pub use generated::public_types::*;
 pub use model::{Quantity, QuantityType, UnitMarker};

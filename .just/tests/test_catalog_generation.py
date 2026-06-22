@@ -14,6 +14,7 @@ from generate_catalog_artifacts import build_summary
 from generate_catalog_artifacts import bulk_support_rows
 from generate_catalog_artifacts import conversion_coverage_rows
 from generate_catalog_artifacts import expected_outputs
+from generate_catalog_artifacts import render_generated_arithmetic_impls
 from generate_catalog_artifacts import render_generated_conversion_metadata
 from generate_catalog_artifacts import render_generated_ffi_types
 from generate_catalog_artifacts import render_generated_public_types
@@ -157,6 +158,23 @@ class CatalogGenerationTests(unittest.TestCase):
         self.assertIn("kind: CatalogConversionKind::Affine", rendered)
         self.assertIn('left_public_type: "Distance"', rendered)
         self.assertIn('right_public_type: "Diopter"', rendered)
+
+    def test_generated_arithmetic_impls_are_catalog_owned(self) -> None:
+        catalog = json.loads((ROOT / "catalog" / "units-catalog.json").read_text(encoding="utf-8"))
+        rendered = render_generated_arithmetic_impls(build_summary(catalog))
+
+        self.assertIn("impl_add_sub_rule!(i32, i32 => i32, checked);", rendered)
+        self.assertIn("impl_mul_rule!(f32, f64 => f64, infallible);", rendered)
+        self.assertIn("impl_same_public_type_arithmetic!(Distance, DistanceUnit);", rendered)
+        self.assertIn(
+            "impl_cross_public_add_sub!(Diopter, DiopterUnit, InverseDistance, InverseDistanceUnit);",
+            rendered,
+        )
+        self.assertNotIn("impl_same_public_type_arithmetic!(Temperature, TemperatureUnit);", rendered)
+        self.assertNotIn(
+            "impl_cross_public_add_sub!(InverseDistance, InverseDistanceUnit, Diopter, DiopterUnit);",
+            rendered,
+        )
 
     def test_conversion_coverage_report_is_complete_for_b2_scope(self) -> None:
         summary = build_summary(json.loads((ROOT / "catalog" / "units-catalog.json").read_text(encoding="utf-8")))
