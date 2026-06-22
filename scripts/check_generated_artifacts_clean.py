@@ -12,6 +12,8 @@ GENERATED_PATHS = (
     "catalog/generated/phase-b-conversion-coverage.json",
     "catalog/generated/phase-b-arithmetic-support.json",
     "catalog/generated/phase-b-bulk-support.json",
+    "crates/units-x/src/generated/arithmetic_impls.rs",
+    "crates/units-x/src/generated/bulk_storage_impls.rs",
     "crates/units-x/src/generated/catalog_metadata.rs",
     "crates/units-x/src/generated/conversion_metadata.rs",
     "crates/units-x/src/generated/ffi_contract_types.rs",
