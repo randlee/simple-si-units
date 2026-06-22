@@ -63,8 +63,8 @@ canonical-dimension arithmetic semantics, and array/buffer model.
 
 Phase B is complete when:
 
-1. Unit-preserving scalar types exist for every item in
-   [docs/crates/units-x/in-scope-type-inventory.md](/Volumes/Extreme%20Pro/github/simple-si-units/docs/crates/units-x/in-scope-type-inventory.md).
+1. Unit-preserving scalar types exist for every public type row in
+   `catalog/generated/units-catalog-summary.json`.
 2. Implemented scalar, array, and buffer surfaces match catalog-derived
    metadata and regenerate cleanly from the authoritative catalog.
 3. Conversions are implemented from catalog-owned conversion metadata across
@@ -72,5 +72,6 @@ Phase B is complete when:
    `Diopter`.
 4. Arithmetic semantics use catalog `canonical_dimension_id` to determine
    same-dimension compatibility and canonical compute bridge eligibility.
-5. Inventory-backed validation demonstrates closure for every in-scope type
-   rather than representative-family sampling.
+5. Catalog-summary-backed validation demonstrates closure for every in-scope
+   public type rather than representative-family sampling, and the derived
+   inventory checklist remains in parity for human review.
