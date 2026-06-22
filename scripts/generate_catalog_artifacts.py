@@ -14,6 +14,7 @@ ROOT = Path(__file__).resolve().parent.parent
 CATALOG_PATH = ROOT / "catalog" / "units-catalog.json"
 SUMMARY_PATH = ROOT / "catalog" / "generated" / "units-catalog-summary.json"
 CONVERSION_COVERAGE_PATH = ROOT / "catalog" / "generated" / "phase-b-conversion-coverage.json"
+ARITHMETIC_SUPPORT_PATH = ROOT / "catalog" / "generated" / "phase-b-arithmetic-support.json"
 RUST_PATH = ROOT / "crates" / "units-x" / "src" / "generated" / "catalog_metadata.rs"
 FFI_TYPES_PATH = ROOT / "crates" / "units-x" / "src" / "generated" / "ffi_contract_types.rs"
 PUBLIC_TYPES_PATH = ROOT / "crates" / "units-x" / "src" / "generated" / "public_types.rs"
@@ -324,6 +325,14 @@ def render_generated_public_types(summary: dict) -> str:
         "    pub supported_units: &'static [&'static str],",
         "}",
         "",
+        "pub trait QuantityForStorage<Storage>: UnitMarker {",
+        "    type Quantity: QuantityType<Storage = Storage, Unit = Self>;",
+        "",
+        "    fn wrap(storage: Storage) -> Self::Quantity;",
+        "}",
+        "",
+        "pub trait ScalarArithmeticUnit: UnitMarker {}",
+        "",
     ]
     for dimension in dimensions:
         for unit in dimension["units"]:
@@ -362,6 +371,13 @@ def render_generated_public_types(summary: dict) -> str:
                     "",
                 ]
             )
+            if dimension["public_type"] != "Temperature":
+                lines.extend(
+                    [
+                        f"impl ScalarArithmeticUnit for {marker} {{}}",
+                        "",
+                    ]
+                )
 
     lines.extend(
         [
@@ -629,6 +645,14 @@ def render_generated_public_types(summary: dict) -> str:
                     "    }",
                     "}",
                     "",
+                    f"impl<Storage> QuantityForStorage<Storage> for {marker} {{",
+                    f"    type Quantity = {public_type}<Storage, {marker}>;",
+                    "",
+                    "    fn wrap(storage: Storage) -> Self::Quantity {",
+                    f"        {public_type}::<Storage, {marker}>::new(storage)",
+                    "    }",
+                    "}",
+                    "",
                 ]
             )
 
@@ -834,6 +858,158 @@ def conversion_coverage_rows(summary: dict) -> list[dict[str, str | None]]:
     return rows
 
 
+def promoted_storage(lhs_storage: str, rhs_storage: str) -> str:
+    if "f64" in {lhs_storage, rhs_storage}:
+        return "f64"
+    if "f32" in {lhs_storage, rhs_storage}:
+        return "f32"
+    return "i32"
+
+
+def arithmetic_api_mode(operator: str, lhs_storage: str, rhs_storage: str) -> tuple[str, str | None, str]:
+    if operator in {"add", "sub", "mul"} and lhs_storage == rhs_storage == "i32":
+        return ("checked", "not-applicable", "Overflow")
+    if operator == "div" and lhs_storage == rhs_storage == "i32":
+        return ("checked", "exact-only", "DivisionByZero|NonIntegralDivision")
+    return ("infallible", "not-applicable", None)
+
+
+def arithmetic_support_rows(summary: dict) -> list[dict[str, str | None]]:
+    dimensions = summary["dimensions"]
+    rows: list[dict[str, str | None]] = []
+
+    for dimension in dimensions:
+        public_type = dimension["public_type"]
+        storages = [scalar_storage_name(type_id) for type_id in dimension["scalar"]["type_ids"]]
+        units = [unit["unit_code_id"] for unit in dimension["units"]]
+        temperature_unsupported = public_type == "Temperature"
+
+        for lhs_storage in storages:
+            for rhs_storage in storages:
+                result_storage = promoted_storage(lhs_storage, rhs_storage)
+                for lhs_unit in units:
+                    for rhs_unit in units:
+                        for operator in ("add", "sub"):
+                            api_mode, exact_division_policy, expected_failure = arithmetic_api_mode(
+                                operator,
+                                lhs_storage,
+                                rhs_storage,
+                            )
+                            rows.append(
+                                {
+                                    "lhs_public_type": public_type,
+                                    "lhs_unit": lhs_unit,
+                                    "lhs_storage": lhs_storage,
+                                    "operator": operator,
+                                    "rhs_public_type": public_type,
+                                    "rhs_unit": rhs_unit,
+                                    "rhs_storage": rhs_storage,
+                                    "result_public_type": public_type,
+                                    "result_unit_rule": "lhs_unit",
+                                    "result_storage": result_storage,
+                                    "path_family": "same_canonical_add_sub",
+                                    "api_mode": "absent" if temperature_unsupported else api_mode,
+                                    "exact_division_policy": exact_division_policy,
+                                    "support_status": "unsupported" if temperature_unsupported else "supported",
+                                    "expected_failure": "IntentionallyUnsupported" if temperature_unsupported else expected_failure,
+                                }
+                            )
+
+                for lhs_unit in units:
+                    for rhs_storage_scalar in ("i32", "f32", "f64"):
+                        for operator in ("mul", "div"):
+                            api_mode, exact_division_policy, expected_failure = arithmetic_api_mode(
+                                operator,
+                                lhs_storage,
+                                rhs_storage_scalar,
+                            )
+                            rows.append(
+                                {
+                                    "lhs_public_type": public_type,
+                                    "lhs_unit": lhs_unit,
+                                    "lhs_storage": lhs_storage,
+                                    "operator": operator,
+                                    "rhs_public_type": "Scalar",
+                                    "rhs_unit": "scalar",
+                                    "rhs_storage": rhs_storage_scalar,
+                                    "result_public_type": public_type,
+                                    "result_unit_rule": "lhs_unit",
+                                    "result_storage": promoted_storage(lhs_storage, rhs_storage_scalar),
+                                    "path_family": "scalar_arithmetic",
+                                    "api_mode": "absent" if temperature_unsupported else api_mode,
+                                    "exact_division_policy": exact_division_policy,
+                                    "support_status": "unsupported" if temperature_unsupported else "supported",
+                                    "expected_failure": "IntentionallyUnsupported" if temperature_unsupported else expected_failure,
+                                }
+                            )
+
+    diopter = next(dimension for dimension in dimensions if dimension["public_type"] == "Diopter")
+    inverse_distance = next(dimension for dimension in dimensions if dimension["public_type"] == "InverseDistance")
+    for lhs_dimension, rhs_dimension in ((diopter, inverse_distance), (inverse_distance, diopter)):
+        lhs_storages = [scalar_storage_name(type_id) for type_id in lhs_dimension["scalar"]["type_ids"]]
+        rhs_storages = [scalar_storage_name(type_id) for type_id in rhs_dimension["scalar"]["type_ids"]]
+        for lhs_storage in lhs_storages:
+            for rhs_storage in rhs_storages:
+                for lhs_unit in [unit["unit_code_id"] for unit in lhs_dimension["units"]]:
+                    for rhs_unit in [unit["unit_code_id"] for unit in rhs_dimension["units"]]:
+                        for operator in ("add", "sub"):
+                            rows.append(
+                                {
+                                    "lhs_public_type": lhs_dimension["public_type"],
+                                    "lhs_unit": lhs_unit,
+                                    "lhs_storage": lhs_storage,
+                                    "operator": operator,
+                                    "rhs_public_type": rhs_dimension["public_type"],
+                                    "rhs_unit": rhs_unit,
+                                    "rhs_storage": rhs_storage,
+                                    "result_public_type": lhs_dimension["public_type"],
+                                    "result_unit_rule": "lhs_unit",
+                                    "result_storage": promoted_storage(lhs_storage, rhs_storage),
+                                    "path_family": "same_canonical_add_sub",
+                                    "api_mode": "infallible",
+                                    "exact_division_policy": "not-applicable",
+                                    "support_status": "supported",
+                                    "expected_failure": None,
+                                }
+                            )
+
+    distance = next(dimension for dimension in dimensions if dimension["public_type"] == "Distance")
+    time = next(dimension for dimension in dimensions if dimension["public_type"] == "Time")
+    velocity = next(dimension for dimension in dimensions if dimension["public_type"] == "Velocity")
+    acceleration = next(dimension for dimension in dimensions if dimension["public_type"] == "Acceleration")
+    for lhs_dimension, operator, rhs_dimension, result_dimension in (
+        (distance, "velocity_from_time", time, velocity),
+        (velocity, "acceleration_from_time", time, acceleration),
+    ):
+        lhs_storages = [scalar_storage_name(type_id) for type_id in lhs_dimension["scalar"]["type_ids"]]
+        rhs_storages = [scalar_storage_name(type_id) for type_id in rhs_dimension["scalar"]["type_ids"]]
+        for lhs_storage in lhs_storages:
+            for rhs_storage in rhs_storages:
+                for lhs_unit in [unit["unit_code_id"] for unit in lhs_dimension["units"]]:
+                    for rhs_unit in [unit["unit_code_id"] for unit in rhs_dimension["units"]]:
+                        rows.append(
+                            {
+                                "lhs_public_type": lhs_dimension["public_type"],
+                                "lhs_unit": lhs_unit,
+                                "lhs_storage": lhs_storage,
+                                "operator": operator,
+                                "rhs_public_type": rhs_dimension["public_type"],
+                                "rhs_unit": rhs_unit,
+                                "rhs_storage": rhs_storage,
+                                "result_public_type": result_dimension["public_type"],
+                                "result_unit_rule": "canonical_compute_unit",
+                                "result_storage": "f64",
+                                "path_family": "compute_bridge",
+                                "api_mode": "checked",
+                                "exact_division_policy": "not-applicable",
+                                "support_status": "supported",
+                                "expected_failure": "ZeroDuration",
+                            }
+                        )
+
+    return rows
+
+
 def format_rust_source(source: str) -> str:
     completed = subprocess.run(
         ["rustfmt", "--emit", "stdout"],
@@ -851,6 +1027,7 @@ def expected_outputs() -> dict[Path, str]:
     return {
         SUMMARY_PATH: json.dumps(summary, indent=2, sort_keys=True) + "\n",
         CONVERSION_COVERAGE_PATH: json.dumps(conversion_coverage_rows(summary), indent=2, sort_keys=True) + "\n",
+        ARITHMETIC_SUPPORT_PATH: json.dumps(arithmetic_support_rows(summary), indent=2, sort_keys=True) + "\n",
         RUST_PATH: format_rust_source(render_rust_module(summary)),
         FFI_TYPES_PATH: format_rust_source(render_generated_ffi_types(summary)),
         PUBLIC_TYPES_PATH: format_rust_source(render_generated_public_types(summary)),

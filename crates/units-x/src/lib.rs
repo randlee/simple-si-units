@@ -28,11 +28,16 @@
 //! let _ = Temperature::<f64, mm>::new(1.0);
 //! ```
 
+pub mod arithmetic;
 pub mod conversion;
 pub mod ffi_contract;
 pub mod generated;
 pub mod model;
 
+pub use arithmetic::{
+    acceleration_from_velocity_and_time, velocity_from_distance_and_time, ArithmeticError,
+    CheckedScalarArithmeticOps, ComputeError,
+};
 pub use conversion::{
     ConversionError, ConvertUnit, InfallibleUnitStorage, ReciprocalBridge, TryConvertQuantity,
     TryConvertUnit, ValueStorage,

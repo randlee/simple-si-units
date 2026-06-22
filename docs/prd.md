@@ -347,7 +347,7 @@ The result should preserve the left-hand unit by converting the right-hand side 
 
 Example:
 
-- `distance_cm + distance_m -> distance_cm`
+- `distance_mm + distance_m -> distance_mm`
 
 This behavior should be explicit and documented.
 
@@ -361,7 +361,10 @@ Examples:
 
 - `Distance / Time -> Velocity`
 - `Velocity / Time -> Acceleration`
-- `Velocity * Time -> Distance`
+- `Velocity * Time -> Distance`:
+  deferred beyond Sprint B-3; V1 closes first on the free-function compute
+  bridges `velocity_from_distance_and_time` and
+  `acceleration_from_velocity_and_time`
 
 Recommended behavior:
 

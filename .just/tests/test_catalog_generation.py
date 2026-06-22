@@ -9,6 +9,7 @@ import unittest
 ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
 
+from generate_catalog_artifacts import arithmetic_support_rows
 from generate_catalog_artifacts import build_summary
 from generate_catalog_artifacts import conversion_coverage_rows
 from generate_catalog_artifacts import expected_outputs
@@ -107,6 +108,8 @@ class CatalogGenerationTests(unittest.TestCase):
         self.assertIn("pub struct mm;", rendered)
         self.assertIn("pub struct degC;", rendered)
         self.assertIn("ConvertUnit", rendered)
+        self.assertIn("pub trait QuantityForStorage<Storage>: UnitMarker {", rendered)
+        self.assertIn("impl ScalarArithmeticUnit for mm {}", rendered)
         self.assertIn("TryConvertQuantity", rendered)
         self.assertIn("pub trait DistanceUnit: UnitMarker {}", rendered)
         self.assertIn("impl DistanceUnit for mm {}", rendered)
@@ -138,6 +141,15 @@ class CatalogGenerationTests(unittest.TestCase):
             {dimension["public_type"] for dimension in summary["dimensions"]},
             {row["source_public_type"] for row in coverage},
         )
+
+    def test_arithmetic_support_report_is_complete_for_b3_scope(self) -> None:
+        summary = build_summary(json.loads((ROOT / "catalog" / "units-catalog.json").read_text(encoding="utf-8")))
+        support = arithmetic_support_rows(summary)
+
+        self.assertTrue(any(row["path_family"] == "scalar_arithmetic" and row["lhs_public_type"] == "Distance" for row in support))
+        self.assertTrue(any(row["path_family"] == "same_canonical_add_sub" and row["lhs_public_type"] == "Diopter" and row["rhs_public_type"] == "InverseDistance" for row in support))
+        self.assertTrue(any(row["path_family"] == "compute_bridge" and row["result_public_type"] == "Velocity" for row in support))
+        self.assertTrue(any(row["lhs_public_type"] == "Temperature" and row["support_status"] == "unsupported" for row in support))
 
     def test_generated_public_types_reject_invalid_marker_names(self) -> None:
         summary = json.loads((ROOT / "catalog" / "generated" / "units-catalog-summary.json").read_text(encoding="utf-8"))

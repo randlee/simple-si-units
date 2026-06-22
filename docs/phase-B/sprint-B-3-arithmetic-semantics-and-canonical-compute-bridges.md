@@ -99,7 +99,7 @@ Define and implement scalar arithmetic, mixed-unit addition/subtraction, and bri
 
 ## Required Validation
 
-1. Dedicated tests cover `distance_cm + distance_m` with documented left-hand preservation behavior.
+1. Dedicated tests cover `distance_mm + distance_m` with documented left-hand preservation behavior.
 2. Dedicated tests cover mixed integer/float storage promotion.
 3. Dedicated tests cover the distance -> velocity -> acceleration chain.
 4. Dedicated tests cover zero-duration rejection or failure behavior for velocity/acceleration compute bridges.
@@ -124,13 +124,13 @@ Define and implement scalar arithmetic, mixed-unit addition/subtraction, and bri
 Representative semantics:
 
 ```rust
-let lhs = Distance::cm(25.0);
+let lhs = Distance::mm(250.0);
 let rhs = Distance::m(1.0);
 let out = lhs + rhs;
-assert_eq!(out.unit(), "cm");
+assert_eq!(out.unit(), "mm");
 
 let scaled = out * 2.0;
-assert_eq!(scaled.unit(), "cm");
+assert_eq!(scaled.unit(), "mm");
 ```
 
 Promotion rule:
@@ -153,13 +153,13 @@ Promotion rule:
 Representative mixed-storage behavior:
 
 ```rust
-let lhs = Distance::cm(25_i32);
+let lhs = Distance::mm(25_i32);
 let rhs = Distance::m(1.0_f64);
-let out: Distance<f64> = lhs + rhs;
+let out: Distance<f64, mm> = lhs + rhs;
 
-let scaled: Distance<f32> = Distance::cm(25_i32) * 2.5_f32;
-let exact: Distance<i32> = Distance::cm(20_i32) / 2_i32;
-let lossy = Distance::cm(1_i32).checked_div(2_i32);
+let scaled: Distance<f32, mm> = Distance::mm(25_i32) * 2.5_f32;
+let exact: Distance<i32, mm> = Distance::mm(20_i32).checked_div(2_i32)?;
+let lossy = Distance::mm(1_i32).checked_div(2_i32);
 assert!(lossy.is_err());
 ```
 
@@ -171,7 +171,7 @@ Representative promotion-matrix rows:
 | `i32` | `mul` | `f32` | `f32` | `scalar_arithmetic` | `infallible` | not-applicable | none |
 | `i32` | `add` | `i32` | `i32` | `scalar_arithmetic` | `checked` | not-applicable | `Overflow` when result exceeds `i32` |
 | `i32` | `mul` | `i32` | `i32` | `scalar_arithmetic` | `checked` | not-applicable | `Overflow` when result exceeds `i32` |
-| `i32` | `div` | `i32` | `i32` | `scalar_arithmetic` | `checked` | exact-only | `NonIntegralDivision` when remainder != 0 |
+| `i32` | `div` | `i32` | `i32` | `scalar_arithmetic` | `checked` | exact-only | `DivisionByZero` when rhs == 0; `NonIntegralDivision` when remainder != 0 |
 
 Representative compute bridge contract:
 
@@ -186,6 +186,7 @@ pub trait CheckedScalarArithmeticOps<Rhs = Self> {
 }
 
 pub enum ArithmeticError {
+    DivisionByZero,
     NonIntegralDivision,
     Overflow,
     PrecisionLoss,
@@ -224,6 +225,9 @@ Result-identity rule:
 - same-canonical-dimension cross-public-type arithmetic also preserves the
   left-hand public quantity type and left-hand unit when the authoritative
   matrix marks that exact path supported
+- floating-point scalar division follows Rust IEEE-754 semantics for supported
+  infallible paths; `ArithmeticError::DivisionByZero` is reserved for checked
+  integer-division paths
 - any cross-public-type pair not named supported in
   `catalog/generated/phase-b-arithmetic-support.json` is intentionally
   unsupported in V1
