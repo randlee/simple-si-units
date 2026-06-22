@@ -2,6 +2,7 @@ use crate::generated::catalog_metadata::{CatalogJsonEncoding, DIMENSIONS};
 use crate::model::UnitMarker;
 use core::marker::PhantomData;
 
+#[cfg_attr(not(test), allow(dead_code))]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum BulkKind {
     Array,
@@ -31,6 +32,7 @@ impl BulkStorage for f64 {
     const STORAGE_ID: &'static str = "f64";
 }
 
+#[cfg_attr(not(test), allow(dead_code))]
 pub const BULK_REVIEW_ARITIES: &[usize] = &[0, 2, 3, 4];
 
 #[repr(transparent)]
@@ -206,6 +208,7 @@ where
     }
 }
 
+#[cfg_attr(not(test), allow(dead_code))]
 pub fn bulk_encoding_for_unit<Unit>(bulk_kind: BulkKind) -> CatalogJsonEncoding
 where
     Unit: UnitMarker,
