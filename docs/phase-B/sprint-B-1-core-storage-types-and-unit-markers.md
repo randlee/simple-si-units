@@ -13,7 +13,6 @@ scalar type set.
 
 - REQ-UX-001
 - REQ-UX-002
-- REQ-UX-003
 - REQ-UX-005
 - REQ-UX-009
 - REQ-UX-011
@@ -24,7 +23,6 @@ scalar type set.
 - REQ-UX-043
 - REQ-UX-044
 - NFR-UX-001
-- NFR-UX-002
 - NFR-UX-013
 - ADR-UX-002
 - ADR-UX-003
@@ -42,6 +40,7 @@ scalar type set.
 5. Size assertions demonstrating zero additional storage overhead
 6. Catalog-metadata-backed type/unit generation or parity checks for the public
    scalar surface
+7. Sealed unit-marker trait contract for catalog-derived public units
 
 ## Dependencies
 
@@ -50,6 +49,13 @@ scalar type set.
 ## Unblocks
 
 - Sprints B-2, B-3, B-4
+
+## Out Of Scope
+
+- fixed-size array wrappers and variable-length bulk wrappers, which close in
+  Sprint B-4
+- conversion behavior, arithmetic behavior, JSON shape, binary shape, and ABI
+  shape, which close in later sprints and phases
 
 ## Acceptance Criteria
 
@@ -60,7 +66,12 @@ scalar type set.
 4. Unit marker naming rules are enforceable in code for case-sensitive units.
 5. No in-scope type may be omitted from closure on the basis that its family was “implicitly covered.”
 6. The implemented public scalar surface is generated from or mechanically
-   checked against the catalog-derived metadata committed in Phase A.
+   checked against the authoritative Phase A generated artifacts
+   `catalog/generated/units-catalog-summary.json` and
+   `crates/units-x/src/generated/catalog_metadata.rs`.
+7. The unit-marker contract explicitly defines the metadata exposed to later
+   conversion and arithmetic work and whether external crates may implement the
+   marker traits.
 
 ## Required Validation
 
@@ -70,7 +81,8 @@ scalar type set.
 4. Validation references the authoritative inventory and confirms every
    in-scope type in this sprint is implemented exactly once.
 5. Regeneration or parity validation confirms the implemented public scalar
-   surface matches the generated catalog metadata without drift.
+   surface matches `catalog/generated/units-catalog-summary.json` and
+   `crates/units-x/src/generated/catalog_metadata.rs` without drift.
 
 ## Code Samples / Contracts
 
@@ -84,9 +96,27 @@ pub struct Quantity<Unit, Storage> {
 }
 ```
 
-## Type Checklist
+Representative marker-trait contract:
 
-The authoritative checklist for this sprint is
+```rust
+mod private {
+    pub trait SealedUnit {}
+}
+
+pub trait UnitMarker: private::SealedUnit + Copy + 'static {
+    const UNIT_SYMBOL: &'static str;
+    const UNIT_CODE_ID: &'static str;
+    const DIMENSION_ID: &'static str;
+    const CANONICAL_DIMENSION_ID: &'static str;
+}
+```
+
+## Closure Gate
+
+The authoritative inventory gate for this sprint is
 [docs/crates/units-x/in-scope-type-inventory.md](/Volumes/Extreme%20Pro/github/simple-si-units/docs/crates/units-x/in-scope-type-inventory.md).
 This sprint does not close until every item in that checklist is implemented
-and the resulting scalar surface matches the catalog-derived metadata exactly.
+and the resulting scalar surface matches
+`catalog/generated/units-catalog-summary.json` for public type and unit
+coverage plus `crates/units-x/src/generated/catalog_metadata.rs` for
+Rust-consumable catalog metadata parity.
