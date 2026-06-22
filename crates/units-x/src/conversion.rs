@@ -115,7 +115,7 @@ impl ValueStorage for i32 {
     }
 }
 
-pub fn convert_same_public_type_infallible<SourceQuantity, TargetQuantity>(
+pub(crate) fn convert_same_public_type_infallible<SourceQuantity, TargetQuantity>(
     source: SourceQuantity,
 ) -> TargetQuantity
 where

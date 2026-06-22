@@ -36,6 +36,13 @@
 //! ```
 //!
 //! ```compile_fail
+//! use units_x::{mm, mol, Quantity};
+//!
+//! let _ = Quantity::<mm, bool>::new(true);
+//! let _ = Quantity::<mol, i32>::new(1);
+//! ```
+//!
+//! ```compile_fail
 //! use units_x::conversion::ConvertUnit;
 //! use units_x::{Distance, ft, mm};
 //!
