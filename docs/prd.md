@@ -235,8 +235,10 @@ scope from the reference project:
 This includes both base quantities and derived quantities across those
 families.
 
-The exact MVP public type inventory is defined in
-[docs/crates/units-x/in-scope-type-inventory.md](/Volumes/Extreme%20Pro/github/simple-si-units/docs/crates/units-x/in-scope-type-inventory.md).
+The authoritative MVP public type inventory is defined in
+`catalog/generated/units-catalog-summary.json`.
+[docs/crates/units-x/in-scope-type-inventory.md](/Volumes/Extreme%20Pro/github/simple-si-units/docs/crates/units-x/in-scope-type-inventory.md)
+is a derived checklist for human review and planning readability.
 
 ## 2. Support for non-SI units
 

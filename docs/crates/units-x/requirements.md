@@ -78,7 +78,7 @@ identifiers where those differ.
 The crate must support the V1 unit-family scope discussed in planning:
 
 - every public type listed in
-  [in-scope-type-inventory.md](/Volumes/Extreme%20Pro/github/simple-si-units/docs/crates/units-x/in-scope-type-inventory.md)
+  `catalog/generated/units-catalog-summary.json`
 
 ### Serialization
 

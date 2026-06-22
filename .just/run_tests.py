@@ -45,6 +45,8 @@ def generated_artifacts_are_dirty(repo_root: Path) -> bool:
         check=False,
         capture_output=True,
         text=True,
+        encoding="utf-8",
+        errors="replace",
     )
     if completed.returncode != 0:
         return True

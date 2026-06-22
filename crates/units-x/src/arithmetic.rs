@@ -14,8 +14,6 @@ pub enum ArithmeticError {
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum ComputeError {
     ZeroDuration,
-    Overflow,
-    PrecisionLoss,
 }
 
 pub trait CheckedScalarArithmeticOps<Rhs = Self> {
@@ -213,7 +211,7 @@ impl_div_rule!(i32, f64 => f64, infallible);
 impl_div_rule!(i32, f32 => f32, infallible);
 impl_div_rule!(i32, i32 => i32, checked);
 
-pub fn checked_add_quantities<Lhs, Rhs, OutStorage>(
+fn checked_add_quantities<Lhs, Rhs, OutStorage>(
     lhs: Lhs,
     rhs: Rhs,
 ) -> Result<<Lhs::Unit as QuantityForStorage<OutStorage>>::Quantity, ArithmeticError>
@@ -238,7 +236,7 @@ where
     Ok(<Lhs::Unit as QuantityForStorage<OutStorage>>::wrap(result))
 }
 
-pub fn checked_sub_quantities<Lhs, Rhs, OutStorage>(
+fn checked_sub_quantities<Lhs, Rhs, OutStorage>(
     lhs: Lhs,
     rhs: Rhs,
 ) -> Result<<Lhs::Unit as QuantityForStorage<OutStorage>>::Quantity, ArithmeticError>
@@ -263,7 +261,7 @@ where
     Ok(<Lhs::Unit as QuantityForStorage<OutStorage>>::wrap(result))
 }
 
-pub fn checked_mul_scalar<Lhs, Rhs, OutStorage>(
+fn checked_mul_scalar<Lhs, Rhs, OutStorage>(
     lhs: Lhs,
     rhs: Rhs,
 ) -> Result<<Lhs::Unit as QuantityForStorage<OutStorage>>::Quantity, ArithmeticError>
@@ -283,7 +281,7 @@ where
     Ok(<Lhs::Unit as QuantityForStorage<OutStorage>>::wrap(result))
 }
 
-pub fn checked_div_scalar<Lhs, Rhs, OutStorage>(
+fn checked_div_scalar<Lhs, Rhs, OutStorage>(
     lhs: Lhs,
     rhs: Rhs,
 ) -> Result<<Lhs::Unit as QuantityForStorage<OutStorage>>::Quantity, ArithmeticError>
@@ -314,9 +312,9 @@ where
     TimeMeasure: TimeUnit,
 {
     let distance_canonical = convert_quantity_for_arithmetic::<_, Distance<f64, m>>(distance)
-        .map_err(map_compute_error)?;
-    let duration_canonical =
-        convert_quantity_for_arithmetic::<_, Time<f64, s>>(duration).map_err(map_compute_error)?;
+        .expect("f64 compute canonicalization must be infallible");
+    let duration_canonical = convert_quantity_for_arithmetic::<_, Time<f64, s>>(duration)
+        .expect("f64 compute canonicalization must be infallible");
     if duration_canonical.value() == 0.0 {
         return Err(ComputeError::ZeroDuration);
     }
@@ -341,9 +339,9 @@ where
     TimeMeasure: TimeUnit,
 {
     let velocity_canonical = convert_quantity_for_arithmetic::<_, Velocity<f64, mps>>(velocity)
-        .map_err(map_compute_error)?;
-    let duration_canonical =
-        convert_quantity_for_arithmetic::<_, Time<f64, s>>(duration).map_err(map_compute_error)?;
+        .expect("f64 compute canonicalization must be infallible");
+    let duration_canonical = convert_quantity_for_arithmetic::<_, Time<f64, s>>(duration)
+        .expect("f64 compute canonicalization must be infallible");
     if duration_canonical.value() == 0.0 {
         return Err(ComputeError::ZeroDuration);
     }
@@ -383,16 +381,6 @@ where
     let target_storage =
         <TargetQuantity::Storage as ArithmeticStorage>::from_f64_for_arithmetic(converted_value)?;
     Ok(TargetQuantity::from_quantity(Quantity::new(target_storage)))
-}
-
-fn map_compute_error(error: ArithmeticError) -> ComputeError {
-    match error {
-        ArithmeticError::Overflow => ComputeError::Overflow,
-        ArithmeticError::PrecisionLoss => ComputeError::PrecisionLoss,
-        ArithmeticError::DivisionByZero | ArithmeticError::NonIntegralDivision => {
-            ComputeError::PrecisionLoss
-        }
-    }
 }
 
 macro_rules! impl_same_public_type_arithmetic {
@@ -793,6 +781,20 @@ mod tests {
 
         let error = Distance::mm(1_i32).checked_div(2_i32).unwrap_err();
         assert_eq!(error, ArithmeticError::NonIntegralDivision);
+    }
+
+    #[test]
+    fn integer_division_by_zero_is_reported() {
+        let error = Distance::mm(1_i32).checked_div(0_i32).unwrap_err();
+        assert_eq!(error, ArithmeticError::DivisionByZero);
+    }
+
+    #[test]
+    fn checked_add_reports_precision_loss_for_integer_unit_conversion() {
+        let error = Distance::m(1_i32)
+            .checked_add::<i32, ft, i32>(Distance::ft(1_i32))
+            .unwrap_err();
+        assert_eq!(error, ArithmeticError::PrecisionLoss);
     }
 
     #[test]

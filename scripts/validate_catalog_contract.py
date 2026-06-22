@@ -165,10 +165,216 @@ def validate_dimension_invariants(dimension: Any, label: str) -> tuple[str, str,
     return dimension_id, canonical_dimension_id, marker_names
 
 
+def validate_conversion_policies(payload: Any, dimensions: list[Any]) -> None:
+    policies = payload["conversion_policies"]
+    policy_rows = policies["policies"]
+    seen_policy_ids: set[str] = set()
+    for index, row in enumerate(policy_rows):
+        policy_id = str(row["policy_id"])
+        require(
+            policy_id not in seen_policy_ids,
+            f"conversion_policies.policies[{index}].policy_id `{policy_id}` is duplicated",
+            f"conversion_policies.policies[{index}].policy_id",
+        )
+        seen_policy_ids.add(policy_id)
+        guard = row["infallibility_guard"]
+        fallback = row["fallback_policy_id"]
+        if guard is None:
+            require(
+                fallback is None,
+                f"conversion_policies.policies[{index}] cannot declare fallback_policy_id without infallibility_guard",
+                f"conversion_policies.policies[{index}].fallback_policy_id",
+            )
+        else:
+            require(
+                fallback is not None,
+                f"conversion_policies.policies[{index}] with infallibility_guard must declare fallback_policy_id",
+                f"conversion_policies.policies[{index}].fallback_policy_id",
+            )
+    for index, row in enumerate(policy_rows):
+        fallback = row["fallback_policy_id"]
+        if fallback is not None:
+            require(
+                fallback in seen_policy_ids,
+                f"conversion_policies.policies[{index}].fallback_policy_id `{fallback}` must reference an existing policy",
+                f"conversion_policies.policies[{index}].fallback_policy_id",
+            )
+
+    observed_storages = {
+        type_id.rsplit("_", maxsplit=1)[1]
+        for dimension in dimensions
+        for type_id in dimension["json_forms"]["scalar"]["type_ids"]
+    }
+    required_pairs = {
+        (source_storage, target_storage)
+        for source_storage in observed_storages
+        for target_storage in observed_storages
+    }
+
+    same_public_type = policies["same_public_type"]
+    require(
+        same_public_type["identity_policy_id"] in seen_policy_ids,
+        "conversion_policies.same_public_type.identity_policy_id must reference an existing policy",
+        "conversion_policies.same_public_type.identity_policy_id",
+    )
+
+    for section_name in ("same_public_type", "same_canonical_dimension", "reciprocal_bridge"):
+        section = policies[section_name]
+        seen_pairs: set[tuple[str, str]] = set()
+        for index, row in enumerate(section["storage_pair_policies"]):
+            pair = (str(row["source_storage"]), str(row["target_storage"]))
+            require(
+                row["policy_id"] in seen_policy_ids,
+                f"conversion_policies.{section_name}.storage_pair_policies[{index}].policy_id `{row['policy_id']}` must reference an existing policy",
+                f"conversion_policies.{section_name}.storage_pair_policies[{index}].policy_id",
+            )
+            require(
+                pair not in seen_pairs,
+                f"conversion_policies.{section_name} duplicates storage pair `{pair[0]}->{pair[1]}`",
+                f"conversion_policies.{section_name}.storage_pair_policies[{index}]",
+            )
+            seen_pairs.add(pair)
+        missing_pairs = sorted(required_pairs - seen_pairs)
+        require(
+            not missing_pairs,
+            f"conversion_policies.{section_name} must define every observed storage pair; missing {missing_pairs}",
+            f"conversion_policies.{section_name}.storage_pair_policies",
+        )
+
+
+def validate_arithmetic_policies(payload: Any, dimensions: list[Any]) -> None:
+    policies = payload["arithmetic_policies"]
+    public_types = {str(dimension["public_type"]) for dimension in dimensions}
+    observed_storages = {
+        type_id.rsplit("_", maxsplit=1)[1]
+        for dimension in dimensions
+        for type_id in dimension["json_forms"]["scalar"]["type_ids"]
+    }
+    required_pairs = {
+        (lhs_storage, rhs_storage)
+        for lhs_storage in observed_storages
+        for rhs_storage in observed_storages
+    }
+
+    same_dimension = policies["same_dimension_add_sub"]
+    for public_type in same_dimension["unsupported_public_types"]:
+        require(
+            public_type in public_types,
+            f"arithmetic_policies.same_dimension_add_sub.unsupported_public_types includes unknown public type `{public_type}`",
+            "arithmetic_policies.same_dimension_add_sub.unsupported_public_types",
+        )
+    seen_pairs: set[tuple[str, str]] = set()
+    for index, row in enumerate(same_dimension["storage_pair_policies"]):
+        pair = (str(row["lhs_storage"]), str(row["rhs_storage"]))
+        require(
+            pair not in seen_pairs,
+            f"arithmetic_policies.same_dimension_add_sub duplicates storage pair `{pair[0]}->{pair[1]}`",
+            f"arithmetic_policies.same_dimension_add_sub.storage_pair_policies[{index}]",
+        )
+        seen_pairs.add(pair)
+    missing_pairs = sorted(required_pairs - seen_pairs)
+    require(
+        not missing_pairs,
+        f"arithmetic_policies.same_dimension_add_sub must define every observed storage pair; missing {missing_pairs}",
+        "arithmetic_policies.same_dimension_add_sub.storage_pair_policies",
+    )
+
+    scalar = policies["scalar_arithmetic"]
+    for public_type in scalar["unsupported_public_types"]:
+        require(
+            public_type in public_types,
+            f"arithmetic_policies.scalar_arithmetic.unsupported_public_types includes unknown public type `{public_type}`",
+            "arithmetic_policies.scalar_arithmetic.unsupported_public_types",
+        )
+    seen_scalar_pairs: set[tuple[str, str, str]] = set()
+    required_scalar_pairs = {
+        (operator, lhs_storage, rhs_storage)
+        for operator in ("mul", "div")
+        for lhs_storage in observed_storages
+        for rhs_storage in observed_storages
+    }
+    for index, row in enumerate(scalar["storage_pair_policies"]):
+        key = (str(row["operator"]), str(row["lhs_storage"]), str(row["rhs_storage"]))
+        require(
+            key not in seen_scalar_pairs,
+            f"arithmetic_policies.scalar_arithmetic duplicates rule `{key[0]}:{key[1]}->{key[2]}`",
+            f"arithmetic_policies.scalar_arithmetic.storage_pair_policies[{index}]",
+        )
+        seen_scalar_pairs.add(key)
+    missing_scalar_pairs = sorted(required_scalar_pairs - seen_scalar_pairs)
+    require(
+        not missing_scalar_pairs,
+        f"arithmetic_policies.scalar_arithmetic must define every observed operator/storage combination; missing {missing_scalar_pairs}",
+        "arithmetic_policies.scalar_arithmetic.storage_pair_policies",
+    )
+
+    seen_cross_pairs: set[tuple[str, str]] = set()
+    for index, row in enumerate(policies["cross_public_type_add_sub"]):
+        left_public_type = str(row["left_public_type"])
+        right_public_type = str(row["right_public_type"])
+        require(
+            left_public_type in public_types,
+            f"arithmetic_policies.cross_public_type_add_sub[{index}].left_public_type `{left_public_type}` must reference an existing public type",
+            f"arithmetic_policies.cross_public_type_add_sub[{index}].left_public_type",
+        )
+        require(
+            right_public_type in public_types,
+            f"arithmetic_policies.cross_public_type_add_sub[{index}].right_public_type `{right_public_type}` must reference an existing public type",
+            f"arithmetic_policies.cross_public_type_add_sub[{index}].right_public_type",
+        )
+        require(
+            left_public_type != right_public_type,
+            f"arithmetic_policies.cross_public_type_add_sub[{index}] must connect two distinct public types",
+            f"arithmetic_policies.cross_public_type_add_sub[{index}]",
+        )
+        pair = tuple(sorted((left_public_type, right_public_type)))
+        require(
+            pair not in seen_cross_pairs,
+            f"arithmetic_policies.cross_public_type_add_sub[{index}] duplicates pair `{pair[0]}`/`{pair[1]}`",
+            f"arithmetic_policies.cross_public_type_add_sub[{index}]",
+        )
+        seen_cross_pairs.add(pair)
+
+    dimensions_by_public_type = {
+        str(dimension["public_type"]): dimension for dimension in dimensions
+    }
+    seen_compute_bridges: set[tuple[str, str, str]] = set()
+    for index, row in enumerate(policies["compute_bridges"]):
+        lhs_public_type = str(row["lhs_public_type"])
+        rhs_public_type = str(row["rhs_public_type"])
+        result_public_type = str(row["result_public_type"])
+        operator = str(row["operator"])
+        for public_type, location in (
+            (lhs_public_type, "lhs_public_type"),
+            (rhs_public_type, "rhs_public_type"),
+            (result_public_type, "result_public_type"),
+        ):
+            require(
+                public_type in public_types,
+                f"arithmetic_policies.compute_bridges[{index}].{location} `{public_type}` must reference an existing public type",
+                f"arithmetic_policies.compute_bridges[{index}].{location}",
+            )
+        result_dimension = dimensions_by_public_type[result_public_type]
+        require(
+            any(unit["unit_code_id"] == row["result_unit_code_id"] for unit in result_dimension["units"]),
+            f"arithmetic_policies.compute_bridges[{index}].result_unit_code_id `{row['result_unit_code_id']}` must exist on `{result_public_type}`",
+            f"arithmetic_policies.compute_bridges[{index}].result_unit_code_id",
+        )
+        bridge_key = (operator, lhs_public_type, rhs_public_type)
+        require(
+            bridge_key not in seen_compute_bridges,
+            f"arithmetic_policies.compute_bridges[{index}] duplicates compute bridge `{operator}` for `{lhs_public_type}` and `{rhs_public_type}`",
+            f"arithmetic_policies.compute_bridges[{index}]",
+        )
+        seen_compute_bridges.add(bridge_key)
+
+
 def validate_catalog(payload: Any) -> None:
     validate_schema(payload)
     dimensions = payload["dimensions"]
     bridges = payload["bridges"]
+    validate_conversion_policies(payload, dimensions)
+    validate_arithmetic_policies(payload, dimensions)
 
     seen_dimension_ids: set[str] = set()
     canonical_dimension_ids: list[tuple[str, str]] = []

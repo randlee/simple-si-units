@@ -1735,9 +1735,20 @@ pub const UNIT_METADATA: &[GeneratedUnitMetadata] = &[
     },
 ];
 
+/// Sealed unit-family marker trait for `Amount`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait AmountUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait AmountInfallibleUnitPath<TargetUnit, Storage>: AmountUnit {}
+
 impl AmountUnit for mol {}
+
+impl AmountInfallibleUnitPath<mol, f32> for mol {}
+
+impl AmountInfallibleUnitPath<mol, f64> for mol {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -1852,6 +1863,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> Amount<Storage, TargetUnit>
     where
         TargetUnit: AmountUnit,
+        Unit: AmountInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, Amount<Storage, TargetUnit>>(self)
     }
@@ -1898,7 +1910,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Amount<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: AmountUnit,
+    Unit: AmountUnit + AmountInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: AmountUnit,
 {
     type Output = Amount<Storage, TargetUnit>;
@@ -1965,9 +1977,20 @@ impl<Storage> QuantityForStorage<Storage> for mol {
     }
 }
 
+/// Sealed unit-family marker trait for `Current`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait CurrentUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait CurrentInfallibleUnitPath<TargetUnit, Storage>: CurrentUnit {}
+
 impl CurrentUnit for A {}
+
+impl CurrentInfallibleUnitPath<A, f32> for A {}
+
+impl CurrentInfallibleUnitPath<A, f64> for A {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -2082,6 +2105,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> Current<Storage, TargetUnit>
     where
         TargetUnit: CurrentUnit,
+        Unit: CurrentInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, Current<Storage, TargetUnit>>(self)
     }
@@ -2128,7 +2152,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Current<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: CurrentUnit,
+    Unit: CurrentUnit + CurrentInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: CurrentUnit,
 {
     type Output = Current<Storage, TargetUnit>;
@@ -2195,13 +2219,50 @@ impl<Storage> QuantityForStorage<Storage> for A {
     }
 }
 
+/// Sealed unit-family marker trait for `Distance`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait DistanceUnit: UnitMarker {}
+
+#[doc(hidden)]
+pub trait DistanceInfallibleUnitPath<TargetUnit, Storage>: DistanceUnit {}
 
 impl DistanceUnit for mm {}
 
 impl DistanceUnit for m {}
 
 impl DistanceUnit for ft {}
+
+impl DistanceInfallibleUnitPath<mm, i32> for mm {}
+
+impl DistanceInfallibleUnitPath<m, i32> for m {}
+
+impl DistanceInfallibleUnitPath<ft, i32> for ft {}
+
+impl DistanceInfallibleUnitPath<mm, f32> for mm {}
+
+impl DistanceInfallibleUnitPath<m, f32> for m {}
+
+impl DistanceInfallibleUnitPath<ft, f32> for ft {}
+
+impl DistanceInfallibleUnitPath<mm, f64> for mm {}
+
+impl DistanceInfallibleUnitPath<m, f64> for mm {}
+
+impl DistanceInfallibleUnitPath<ft, f64> for mm {}
+
+impl DistanceInfallibleUnitPath<mm, f64> for m {}
+
+impl DistanceInfallibleUnitPath<m, f64> for m {}
+
+impl DistanceInfallibleUnitPath<ft, f64> for m {}
+
+impl DistanceInfallibleUnitPath<mm, f64> for ft {}
+
+impl DistanceInfallibleUnitPath<m, f64> for ft {}
+
+impl DistanceInfallibleUnitPath<ft, f64> for ft {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -2316,6 +2377,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> Distance<Storage, TargetUnit>
     where
         TargetUnit: DistanceUnit,
+        Unit: DistanceInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, Distance<Storage, TargetUnit>>(self)
     }
@@ -2362,7 +2424,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Distance<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: DistanceUnit,
+    Unit: DistanceUnit + DistanceInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: DistanceUnit,
 {
     type Output = Distance<Storage, TargetUnit>;
@@ -2457,9 +2519,20 @@ impl<Storage> QuantityForStorage<Storage> for ft {
     }
 }
 
+/// Sealed unit-family marker trait for `InverseAmount`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InverseAmountUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait InverseAmountInfallibleUnitPath<TargetUnit, Storage>: InverseAmountUnit {}
+
 impl InverseAmountUnit for per_mol {}
+
+impl InverseAmountInfallibleUnitPath<per_mol, f32> for per_mol {}
+
+impl InverseAmountInfallibleUnitPath<per_mol, f64> for per_mol {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -2577,6 +2650,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> InverseAmount<Storage, TargetUnit>
     where
         TargetUnit: InverseAmountUnit,
+        Unit: InverseAmountInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, InverseAmount<Storage, TargetUnit>>(self)
     }
@@ -2623,7 +2697,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for InverseAmount<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: InverseAmountUnit,
+    Unit: InverseAmountUnit + InverseAmountInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InverseAmountUnit,
 {
     type Output = InverseAmount<Storage, TargetUnit>;
@@ -2690,9 +2764,20 @@ impl<Storage> QuantityForStorage<Storage> for per_mol {
     }
 }
 
+/// Sealed unit-family marker trait for `InverseCurrent`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InverseCurrentUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait InverseCurrentInfallibleUnitPath<TargetUnit, Storage>: InverseCurrentUnit {}
+
 impl InverseCurrentUnit for per_A {}
+
+impl InverseCurrentInfallibleUnitPath<per_A, f32> for per_A {}
+
+impl InverseCurrentInfallibleUnitPath<per_A, f64> for per_A {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -2810,6 +2895,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> InverseCurrent<Storage, TargetUnit>
     where
         TargetUnit: InverseCurrentUnit,
+        Unit: InverseCurrentInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, InverseCurrent<Storage, TargetUnit>>(self)
     }
@@ -2856,7 +2942,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for InverseCurrent<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: InverseCurrentUnit,
+    Unit: InverseCurrentUnit + InverseCurrentInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InverseCurrentUnit,
 {
     type Output = InverseCurrent<Storage, TargetUnit>;
@@ -2923,9 +3009,20 @@ impl<Storage> QuantityForStorage<Storage> for per_A {
     }
 }
 
+/// Sealed unit-family marker trait for `InverseDistance`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InverseDistanceUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait InverseDistanceInfallibleUnitPath<TargetUnit, Storage>: InverseDistanceUnit {}
+
 impl InverseDistanceUnit for per_m {}
+
+impl InverseDistanceInfallibleUnitPath<per_m, f32> for per_m {}
+
+impl InverseDistanceInfallibleUnitPath<per_m, f64> for per_m {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -3043,6 +3140,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> InverseDistance<Storage, TargetUnit>
     where
         TargetUnit: InverseDistanceUnit,
+        Unit: InverseDistanceInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, InverseDistance<Storage, TargetUnit>>(self)
     }
@@ -3089,7 +3187,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for InverseDistance<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: InverseDistanceUnit,
+    Unit: InverseDistanceUnit + InverseDistanceInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InverseDistanceUnit,
 {
     type Output = InverseDistance<Storage, TargetUnit>;
@@ -3156,9 +3254,20 @@ impl<Storage> QuantityForStorage<Storage> for per_m {
     }
 }
 
+/// Sealed unit-family marker trait for `InverseLuminosity`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InverseLuminosityUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait InverseLuminosityInfallibleUnitPath<TargetUnit, Storage>: InverseLuminosityUnit {}
+
 impl InverseLuminosityUnit for per_cd {}
+
+impl InverseLuminosityInfallibleUnitPath<per_cd, f32> for per_cd {}
+
+impl InverseLuminosityInfallibleUnitPath<per_cd, f64> for per_cd {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -3276,6 +3385,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> InverseLuminosity<Storage, TargetUnit>
     where
         TargetUnit: InverseLuminosityUnit,
+        Unit: InverseLuminosityInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, InverseLuminosity<Storage, TargetUnit>>(self)
     }
@@ -3322,7 +3432,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for InverseLuminosity<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: InverseLuminosityUnit,
+    Unit: InverseLuminosityUnit + InverseLuminosityInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InverseLuminosityUnit,
 {
     type Output = InverseLuminosity<Storage, TargetUnit>;
@@ -3390,9 +3500,20 @@ impl<Storage> QuantityForStorage<Storage> for per_cd {
     }
 }
 
+/// Sealed unit-family marker trait for `InverseMass`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InverseMassUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait InverseMassInfallibleUnitPath<TargetUnit, Storage>: InverseMassUnit {}
+
 impl InverseMassUnit for per_kg {}
+
+impl InverseMassInfallibleUnitPath<per_kg, f32> for per_kg {}
+
+impl InverseMassInfallibleUnitPath<per_kg, f64> for per_kg {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -3510,6 +3631,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> InverseMass<Storage, TargetUnit>
     where
         TargetUnit: InverseMassUnit,
+        Unit: InverseMassInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, InverseMass<Storage, TargetUnit>>(self)
     }
@@ -3556,7 +3678,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for InverseMass<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: InverseMassUnit,
+    Unit: InverseMassUnit + InverseMassInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InverseMassUnit,
 {
     type Output = InverseMass<Storage, TargetUnit>;
@@ -3623,9 +3745,23 @@ impl<Storage> QuantityForStorage<Storage> for per_kg {
     }
 }
 
+/// Sealed unit-family marker trait for `InverseTemperature`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InverseTemperatureUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait InverseTemperatureInfallibleUnitPath<TargetUnit, Storage>:
+    InverseTemperatureUnit
+{
+}
+
 impl InverseTemperatureUnit for per_K {}
+
+impl InverseTemperatureInfallibleUnitPath<per_K, f32> for per_K {}
+
+impl InverseTemperatureInfallibleUnitPath<per_K, f64> for per_K {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -3743,6 +3879,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> InverseTemperature<Storage, TargetUnit>
     where
         TargetUnit: InverseTemperatureUnit,
+        Unit: InverseTemperatureInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, InverseTemperature<Storage, TargetUnit>>(self)
     }
@@ -3789,7 +3926,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for InverseTemperature<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: InverseTemperatureUnit,
+    Unit: InverseTemperatureUnit + InverseTemperatureInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InverseTemperatureUnit,
 {
     type Output = InverseTemperature<Storage, TargetUnit>;
@@ -3858,9 +3995,20 @@ impl<Storage> QuantityForStorage<Storage> for per_K {
     }
 }
 
+/// Sealed unit-family marker trait for `Luminosity`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait LuminosityUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait LuminosityInfallibleUnitPath<TargetUnit, Storage>: LuminosityUnit {}
+
 impl LuminosityUnit for cd {}
+
+impl LuminosityInfallibleUnitPath<cd, f32> for cd {}
+
+impl LuminosityInfallibleUnitPath<cd, f64> for cd {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -3978,6 +4126,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> Luminosity<Storage, TargetUnit>
     where
         TargetUnit: LuminosityUnit,
+        Unit: LuminosityInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, Luminosity<Storage, TargetUnit>>(self)
     }
@@ -4024,7 +4173,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Luminosity<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: LuminosityUnit,
+    Unit: LuminosityUnit + LuminosityInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: LuminosityUnit,
 {
     type Output = Luminosity<Storage, TargetUnit>;
@@ -4091,9 +4240,20 @@ impl<Storage> QuantityForStorage<Storage> for cd {
     }
 }
 
+/// Sealed unit-family marker trait for `Mass`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait MassUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait MassInfallibleUnitPath<TargetUnit, Storage>: MassUnit {}
+
 impl MassUnit for kg {}
+
+impl MassInfallibleUnitPath<kg, f32> for kg {}
+
+impl MassInfallibleUnitPath<kg, f64> for kg {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -4208,6 +4368,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> Mass<Storage, TargetUnit>
     where
         TargetUnit: MassUnit,
+        Unit: MassInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, Mass<Storage, TargetUnit>>(self)
     }
@@ -4254,7 +4415,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Mass<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: MassUnit,
+    Unit: MassUnit + MassInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: MassUnit,
 {
     type Output = Mass<Storage, TargetUnit>;
@@ -4321,13 +4482,44 @@ impl<Storage> QuantityForStorage<Storage> for kg {
     }
 }
 
+/// Sealed unit-family marker trait for `Temperature`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait TemperatureUnit: UnitMarker {}
+
+#[doc(hidden)]
+pub trait TemperatureInfallibleUnitPath<TargetUnit, Storage>: TemperatureUnit {}
 
 impl TemperatureUnit for K {}
 
 impl TemperatureUnit for degC {}
 
 impl TemperatureUnit for degF {}
+
+impl TemperatureInfallibleUnitPath<K, f32> for K {}
+
+impl TemperatureInfallibleUnitPath<degC, f32> for degC {}
+
+impl TemperatureInfallibleUnitPath<degF, f32> for degF {}
+
+impl TemperatureInfallibleUnitPath<K, f64> for K {}
+
+impl TemperatureInfallibleUnitPath<degC, f64> for K {}
+
+impl TemperatureInfallibleUnitPath<degF, f64> for K {}
+
+impl TemperatureInfallibleUnitPath<K, f64> for degC {}
+
+impl TemperatureInfallibleUnitPath<degC, f64> for degC {}
+
+impl TemperatureInfallibleUnitPath<degF, f64> for degC {}
+
+impl TemperatureInfallibleUnitPath<K, f64> for degF {}
+
+impl TemperatureInfallibleUnitPath<degC, f64> for degF {}
+
+impl TemperatureInfallibleUnitPath<degF, f64> for degF {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -4445,6 +4637,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> Temperature<Storage, TargetUnit>
     where
         TargetUnit: TemperatureUnit,
+        Unit: TemperatureInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, Temperature<Storage, TargetUnit>>(self)
     }
@@ -4491,7 +4684,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Temperature<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: TemperatureUnit,
+    Unit: TemperatureUnit + TemperatureInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: TemperatureUnit,
 {
     type Output = Temperature<Storage, TargetUnit>;
@@ -4586,11 +4779,34 @@ impl<Storage> QuantityForStorage<Storage> for degF {
     }
 }
 
+/// Sealed unit-family marker trait for `Time`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait TimeUnit: UnitMarker {}
+
+#[doc(hidden)]
+pub trait TimeInfallibleUnitPath<TargetUnit, Storage>: TimeUnit {}
 
 impl TimeUnit for s {}
 
 impl TimeUnit for ms {}
+
+impl TimeInfallibleUnitPath<s, i32> for s {}
+
+impl TimeInfallibleUnitPath<ms, i32> for ms {}
+
+impl TimeInfallibleUnitPath<s, f32> for s {}
+
+impl TimeInfallibleUnitPath<ms, f32> for ms {}
+
+impl TimeInfallibleUnitPath<s, f64> for s {}
+
+impl TimeInfallibleUnitPath<ms, f64> for s {}
+
+impl TimeInfallibleUnitPath<s, f64> for ms {}
+
+impl TimeInfallibleUnitPath<ms, f64> for ms {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -4705,6 +4921,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> Time<Storage, TargetUnit>
     where
         TargetUnit: TimeUnit,
+        Unit: TimeInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, Time<Storage, TargetUnit>>(self)
     }
@@ -4751,7 +4968,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Time<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: TimeUnit,
+    Unit: TimeUnit + TimeInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: TimeUnit,
 {
     type Output = Time<Storage, TargetUnit>;
@@ -4832,9 +5049,20 @@ impl<Storage> QuantityForStorage<Storage> for ms {
     }
 }
 
+/// Sealed unit-family marker trait for `Angle`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait AngleUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait AngleInfallibleUnitPath<TargetUnit, Storage>: AngleUnit {}
+
 impl AngleUnit for rad {}
+
+impl AngleInfallibleUnitPath<rad, f32> for rad {}
+
+impl AngleInfallibleUnitPath<rad, f64> for rad {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -4949,6 +5177,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> Angle<Storage, TargetUnit>
     where
         TargetUnit: AngleUnit,
+        Unit: AngleInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, Angle<Storage, TargetUnit>>(self)
     }
@@ -4995,7 +5224,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Angle<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: AngleUnit,
+    Unit: AngleUnit + AngleInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: AngleUnit,
 {
     type Output = Angle<Storage, TargetUnit>;
@@ -5062,9 +5291,20 @@ impl<Storage> QuantityForStorage<Storage> for rad {
     }
 }
 
+/// Sealed unit-family marker trait for `Area`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait AreaUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait AreaInfallibleUnitPath<TargetUnit, Storage>: AreaUnit {}
+
 impl AreaUnit for m2 {}
+
+impl AreaInfallibleUnitPath<m2, f32> for m2 {}
+
+impl AreaInfallibleUnitPath<m2, f64> for m2 {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -5179,6 +5419,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> Area<Storage, TargetUnit>
     where
         TargetUnit: AreaUnit,
+        Unit: AreaInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, Area<Storage, TargetUnit>>(self)
     }
@@ -5225,7 +5466,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Area<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: AreaUnit,
+    Unit: AreaUnit + AreaInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: AreaUnit,
 {
     type Output = Area<Storage, TargetUnit>;
@@ -5292,9 +5533,20 @@ impl<Storage> QuantityForStorage<Storage> for m2 {
     }
 }
 
+/// Sealed unit-family marker trait for `InverseAngle`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InverseAngleUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait InverseAngleInfallibleUnitPath<TargetUnit, Storage>: InverseAngleUnit {}
+
 impl InverseAngleUnit for per_rad {}
+
+impl InverseAngleInfallibleUnitPath<per_rad, f32> for per_rad {}
+
+impl InverseAngleInfallibleUnitPath<per_rad, f64> for per_rad {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -5412,6 +5664,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> InverseAngle<Storage, TargetUnit>
     where
         TargetUnit: InverseAngleUnit,
+        Unit: InverseAngleInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, InverseAngle<Storage, TargetUnit>>(self)
     }
@@ -5458,7 +5711,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for InverseAngle<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: InverseAngleUnit,
+    Unit: InverseAngleUnit + InverseAngleInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InverseAngleUnit,
 {
     type Output = InverseAngle<Storage, TargetUnit>;
@@ -5525,9 +5778,20 @@ impl<Storage> QuantityForStorage<Storage> for per_rad {
     }
 }
 
+/// Sealed unit-family marker trait for `InverseArea`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InverseAreaUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait InverseAreaInfallibleUnitPath<TargetUnit, Storage>: InverseAreaUnit {}
+
 impl InverseAreaUnit for per_m2 {}
+
+impl InverseAreaInfallibleUnitPath<per_m2, f32> for per_m2 {}
+
+impl InverseAreaInfallibleUnitPath<per_m2, f64> for per_m2 {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -5645,6 +5909,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> InverseArea<Storage, TargetUnit>
     where
         TargetUnit: InverseAreaUnit,
+        Unit: InverseAreaInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, InverseArea<Storage, TargetUnit>>(self)
     }
@@ -5691,7 +5956,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for InverseArea<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: InverseAreaUnit,
+    Unit: InverseAreaUnit + InverseAreaInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InverseAreaUnit,
 {
     type Output = InverseArea<Storage, TargetUnit>;
@@ -5758,9 +6023,20 @@ impl<Storage> QuantityForStorage<Storage> for per_m2 {
     }
 }
 
+/// Sealed unit-family marker trait for `InverseSolidAngle`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InverseSolidAngleUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait InverseSolidAngleInfallibleUnitPath<TargetUnit, Storage>: InverseSolidAngleUnit {}
+
 impl InverseSolidAngleUnit for per_sr {}
+
+impl InverseSolidAngleInfallibleUnitPath<per_sr, f32> for per_sr {}
+
+impl InverseSolidAngleInfallibleUnitPath<per_sr, f64> for per_sr {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -5878,6 +6154,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> InverseSolidAngle<Storage, TargetUnit>
     where
         TargetUnit: InverseSolidAngleUnit,
+        Unit: InverseSolidAngleInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, InverseSolidAngle<Storage, TargetUnit>>(self)
     }
@@ -5924,7 +6201,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for InverseSolidAngle<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: InverseSolidAngleUnit,
+    Unit: InverseSolidAngleUnit + InverseSolidAngleInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InverseSolidAngleUnit,
 {
     type Output = InverseSolidAngle<Storage, TargetUnit>;
@@ -5992,9 +6269,20 @@ impl<Storage> QuantityForStorage<Storage> for per_sr {
     }
 }
 
+/// Sealed unit-family marker trait for `InverseVolume`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InverseVolumeUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait InverseVolumeInfallibleUnitPath<TargetUnit, Storage>: InverseVolumeUnit {}
+
 impl InverseVolumeUnit for per_m3 {}
+
+impl InverseVolumeInfallibleUnitPath<per_m3, f32> for per_m3 {}
+
+impl InverseVolumeInfallibleUnitPath<per_m3, f64> for per_m3 {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -6112,6 +6400,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> InverseVolume<Storage, TargetUnit>
     where
         TargetUnit: InverseVolumeUnit,
+        Unit: InverseVolumeInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, InverseVolume<Storage, TargetUnit>>(self)
     }
@@ -6158,7 +6447,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for InverseVolume<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: InverseVolumeUnit,
+    Unit: InverseVolumeUnit + InverseVolumeInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InverseVolumeUnit,
 {
     type Output = InverseVolume<Storage, TargetUnit>;
@@ -6225,9 +6514,20 @@ impl<Storage> QuantityForStorage<Storage> for per_m3 {
     }
 }
 
+/// Sealed unit-family marker trait for `SolidAngle`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait SolidAngleUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait SolidAngleInfallibleUnitPath<TargetUnit, Storage>: SolidAngleUnit {}
+
 impl SolidAngleUnit for sr {}
+
+impl SolidAngleInfallibleUnitPath<sr, f32> for sr {}
+
+impl SolidAngleInfallibleUnitPath<sr, f64> for sr {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -6345,6 +6645,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> SolidAngle<Storage, TargetUnit>
     where
         TargetUnit: SolidAngleUnit,
+        Unit: SolidAngleInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, SolidAngle<Storage, TargetUnit>>(self)
     }
@@ -6391,7 +6692,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for SolidAngle<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: SolidAngleUnit,
+    Unit: SolidAngleUnit + SolidAngleInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: SolidAngleUnit,
 {
     type Output = SolidAngle<Storage, TargetUnit>;
@@ -6458,9 +6759,20 @@ impl<Storage> QuantityForStorage<Storage> for sr {
     }
 }
 
+/// Sealed unit-family marker trait for `Volume`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait VolumeUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait VolumeInfallibleUnitPath<TargetUnit, Storage>: VolumeUnit {}
+
 impl VolumeUnit for m3 {}
+
+impl VolumeInfallibleUnitPath<m3, f32> for m3 {}
+
+impl VolumeInfallibleUnitPath<m3, f64> for m3 {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -6575,6 +6887,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> Volume<Storage, TargetUnit>
     where
         TargetUnit: VolumeUnit,
+        Unit: VolumeInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, Volume<Storage, TargetUnit>>(self)
     }
@@ -6621,7 +6934,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Volume<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: VolumeUnit,
+    Unit: VolumeUnit + VolumeInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: VolumeUnit,
 {
     type Output = Volume<Storage, TargetUnit>;
@@ -6688,9 +7001,20 @@ impl<Storage> QuantityForStorage<Storage> for m3 {
     }
 }
 
+/// Sealed unit-family marker trait for `Acceleration`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait AccelerationUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait AccelerationInfallibleUnitPath<TargetUnit, Storage>: AccelerationUnit {}
+
 impl AccelerationUnit for mps2 {}
+
+impl AccelerationInfallibleUnitPath<mps2, f32> for mps2 {}
+
+impl AccelerationInfallibleUnitPath<mps2, f64> for mps2 {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -6808,6 +7132,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> Acceleration<Storage, TargetUnit>
     where
         TargetUnit: AccelerationUnit,
+        Unit: AccelerationInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, Acceleration<Storage, TargetUnit>>(self)
     }
@@ -6854,7 +7179,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Acceleration<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: AccelerationUnit,
+    Unit: AccelerationUnit + AccelerationInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: AccelerationUnit,
 {
     type Output = Acceleration<Storage, TargetUnit>;
@@ -6921,9 +7246,23 @@ impl<Storage> QuantityForStorage<Storage> for mps2 {
     }
 }
 
+/// Sealed unit-family marker trait for `AngularAcceleration`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait AngularAccelerationUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait AngularAccelerationInfallibleUnitPath<TargetUnit, Storage>:
+    AngularAccelerationUnit
+{
+}
+
 impl AngularAccelerationUnit for radps2 {}
+
+impl AngularAccelerationInfallibleUnitPath<radps2, f32> for radps2 {}
+
+impl AngularAccelerationInfallibleUnitPath<radps2, f64> for radps2 {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -7041,6 +7380,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> AngularAcceleration<Storage, TargetUnit>
     where
         TargetUnit: AngularAccelerationUnit,
+        Unit: AngularAccelerationInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, AngularAcceleration<Storage, TargetUnit>>(self)
     }
@@ -7087,7 +7427,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for AngularAcceleration<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: AngularAccelerationUnit,
+    Unit: AngularAccelerationUnit + AngularAccelerationInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: AngularAccelerationUnit,
 {
     type Output = AngularAcceleration<Storage, TargetUnit>;
@@ -7156,9 +7496,20 @@ impl<Storage> QuantityForStorage<Storage> for radps2 {
     }
 }
 
+/// Sealed unit-family marker trait for `AngularMomentum`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait AngularMomentumUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait AngularMomentumInfallibleUnitPath<TargetUnit, Storage>: AngularMomentumUnit {}
+
 impl AngularMomentumUnit for kgm2ps {}
+
+impl AngularMomentumInfallibleUnitPath<kgm2ps, f32> for kgm2ps {}
+
+impl AngularMomentumInfallibleUnitPath<kgm2ps, f64> for kgm2ps {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -7276,6 +7627,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> AngularMomentum<Storage, TargetUnit>
     where
         TargetUnit: AngularMomentumUnit,
+        Unit: AngularMomentumInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, AngularMomentum<Storage, TargetUnit>>(self)
     }
@@ -7322,7 +7674,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for AngularMomentum<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: AngularMomentumUnit,
+    Unit: AngularMomentumUnit + AngularMomentumInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: AngularMomentumUnit,
 {
     type Output = AngularMomentum<Storage, TargetUnit>;
@@ -7389,9 +7741,20 @@ impl<Storage> QuantityForStorage<Storage> for kgm2ps {
     }
 }
 
+/// Sealed unit-family marker trait for `AngularVelocity`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait AngularVelocityUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait AngularVelocityInfallibleUnitPath<TargetUnit, Storage>: AngularVelocityUnit {}
+
 impl AngularVelocityUnit for radps {}
+
+impl AngularVelocityInfallibleUnitPath<radps, f32> for radps {}
+
+impl AngularVelocityInfallibleUnitPath<radps, f64> for radps {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -7509,6 +7872,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> AngularVelocity<Storage, TargetUnit>
     where
         TargetUnit: AngularVelocityUnit,
+        Unit: AngularVelocityInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, AngularVelocity<Storage, TargetUnit>>(self)
     }
@@ -7555,7 +7919,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for AngularVelocity<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: AngularVelocityUnit,
+    Unit: AngularVelocityUnit + AngularVelocityInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: AngularVelocityUnit,
 {
     type Output = AngularVelocity<Storage, TargetUnit>;
@@ -7622,9 +7986,20 @@ impl<Storage> QuantityForStorage<Storage> for radps {
     }
 }
 
+/// Sealed unit-family marker trait for `AreaDensity`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait AreaDensityUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait AreaDensityInfallibleUnitPath<TargetUnit, Storage>: AreaDensityUnit {}
+
 impl AreaDensityUnit for kgpm2 {}
+
+impl AreaDensityInfallibleUnitPath<kgpm2, f32> for kgpm2 {}
+
+impl AreaDensityInfallibleUnitPath<kgpm2, f64> for kgpm2 {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -7742,6 +8117,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> AreaDensity<Storage, TargetUnit>
     where
         TargetUnit: AreaDensityUnit,
+        Unit: AreaDensityInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, AreaDensity<Storage, TargetUnit>>(self)
     }
@@ -7788,7 +8164,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for AreaDensity<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: AreaDensityUnit,
+    Unit: AreaDensityUnit + AreaDensityInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: AreaDensityUnit,
 {
     type Output = AreaDensity<Storage, TargetUnit>;
@@ -7855,9 +8231,20 @@ impl<Storage> QuantityForStorage<Storage> for kgpm2 {
     }
 }
 
+/// Sealed unit-family marker trait for `AreaPerMass`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait AreaPerMassUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait AreaPerMassInfallibleUnitPath<TargetUnit, Storage>: AreaPerMassUnit {}
+
 impl AreaPerMassUnit for m2pkg {}
+
+impl AreaPerMassInfallibleUnitPath<m2pkg, f32> for m2pkg {}
+
+impl AreaPerMassInfallibleUnitPath<m2pkg, f64> for m2pkg {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -7975,6 +8362,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> AreaPerMass<Storage, TargetUnit>
     where
         TargetUnit: AreaPerMassUnit,
+        Unit: AreaPerMassInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, AreaPerMass<Storage, TargetUnit>>(self)
     }
@@ -8021,7 +8409,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for AreaPerMass<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: AreaPerMassUnit,
+    Unit: AreaPerMassUnit + AreaPerMassInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: AreaPerMassUnit,
 {
     type Output = AreaPerMass<Storage, TargetUnit>;
@@ -8088,9 +8476,20 @@ impl<Storage> QuantityForStorage<Storage> for m2pkg {
     }
 }
 
+/// Sealed unit-family marker trait for `Density`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait DensityUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait DensityInfallibleUnitPath<TargetUnit, Storage>: DensityUnit {}
+
 impl DensityUnit for kgpm3 {}
+
+impl DensityInfallibleUnitPath<kgpm3, f32> for kgpm3 {}
+
+impl DensityInfallibleUnitPath<kgpm3, f64> for kgpm3 {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -8205,6 +8604,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> Density<Storage, TargetUnit>
     where
         TargetUnit: DensityUnit,
+        Unit: DensityInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, Density<Storage, TargetUnit>>(self)
     }
@@ -8251,7 +8651,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Density<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: DensityUnit,
+    Unit: DensityUnit + DensityInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: DensityUnit,
 {
     type Output = Density<Storage, TargetUnit>;
@@ -8318,9 +8718,20 @@ impl<Storage> QuantityForStorage<Storage> for kgpm3 {
     }
 }
 
+/// Sealed unit-family marker trait for `Energy`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait EnergyUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait EnergyInfallibleUnitPath<TargetUnit, Storage>: EnergyUnit {}
+
 impl EnergyUnit for J {}
+
+impl EnergyInfallibleUnitPath<J, f32> for J {}
+
+impl EnergyInfallibleUnitPath<J, f64> for J {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -8435,6 +8846,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> Energy<Storage, TargetUnit>
     where
         TargetUnit: EnergyUnit,
+        Unit: EnergyInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, Energy<Storage, TargetUnit>>(self)
     }
@@ -8481,7 +8893,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Energy<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: EnergyUnit,
+    Unit: EnergyUnit + EnergyInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: EnergyUnit,
 {
     type Output = Energy<Storage, TargetUnit>;
@@ -8548,9 +8960,20 @@ impl<Storage> QuantityForStorage<Storage> for J {
     }
 }
 
+/// Sealed unit-family marker trait for `Force`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait ForceUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait ForceInfallibleUnitPath<TargetUnit, Storage>: ForceUnit {}
+
 impl ForceUnit for N {}
+
+impl ForceInfallibleUnitPath<N, f32> for N {}
+
+impl ForceInfallibleUnitPath<N, f64> for N {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -8665,6 +9088,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> Force<Storage, TargetUnit>
     where
         TargetUnit: ForceUnit,
+        Unit: ForceInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, Force<Storage, TargetUnit>>(self)
     }
@@ -8711,7 +9135,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Force<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: ForceUnit,
+    Unit: ForceUnit + ForceInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: ForceUnit,
 {
     type Output = Force<Storage, TargetUnit>;
@@ -8778,9 +9202,20 @@ impl<Storage> QuantityForStorage<Storage> for N {
     }
 }
 
+/// Sealed unit-family marker trait for `Frequency`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait FrequencyUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait FrequencyInfallibleUnitPath<TargetUnit, Storage>: FrequencyUnit {}
+
 impl FrequencyUnit for Hz {}
+
+impl FrequencyInfallibleUnitPath<Hz, f32> for Hz {}
+
+impl FrequencyInfallibleUnitPath<Hz, f64> for Hz {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -8898,6 +9333,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> Frequency<Storage, TargetUnit>
     where
         TargetUnit: FrequencyUnit,
+        Unit: FrequencyInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, Frequency<Storage, TargetUnit>>(self)
     }
@@ -8944,7 +9380,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Frequency<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: FrequencyUnit,
+    Unit: FrequencyUnit + FrequencyInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: FrequencyUnit,
 {
     type Output = Frequency<Storage, TargetUnit>;
@@ -9011,9 +9447,23 @@ impl<Storage> QuantityForStorage<Storage> for Hz {
     }
 }
 
+/// Sealed unit-family marker trait for `InverseAcceleration`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InverseAccelerationUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait InverseAccelerationInfallibleUnitPath<TargetUnit, Storage>:
+    InverseAccelerationUnit
+{
+}
+
 impl InverseAccelerationUnit for per_mps2 {}
+
+impl InverseAccelerationInfallibleUnitPath<per_mps2, f32> for per_mps2 {}
+
+impl InverseAccelerationInfallibleUnitPath<per_mps2, f64> for per_mps2 {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -9131,6 +9581,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> InverseAcceleration<Storage, TargetUnit>
     where
         TargetUnit: InverseAccelerationUnit,
+        Unit: InverseAccelerationInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, InverseAcceleration<Storage, TargetUnit>>(self)
     }
@@ -9177,7 +9628,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for InverseAcceleration<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: InverseAccelerationUnit,
+    Unit: InverseAccelerationUnit + InverseAccelerationInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InverseAccelerationUnit,
 {
     type Output = InverseAcceleration<Storage, TargetUnit>;
@@ -9246,9 +9697,23 @@ impl<Storage> QuantityForStorage<Storage> for per_mps2 {
     }
 }
 
+/// Sealed unit-family marker trait for `InverseAngularAcceleration`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InverseAngularAccelerationUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait InverseAngularAccelerationInfallibleUnitPath<TargetUnit, Storage>:
+    InverseAngularAccelerationUnit
+{
+}
+
 impl InverseAngularAccelerationUnit for per_radps2 {}
+
+impl InverseAngularAccelerationInfallibleUnitPath<per_radps2, f32> for per_radps2 {}
+
+impl InverseAngularAccelerationInfallibleUnitPath<per_radps2, f64> for per_radps2 {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -9366,6 +9831,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> InverseAngularAcceleration<Storage, TargetUnit>
     where
         TargetUnit: InverseAngularAccelerationUnit,
+        Unit: InverseAngularAccelerationInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, InverseAngularAcceleration<Storage, TargetUnit>>(
             self,
@@ -9420,7 +9886,8 @@ impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit>
     for InverseAngularAcceleration<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: InverseAngularAccelerationUnit,
+    Unit: InverseAngularAccelerationUnit
+        + InverseAngularAccelerationInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InverseAngularAccelerationUnit,
 {
     type Output = InverseAngularAcceleration<Storage, TargetUnit>;
@@ -9493,9 +9960,23 @@ impl<Storage> QuantityForStorage<Storage> for per_radps2 {
     }
 }
 
+/// Sealed unit-family marker trait for `InverseAngularMomentum`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InverseAngularMomentumUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait InverseAngularMomentumInfallibleUnitPath<TargetUnit, Storage>:
+    InverseAngularMomentumUnit
+{
+}
+
 impl InverseAngularMomentumUnit for per_kgm2ps {}
+
+impl InverseAngularMomentumInfallibleUnitPath<per_kgm2ps, f32> for per_kgm2ps {}
+
+impl InverseAngularMomentumInfallibleUnitPath<per_kgm2ps, f64> for per_kgm2ps {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -9613,6 +10094,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> InverseAngularMomentum<Storage, TargetUnit>
     where
         TargetUnit: InverseAngularMomentumUnit,
+        Unit: InverseAngularMomentumInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, InverseAngularMomentum<Storage, TargetUnit>>(
             self,
@@ -9663,7 +10145,8 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for InverseAngularMomentum<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: InverseAngularMomentumUnit,
+    Unit:
+        InverseAngularMomentumUnit + InverseAngularMomentumInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InverseAngularMomentumUnit,
 {
     type Output = InverseAngularMomentum<Storage, TargetUnit>;
@@ -9736,9 +10219,23 @@ impl<Storage> QuantityForStorage<Storage> for per_kgm2ps {
     }
 }
 
+/// Sealed unit-family marker trait for `InverseAngularVelocity`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InverseAngularVelocityUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait InverseAngularVelocityInfallibleUnitPath<TargetUnit, Storage>:
+    InverseAngularVelocityUnit
+{
+}
+
 impl InverseAngularVelocityUnit for per_radps {}
+
+impl InverseAngularVelocityInfallibleUnitPath<per_radps, f32> for per_radps {}
+
+impl InverseAngularVelocityInfallibleUnitPath<per_radps, f64> for per_radps {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -9856,6 +10353,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> InverseAngularVelocity<Storage, TargetUnit>
     where
         TargetUnit: InverseAngularVelocityUnit,
+        Unit: InverseAngularVelocityInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, InverseAngularVelocity<Storage, TargetUnit>>(
             self,
@@ -9906,7 +10404,8 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for InverseAngularVelocity<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: InverseAngularVelocityUnit,
+    Unit:
+        InverseAngularVelocityUnit + InverseAngularVelocityInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InverseAngularVelocityUnit,
 {
     type Output = InverseAngularVelocity<Storage, TargetUnit>;
@@ -9979,9 +10478,20 @@ impl<Storage> QuantityForStorage<Storage> for per_radps {
     }
 }
 
+/// Sealed unit-family marker trait for `InverseEnergy`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InverseEnergyUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait InverseEnergyInfallibleUnitPath<TargetUnit, Storage>: InverseEnergyUnit {}
+
 impl InverseEnergyUnit for per_J {}
+
+impl InverseEnergyInfallibleUnitPath<per_J, f32> for per_J {}
+
+impl InverseEnergyInfallibleUnitPath<per_J, f64> for per_J {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -10099,6 +10609,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> InverseEnergy<Storage, TargetUnit>
     where
         TargetUnit: InverseEnergyUnit,
+        Unit: InverseEnergyInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, InverseEnergy<Storage, TargetUnit>>(self)
     }
@@ -10145,7 +10656,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for InverseEnergy<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: InverseEnergyUnit,
+    Unit: InverseEnergyUnit + InverseEnergyInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InverseEnergyUnit,
 {
     type Output = InverseEnergy<Storage, TargetUnit>;
@@ -10212,9 +10723,20 @@ impl<Storage> QuantityForStorage<Storage> for per_J {
     }
 }
 
+/// Sealed unit-family marker trait for `InverseForce`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InverseForceUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait InverseForceInfallibleUnitPath<TargetUnit, Storage>: InverseForceUnit {}
+
 impl InverseForceUnit for per_N {}
+
+impl InverseForceInfallibleUnitPath<per_N, f32> for per_N {}
+
+impl InverseForceInfallibleUnitPath<per_N, f64> for per_N {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -10332,6 +10854,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> InverseForce<Storage, TargetUnit>
     where
         TargetUnit: InverseForceUnit,
+        Unit: InverseForceInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, InverseForce<Storage, TargetUnit>>(self)
     }
@@ -10378,7 +10901,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for InverseForce<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: InverseForceUnit,
+    Unit: InverseForceUnit + InverseForceInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InverseForceUnit,
 {
     type Output = InverseForce<Storage, TargetUnit>;
@@ -10445,9 +10968,23 @@ impl<Storage> QuantityForStorage<Storage> for per_N {
     }
 }
 
+/// Sealed unit-family marker trait for `InverseMomentOfInertia`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InverseMomentOfInertiaUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait InverseMomentOfInertiaInfallibleUnitPath<TargetUnit, Storage>:
+    InverseMomentOfInertiaUnit
+{
+}
+
 impl InverseMomentOfInertiaUnit for per_kgm2 {}
+
+impl InverseMomentOfInertiaInfallibleUnitPath<per_kgm2, f32> for per_kgm2 {}
+
+impl InverseMomentOfInertiaInfallibleUnitPath<per_kgm2, f64> for per_kgm2 {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -10565,6 +11102,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> InverseMomentOfInertia<Storage, TargetUnit>
     where
         TargetUnit: InverseMomentOfInertiaUnit,
+        Unit: InverseMomentOfInertiaInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, InverseMomentOfInertia<Storage, TargetUnit>>(
             self,
@@ -10615,7 +11153,8 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for InverseMomentOfInertia<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: InverseMomentOfInertiaUnit,
+    Unit:
+        InverseMomentOfInertiaUnit + InverseMomentOfInertiaInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InverseMomentOfInertiaUnit,
 {
     type Output = InverseMomentOfInertia<Storage, TargetUnit>;
@@ -10688,9 +11227,20 @@ impl<Storage> QuantityForStorage<Storage> for per_kgm2 {
     }
 }
 
+/// Sealed unit-family marker trait for `InverseMomentum`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InverseMomentumUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait InverseMomentumInfallibleUnitPath<TargetUnit, Storage>: InverseMomentumUnit {}
+
 impl InverseMomentumUnit for per_kgmps {}
+
+impl InverseMomentumInfallibleUnitPath<per_kgmps, f32> for per_kgmps {}
+
+impl InverseMomentumInfallibleUnitPath<per_kgmps, f64> for per_kgmps {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -10808,6 +11358,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> InverseMomentum<Storage, TargetUnit>
     where
         TargetUnit: InverseMomentumUnit,
+        Unit: InverseMomentumInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, InverseMomentum<Storage, TargetUnit>>(self)
     }
@@ -10854,7 +11405,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for InverseMomentum<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: InverseMomentumUnit,
+    Unit: InverseMomentumUnit + InverseMomentumInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InverseMomentumUnit,
 {
     type Output = InverseMomentum<Storage, TargetUnit>;
@@ -10921,9 +11472,20 @@ impl<Storage> QuantityForStorage<Storage> for per_kgmps {
     }
 }
 
+/// Sealed unit-family marker trait for `InversePower`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InversePowerUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait InversePowerInfallibleUnitPath<TargetUnit, Storage>: InversePowerUnit {}
+
 impl InversePowerUnit for per_W {}
+
+impl InversePowerInfallibleUnitPath<per_W, f32> for per_W {}
+
+impl InversePowerInfallibleUnitPath<per_W, f64> for per_W {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -11041,6 +11603,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> InversePower<Storage, TargetUnit>
     where
         TargetUnit: InversePowerUnit,
+        Unit: InversePowerInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, InversePower<Storage, TargetUnit>>(self)
     }
@@ -11087,7 +11650,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for InversePower<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: InversePowerUnit,
+    Unit: InversePowerUnit + InversePowerInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InversePowerUnit,
 {
     type Output = InversePower<Storage, TargetUnit>;
@@ -11154,9 +11717,20 @@ impl<Storage> QuantityForStorage<Storage> for per_W {
     }
 }
 
+/// Sealed unit-family marker trait for `InversePressure`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InversePressureUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait InversePressureInfallibleUnitPath<TargetUnit, Storage>: InversePressureUnit {}
+
 impl InversePressureUnit for per_Pa {}
+
+impl InversePressureInfallibleUnitPath<per_Pa, f32> for per_Pa {}
+
+impl InversePressureInfallibleUnitPath<per_Pa, f64> for per_Pa {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -11274,6 +11848,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> InversePressure<Storage, TargetUnit>
     where
         TargetUnit: InversePressureUnit,
+        Unit: InversePressureInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, InversePressure<Storage, TargetUnit>>(self)
     }
@@ -11320,7 +11895,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for InversePressure<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: InversePressureUnit,
+    Unit: InversePressureUnit + InversePressureInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InversePressureUnit,
 {
     type Output = InversePressure<Storage, TargetUnit>;
@@ -11387,9 +11962,20 @@ impl<Storage> QuantityForStorage<Storage> for per_Pa {
     }
 }
 
+/// Sealed unit-family marker trait for `InverseTorque`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InverseTorqueUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait InverseTorqueInfallibleUnitPath<TargetUnit, Storage>: InverseTorqueUnit {}
+
 impl InverseTorqueUnit for per_Nm {}
+
+impl InverseTorqueInfallibleUnitPath<per_Nm, f32> for per_Nm {}
+
+impl InverseTorqueInfallibleUnitPath<per_Nm, f64> for per_Nm {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -11507,6 +12093,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> InverseTorque<Storage, TargetUnit>
     where
         TargetUnit: InverseTorqueUnit,
+        Unit: InverseTorqueInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, InverseTorque<Storage, TargetUnit>>(self)
     }
@@ -11553,7 +12140,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for InverseTorque<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: InverseTorqueUnit,
+    Unit: InverseTorqueUnit + InverseTorqueInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InverseTorqueUnit,
 {
     type Output = InverseTorque<Storage, TargetUnit>;
@@ -11620,9 +12207,20 @@ impl<Storage> QuantityForStorage<Storage> for per_Nm {
     }
 }
 
+/// Sealed unit-family marker trait for `MomentOfInertia`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait MomentOfInertiaUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait MomentOfInertiaInfallibleUnitPath<TargetUnit, Storage>: MomentOfInertiaUnit {}
+
 impl MomentOfInertiaUnit for kgm2 {}
+
+impl MomentOfInertiaInfallibleUnitPath<kgm2, f32> for kgm2 {}
+
+impl MomentOfInertiaInfallibleUnitPath<kgm2, f64> for kgm2 {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -11740,6 +12338,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> MomentOfInertia<Storage, TargetUnit>
     where
         TargetUnit: MomentOfInertiaUnit,
+        Unit: MomentOfInertiaInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, MomentOfInertia<Storage, TargetUnit>>(self)
     }
@@ -11786,7 +12385,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for MomentOfInertia<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: MomentOfInertiaUnit,
+    Unit: MomentOfInertiaUnit + MomentOfInertiaInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: MomentOfInertiaUnit,
 {
     type Output = MomentOfInertia<Storage, TargetUnit>;
@@ -11853,9 +12452,20 @@ impl<Storage> QuantityForStorage<Storage> for kgm2 {
     }
 }
 
+/// Sealed unit-family marker trait for `Momentum`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait MomentumUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait MomentumInfallibleUnitPath<TargetUnit, Storage>: MomentumUnit {}
+
 impl MomentumUnit for kgmps {}
+
+impl MomentumInfallibleUnitPath<kgmps, f32> for kgmps {}
+
+impl MomentumInfallibleUnitPath<kgmps, f64> for kgmps {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -11970,6 +12580,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> Momentum<Storage, TargetUnit>
     where
         TargetUnit: MomentumUnit,
+        Unit: MomentumInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, Momentum<Storage, TargetUnit>>(self)
     }
@@ -12016,7 +12627,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Momentum<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: MomentumUnit,
+    Unit: MomentumUnit + MomentumInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: MomentumUnit,
 {
     type Output = Momentum<Storage, TargetUnit>;
@@ -12083,9 +12694,20 @@ impl<Storage> QuantityForStorage<Storage> for kgmps {
     }
 }
 
+/// Sealed unit-family marker trait for `Power`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait PowerUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait PowerInfallibleUnitPath<TargetUnit, Storage>: PowerUnit {}
+
 impl PowerUnit for W {}
+
+impl PowerInfallibleUnitPath<W, f32> for W {}
+
+impl PowerInfallibleUnitPath<W, f64> for W {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -12200,6 +12822,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> Power<Storage, TargetUnit>
     where
         TargetUnit: PowerUnit,
+        Unit: PowerInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, Power<Storage, TargetUnit>>(self)
     }
@@ -12246,7 +12869,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Power<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: PowerUnit,
+    Unit: PowerUnit + PowerInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: PowerUnit,
 {
     type Output = Power<Storage, TargetUnit>;
@@ -12313,9 +12936,20 @@ impl<Storage> QuantityForStorage<Storage> for W {
     }
 }
 
+/// Sealed unit-family marker trait for `Pressure`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait PressureUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait PressureInfallibleUnitPath<TargetUnit, Storage>: PressureUnit {}
+
 impl PressureUnit for Pa {}
+
+impl PressureInfallibleUnitPath<Pa, f32> for Pa {}
+
+impl PressureInfallibleUnitPath<Pa, f64> for Pa {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -12430,6 +13064,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> Pressure<Storage, TargetUnit>
     where
         TargetUnit: PressureUnit,
+        Unit: PressureInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, Pressure<Storage, TargetUnit>>(self)
     }
@@ -12476,7 +13111,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Pressure<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: PressureUnit,
+    Unit: PressureUnit + PressureInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: PressureUnit,
 {
     type Output = Pressure<Storage, TargetUnit>;
@@ -12543,9 +13178,20 @@ impl<Storage> QuantityForStorage<Storage> for Pa {
     }
 }
 
+/// Sealed unit-family marker trait for `TimePerDistance`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait TimePerDistanceUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait TimePerDistanceInfallibleUnitPath<TargetUnit, Storage>: TimePerDistanceUnit {}
+
 impl TimePerDistanceUnit for spm {}
+
+impl TimePerDistanceInfallibleUnitPath<spm, f32> for spm {}
+
+impl TimePerDistanceInfallibleUnitPath<spm, f64> for spm {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -12663,6 +13309,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> TimePerDistance<Storage, TargetUnit>
     where
         TargetUnit: TimePerDistanceUnit,
+        Unit: TimePerDistanceInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, TimePerDistance<Storage, TargetUnit>>(self)
     }
@@ -12709,7 +13356,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for TimePerDistance<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: TimePerDistanceUnit,
+    Unit: TimePerDistanceUnit + TimePerDistanceInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: TimePerDistanceUnit,
 {
     type Output = TimePerDistance<Storage, TargetUnit>;
@@ -12776,9 +13423,20 @@ impl<Storage> QuantityForStorage<Storage> for spm {
     }
 }
 
+/// Sealed unit-family marker trait for `Torque`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait TorqueUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait TorqueInfallibleUnitPath<TargetUnit, Storage>: TorqueUnit {}
+
 impl TorqueUnit for Nm {}
+
+impl TorqueInfallibleUnitPath<Nm, f32> for Nm {}
+
+impl TorqueInfallibleUnitPath<Nm, f64> for Nm {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -12893,6 +13551,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> Torque<Storage, TargetUnit>
     where
         TargetUnit: TorqueUnit,
+        Unit: TorqueInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, Torque<Storage, TargetUnit>>(self)
     }
@@ -12939,7 +13598,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Torque<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: TorqueUnit,
+    Unit: TorqueUnit + TorqueInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: TorqueUnit,
 {
     type Output = Torque<Storage, TargetUnit>;
@@ -13006,9 +13665,20 @@ impl<Storage> QuantityForStorage<Storage> for Nm {
     }
 }
 
+/// Sealed unit-family marker trait for `Velocity`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait VelocityUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait VelocityInfallibleUnitPath<TargetUnit, Storage>: VelocityUnit {}
+
 impl VelocityUnit for mps {}
+
+impl VelocityInfallibleUnitPath<mps, f32> for mps {}
+
+impl VelocityInfallibleUnitPath<mps, f64> for mps {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -13123,6 +13793,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> Velocity<Storage, TargetUnit>
     where
         TargetUnit: VelocityUnit,
+        Unit: VelocityInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, Velocity<Storage, TargetUnit>>(self)
     }
@@ -13169,7 +13840,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Velocity<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: VelocityUnit,
+    Unit: VelocityUnit + VelocityInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: VelocityUnit,
 {
     type Output = Velocity<Storage, TargetUnit>;
@@ -13236,9 +13907,20 @@ impl<Storage> QuantityForStorage<Storage> for mps {
     }
 }
 
+/// Sealed unit-family marker trait for `VolumePerMass`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait VolumePerMassUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait VolumePerMassInfallibleUnitPath<TargetUnit, Storage>: VolumePerMassUnit {}
+
 impl VolumePerMassUnit for m3pkg {}
+
+impl VolumePerMassInfallibleUnitPath<m3pkg, f32> for m3pkg {}
+
+impl VolumePerMassInfallibleUnitPath<m3pkg, f64> for m3pkg {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -13356,6 +14038,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> VolumePerMass<Storage, TargetUnit>
     where
         TargetUnit: VolumePerMassUnit,
+        Unit: VolumePerMassInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, VolumePerMass<Storage, TargetUnit>>(self)
     }
@@ -13402,7 +14085,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for VolumePerMass<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: VolumePerMassUnit,
+    Unit: VolumePerMassUnit + VolumePerMassInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: VolumePerMassUnit,
 {
     type Output = VolumePerMass<Storage, TargetUnit>;
@@ -13469,9 +14152,20 @@ impl<Storage> QuantityForStorage<Storage> for m3pkg {
     }
 }
 
+/// Sealed unit-family marker trait for `AreaPerLumen`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait AreaPerLumenUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait AreaPerLumenInfallibleUnitPath<TargetUnit, Storage>: AreaPerLumenUnit {}
+
 impl AreaPerLumenUnit for m2plm {}
+
+impl AreaPerLumenInfallibleUnitPath<m2plm, f32> for m2plm {}
+
+impl AreaPerLumenInfallibleUnitPath<m2plm, f64> for m2plm {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -13589,6 +14283,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> AreaPerLumen<Storage, TargetUnit>
     where
         TargetUnit: AreaPerLumenUnit,
+        Unit: AreaPerLumenInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, AreaPerLumen<Storage, TargetUnit>>(self)
     }
@@ -13635,7 +14330,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for AreaPerLumen<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: AreaPerLumenUnit,
+    Unit: AreaPerLumenUnit + AreaPerLumenInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: AreaPerLumenUnit,
 {
     type Output = AreaPerLumen<Storage, TargetUnit>;
@@ -13702,9 +14397,20 @@ impl<Storage> QuantityForStorage<Storage> for m2plm {
     }
 }
 
+/// Sealed unit-family marker trait for `Capacitance`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait CapacitanceUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait CapacitanceInfallibleUnitPath<TargetUnit, Storage>: CapacitanceUnit {}
+
 impl CapacitanceUnit for F {}
+
+impl CapacitanceInfallibleUnitPath<F, f32> for F {}
+
+impl CapacitanceInfallibleUnitPath<F, f64> for F {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -13822,6 +14528,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> Capacitance<Storage, TargetUnit>
     where
         TargetUnit: CapacitanceUnit,
+        Unit: CapacitanceInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, Capacitance<Storage, TargetUnit>>(self)
     }
@@ -13868,7 +14575,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Capacitance<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: CapacitanceUnit,
+    Unit: CapacitanceUnit + CapacitanceInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: CapacitanceUnit,
 {
     type Output = Capacitance<Storage, TargetUnit>;
@@ -13935,9 +14642,20 @@ impl<Storage> QuantityForStorage<Storage> for F {
     }
 }
 
+/// Sealed unit-family marker trait for `Charge`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait ChargeUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait ChargeInfallibleUnitPath<TargetUnit, Storage>: ChargeUnit {}
+
 impl ChargeUnit for C {}
+
+impl ChargeInfallibleUnitPath<C, f32> for C {}
+
+impl ChargeInfallibleUnitPath<C, f64> for C {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -14052,6 +14770,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> Charge<Storage, TargetUnit>
     where
         TargetUnit: ChargeUnit,
+        Unit: ChargeInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, Charge<Storage, TargetUnit>>(self)
     }
@@ -14098,7 +14817,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Charge<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: ChargeUnit,
+    Unit: ChargeUnit + ChargeInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: ChargeUnit,
 {
     type Output = Charge<Storage, TargetUnit>;
@@ -14165,9 +14884,20 @@ impl<Storage> QuantityForStorage<Storage> for C {
     }
 }
 
+/// Sealed unit-family marker trait for `Conductance`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait ConductanceUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait ConductanceInfallibleUnitPath<TargetUnit, Storage>: ConductanceUnit {}
+
 impl ConductanceUnit for S {}
+
+impl ConductanceInfallibleUnitPath<S, f32> for S {}
+
+impl ConductanceInfallibleUnitPath<S, f64> for S {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -14285,6 +15015,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> Conductance<Storage, TargetUnit>
     where
         TargetUnit: ConductanceUnit,
+        Unit: ConductanceInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, Conductance<Storage, TargetUnit>>(self)
     }
@@ -14331,7 +15062,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Conductance<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: ConductanceUnit,
+    Unit: ConductanceUnit + ConductanceInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: ConductanceUnit,
 {
     type Output = Conductance<Storage, TargetUnit>;
@@ -14398,9 +15129,20 @@ impl<Storage> QuantityForStorage<Storage> for S {
     }
 }
 
+/// Sealed unit-family marker trait for `Elastance`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait ElastanceUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait ElastanceInfallibleUnitPath<TargetUnit, Storage>: ElastanceUnit {}
+
 impl ElastanceUnit for per_F {}
+
+impl ElastanceInfallibleUnitPath<per_F, f32> for per_F {}
+
+impl ElastanceInfallibleUnitPath<per_F, f64> for per_F {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -14518,6 +15260,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> Elastance<Storage, TargetUnit>
     where
         TargetUnit: ElastanceUnit,
+        Unit: ElastanceInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, Elastance<Storage, TargetUnit>>(self)
     }
@@ -14564,7 +15307,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Elastance<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: ElastanceUnit,
+    Unit: ElastanceUnit + ElastanceInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: ElastanceUnit,
 {
     type Output = Elastance<Storage, TargetUnit>;
@@ -14631,9 +15374,20 @@ impl<Storage> QuantityForStorage<Storage> for per_F {
     }
 }
 
+/// Sealed unit-family marker trait for `Illuminance`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait IlluminanceUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait IlluminanceInfallibleUnitPath<TargetUnit, Storage>: IlluminanceUnit {}
+
 impl IlluminanceUnit for lx {}
+
+impl IlluminanceInfallibleUnitPath<lx, f32> for lx {}
+
+impl IlluminanceInfallibleUnitPath<lx, f64> for lx {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -14751,6 +15505,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> Illuminance<Storage, TargetUnit>
     where
         TargetUnit: IlluminanceUnit,
+        Unit: IlluminanceInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, Illuminance<Storage, TargetUnit>>(self)
     }
@@ -14797,7 +15552,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Illuminance<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: IlluminanceUnit,
+    Unit: IlluminanceUnit + IlluminanceInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: IlluminanceUnit,
 {
     type Output = Illuminance<Storage, TargetUnit>;
@@ -14864,9 +15619,20 @@ impl<Storage> QuantityForStorage<Storage> for lx {
     }
 }
 
+/// Sealed unit-family marker trait for `Inductance`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InductanceUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait InductanceInfallibleUnitPath<TargetUnit, Storage>: InductanceUnit {}
+
 impl InductanceUnit for H {}
+
+impl InductanceInfallibleUnitPath<H, f32> for H {}
+
+impl InductanceInfallibleUnitPath<H, f64> for H {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -14984,6 +15750,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> Inductance<Storage, TargetUnit>
     where
         TargetUnit: InductanceUnit,
+        Unit: InductanceInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, Inductance<Storage, TargetUnit>>(self)
     }
@@ -15030,7 +15797,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Inductance<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: InductanceUnit,
+    Unit: InductanceUnit + InductanceInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InductanceUnit,
 {
     type Output = Inductance<Storage, TargetUnit>;
@@ -15097,9 +15864,20 @@ impl<Storage> QuantityForStorage<Storage> for H {
     }
 }
 
+/// Sealed unit-family marker trait for `InverseCharge`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InverseChargeUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait InverseChargeInfallibleUnitPath<TargetUnit, Storage>: InverseChargeUnit {}
+
 impl InverseChargeUnit for per_C {}
+
+impl InverseChargeInfallibleUnitPath<per_C, f32> for per_C {}
+
+impl InverseChargeInfallibleUnitPath<per_C, f64> for per_C {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -15217,6 +15995,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> InverseCharge<Storage, TargetUnit>
     where
         TargetUnit: InverseChargeUnit,
+        Unit: InverseChargeInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, InverseCharge<Storage, TargetUnit>>(self)
     }
@@ -15263,7 +16042,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for InverseCharge<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: InverseChargeUnit,
+    Unit: InverseChargeUnit + InverseChargeInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InverseChargeUnit,
 {
     type Output = InverseCharge<Storage, TargetUnit>;
@@ -15330,9 +16109,20 @@ impl<Storage> QuantityForStorage<Storage> for per_C {
     }
 }
 
+/// Sealed unit-family marker trait for `InverseInductance`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InverseInductanceUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait InverseInductanceInfallibleUnitPath<TargetUnit, Storage>: InverseInductanceUnit {}
+
 impl InverseInductanceUnit for per_H {}
+
+impl InverseInductanceInfallibleUnitPath<per_H, f32> for per_H {}
+
+impl InverseInductanceInfallibleUnitPath<per_H, f64> for per_H {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -15450,6 +16240,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> InverseInductance<Storage, TargetUnit>
     where
         TargetUnit: InverseInductanceUnit,
+        Unit: InverseInductanceInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, InverseInductance<Storage, TargetUnit>>(self)
     }
@@ -15496,7 +16287,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for InverseInductance<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: InverseInductanceUnit,
+    Unit: InverseInductanceUnit + InverseInductanceInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InverseInductanceUnit,
 {
     type Output = InverseInductance<Storage, TargetUnit>;
@@ -15564,9 +16355,23 @@ impl<Storage> QuantityForStorage<Storage> for per_H {
     }
 }
 
+/// Sealed unit-family marker trait for `InverseLuminousFlux`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InverseLuminousFluxUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait InverseLuminousFluxInfallibleUnitPath<TargetUnit, Storage>:
+    InverseLuminousFluxUnit
+{
+}
+
 impl InverseLuminousFluxUnit for per_lm {}
+
+impl InverseLuminousFluxInfallibleUnitPath<per_lm, f32> for per_lm {}
+
+impl InverseLuminousFluxInfallibleUnitPath<per_lm, f64> for per_lm {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -15684,6 +16489,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> InverseLuminousFlux<Storage, TargetUnit>
     where
         TargetUnit: InverseLuminousFluxUnit,
+        Unit: InverseLuminousFluxInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, InverseLuminousFlux<Storage, TargetUnit>>(self)
     }
@@ -15730,7 +16536,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for InverseLuminousFlux<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: InverseLuminousFluxUnit,
+    Unit: InverseLuminousFluxUnit + InverseLuminousFluxInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InverseLuminousFluxUnit,
 {
     type Output = InverseLuminousFlux<Storage, TargetUnit>;
@@ -15799,9 +16605,23 @@ impl<Storage> QuantityForStorage<Storage> for per_lm {
     }
 }
 
+/// Sealed unit-family marker trait for `InverseMagneticFlux`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InverseMagneticFluxUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait InverseMagneticFluxInfallibleUnitPath<TargetUnit, Storage>:
+    InverseMagneticFluxUnit
+{
+}
+
 impl InverseMagneticFluxUnit for per_Wb {}
+
+impl InverseMagneticFluxInfallibleUnitPath<per_Wb, f32> for per_Wb {}
+
+impl InverseMagneticFluxInfallibleUnitPath<per_Wb, f64> for per_Wb {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -15919,6 +16739,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> InverseMagneticFlux<Storage, TargetUnit>
     where
         TargetUnit: InverseMagneticFluxUnit,
+        Unit: InverseMagneticFluxInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, InverseMagneticFlux<Storage, TargetUnit>>(self)
     }
@@ -15965,7 +16786,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for InverseMagneticFlux<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: InverseMagneticFluxUnit,
+    Unit: InverseMagneticFluxUnit + InverseMagneticFluxInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InverseMagneticFluxUnit,
 {
     type Output = InverseMagneticFlux<Storage, TargetUnit>;
@@ -16034,9 +16855,23 @@ impl<Storage> QuantityForStorage<Storage> for per_Wb {
     }
 }
 
+/// Sealed unit-family marker trait for `InverseMagneticFluxDensity`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InverseMagneticFluxDensityUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait InverseMagneticFluxDensityInfallibleUnitPath<TargetUnit, Storage>:
+    InverseMagneticFluxDensityUnit
+{
+}
+
 impl InverseMagneticFluxDensityUnit for per_T {}
+
+impl InverseMagneticFluxDensityInfallibleUnitPath<per_T, f32> for per_T {}
+
+impl InverseMagneticFluxDensityInfallibleUnitPath<per_T, f64> for per_T {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -16154,6 +16989,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> InverseMagneticFluxDensity<Storage, TargetUnit>
     where
         TargetUnit: InverseMagneticFluxDensityUnit,
+        Unit: InverseMagneticFluxDensityInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, InverseMagneticFluxDensity<Storage, TargetUnit>>(
             self,
@@ -16208,7 +17044,8 @@ impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit>
     for InverseMagneticFluxDensity<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: InverseMagneticFluxDensityUnit,
+    Unit: InverseMagneticFluxDensityUnit
+        + InverseMagneticFluxDensityInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InverseMagneticFluxDensityUnit,
 {
     type Output = InverseMagneticFluxDensity<Storage, TargetUnit>;
@@ -16281,9 +17118,20 @@ impl<Storage> QuantityForStorage<Storage> for per_T {
     }
 }
 
+/// Sealed unit-family marker trait for `InverseVoltage`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InverseVoltageUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait InverseVoltageInfallibleUnitPath<TargetUnit, Storage>: InverseVoltageUnit {}
+
 impl InverseVoltageUnit for per_V {}
+
+impl InverseVoltageInfallibleUnitPath<per_V, f32> for per_V {}
+
+impl InverseVoltageInfallibleUnitPath<per_V, f64> for per_V {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -16401,6 +17249,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> InverseVoltage<Storage, TargetUnit>
     where
         TargetUnit: InverseVoltageUnit,
+        Unit: InverseVoltageInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, InverseVoltage<Storage, TargetUnit>>(self)
     }
@@ -16447,7 +17296,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for InverseVoltage<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: InverseVoltageUnit,
+    Unit: InverseVoltageUnit + InverseVoltageInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InverseVoltageUnit,
 {
     type Output = InverseVoltage<Storage, TargetUnit>;
@@ -16514,9 +17363,20 @@ impl<Storage> QuantityForStorage<Storage> for per_V {
     }
 }
 
+/// Sealed unit-family marker trait for `LuminousFlux`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait LuminousFluxUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait LuminousFluxInfallibleUnitPath<TargetUnit, Storage>: LuminousFluxUnit {}
+
 impl LuminousFluxUnit for lm {}
+
+impl LuminousFluxInfallibleUnitPath<lm, f32> for lm {}
+
+impl LuminousFluxInfallibleUnitPath<lm, f64> for lm {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -16634,6 +17494,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> LuminousFlux<Storage, TargetUnit>
     where
         TargetUnit: LuminousFluxUnit,
+        Unit: LuminousFluxInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, LuminousFlux<Storage, TargetUnit>>(self)
     }
@@ -16680,7 +17541,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for LuminousFlux<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: LuminousFluxUnit,
+    Unit: LuminousFluxUnit + LuminousFluxInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: LuminousFluxUnit,
 {
     type Output = LuminousFlux<Storage, TargetUnit>;
@@ -16747,9 +17608,20 @@ impl<Storage> QuantityForStorage<Storage> for lm {
     }
 }
 
+/// Sealed unit-family marker trait for `MagneticFlux`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait MagneticFluxUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait MagneticFluxInfallibleUnitPath<TargetUnit, Storage>: MagneticFluxUnit {}
+
 impl MagneticFluxUnit for Wb {}
+
+impl MagneticFluxInfallibleUnitPath<Wb, f32> for Wb {}
+
+impl MagneticFluxInfallibleUnitPath<Wb, f64> for Wb {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -16867,6 +17739,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> MagneticFlux<Storage, TargetUnit>
     where
         TargetUnit: MagneticFluxUnit,
+        Unit: MagneticFluxInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, MagneticFlux<Storage, TargetUnit>>(self)
     }
@@ -16913,7 +17786,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for MagneticFlux<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: MagneticFluxUnit,
+    Unit: MagneticFluxUnit + MagneticFluxInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: MagneticFluxUnit,
 {
     type Output = MagneticFlux<Storage, TargetUnit>;
@@ -16980,9 +17853,23 @@ impl<Storage> QuantityForStorage<Storage> for Wb {
     }
 }
 
+/// Sealed unit-family marker trait for `MagneticFluxDensity`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait MagneticFluxDensityUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait MagneticFluxDensityInfallibleUnitPath<TargetUnit, Storage>:
+    MagneticFluxDensityUnit
+{
+}
+
 impl MagneticFluxDensityUnit for T {}
+
+impl MagneticFluxDensityInfallibleUnitPath<T, f32> for T {}
+
+impl MagneticFluxDensityInfallibleUnitPath<T, f64> for T {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -17100,6 +17987,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> MagneticFluxDensity<Storage, TargetUnit>
     where
         TargetUnit: MagneticFluxDensityUnit,
+        Unit: MagneticFluxDensityInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, MagneticFluxDensity<Storage, TargetUnit>>(self)
     }
@@ -17146,7 +18034,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for MagneticFluxDensity<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: MagneticFluxDensityUnit,
+    Unit: MagneticFluxDensityUnit + MagneticFluxDensityInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: MagneticFluxDensityUnit,
 {
     type Output = MagneticFluxDensity<Storage, TargetUnit>;
@@ -17215,9 +18103,20 @@ impl<Storage> QuantityForStorage<Storage> for T {
     }
 }
 
+/// Sealed unit-family marker trait for `Resistance`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait ResistanceUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait ResistanceInfallibleUnitPath<TargetUnit, Storage>: ResistanceUnit {}
+
 impl ResistanceUnit for Ohm {}
+
+impl ResistanceInfallibleUnitPath<Ohm, f32> for Ohm {}
+
+impl ResistanceInfallibleUnitPath<Ohm, f64> for Ohm {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -17335,6 +18234,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> Resistance<Storage, TargetUnit>
     where
         TargetUnit: ResistanceUnit,
+        Unit: ResistanceInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, Resistance<Storage, TargetUnit>>(self)
     }
@@ -17381,7 +18281,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Resistance<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: ResistanceUnit,
+    Unit: ResistanceUnit + ResistanceInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: ResistanceUnit,
 {
     type Output = Resistance<Storage, TargetUnit>;
@@ -17448,9 +18348,20 @@ impl<Storage> QuantityForStorage<Storage> for Ohm {
     }
 }
 
+/// Sealed unit-family marker trait for `Voltage`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait VoltageUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait VoltageInfallibleUnitPath<TargetUnit, Storage>: VoltageUnit {}
+
 impl VoltageUnit for V {}
+
+impl VoltageInfallibleUnitPath<V, f32> for V {}
+
+impl VoltageInfallibleUnitPath<V, f64> for V {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -17565,6 +18476,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> Voltage<Storage, TargetUnit>
     where
         TargetUnit: VoltageUnit,
+        Unit: VoltageInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, Voltage<Storage, TargetUnit>>(self)
     }
@@ -17611,7 +18523,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Voltage<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: VoltageUnit,
+    Unit: VoltageUnit + VoltageInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: VoltageUnit,
 {
     type Output = Voltage<Storage, TargetUnit>;
@@ -17678,9 +18590,20 @@ impl<Storage> QuantityForStorage<Storage> for V {
     }
 }
 
+/// Sealed unit-family marker trait for `Diopter`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait DiopterUnit: UnitMarker {}
 
+#[doc(hidden)]
+pub trait DiopterInfallibleUnitPath<TargetUnit, Storage>: DiopterUnit {}
+
 impl DiopterUnit for dpt {}
+
+impl DiopterInfallibleUnitPath<dpt, f32> for dpt {}
+
+impl DiopterInfallibleUnitPath<dpt, f64> for dpt {}
 
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -17795,6 +18718,7 @@ where
     pub fn to_unit<TargetUnit>(self) -> Diopter<Storage, TargetUnit>
     where
         TargetUnit: DiopterUnit,
+        Unit: DiopterInfallibleUnitPath<TargetUnit, Storage>,
     {
         convert_same_public_type_infallible::<Self, Diopter<Storage, TargetUnit>>(self)
     }
@@ -17841,7 +18765,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Diopter<Storage, Unit>
 where
     Storage: InfallibleUnitStorage,
-    Unit: DiopterUnit,
+    Unit: DiopterUnit + DiopterInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: DiopterUnit,
 {
     type Output = Diopter<Storage, TargetUnit>;
