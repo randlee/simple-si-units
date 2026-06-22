@@ -30,6 +30,7 @@ def build_summary(catalog: dict) -> dict:
     return {
         "catalog_version": catalog["catalog_version"],
         "bridges": catalog["bridges"],
+        "conversion_policies": catalog["conversion_policies"],
         "dimension_count": len(dimensions),
         "dimensions": [
             {
@@ -763,16 +764,52 @@ def render_generated_conversion_metadata(summary: dict) -> str:
     return "\n".join(lines) + "\n"
 
 
-def expected_storage_failure(source_storage: str, target_storage: str) -> str | None:
-    if source_storage == target_storage:
+def policy_index(summary: dict) -> dict[str, dict[str, object]]:
+    return {
+        policy["policy_id"]: policy for policy in summary["conversion_policies"]["policies"]
+    }
+
+
+def storage_pair_policy_id(path_policy: dict[str, object], source_storage: str, target_storage: str) -> str:
+    for row in path_policy["storage_pair_policies"]:
+        if row["source_storage"] == source_storage and row["target_storage"] == target_storage:
+            return str(row["policy_id"])
+    raise ValueError(f"missing storage pair policy for {source_storage}->{target_storage}")
+
+
+def combine_failure_tags(*fragments: str | None) -> str | None:
+    tags: list[str] = []
+    for fragment in fragments:
+        if fragment is None:
+            continue
+        for token in fragment.split("|"):
+            if token and token not in tags:
+                tags.append(token)
+    if not tags:
         return None
-    if target_storage == "i32":
-        return "Overflow|PrecisionLoss"
-    if source_storage == "i32" and target_storage == "f32":
-        return "PrecisionLoss"
-    if source_storage == "f64" and target_storage == "f32":
-        return "Overflow|PrecisionLoss"
-    return None
+    return "|".join(tags)
+
+
+def resolve_policy(
+    summary: dict,
+    policy_id: str,
+    source_unit: dict[str, object],
+    target_unit: dict[str, object],
+    source_storage: str,
+) -> dict[str, object]:
+    policies = policy_index(summary)
+    policy = policies[policy_id]
+    guard = policy["infallibility_guard"]
+    if guard is None:
+        return policy
+    if guard == "same_storage_float_range":
+        if same_storage_float_path_is_infallible(source_storage, source_unit, target_unit):
+            return policy
+        fallback_policy_id = policy["fallback_policy_id"]
+        if fallback_policy_id is None:
+            raise ValueError(f"guarded policy `{policy_id}` is missing fallback")
+        return policies[fallback_policy_id]
+    raise ValueError(f"unsupported infallibility guard `{guard}`")
 
 
 def storage_bounds(storage: str) -> tuple[float, float]:
@@ -807,6 +844,13 @@ def converted_value(value: float, source_unit: dict[str, object], target_unit: d
 def same_storage_float_path_is_infallible(
     storage: str, source_unit: dict[str, object], target_unit: dict[str, object]
 ) -> bool:
+    # For same-storage float paths we only expose `to_unit` when every source
+    # value is preserved exactly, not merely when the endpoints stay in range.
+    # With the current catalog contract, differing conversion coefficients imply
+    # runtime precision loss for at least some values, so those paths stay
+    # explicitly fallible.
+    if source_unit["conversion"] != target_unit["conversion"]:
+        return False
     lower, upper = storage_bounds(storage)
     target_lower, target_upper = storage_bounds(storage)
     for source_value in (lower, upper):
@@ -819,31 +863,38 @@ def same_storage_float_path_is_infallible(
 
 
 def classify_same_public_type_path(
+    summary: dict,
     source_storage: str,
     target_storage: str,
     source_unit: dict[str, object],
     target_unit: dict[str, object],
 ) -> tuple[str, str | None]:
+    path_policy = summary["conversion_policies"]["same_public_type"]
     if source_unit["unit_code_id"] == target_unit["unit_code_id"] and source_storage == target_storage:
-        return ("identity", None)
+        policy = resolve_policy(
+            summary,
+            str(path_policy["identity_policy_id"]),
+            source_unit,
+            target_unit,
+            source_storage,
+        )
+        return (str(policy["api_surface"]), policy["expected_failure"])
 
-    if source_storage == target_storage == "f64":
-        return ("to_unit", None)
-
-    if source_storage == target_storage == "f32":
-        if same_storage_float_path_is_infallible(source_storage, source_unit, target_unit):
-            return ("to_unit", None)
-        return ("try_to_unit", "Overflow")
-
-    expected_failure = expected_storage_failure(source_storage, target_storage)
-    if expected_failure is None and source_storage == target_storage == "i32":
-        expected_failure = "Overflow|PrecisionLoss"
-    return ("try_to_unit", expected_failure)
+    policy = resolve_policy(
+        summary,
+        storage_pair_policy_id(path_policy, source_storage, target_storage),
+        source_unit,
+        target_unit,
+        source_storage,
+    )
+    return (str(policy["api_surface"]), policy["expected_failure"])
 
 
 def conversion_coverage_rows(summary: dict) -> list[dict[str, str | None]]:
     dimensions = summary["dimensions"]
     rows: list[dict[str, str | None]] = []
+    same_canonical_policy = summary["conversion_policies"]["same_canonical_dimension"]
+    reciprocal_policy = summary["conversion_policies"]["reciprocal_bridge"]
 
     for dimension in dimensions:
         source_public_type = dimension["public_type"]
@@ -854,6 +905,7 @@ def conversion_coverage_rows(summary: dict) -> list[dict[str, str | None]]:
                 for source_unit in units:
                     for target_unit in units:
                         api_surface, expected_failure = classify_same_public_type_path(
+                            summary,
                             source_storage,
                             target_storage,
                             source_unit,
@@ -889,20 +941,27 @@ def conversion_coverage_rows(summary: dict) -> list[dict[str, str | None]]:
                 target_storages = [scalar_storage_name(type_id) for type_id in target_dimension["scalar"]["type_ids"]]
                 for source_storage in source_storages:
                     for target_storage in target_storages:
-                        for source_unit in [unit["unit_code_id"] for unit in source_dimension["units"]]:
-                            for target_unit in [unit["unit_code_id"] for unit in target_dimension["units"]]:
+                        for source_unit in source_dimension["units"]:
+                            for target_unit in target_dimension["units"]:
+                                policy = resolve_policy(
+                                    summary,
+                                    storage_pair_policy_id(same_canonical_policy, source_storage, target_storage),
+                                    source_unit,
+                                    target_unit,
+                                    source_storage,
+                                )
                                 rows.append(
                                     {
                                         "source_public_type": source_dimension["public_type"],
-                                        "source_unit": source_unit,
+                                        "source_unit": source_unit["unit_code_id"],
                                         "source_storage": source_storage,
                                         "target_public_type": target_dimension["public_type"],
-                                        "target_unit": target_unit,
+                                        "target_unit": target_unit["unit_code_id"],
                                         "target_storage": target_storage,
                                         "path_kind": "same_canonical_dimension",
-                                        "api_surface": "try_to_quantity",
+                                        "api_surface": same_canonical_policy["api_surface"],
                                         "support_status": "supported",
-                                        "expected_failure": expected_storage_failure(source_storage, target_storage),
+                                        "expected_failure": policy["expected_failure"],
                                     }
                                 )
 
@@ -915,22 +974,30 @@ def conversion_coverage_rows(summary: dict) -> list[dict[str, str | None]]:
             target_storages = [scalar_storage_name(type_id) for type_id in target_dimension["scalar"]["type_ids"]]
             for source_storage in source_storages:
                 for target_storage in target_storages:
-                    for source_unit in [unit["unit_code_id"] for unit in source_dimension["units"]]:
-                        for target_unit in [unit["unit_code_id"] for unit in target_dimension["units"]]:
-                            failure = expected_storage_failure(source_storage, target_storage)
-                            expected_failure = "DomainViolation" if failure is None else f"DomainViolation|{failure}"
+                    for source_unit in source_dimension["units"]:
+                        for target_unit in target_dimension["units"]:
+                            policy = resolve_policy(
+                                summary,
+                                storage_pair_policy_id(reciprocal_policy, source_storage, target_storage),
+                                source_unit,
+                                target_unit,
+                                source_storage,
+                            )
                             rows.append(
                                 {
                                     "source_public_type": source_dimension["public_type"],
-                                    "source_unit": source_unit,
+                                    "source_unit": source_unit["unit_code_id"],
                                     "source_storage": source_storage,
                                     "target_public_type": target_dimension["public_type"],
-                                    "target_unit": target_unit,
+                                    "target_unit": target_unit["unit_code_id"],
                                     "target_storage": target_storage,
                                     "path_kind": "reciprocal_bridge",
-                                    "api_surface": "to_reciprocal_quantity",
+                                    "api_surface": reciprocal_policy["api_surface"],
                                     "support_status": "supported",
-                                    "expected_failure": expected_failure,
+                                    "expected_failure": combine_failure_tags(
+                                        "|".join(reciprocal_policy.get("base_failures", [])),
+                                        policy["expected_failure"],
+                                    ),
                                 }
                             )
 

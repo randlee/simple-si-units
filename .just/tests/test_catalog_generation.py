@@ -39,6 +39,18 @@ class CatalogGenerationTests(unittest.TestCase):
                 }
             ],
         )
+        self.assertEqual(
+            summary["conversion_policies"]["same_public_type"]["identity_policy_id"],
+            "identity",
+        )
+        self.assertEqual(
+            summary["conversion_policies"]["same_canonical_dimension"]["api_surface"],
+            "try_to_quantity",
+        )
+        self.assertEqual(
+            summary["conversion_policies"]["reciprocal_bridge"]["api_surface"],
+            "to_reciprocal_quantity",
+        )
         dimensions = {dimension["dimension_id"]: dimension for dimension in summary["dimensions"]}
         self.assertIn("distance", dimensions)
         self.assertIn("distance_i32", dimensions["distance"]["scalar"]["type_ids"])
@@ -157,7 +169,20 @@ class CatalogGenerationTests(unittest.TestCase):
             and row["target_storage"] == "f32"
         )
         self.assertEqual(ft_to_mm_f32["api_surface"], "try_to_unit")
-        self.assertEqual(ft_to_mm_f32["expected_failure"], "Overflow")
+        self.assertEqual(ft_to_mm_f32["expected_failure"], "Overflow|PrecisionLoss")
+
+        mm_to_m_f32 = next(
+            row
+            for row in coverage
+            if row["source_public_type"] == "Distance"
+            and row["source_unit"] == "mm"
+            and row["source_storage"] == "f32"
+            and row["target_public_type"] == "Distance"
+            and row["target_unit"] == "m"
+            and row["target_storage"] == "f32"
+        )
+        self.assertEqual(mm_to_m_f32["api_surface"], "try_to_unit")
+        self.assertEqual(mm_to_m_f32["expected_failure"], "Overflow|PrecisionLoss")
 
         mm_to_m_f64 = next(
             row
@@ -171,6 +196,32 @@ class CatalogGenerationTests(unittest.TestCase):
         )
         self.assertEqual(mm_to_m_f64["api_surface"], "to_unit")
         self.assertIsNone(mm_to_m_f64["expected_failure"])
+
+        kelvin_to_celsius_f32 = next(
+            row
+            for row in coverage
+            if row["source_public_type"] == "Temperature"
+            and row["source_unit"] == "K"
+            and row["source_storage"] == "f32"
+            and row["target_public_type"] == "Temperature"
+            and row["target_unit"] == "degC"
+            and row["target_storage"] == "f32"
+        )
+        self.assertEqual(kelvin_to_celsius_f32["api_surface"], "try_to_unit")
+        self.assertEqual(kelvin_to_celsius_f32["expected_failure"], "Overflow|PrecisionLoss")
+
+        reciprocal_widen = next(
+            row
+            for row in coverage
+            if row["source_public_type"] == "Distance"
+            and row["source_unit"] == "m"
+            and row["source_storage"] == "f32"
+            and row["target_public_type"] == "Diopter"
+            and row["target_unit"] == "dpt"
+            and row["target_storage"] == "f64"
+        )
+        self.assertEqual(reciprocal_widen["api_surface"], "to_reciprocal_quantity")
+        self.assertEqual(reciprocal_widen["expected_failure"], "DomainViolation")
 
     def test_generated_public_types_reject_invalid_marker_names(self) -> None:
         summary = json.loads((ROOT / "catalog" / "generated" / "units-catalog-summary.json").read_text(encoding="utf-8"))

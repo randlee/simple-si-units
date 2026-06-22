@@ -2076,13 +2076,7 @@ impl DistanceInfallibleUnitPath<ft, i32> for ft {}
 
 impl DistanceInfallibleUnitPath<mm, f32> for mm {}
 
-impl DistanceInfallibleUnitPath<m, f32> for mm {}
-
-impl DistanceInfallibleUnitPath<ft, f32> for mm {}
-
 impl DistanceInfallibleUnitPath<m, f32> for m {}
-
-impl DistanceInfallibleUnitPath<m, f32> for ft {}
 
 impl DistanceInfallibleUnitPath<ft, f32> for ft {}
 
@@ -4251,15 +4245,7 @@ impl TemperatureUnit for degF {}
 
 impl TemperatureInfallibleUnitPath<K, f32> for K {}
 
-impl TemperatureInfallibleUnitPath<degC, f32> for K {}
-
-impl TemperatureInfallibleUnitPath<K, f32> for degC {}
-
 impl TemperatureInfallibleUnitPath<degC, f32> for degC {}
-
-impl TemperatureInfallibleUnitPath<K, f32> for degF {}
-
-impl TemperatureInfallibleUnitPath<degC, f32> for degF {}
 
 impl TemperatureInfallibleUnitPath<degF, f32> for degF {}
 
@@ -4533,8 +4519,6 @@ impl TimeInfallibleUnitPath<s, i32> for s {}
 impl TimeInfallibleUnitPath<ms, i32> for ms {}
 
 impl TimeInfallibleUnitPath<s, f32> for s {}
-
-impl TimeInfallibleUnitPath<s, f32> for ms {}
 
 impl TimeInfallibleUnitPath<ms, f32> for ms {}
 

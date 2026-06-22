@@ -34,6 +34,13 @@
 //!
 //! let _ = Distance::ft(1.0_f32).to_unit::<mm>();
 //! ```
+//!
+//! ```compile_fail
+//! use units_x::conversion::ConvertUnit;
+//! use units_x::{Distance, m, mm};
+//!
+//! let _ = Distance::mm(1.0_f32).to_unit::<m>();
+//! ```
 
 pub mod conversion;
 pub mod ffi_contract;

@@ -540,8 +540,8 @@
     "target_unit": "mm"
   },
   {
-    "api_surface": "to_unit",
-    "expected_failure": null,
+    "api_surface": "try_to_unit",
+    "expected_failure": "Overflow|PrecisionLoss",
     "path_kind": "same_public_type",
     "source_public_type": "Distance",
     "source_storage": "f32",
@@ -552,8 +552,8 @@
     "target_unit": "m"
   },
   {
-    "api_surface": "to_unit",
-    "expected_failure": null,
+    "api_surface": "try_to_unit",
+    "expected_failure": "Overflow|PrecisionLoss",
     "path_kind": "same_public_type",
     "source_public_type": "Distance",
     "source_storage": "f32",
@@ -565,7 +565,7 @@
   },
   {
     "api_surface": "try_to_unit",
-    "expected_failure": "Overflow",
+    "expected_failure": "Overflow|PrecisionLoss",
     "path_kind": "same_public_type",
     "source_public_type": "Distance",
     "source_storage": "f32",
@@ -589,7 +589,7 @@
   },
   {
     "api_surface": "try_to_unit",
-    "expected_failure": "Overflow",
+    "expected_failure": "Overflow|PrecisionLoss",
     "path_kind": "same_public_type",
     "source_public_type": "Distance",
     "source_storage": "f32",
@@ -601,7 +601,7 @@
   },
   {
     "api_surface": "try_to_unit",
-    "expected_failure": "Overflow",
+    "expected_failure": "Overflow|PrecisionLoss",
     "path_kind": "same_public_type",
     "source_public_type": "Distance",
     "source_storage": "f32",
@@ -612,8 +612,8 @@
     "target_unit": "mm"
   },
   {
-    "api_surface": "to_unit",
-    "expected_failure": null,
+    "api_surface": "try_to_unit",
+    "expected_failure": "Overflow|PrecisionLoss",
     "path_kind": "same_public_type",
     "source_public_type": "Distance",
     "source_storage": "f32",
@@ -1464,8 +1464,8 @@
     "target_unit": "K"
   },
   {
-    "api_surface": "to_unit",
-    "expected_failure": null,
+    "api_surface": "try_to_unit",
+    "expected_failure": "Overflow|PrecisionLoss",
     "path_kind": "same_public_type",
     "source_public_type": "Temperature",
     "source_storage": "f32",
@@ -1477,7 +1477,7 @@
   },
   {
     "api_surface": "try_to_unit",
-    "expected_failure": "Overflow",
+    "expected_failure": "Overflow|PrecisionLoss",
     "path_kind": "same_public_type",
     "source_public_type": "Temperature",
     "source_storage": "f32",
@@ -1488,8 +1488,8 @@
     "target_unit": "degF"
   },
   {
-    "api_surface": "to_unit",
-    "expected_failure": null,
+    "api_surface": "try_to_unit",
+    "expected_failure": "Overflow|PrecisionLoss",
     "path_kind": "same_public_type",
     "source_public_type": "Temperature",
     "source_storage": "f32",
@@ -1513,7 +1513,7 @@
   },
   {
     "api_surface": "try_to_unit",
-    "expected_failure": "Overflow",
+    "expected_failure": "Overflow|PrecisionLoss",
     "path_kind": "same_public_type",
     "source_public_type": "Temperature",
     "source_storage": "f32",
@@ -1524,8 +1524,8 @@
     "target_unit": "degF"
   },
   {
-    "api_surface": "to_unit",
-    "expected_failure": null,
+    "api_surface": "try_to_unit",
+    "expected_failure": "Overflow|PrecisionLoss",
     "path_kind": "same_public_type",
     "source_public_type": "Temperature",
     "source_storage": "f32",
@@ -1536,8 +1536,8 @@
     "target_unit": "K"
   },
   {
-    "api_surface": "to_unit",
-    "expected_failure": null,
+    "api_surface": "try_to_unit",
+    "expected_failure": "Overflow|PrecisionLoss",
     "path_kind": "same_public_type",
     "source_public_type": "Temperature",
     "source_storage": "f32",
@@ -2089,7 +2089,7 @@
   },
   {
     "api_surface": "try_to_unit",
-    "expected_failure": "Overflow",
+    "expected_failure": "Overflow|PrecisionLoss",
     "path_kind": "same_public_type",
     "source_public_type": "Time",
     "source_storage": "f32",
@@ -2100,8 +2100,8 @@
     "target_unit": "ms"
   },
   {
-    "api_surface": "to_unit",
-    "expected_failure": null,
+    "api_surface": "try_to_unit",
+    "expected_failure": "Overflow|PrecisionLoss",
     "path_kind": "same_public_type",
     "source_public_type": "Time",
     "source_storage": "f32",
@@ -5173,7 +5173,7 @@
   },
   {
     "api_surface": "to_reciprocal_quantity",
-    "expected_failure": "DomainViolation",
+    "expected_failure": "DomainViolation|Overflow|PrecisionLoss",
     "path_kind": "reciprocal_bridge",
     "source_public_type": "Distance",
     "source_storage": "f32",
@@ -5197,7 +5197,7 @@
   },
   {
     "api_surface": "to_reciprocal_quantity",
-    "expected_failure": "DomainViolation",
+    "expected_failure": "DomainViolation|Overflow|PrecisionLoss",
     "path_kind": "reciprocal_bridge",
     "source_public_type": "Distance",
     "source_storage": "f32",
@@ -5353,7 +5353,7 @@
   },
   {
     "api_surface": "to_reciprocal_quantity",
-    "expected_failure": "DomainViolation",
+    "expected_failure": "DomainViolation|Overflow|PrecisionLoss",
     "path_kind": "reciprocal_bridge",
     "source_public_type": "Diopter",
     "source_storage": "f32",
@@ -5377,7 +5377,7 @@
   },
   {
     "api_surface": "to_reciprocal_quantity",
-    "expected_failure": "DomainViolation",
+    "expected_failure": "DomainViolation|Overflow|PrecisionLoss",
     "path_kind": "reciprocal_bridge",
     "source_public_type": "Diopter",
     "source_storage": "f32",

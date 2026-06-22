@@ -361,6 +361,17 @@ mod tests {
     }
 
     #[test]
+    fn same_storage_f32_precision_loss_is_rejected() {
+        let error = Distance::mm(1.0_f32).try_to_unit::<m, f32>().unwrap_err();
+        assert_eq!(error, ConversionError::PrecisionLoss);
+
+        let temperature_error = Temperature::K(0.0_f32)
+            .try_to_unit::<degC, f32>()
+            .unwrap_err();
+        assert_eq!(temperature_error, ConversionError::PrecisionLoss);
+    }
+
+    #[test]
     fn same_canonical_dimension_cross_public_type_conversion_works() {
         let inverse = Diopter::dpt(2.0_f64)
             .try_to_quantity::<InverseDistance<f64, per_m>, per_m, f64>()
