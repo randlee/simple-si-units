@@ -358,8 +358,8 @@
         "operator": {
           "type": "string",
           "enum": [
-            "velocity_from_time",
-            "acceleration_from_time"
+            "velocity_from_distance_and_time",
+            "acceleration_from_velocity_and_time"
           ]
         },
         "lhs_public_type": {

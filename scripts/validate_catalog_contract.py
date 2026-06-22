@@ -386,8 +386,14 @@ def validate_arithmetic_policies(payload: Any, dimensions: list[Any]) -> None:
         require(
             compute_bridge_specs
             == {
-                ("velocity_from_time", "Distance", "Time", "Velocity", "mps"),
-                ("acceleration_from_time", "Velocity", "Time", "Acceleration", "mps2"),
+                ("velocity_from_distance_and_time", "Distance", "Time", "Velocity", "mps"),
+                (
+                    "acceleration_from_velocity_and_time",
+                    "Velocity",
+                    "Time",
+                    "Acceleration",
+                    "mps2",
+                ),
             },
             "arithmetic_policies.compute_bridges must match the Phase B compute-bridge contract",
             "arithmetic_policies.compute_bridges",

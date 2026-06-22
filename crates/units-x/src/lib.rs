@@ -51,7 +51,7 @@ pub mod model;
 
 pub use arithmetic::{
     acceleration_from_velocity_and_time, velocity_from_distance_and_time, ArithmeticError,
-    CheckedScalarArithmeticOps, ComputeError,
+    ComputeError,
 };
 pub use bulk::{QuantityArray, QuantityBuffer, QuantityBufferView};
 pub use conversion::{

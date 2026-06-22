@@ -5,7 +5,7 @@
         "api_mode": "checked",
         "expected_failure": "ZeroDuration",
         "lhs_public_type": "Distance",
-        "operator": "velocity_from_time",
+        "operator": "velocity_from_distance_and_time",
         "result_public_type": "Velocity",
         "result_storage": "f64",
         "result_unit_code_id": "mps",
@@ -15,7 +15,7 @@
         "api_mode": "checked",
         "expected_failure": "ZeroDuration",
         "lhs_public_type": "Velocity",
-        "operator": "acceleration_from_time",
+        "operator": "acceleration_from_velocity_and_time",
         "result_public_type": "Acceleration",
         "result_storage": "f64",
         "result_unit_code_id": "mps2",
@@ -44,7 +44,7 @@
           "api_mode": "infallible",
           "expected_failure": null,
           "lhs_storage": "i32",
-          "result_storage": "f32",
+          "result_storage": "f64",
           "rhs_storage": "f32"
         },
         {
@@ -58,14 +58,14 @@
           "api_mode": "infallible",
           "expected_failure": null,
           "lhs_storage": "f32",
-          "result_storage": "f32",
+          "result_storage": "f64",
           "rhs_storage": "i32"
         },
         {
           "api_mode": "infallible",
           "expected_failure": null,
           "lhs_storage": "f32",
-          "result_storage": "f32",
+          "result_storage": "f64",
           "rhs_storage": "f32"
         },
         {
@@ -118,7 +118,7 @@
           "expected_failure": null,
           "lhs_storage": "i32",
           "operator": "mul",
-          "result_storage": "f32",
+          "result_storage": "f64",
           "rhs_storage": "f32"
         },
         {
@@ -136,7 +136,7 @@
           "expected_failure": null,
           "lhs_storage": "f32",
           "operator": "mul",
-          "result_storage": "f32",
+          "result_storage": "f64",
           "rhs_storage": "i32"
         },
         {
@@ -145,7 +145,7 @@
           "expected_failure": null,
           "lhs_storage": "f32",
           "operator": "mul",
-          "result_storage": "f32",
+          "result_storage": "f64",
           "rhs_storage": "f32"
         },
         {

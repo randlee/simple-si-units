@@ -60,7 +60,7 @@ class CatalogGenerationTests(unittest.TestCase):
         )
         self.assertEqual(
             summary["arithmetic_policies"]["compute_bridges"][1]["operator"],
-            "acceleration_from_time",
+            "acceleration_from_velocity_and_time",
         )
         dimensions = {dimension["dimension_id"]: dimension for dimension in summary["dimensions"]}
         self.assertIn("distance", dimensions)
@@ -292,7 +292,7 @@ class CatalogGenerationTests(unittest.TestCase):
             row
             for row in support
             if row["lhs_public_type"] == "Distance"
-            and row["operator"] == "velocity_from_time"
+            and row["operator"] == "velocity_from_distance_and_time"
             and row["rhs_public_type"] == "Time"
         )
         self.assertEqual(compute_bridge["result_unit_code_id"], "mps")
