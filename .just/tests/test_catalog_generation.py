@@ -14,18 +14,34 @@ from generate_catalog_artifacts import build_summary
 from generate_catalog_artifacts import bulk_support_rows
 from generate_catalog_artifacts import conversion_coverage_rows
 from generate_catalog_artifacts import expected_outputs
+from generate_catalog_artifacts import marker_name_for_unit
 from generate_catalog_artifacts import render_generated_arithmetic_impls
 from generate_catalog_artifacts import render_generated_bulk_storage_impls
 from generate_catalog_artifacts import render_generated_conversion_metadata
 from generate_catalog_artifacts import render_generated_ffi_types
 from generate_catalog_artifacts import render_generated_public_types
 from generate_catalog_artifacts import render_rust_module
+from generate_catalog_artifacts import scalar_storage_name
 
 
 class CatalogGenerationTests(unittest.TestCase):
     def derived_inventory(self) -> set[str]:
         inventory = (ROOT / "docs" / "crates" / "units-x" / "in-scope-type-inventory.md").read_text(encoding="utf-8")
         return set(re.findall(r"^- \[[ x]\] `([^`]+)`$", inventory, flags=re.MULTILINE))
+
+    def expected_unit_storage_impls(self, summary: dict) -> tuple[set[str], set[str]]:
+        scalar_impls: set[str] = set()
+        bulk_impls: set[str] = set()
+        for dimension in summary["dimensions"]:
+            storages = [scalar_storage_name(type_id) for type_id in dimension["scalar"]["type_ids"]]
+            for unit in dimension["units"]:
+                marker = marker_name_for_unit(unit)
+                for storage in storages:
+                    scalar_impls.add(f"impl private::SealedScalarStorageFor<{marker}> for {storage} {{}}")
+                    scalar_impls.add(f"impl ScalarStorageFor<{marker}> for {storage} {{}}")
+                    bulk_impls.add(f"impl private::SealedBulkStorageFor<{marker}> for {storage} {{}}")
+                    bulk_impls.add(f"impl BulkStorageFor<{marker}> for {storage} {{}}")
+        return scalar_impls, bulk_impls
 
     def test_bootstrap_catalog_exists(self) -> None:
         catalog = json.loads((ROOT / "catalog" / "units-catalog.json").read_text(encoding="utf-8"))
@@ -134,7 +150,14 @@ class CatalogGenerationTests(unittest.TestCase):
 
     def test_generated_public_types_are_catalog_owned(self) -> None:
         catalog = json.loads((ROOT / "catalog" / "units-catalog.json").read_text(encoding="utf-8"))
-        rendered = render_generated_public_types(build_summary(catalog))
+        summary = build_summary(catalog)
+        rendered = render_generated_public_types(summary)
+        expected_scalar_impls, _ = self.expected_unit_storage_impls(summary)
+        actual_scalar_impls = {
+            line.strip()
+            for line in rendered.splitlines()
+            if line.startswith("impl private::SealedScalarStorageFor<") or line.startswith("impl ScalarStorageFor<")
+        }
 
         self.assertIn("pub struct mm;", rendered)
         self.assertIn("pub struct degC;", rendered)
@@ -144,8 +167,12 @@ class CatalogGenerationTests(unittest.TestCase):
         self.assertIn("TryConvertQuantity", rendered)
         self.assertIn("pub trait DistanceUnit: UnitMarker {}", rendered)
         self.assertIn("impl DistanceUnit for mm {}", rendered)
+        self.assertEqual(actual_scalar_impls, expected_scalar_impls)
         self.assertIn("pub struct Distance<Storage = f64, Unit = m>", rendered)
+        self.assertIn("impl<Storage> Distance<Storage, mm>", rendered)
+        self.assertIn("Storage: ScalarStorageFor<mm>,", rendered)
         self.assertIn("pub const fn mm(storage: Storage) -> Self {", rendered)
+        self.assertIn("impl<Storage> QuantityForStorage<Storage> for mm", rendered)
         self.assertIn("pub struct Diopter<Storage = f64, Unit = dpt>", rendered)
         self.assertIn("const CANONICAL_DIMENSION_ID: &'static str = \"inverse_distance\";", rendered)
 
@@ -180,11 +207,16 @@ class CatalogGenerationTests(unittest.TestCase):
 
     def test_generated_bulk_storage_impls_are_catalog_owned(self) -> None:
         catalog = json.loads((ROOT / "catalog" / "units-catalog.json").read_text(encoding="utf-8"))
-        rendered = render_generated_bulk_storage_impls(build_summary(catalog))
+        summary = build_summary(catalog)
+        rendered = render_generated_bulk_storage_impls(summary)
+        _, expected_bulk_impls = self.expected_unit_storage_impls(summary)
+        actual_bulk_impls = {
+            line.strip()
+            for line in rendered.splitlines()
+            if line.startswith("impl private::SealedBulkStorageFor<") or line.startswith("impl BulkStorageFor<")
+        }
 
-        self.assertIn("impl BulkStorageFor<mm> for i32 {}", rendered)
-        self.assertIn("impl BulkStorageFor<mol> for f32 {}", rendered)
-        self.assertNotIn("impl BulkStorageFor<mol> for i32 {}", rendered)
+        self.assertEqual(actual_bulk_impls, expected_bulk_impls)
 
     def test_conversion_coverage_report_is_complete_for_b2_scope(self) -> None:
         summary = build_summary(json.loads((ROOT / "catalog" / "units-catalog.json").read_text(encoding="utf-8")))

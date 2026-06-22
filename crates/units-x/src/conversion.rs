@@ -1,7 +1,7 @@
 use crate::generated::conversion_metadata::{
     CatalogConversionKind, GeneratedUnitConversionMetadata, BRIDGES, UNIT_CONVERSIONS,
 };
-use crate::model::{Quantity, QuantityType, UnitMarker};
+use crate::model::{Quantity, QuantityType, ScalarStorageFor, UnitMarker};
 
 mod private {
     pub trait SealedValueStorage {}
@@ -115,12 +115,12 @@ impl ValueStorage for i32 {
     }
 }
 
-pub fn convert_same_public_type_infallible<SourceQuantity, TargetQuantity>(
+pub(crate) fn convert_same_public_type_infallible<SourceQuantity, TargetQuantity>(
     source: SourceQuantity,
 ) -> TargetQuantity
 where
     SourceQuantity: QuantityType,
-    SourceQuantity::Storage: InfallibleUnitStorage,
+    SourceQuantity::Storage: InfallibleUnitStorage + ScalarStorageFor<TargetQuantity::Unit>,
     TargetQuantity: QuantityType<Storage = SourceQuantity::Storage>,
 {
     let source_meta = lookup_unit_metadata(
@@ -271,7 +271,7 @@ mod tests {
     use crate::generated::public_types::{
         degC, degF, dpt, ft, m, mm, per_m, s, Diopter, Distance, InverseDistance, Temperature, Time,
     };
-    use crate::model::{private, Quantity, QuantityType, UnitMarker};
+    use crate::model::{private, Quantity, QuantityType, ScalarStorageFor, UnitMarker};
 
     fn assert_close(left: f64, right: f64) {
         assert!((left - right).abs() < 1.0e-9, "left={left}, right={right}");
@@ -289,6 +289,9 @@ mod tests {
         const CANONICAL_DIMENSION_ID: &'static str = "distance";
         const PUBLIC_TYPE: &'static str = "Distance";
     }
+
+    impl private::SealedScalarStorageFor<FakeUnit> for f64 {}
+    impl ScalarStorageFor<FakeUnit> for f64 {}
 
     #[derive(Copy, Clone, Debug, PartialEq)]
     struct FakeQuantity {

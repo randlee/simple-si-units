@@ -3,6 +3,14 @@ use core::marker::PhantomData;
 pub(crate) mod private {
     pub trait SealedUnit {}
     pub trait SealedQuantityType {}
+    pub trait SealedScalarStorageFor<Unit> {}
+}
+
+#[doc(hidden)]
+pub trait ScalarStorageFor<Unit>: private::SealedScalarStorageFor<Unit>
+where
+    Unit: UnitMarker,
+{
 }
 
 #[repr(transparent)]
@@ -10,6 +18,7 @@ pub(crate) mod private {
 pub struct Quantity<Unit, Storage>
 where
     Unit: UnitMarker,
+    Storage: ScalarStorageFor<Unit>,
 {
     pub storage: Storage,
     _unit: PhantomData<Unit>,
@@ -18,6 +27,7 @@ where
 impl<Unit, Storage> Quantity<Unit, Storage>
 where
     Unit: UnitMarker,
+    Storage: ScalarStorageFor<Unit>,
 {
     pub const fn new(storage: Storage) -> Self {
         Self {
@@ -52,8 +62,8 @@ pub trait UnitMarker: private::SealedUnit + Copy + 'static {
 }
 
 pub trait QuantityType: private::SealedQuantityType + Sized {
-    type Storage;
     type Unit: UnitMarker;
+    type Storage: ScalarStorageFor<Self::Unit>;
 
     const PUBLIC_TYPE: &'static str;
     const DIMENSION_ID: &'static str;
