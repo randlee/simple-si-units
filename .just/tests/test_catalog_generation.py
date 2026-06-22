@@ -165,6 +165,7 @@ class CatalogGenerationTests(unittest.TestCase):
 
         self.assertIn("impl_add_sub_rule!(i32, i32 => i32, checked);", rendered)
         self.assertIn("impl_mul_rule!(f32, f64 => f64, infallible);", rendered)
+        self.assertIn("impl_div_rule!(i32, f32 => f64, infallible);", rendered)
         self.assertIn("impl_same_public_type_arithmetic!(Distance, DistanceUnit);", rendered)
         self.assertIn(
             "impl_cross_public_add_sub!(Diopter, DiopterUnit, InverseDistance, InverseDistanceUnit);",

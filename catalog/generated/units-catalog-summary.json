@@ -199,7 +199,7 @@
           "expected_failure": null,
           "lhs_storage": "i32",
           "operator": "div",
-          "result_storage": "f32",
+          "result_storage": "f64",
           "rhs_storage": "f32"
         },
         {
@@ -217,7 +217,7 @@
           "expected_failure": null,
           "lhs_storage": "f32",
           "operator": "div",
-          "result_storage": "f32",
+          "result_storage": "f64",
           "rhs_storage": "i32"
         },
         {

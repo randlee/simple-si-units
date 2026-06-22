@@ -398,7 +398,7 @@
           "operator": "div",
           "lhs_storage": "i32",
           "rhs_storage": "f32",
-          "result_storage": "f32",
+          "result_storage": "f64",
           "api_mode": "infallible",
           "exact_division_policy": "not-applicable",
           "expected_failure": null
@@ -416,7 +416,7 @@
           "operator": "div",
           "lhs_storage": "f32",
           "rhs_storage": "i32",
-          "result_storage": "f32",
+          "result_storage": "f64",
           "api_mode": "infallible",
           "exact_division_policy": "not-applicable",
           "expected_failure": null

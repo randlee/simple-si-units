@@ -169,6 +169,7 @@ Representative promotion-matrix rows:
 |---|---|---|---|---|---|---|---|
 | `i32` | `add` | `f64` | `f64` | `scalar_arithmetic` | `infallible` | not-applicable | none |
 | `i32` | `mul` | `f32` | `f64` | `scalar_arithmetic` | `infallible` | not-applicable | none |
+| `i32` | `div` | `f32` | `f64` | `scalar_arithmetic` | `infallible` | not-applicable | none |
 | `i32` | `add` | `i32` | `i32` | `scalar_arithmetic` | `checked` | not-applicable | `Overflow` when result exceeds `i32` |
 | `i32` | `mul` | `i32` | `i32` | `scalar_arithmetic` | `checked` | not-applicable | `Overflow` when result exceeds `i32` |
 | `i32` | `div` | `i32` | `i32` | `scalar_arithmetic` | `checked` | exact-only | `DivisionByZero` when rhs == 0; `NonIntegralDivision` when remainder != 0 |
@@ -245,6 +246,8 @@ Result-identity rule:
 - floating-point scalar division follows Rust IEEE-754 semantics for supported
   infallible paths; `ArithmeticError::DivisionByZero` is reserved for checked
   integer-division paths
+- mixed `i32`/`f32` scalar division widens to `f64` in V1 so the infallible
+  path does not silently round large integer payloads through `f32`
 - any cross-public-type pair not named supported in
   `catalog/generated/phase-b-arithmetic-support.json` is intentionally
   unsupported in V1
