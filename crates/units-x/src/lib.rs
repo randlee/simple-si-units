@@ -26,4 +26,13 @@ mod tests {
             .iter()
             .any(|dimension| dimension.dimension_id.as_str() == "distance"));
     }
+
+    #[test]
+    fn diopter_maps_to_inverse_distance_in_generated_metadata() {
+        let diopter = catalog_metadata::DIMENSIONS
+            .iter()
+            .find(|dimension| dimension.public_type == "Diopter")
+            .expect("Diopter metadata row must exist");
+        assert_eq!(diopter.canonical_dimension_id.as_str(), "inverse_distance");
+    }
 }

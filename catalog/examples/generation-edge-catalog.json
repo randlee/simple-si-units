@@ -4,6 +4,7 @@
   "dimensions": [
     {
       "dimension_id": "distance",
+      "canonical_dimension_id": "distance",
       "family": "base",
       "public_type": "Distance",
       "base_unit_code_id": "m",
@@ -93,7 +94,98 @@
       ]
     },
     {
+      "dimension_id": "inverse_distance",
+      "canonical_dimension_id": "inverse_distance",
+      "family": "base",
+      "public_type": "InverseDistance",
+      "base_unit_code_id": "per_m",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "inverse_distance_f32",
+            "inverse_distance_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "inverse_distance{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "inverse_distance_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "inverse_distance",
+        "binary_schema_id": "units-x.inverse_distance.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "per_m",
+          "unit_symbol": "1/m",
+          "display_name": "reciprocal meter",
+          "binary_unit_id": "inverse_distance.per_m",
+          "reserved_word_alias": null,
+          "aliases": [
+            "per meter"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "diopter",
+      "canonical_dimension_id": "inverse_distance",
+      "family": "base",
+      "public_type": "Diopter",
+      "base_unit_code_id": "dpt",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "diopter_f32",
+            "diopter_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "diopter{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "diopter_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "diopter",
+        "binary_schema_id": "units-x.diopter.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "dpt",
+          "unit_symbol": "D",
+          "display_name": "diopter",
+          "binary_unit_id": "diopter.dpt",
+          "reserved_word_alias": null,
+          "aliases": [
+            "diopters"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
       "dimension_id": "temperature",
+      "canonical_dimension_id": "temperature",
       "family": "base",
       "public_type": "Temperature",
       "base_unit_code_id": "K",

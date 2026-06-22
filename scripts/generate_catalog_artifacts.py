@@ -7,6 +7,8 @@ from pathlib import Path
 import subprocess
 import sys
 
+from validate_catalog_contract import is_valid_rust_identifier
+
 
 ROOT = Path(__file__).resolve().parent.parent
 CATALOG_PATH = ROOT / "catalog" / "units-catalog.json"
@@ -27,6 +29,7 @@ def build_summary(catalog: dict) -> dict:
         "dimensions": [
             {
                 "dimension_id": dimension["dimension_id"],
+                "canonical_dimension_id": dimension["canonical_dimension_id"],
                 "public_type": dimension["public_type"],
                 "scalar": dimension["json_forms"]["scalar"],
                 "small_array": dimension["json_forms"]["small_array"],
@@ -134,6 +137,7 @@ def render_rust_module(summary: dict) -> str:
         "#[derive(Copy, Clone, Debug, PartialEq, Eq)]",
         "pub struct CatalogDimensionMetadata {",
         "    pub dimension_id: CatalogDimensionId,",
+        "    pub canonical_dimension_id: CatalogDimensionId,",
         "    pub public_type: &'static str,",
         "    pub scalar_type_ids: &'static [CatalogTypeId],",
         "    pub scalar_encoding: CatalogJsonEncoding,",
@@ -159,6 +163,7 @@ def render_rust_module(summary: dict) -> str:
             [
                 "    CatalogDimensionMetadata {",
                 f"        dimension_id: CatalogDimensionId({rust_string_literal(dimension['dimension_id'])}),",
+                f"        canonical_dimension_id: CatalogDimensionId({rust_string_literal(dimension['canonical_dimension_id'])}),",
                 f"        public_type: {rust_string_literal(dimension['public_type'])},",
                 f"        scalar_type_ids: &[{scalar_literals}],",
                 f"        scalar_encoding: CatalogJsonEncoding::{scalar_encoding},",
@@ -187,7 +192,7 @@ def rust_encoding_variant(value: str) -> str:
 def rust_identifier(value: str) -> str:
     pieces: list[str] = []
     for char in value:
-        if char.isalnum() or char == "_":
+        if char.isascii() and (char.isalnum() or char == "_"):
             pieces.append(char)
         else:
             pieces.append("_")
@@ -205,9 +210,12 @@ def render_generated_ffi_types(summary: dict) -> str:
     seen_markers: set[str] = set()
     for dimension in dimensions:
         for unit in dimension["units"]:
-            marker = rust_identifier(unit["reserved_word_alias"] or unit["unit_code_id"])
+            marker_source = unit["reserved_word_alias"] or unit["unit_code_id"]
+            if not is_valid_rust_identifier(marker_source):
+                raise ValueError(f"invalid generated Rust marker: {marker_source}")
+            marker = rust_identifier(marker_source)
             if marker in seen_markers:
-                continue
+                raise ValueError(f"duplicate generated Rust marker: {marker}")
             seen_markers.add(marker)
             unit_markers.extend(
                 [
@@ -217,11 +225,11 @@ def render_generated_ffi_types(summary: dict) -> str:
                 ]
             )
 
-    distance = next(dimension for dimension in dimensions if dimension["dimension_id"] == "distance")
-    exemplar_unit = next(unit for unit in distance["units"] if unit["unit_code_id"] == "mm")
-    scalar_type_id = next(value for value in distance["scalar"]["type_ids"] if value.endswith("_i32"))
+    exemplar_dimension = next(dimension for dimension in dimensions if dimension["dimension_id"] == "distance")
+    exemplar_unit = next(unit for unit in exemplar_dimension["units"] if unit["unit_code_id"] == "mm")
+    scalar_type_id = next(value for value in exemplar_dimension["scalar"]["type_ids"] if value.endswith("_i32"))
     storage = scalar_type_id.rsplit("_", maxsplit=1)[1]
-    abi_name_stem = distance["abi_name_stem"]
+    abi_name_stem = exemplar_dimension["abi_name_stem"]
     unit_code_id = exemplar_unit["unit_code_id"]
     type_name = rust_identifier(f"{abi_name_stem}_{unit_code_id}_{storage}")
     field_name = rust_identifier(f"value_{unit_code_id}")

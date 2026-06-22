@@ -41,6 +41,7 @@ The catalog root contains:
 Each `dimensions[]` entry owns:
 
 - `dimension_id`
+- `canonical_dimension_id`
 - `family`
 - `public_type`
 - `base_unit_code_id`
@@ -76,12 +77,26 @@ The catalog deliberately separates naming layers:
 - `binary_unit_id` is the schema-safe wire id such as `distance.mm` or
   `temperature.degC`.
 - `abi.abi_name_stem` is the dimension-level input to ABI type/function naming.
+- `canonical_dimension_id` is the underlying physical-dimension identity used
+  when a public quantity maps to another canonical dimension, for example
+  `Diopter -> inverse_distance`.
 
 This allows the required distinctions:
 
 - `mm` versus `Mm`
 - `C` versus `degC`
 - `F` versus `degF`
+- first-class public naming versus shared canonical-dimension identity
+
+Rust-generation safety rule:
+
+- `reserved_word_alias` is required whenever `unit_code_id` would not be a
+  legal Rust identifier or would collide with a reserved Rust keyword.
+- legal Rust identifiers for generated markers are treated as ASCII-only for
+  the Phase A generator surface.
+- the resolved Rust marker name must be unique across the full catalog.
+- Phase A keeps a documented FFI bootstrap exemplar on `distance.mm` with an
+  `_i32` scalar type id so the scaffolded ABI sample remains deterministic.
 
 ## Conversion Rules
 

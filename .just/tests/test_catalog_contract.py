@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import json
+import subprocess
 import sys
+import tempfile
 from pathlib import Path
 import unittest
 
@@ -27,6 +29,7 @@ class CatalogContractTests(unittest.TestCase):
             schema["$defs"]["dimension"]["properties"]["family"]["enum"],
             ["base", "geometry", "mechanical", "electromagnetic"],
         )
+        self.assertIn("canonical_dimension_id", schema["$defs"]["dimension"]["required"])
         conversion = schema["$defs"]["conversion"]
         self.assertIn("allOf", conversion)
         unit_required = set(schema["$defs"]["unit"]["required"])
@@ -59,6 +62,7 @@ class CatalogContractTests(unittest.TestCase):
             unit["unit_code_id"]: unit
             for unit in dimensions["temperature"]["units"]
         }
+        self.assertEqual(dimensions["diopter"]["canonical_dimension_id"], "inverse_distance")
         self.assertEqual(temperature_units["degC"]["unit_symbol"], "C")
         self.assertEqual(temperature_units["degF"]["unit_symbol"], "F")
         self.assertEqual(temperature_units["degC"]["conversion"]["kind"], "affine")
@@ -71,12 +75,53 @@ class CatalogContractTests(unittest.TestCase):
             validate_catalog(sample)
 
         sample = self.load_sample()
-        sample["dimensions"][1]["units"][1]["conversion"]["offset_to_base"] = None
+        temperature = next(dimension for dimension in sample["dimensions"] if dimension["dimension_id"] == "temperature")
+        temperature["units"][1]["conversion"]["offset_to_base"] = None
         with self.assertRaises(ValidationError):
             validate_catalog(sample)
 
         sample = self.load_sample()
         sample["dimensions"][0]["base_unit_code_id"] = "km"
+        with self.assertRaises(ValidationError):
+            validate_catalog(sample)
+
+        sample = self.load_sample()
+        sample["dimensions"][0]["json_forms"]["scalar"]["type_ids"] = ["distance_f32", "distance_f64"]
+        with self.assertRaises(ValidationError):
+            validate_catalog(sample)
+
+        sample = self.load_sample()
+        sample["dimensions"][2]["canonical_dimension_id"] = "no_such_dimension"
+        with self.assertRaises(ValidationError):
+            validate_catalog(sample)
+
+        sample = self.load_sample()
+        sample["dimensions"][0]["units"][0]["unit_code_id"] = "type"
+        sample["dimensions"][0]["units"][0]["binary_unit_id"] = "distance.type"
+        sample["dimensions"][0]["units"][0]["reserved_word_alias"] = None
+        with self.assertRaises(ValidationError):
+            validate_catalog(sample)
+
+        sample = self.load_sample()
+        sample["dimensions"][0]["units"][0]["unit_code_id"] = "m²"
+        sample["dimensions"][0]["units"][0]["binary_unit_id"] = "distance.m²"
+        sample["dimensions"][0]["units"][0]["reserved_word_alias"] = None
+        with self.assertRaises(ValidationError):
+            validate_catalog(sample)
+
+        sample = self.load_sample()
+        sample["dimensions"][0]["units"][0]["unit_code_id"] = "m-m"
+        sample["dimensions"][0]["units"][0]["binary_unit_id"] = "distance.m-m"
+        sample["dimensions"][0]["units"][0]["reserved_word_alias"] = "m_m"
+        sample["dimensions"][0]["units"][1]["unit_code_id"] = "m/m"
+        sample["dimensions"][0]["units"][1]["binary_unit_id"] = "distance.m/m"
+        sample["dimensions"][0]["units"][1]["reserved_word_alias"] = "m_m"
+        with self.assertRaises(ValidationError):
+            validate_catalog(sample)
+
+        sample = self.load_sample()
+        sample["dimensions"][0]["units"][0]["reserved_word_alias"] = "shared_marker"
+        sample["dimensions"][1]["units"][0]["reserved_word_alias"] = "shared_marker"
         with self.assertRaises(ValidationError):
             validate_catalog(sample)
 
@@ -102,7 +147,7 @@ class CatalogContractTests(unittest.TestCase):
             validate_catalog(sample)
 
         sample = self.load_sample()
-        sample["dimensions"][1]["units"][0]["display_name"] = "   "
+        sample["dimensions"][2]["units"][0]["display_name"] = "   "
         with self.assertRaises(ValidationError):
             validate_catalog(sample)
 
@@ -120,6 +165,33 @@ class CatalogContractTests(unittest.TestCase):
         sample["dimensions"][0]["units"][0]["binary_unit_id"] = "distance.centimeter"
         with self.assertRaises(ValidationError):
             validate_catalog(sample)
+
+    def test_validator_cli_emits_machine_readable_envelope_for_file_errors(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="units-x-catalog-cli-") as tmpdir:
+            tmpdir_path = Path(tmpdir)
+            missing = tmpdir_path / "missing.json"
+            malformed = tmpdir_path / "malformed.json"
+            malformed.write_text("{ invalid json", encoding="utf-8", newline="\n")
+
+            missing_run = subprocess.run(
+                [sys.executable, str(ROOT / "scripts" / "validate_catalog_contract.py"), str(missing)],
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+            self.assertEqual(missing_run.returncode, 1)
+            missing_envelope = json.loads(missing_run.stderr.strip())
+            self.assertEqual(missing_envelope["code"], "catalog_read_failed")
+
+            malformed_run = subprocess.run(
+                [sys.executable, str(ROOT / "scripts" / "validate_catalog_contract.py"), str(malformed)],
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+            self.assertEqual(malformed_run.returncode, 1)
+            malformed_envelope = json.loads(malformed_run.stderr.strip())
+            self.assertEqual(malformed_envelope["code"], "catalog_json_decode_failed")
 
 
 if __name__ == "__main__":

@@ -242,6 +242,7 @@
       "additionalProperties": false,
       "required": [
         "dimension_id",
+        "canonical_dimension_id",
         "family",
         "public_type",
         "base_unit_code_id",
@@ -251,6 +252,9 @@
       ],
       "properties": {
         "dimension_id": {
+          "$ref": "#/$defs/non_blank_string"
+        },
+        "canonical_dimension_id": {
           "$ref": "#/$defs/non_blank_string"
         },
         "family": {

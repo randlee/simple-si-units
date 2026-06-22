@@ -50,6 +50,7 @@ Establish the new repository layout, deliverable crate location, workspace struc
 | [Sprint A-3](sprint-A-3-abi-and-unit-naming-contract.md) | Lock ABI, naming, layout, and symbol rules | Sprint A-1 | Sprint A-4 | `Done` |
 | [Sprint A-4](sprint-A-4-ci-baseline-and-dev-workflow.md) | Create CI, test, and local workflow baseline | Sprint A-1 | Sprints A-2, A-3 | `Done` |
 | [Sprint A-5](sprint-A-5-catalog-and-generation-bootstrap.md) | Build the first catalog-driven generation baseline | Sprints A-2, A-3, A-4 | None | `Done` |
+| [Sprint A-6](sprint-A-6-phase-end-fixes.md) | Close phase-end QA gaps in catalog inventory coverage and reciprocal-dimension modeling | Sprint A-5 | None | `Done` |
 
 ## Phase Completion Criteria
 
