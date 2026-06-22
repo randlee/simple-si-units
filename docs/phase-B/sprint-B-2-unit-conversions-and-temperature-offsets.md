@@ -13,33 +13,45 @@ Implement conversion logic for multiplicative units and MVP offset-temperature u
 - REQ-UX-006
 - REQ-UX-007
 - REQ-UX-008
+- REQ-UX-009
 - REQ-UX-011
 - REQ-UX-035
 - REQ-UX-041
 - REQ-UX-025
 - REQ-UX-026
+- REQ-UX-029
+- REQ-UX-034
+- REQ-UX-040
 - REQ-UX-042
 - REQ-UX-043
 - REQ-UX-044
 - REQ-UX-045
+- REQ-UX-046
 - ADR-UX-003
 - ADR-UX-010
+- ADR-UX-017
 - ADR-UX-019
 - ADR-UX-020
 - ADR-UX-021
+- ADR-UX-022
 
 ## Deliverables
 
 1. Multiplicative conversions for the in-scope `base`, `geometry`, `mechanical`, and `electromagnetic` unit families
 2. Celsius, Fahrenheit, and Kelvin conversion logic
-3. Domain-reciprocal conversion logic for first-class reciprocal quantities, including `Diopter`
-4. Reuse or adaptation of reference conversion-factor sources
+3. Canonical-dimension-driven compatibility for reciprocal public quantities,
+   including `Diopter`
+4. Catalog-owned conversion tables and runtime metadata derived from
+   `catalog/units-catalog.json`
 5. Conversion-coverage completion for every item in
    [docs/crates/units-x/in-scope-type-inventory.md](/Volumes/Extreme%20Pro/github/simple-si-units/docs/crates/units-x/in-scope-type-inventory.md)
+6. Reference-source parity fixtures or tests that validate the catalog without
+   replacing it as the source of truth
 
 ## Dependencies
 
-- Sprints A-2, A-3, B-1
+- Sprint A-6
+- Sprint B-1
 
 ## Unblocks
 
@@ -49,8 +61,12 @@ Implement conversion logic for multiplicative units and MVP offset-temperature u
 
 1. Multiplicative conversions are implemented for the in-scope unit families.
 2. Celsius, Fahrenheit, and Kelvin conversion rules are explicit and correct.
-3. Domain-reciprocal public units such as `Diopter` are explicitly supported.
-4. Reference conversion-factor sources are either reused or mapped with no undocumented divergence.
+3. Same-canonical-dimension public units such as `Diopter` and
+   `InverseDistance` are explicitly supported without collapsing their public
+   identities.
+4. Conversion execution derives from the committed catalog and generated
+   metadata; reference-project sources may validate parity but may not become a
+   second runtime source of truth.
 5. The crate can represent the planned distance examples `mm`, `m`, and `ft`.
 6. Potentially lossy storage conversions are routed through explicit fallible APIs.
 7. The sprint cannot close while any in-scope type lacks a documented conversion status in the checklist for this sprint.
@@ -61,8 +77,11 @@ Implement conversion logic for multiplicative units and MVP offset-temperature u
 2. Dedicated temperature tests cover negative values and offset-sensitive values such as freezing/boiling points.
 3. Mixed conversion tests verify symbol/id handling does not confuse `C`/`degC`.
 4. Dedicated tests cover a lossy integer-backed conversion failure path.
-5. Dedicated tests cover `Distance::m(0.5) <-> Diopter::dpt(2.0)`.
-6. Validation records conversion support status for every item in the
+5. Dedicated tests cover `Distance::m(0.5) <-> Diopter::dpt(2.0)` and prove the
+   compatibility path is keyed by `canonical_dimension_id`.
+6. Regeneration or parity validation confirms conversion tables and unit ids are
+   derived from the catalog without manual drift.
+7. Validation records conversion support status for every item in the
    authoritative inventory.
 
 ## Edge / Corner Conditions Requiring Dedicated Tests
@@ -71,6 +90,7 @@ Implement conversion logic for multiplicative units and MVP offset-temperature u
 2. Negative temperature values.
 3. Cross-system conversion between imperial and metric units.
 4. Reciprocal-domain conversions between distance and diopter.
+5. Distinct public types that share a `canonical_dimension_id`.
 
 ## Code Samples / Contracts
 
@@ -97,4 +117,5 @@ assert!(lossy.is_err());
 The authoritative checklist for this sprint is
 [docs/crates/units-x/in-scope-type-inventory.md](/Volumes/Extreme%20Pro/github/simple-si-units/docs/crates/units-x/in-scope-type-inventory.md).
 This sprint does not close until every item in that checklist has explicit
-conversion support status implemented and tested.
+conversion support status implemented and tested, and every conversion path is
+owned by catalog-derived metadata.

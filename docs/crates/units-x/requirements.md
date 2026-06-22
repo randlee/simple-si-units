@@ -220,6 +220,12 @@ The MVP is not required to reproduce the full legacy operator graph for every
 possible unit combination, but it must support conversion, serialization, and
 documented derived operations across the in-scope unit families.
 
+#### REQ-UX-046
+
+Operational compatibility for conversion and same-dimension arithmetic must be
+keyed by catalog `canonical_dimension_id` rather than inferred only from public
+type names.
+
 #### REQ-UX-026
 
 The crate must support the derivative chain from distance to velocity to

@@ -2,8 +2,8 @@
 
 ## Goal
 
-Implement the primary quantity container and the full in-scope public quantity
-type set.
+Implement the primary scalar quantity container and the full in-scope public
+scalar type set.
 
 ## Status
 
@@ -15,13 +15,20 @@ type set.
 - REQ-UX-002
 - REQ-UX-003
 - REQ-UX-005
+- REQ-UX-009
 - REQ-UX-011
+- REQ-UX-029
+- REQ-UX-034
+- REQ-UX-040
 - REQ-UX-042
 - REQ-UX-043
 - REQ-UX-044
 - NFR-UX-001
 - NFR-UX-002
+- NFR-UX-013
 - ADR-UX-002
+- ADR-UX-003
+- ADR-UX-017
 - ADR-UX-020
 - ADR-UX-021
 
@@ -33,10 +40,12 @@ type set.
    [docs/crates/units-x/in-scope-type-inventory.md](/Volumes/Extreme%20Pro/github/simple-si-units/docs/crates/units-x/in-scope-type-inventory.md)
 4. `Diopter` public type mapped to the inverse-distance dimension
 5. Size assertions demonstrating zero additional storage overhead
+6. Catalog-metadata-backed type/unit generation or parity checks for the public
+   scalar surface
 
 ## Dependencies
 
-- Sprint A-3
+- Sprint A-6
 
 ## Unblocks
 
@@ -50,6 +59,8 @@ type set.
 3. Scalar wrappers demonstrate zero additional storage overhead over their payloads.
 4. Unit marker naming rules are enforceable in code for case-sensitive units.
 5. No in-scope type may be omitted from closure on the basis that its family was “implicitly covered.”
+6. The implemented public scalar surface is generated from or mechanically
+   checked against the catalog-derived metadata committed in Phase A.
 
 ## Required Validation
 
@@ -58,6 +69,8 @@ type set.
 3. Dedicated type-level tests cover `degC` and `degF` naming.
 4. Validation references the authoritative inventory and confirms every
    in-scope type in this sprint is implemented exactly once.
+5. Regeneration or parity validation confirms the implemented public scalar
+   surface matches the generated catalog metadata without drift.
 
 ## Code Samples / Contracts
 
@@ -75,4 +88,5 @@ pub struct Quantity<Unit, Storage> {
 
 The authoritative checklist for this sprint is
 [docs/crates/units-x/in-scope-type-inventory.md](/Volumes/Extreme%20Pro/github/simple-si-units/docs/crates/units-x/in-scope-type-inventory.md).
-This sprint does not close until every item in that checklist is implemented.
+This sprint does not close until every item in that checklist is implemented
+and the resulting scalar surface matches the catalog-derived metadata exactly.

@@ -17,21 +17,29 @@ Define and implement scalar arithmetic, mixed-unit addition/subtraction, and bri
 - REQ-UX-027
 - REQ-UX-028
 - REQ-UX-041
+- REQ-UX-046
 - REQ-UX-045
 - ADR-UX-013
 - ADR-UX-019
+- ADR-UX-022
 
 ## Deliverables
 
-1. Same-dimension scalar multiply-by-scalar and divide-by-scalar semantics across the authoritative inventory
-2. Same-dimension mixed-unit addition and subtraction with left-hand-unit preservation across the authoritative inventory
+1. Same-canonical-dimension scalar multiply-by-scalar and divide-by-scalar
+   semantics across the authoritative inventory
+2. Same-canonical-dimension mixed-unit addition and subtraction with
+   left-hand-unit preservation across the authoritative inventory
 3. Deterministic mixed-storage promotion rules
 4. Canonical compute bridges for velocity and acceleration calculations
 5. Explicit non-support boundary for the legacy cross-dimension operator graph beyond the documented bridge set
+6. Inventory-backed arithmetic support matrix covering every in-scope public
+   type, with any exclusions named explicitly
 
 ## Dependencies
 
-- Sprints A-2, A-3, B-1
+- Sprint A-6
+- Sprint B-1
+- Sprint B-2
 
 ## Unblocks
 
@@ -43,11 +51,15 @@ Define and implement scalar arithmetic, mixed-unit addition/subtraction, and bri
 
 ## Acceptance Criteria
 
-1. Multiplication and division by unitless scalars preserve the declared unit across the authoritative inventory.
-2. Mixed-unit addition and subtraction use one documented unit-preservation rule across the authoritative inventory.
+1. Multiplication and division by unitless scalars preserve the declared unit
+   across the authoritative inventory.
+2. Mixed-unit addition and subtraction use one documented unit-preservation rule
+   across the authoritative inventory.
 3. Mixed-storage arithmetic uses one documented promotion rule.
 4. Derived calculations are limited to the documented canonical set rather than open-ended combinatorial result typing.
 5. The sprint explicitly states which arithmetic is intentionally unsupported in V1 instead of leaving gaps for inference.
+6. Same-dimension compatibility is determined from catalog
+   `canonical_dimension_id`, not from public-type-name equality.
 
 ## Required Validation
 
@@ -55,7 +67,11 @@ Define and implement scalar arithmetic, mixed-unit addition/subtraction, and bri
 2. Dedicated tests cover mixed integer/float storage promotion.
 3. Dedicated tests cover the distance -> velocity -> acceleration chain.
 4. Dedicated tests cover zero-duration rejection or failure behavior for velocity/acceleration compute bridges.
-5. Validation covers at least one same-dimension arithmetic case from `base`, `geometry`, `mechanical`, `electromagnetic`, and `Diopter`.
+5. Dedicated tests cover arithmetic compatibility between `InverseDistance` and
+   `Diopter` while preserving their distinct public identities.
+6. Validation produces an inventory-backed arithmetic support matrix or
+   generated checklist for every in-scope public type, and any exclusions are
+   documented by exact type name before sprint closure.
 
 ## Code Samples / Contracts
 

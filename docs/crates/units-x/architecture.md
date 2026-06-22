@@ -460,6 +460,29 @@ an abstract inverse-distance placeholder.
 - conversion logic must bridge reciprocal-domain units and their related base
   dimensions where applicable
 
+### ADR-UX-022: Dimension Compatibility Keys From Canonical Catalog Identity
+
+#### Decision
+
+Conversion compatibility and same-dimension arithmetic compatibility must be
+determined from catalog `canonical_dimension_id`, not inferred from the public
+quantity type name alone.
+
+#### Rationale
+
+The catalog now allows public type identity to differ from the underlying
+physical dimension identity. `Diopter` and `InverseDistance` are the concrete
+proof case: they must remain distinct public types while still participating in
+the same canonical compatibility domain.
+
+#### Consequences
+
+- generators must expose canonical-dimension metadata to runtime and test code
+- arithmetic and conversion dispatch must consult canonical compatibility rather
+  than re-deriving physics from type names
+- validation must include at least one public-type pair whose public names
+  differ but whose `canonical_dimension_id` matches
+
 ## Traceability Notes
 
 - Functional and non-functional requirements for this crate are defined in
