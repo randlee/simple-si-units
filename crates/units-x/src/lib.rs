@@ -41,8 +41,17 @@
 //!
 //! let _ = Distance::mm(1.0_f32).to_unit::<m>();
 //! ```
+//!
+//! ```compile_fail
+//! use units_x::{mol, QuantityArray, QuantityBuffer, QuantityBufferView};
+//!
+//! fn takes_array(_: QuantityArray<mol, i32, 2>) {}
+//! fn takes_buffer(_: QuantityBuffer<mol, i32>) {}
+//! fn takes_view(_: QuantityBufferView<'static, mol, i32>) {}
+//! ```
 
 pub mod arithmetic;
+mod bulk;
 pub mod conversion;
 pub mod ffi_contract;
 pub mod generated;
@@ -52,6 +61,7 @@ pub use arithmetic::{
     acceleration_from_velocity_and_time, velocity_from_distance_and_time, ArithmeticError,
     ComputeError,
 };
+pub use bulk::{QuantityArray, QuantityBuffer, QuantityBufferView};
 pub use conversion::{
     ConversionError, ConvertUnit, ReciprocalBridge, TryConvertQuantity, TryConvertUnit,
 };

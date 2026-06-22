@@ -11,9 +11,11 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 from generate_catalog_artifacts import arithmetic_support_rows
 from generate_catalog_artifacts import build_summary
+from generate_catalog_artifacts import bulk_support_rows
 from generate_catalog_artifacts import conversion_coverage_rows
 from generate_catalog_artifacts import expected_outputs
 from generate_catalog_artifacts import render_generated_arithmetic_impls
+from generate_catalog_artifacts import render_generated_bulk_storage_impls
 from generate_catalog_artifacts import render_generated_conversion_metadata
 from generate_catalog_artifacts import render_generated_ffi_types
 from generate_catalog_artifacts import render_generated_public_types
@@ -176,6 +178,14 @@ class CatalogGenerationTests(unittest.TestCase):
         )
         self.assertNotIn("impl_same_public_type_arithmetic!(Temperature, TemperatureUnit);", rendered)
 
+    def test_generated_bulk_storage_impls_are_catalog_owned(self) -> None:
+        catalog = json.loads((ROOT / "catalog" / "units-catalog.json").read_text(encoding="utf-8"))
+        rendered = render_generated_bulk_storage_impls(build_summary(catalog))
+
+        self.assertIn("impl BulkStorageFor<mm> for i32 {}", rendered)
+        self.assertIn("impl BulkStorageFor<mol> for f32 {}", rendered)
+        self.assertNotIn("impl BulkStorageFor<mol> for i32 {}", rendered)
+
     def test_conversion_coverage_report_is_complete_for_b2_scope(self) -> None:
         summary = build_summary(json.loads((ROOT / "catalog" / "units-catalog.json").read_text(encoding="utf-8")))
         coverage = conversion_coverage_rows(summary)
@@ -320,6 +330,68 @@ class CatalogGenerationTests(unittest.TestCase):
             and row["path_family"] == "cross_dimension_non_support"
         )
         self.assertEqual(unsupported_mul["api_mode"], "absent")
+
+    def test_bulk_support_report_is_complete_for_b4_scope(self) -> None:
+        summary = build_summary(json.loads((ROOT / "catalog" / "units-catalog.json").read_text(encoding="utf-8")))
+        support = bulk_support_rows(summary)
+        expected_rows = []
+        review_arities = {0, 2, 3, 4}
+        for dimension in summary["dimensions"]:
+            storages = {type_id.rsplit("_", maxsplit=1)[1] for type_id in dimension["scalar"]["type_ids"]}
+            for storage in storages:
+                for arity in review_arities:
+                    expected_rows.append(
+                        (
+                            dimension["public_type"],
+                            "array",
+                            arity,
+                            storage,
+                            dimension["small_array"]["encoding"],
+                            "supported",
+                            None,
+                        )
+                    )
+                expected_rows.append(
+                    (
+                        dimension["public_type"],
+                        "buffer",
+                        None,
+                        storage,
+                        dimension["buffer"]["encoding"],
+                        "supported",
+                        None,
+                    )
+                )
+                expected_rows.append(
+                    (
+                        dimension["public_type"],
+                        "buffer_view",
+                        None,
+                        storage,
+                        dimension["buffer"]["encoding"],
+                        "supported",
+                        None,
+                    )
+                )
+
+        actual_rows = [
+            (
+                row["public_type"],
+                row["bulk_kind"],
+                row["array_arity"],
+                row["storage"],
+                row["classification"],
+                row["support_status"],
+                row["expected_failure"],
+            )
+            for row in support
+        ]
+        self.assertEqual(len(actual_rows), len(set(actual_rows)))
+        self.assertEqual(set(actual_rows), set(expected_rows))
+        self.assertEqual(
+            {row["array_arity"] for row in support if row["bulk_kind"] == "array"},
+            review_arities,
+        )
 
     def test_generated_public_types_reject_invalid_marker_names(self) -> None:
         summary = json.loads((ROOT / "catalog" / "generated" / "units-catalog-summary.json").read_text(encoding="utf-8"))
