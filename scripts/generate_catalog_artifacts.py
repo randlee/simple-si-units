@@ -835,6 +835,10 @@ def render_generated_arithmetic_impls(summary: dict) -> str:
         lines.append(
             f"impl_cross_public_add_sub!({left_public_type}, {left_public_type}Unit, {right_public_type}, {right_public_type}Unit);"
         )
+        if left_public_type != right_public_type:
+            lines.append(
+                f"impl_cross_public_add_sub!({right_public_type}, {right_public_type}Unit, {left_public_type}, {left_public_type}Unit);"
+            )
     lines.append("")
     return "\n".join(lines)
 

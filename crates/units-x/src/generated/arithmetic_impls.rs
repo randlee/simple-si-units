@@ -167,3 +167,4 @@ impl_same_public_type_arithmetic!(Diopter, DiopterUnit);
 impl_scalar_arithmetic!(Diopter, DiopterUnit);
 
 impl_cross_public_add_sub!(Diopter, DiopterUnit, InverseDistance, InverseDistanceUnit);
+impl_cross_public_add_sub!(InverseDistance, InverseDistanceUnit, Diopter, DiopterUnit);
