@@ -21,31 +21,22 @@ pub enum ComputeError {
     ZeroDuration,
 }
 
-pub trait CheckedScalarArithmeticOps<Rhs = Self> {
-    type Output;
-
-    fn checked_add(self, rhs: Rhs) -> Result<Self::Output, ArithmeticError>;
-    fn checked_sub(self, rhs: Rhs) -> Result<Self::Output, ArithmeticError>;
-    fn checked_mul(self, rhs: Rhs) -> Result<Self::Output, ArithmeticError>;
-    fn checked_div(self, rhs: Rhs) -> Result<Self::Output, ArithmeticError>;
-}
-
 pub trait AddSubPromotion<Rhs>: private::SealedArithmeticPolicy + ValueStorage {
-    type Output: CheckedArithmeticStorage;
+    type Output: ValueStorage;
 }
 
 pub trait InfallibleAddSubPromotion<Rhs>: AddSubPromotion<Rhs> {}
 pub trait CheckedAddSubPromotion<Rhs>: AddSubPromotion<Rhs> {}
 
 pub trait MulPromotion<Rhs>: private::SealedArithmeticPolicy + ValueStorage {
-    type Output: CheckedArithmeticStorage;
+    type Output: ValueStorage;
 }
 
 pub trait InfallibleMulPromotion<Rhs>: MulPromotion<Rhs> {}
 pub trait CheckedMulPromotion<Rhs>: MulPromotion<Rhs> {}
 
 pub trait DivPromotion<Rhs>: private::SealedArithmeticPolicy + ValueStorage {
-    type Output: CheckedArithmeticStorage;
+    type Output: ValueStorage;
 }
 
 pub trait InfallibleDivPromotion<Rhs>: DivPromotion<Rhs> {}
@@ -59,7 +50,7 @@ pub trait CheckedArithmeticStorage: private::SealedArithmeticStorage + ValueStor
     fn checked_div(lhs: Self, rhs: Self) -> Result<Self, ArithmeticError>;
 }
 
-pub trait InfallibleArithmeticStorage: CheckedArithmeticStorage {
+pub trait InfallibleArithmeticStorage: ValueStorage {
     fn from_f64_for_arithmetic_infallible(value: f64) -> Self;
     fn add_infallible(lhs: Self, rhs: Self) -> Self;
     fn sub_infallible(lhs: Self, rhs: Self) -> Self;
@@ -74,28 +65,6 @@ impl private::SealedArithmeticPolicy for i32 {}
 impl private::SealedArithmeticStorage for f64 {}
 impl private::SealedArithmeticStorage for f32 {}
 impl private::SealedArithmeticStorage for i32 {}
-
-impl CheckedArithmeticStorage for f64 {
-    fn from_f64_for_arithmetic(value: f64) -> Result<Self, ArithmeticError> {
-        Ok(value)
-    }
-
-    fn checked_add(lhs: Self, rhs: Self) -> Result<Self, ArithmeticError> {
-        Ok(lhs + rhs)
-    }
-
-    fn checked_sub(lhs: Self, rhs: Self) -> Result<Self, ArithmeticError> {
-        Ok(lhs - rhs)
-    }
-
-    fn checked_mul(lhs: Self, rhs: Self) -> Result<Self, ArithmeticError> {
-        Ok(lhs * rhs)
-    }
-
-    fn checked_div(lhs: Self, rhs: Self) -> Result<Self, ArithmeticError> {
-        Ok(lhs / rhs)
-    }
-}
 
 impl InfallibleArithmeticStorage for f64 {
     fn from_f64_for_arithmetic_infallible(value: f64) -> Self {
@@ -116,34 +85,6 @@ impl InfallibleArithmeticStorage for f64 {
 
     fn div_infallible(lhs: Self, rhs: Self) -> Self {
         lhs / rhs
-    }
-}
-
-impl CheckedArithmeticStorage for f32 {
-    fn from_f64_for_arithmetic(value: f64) -> Result<Self, ArithmeticError> {
-        if value.is_nan() {
-            return Ok(f32::NAN);
-        }
-        if !value.is_finite() || value > f32::MAX as f64 || value < f32::MIN as f64 {
-            return Err(ArithmeticError::Overflow);
-        }
-        Ok(value as f32)
-    }
-
-    fn checked_add(lhs: Self, rhs: Self) -> Result<Self, ArithmeticError> {
-        Ok(lhs + rhs)
-    }
-
-    fn checked_sub(lhs: Self, rhs: Self) -> Result<Self, ArithmeticError> {
-        Ok(lhs - rhs)
-    }
-
-    fn checked_mul(lhs: Self, rhs: Self) -> Result<Self, ArithmeticError> {
-        Ok(lhs * rhs)
-    }
-
-    fn checked_div(lhs: Self, rhs: Self) -> Result<Self, ArithmeticError> {
-        Ok(lhs / rhs)
     }
 }
 
@@ -791,6 +732,9 @@ mod tests {
         let out: Distance<f64, mm> = lhs + rhs;
         assert_eq!(out.unit(), "mm");
         assert_close(out.value(), 1025.0);
+
+        let widened: Distance<f64, m> = Distance::m(i32::MAX) + Distance::m(0.0_f32);
+        assert_close(widened.value(), i32::MAX as f64);
     }
 
     #[test]

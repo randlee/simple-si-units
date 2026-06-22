@@ -244,7 +244,7 @@
         {
           "lhs_storage": "i32",
           "rhs_storage": "f32",
-          "result_storage": "f32",
+          "result_storage": "f64",
           "api_mode": "infallible",
           "expected_failure": null
         },
@@ -258,14 +258,14 @@
         {
           "lhs_storage": "f32",
           "rhs_storage": "i32",
-          "result_storage": "f32",
+          "result_storage": "f64",
           "api_mode": "infallible",
           "expected_failure": null
         },
         {
           "lhs_storage": "f32",
           "rhs_storage": "f32",
-          "result_storage": "f32",
+          "result_storage": "f64",
           "api_mode": "infallible",
           "expected_failure": null
         },
@@ -317,7 +317,7 @@
           "operator": "mul",
           "lhs_storage": "i32",
           "rhs_storage": "f32",
-          "result_storage": "f32",
+          "result_storage": "f64",
           "api_mode": "infallible",
           "exact_division_policy": "not-applicable",
           "expected_failure": null
@@ -335,7 +335,7 @@
           "operator": "mul",
           "lhs_storage": "f32",
           "rhs_storage": "i32",
-          "result_storage": "f32",
+          "result_storage": "f64",
           "api_mode": "infallible",
           "exact_division_policy": "not-applicable",
           "expected_failure": null
@@ -344,7 +344,7 @@
           "operator": "mul",
           "lhs_storage": "f32",
           "rhs_storage": "f32",
-          "result_storage": "f32",
+          "result_storage": "f64",
           "api_mode": "infallible",
           "exact_division_policy": "not-applicable",
           "expected_failure": null
@@ -479,7 +479,7 @@
     ],
     "compute_bridges": [
       {
-        "operator": "velocity_from_time",
+        "operator": "velocity_from_distance_and_time",
         "lhs_public_type": "Distance",
         "rhs_public_type": "Time",
         "result_public_type": "Velocity",
@@ -489,7 +489,7 @@
         "expected_failure": "ZeroDuration"
       },
       {
-        "operator": "acceleration_from_time",
+        "operator": "acceleration_from_velocity_and_time",
         "lhs_public_type": "Velocity",
         "rhs_public_type": "Time",
         "result_public_type": "Acceleration",
