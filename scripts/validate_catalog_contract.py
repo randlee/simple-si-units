@@ -334,11 +334,17 @@ def validate_arithmetic_policies(payload: Any, dimensions: list[Any]) -> None:
             f"arithmetic_policies.cross_public_type_add_sub[{index}]",
         )
         seen_cross_pairs.add(pair)
+    require(
+        seen_cross_pairs == {("Diopter", "InverseDistance")},
+        "arithmetic_policies.cross_public_type_add_sub must match the Phase B supported reciprocal public-type pair set",
+        "arithmetic_policies.cross_public_type_add_sub",
+    )
 
     dimensions_by_public_type = {
         str(dimension["public_type"]): dimension for dimension in dimensions
     }
     seen_compute_bridges: set[tuple[str, str, str]] = set()
+    compute_bridge_specs: set[tuple[str, str, str, str, str]] = set()
     for index, row in enumerate(policies["compute_bridges"]):
         lhs_public_type = str(row["lhs_public_type"])
         rhs_public_type = str(row["rhs_public_type"])
@@ -367,6 +373,25 @@ def validate_arithmetic_policies(payload: Any, dimensions: list[Any]) -> None:
             f"arithmetic_policies.compute_bridges[{index}]",
         )
         seen_compute_bridges.add(bridge_key)
+        compute_bridge_specs.add(
+            (
+                operator,
+                lhs_public_type,
+                rhs_public_type,
+                result_public_type,
+                str(row["result_unit_code_id"]),
+            )
+        )
+    if compute_bridge_specs:
+        require(
+            compute_bridge_specs
+            == {
+                ("velocity_from_time", "Distance", "Time", "Velocity", "mps"),
+                ("acceleration_from_time", "Velocity", "Time", "Acceleration", "mps2"),
+            },
+            "arithmetic_policies.compute_bridges must match the Phase B compute-bridge contract",
+            "arithmetic_policies.compute_bridges",
+        )
 
 
 def validate_catalog(payload: Any) -> None:
