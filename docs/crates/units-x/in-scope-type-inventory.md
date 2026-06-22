@@ -25,84 +25,84 @@ Current additional reciprocal domain types:
 
 ### `base`
 
-- [ ] `Amount`
-- [ ] `Current`
-- [ ] `Distance`
-- [ ] `InverseAmount`
-- [ ] `InverseCurrent`
-- [ ] `InverseDistance`
-- [ ] `InverseLuminosity`
-- [ ] `InverseMass`
-- [ ] `InverseTemperature`
-- [ ] `Luminosity`
-- [ ] `Mass`
-- [ ] `Temperature`
-- [ ] `Time`
+- [x] `Amount`
+- [x] `Current`
+- [x] `Distance`
+- [x] `InverseAmount`
+- [x] `InverseCurrent`
+- [x] `InverseDistance`
+- [x] `InverseLuminosity`
+- [x] `InverseMass`
+- [x] `InverseTemperature`
+- [x] `Luminosity`
+- [x] `Mass`
+- [x] `Temperature`
+- [x] `Time`
 
 ### `geometry`
 
-- [ ] `Angle`
-- [ ] `Area`
-- [ ] `InverseAngle`
-- [ ] `InverseArea`
-- [ ] `InverseSolidAngle`
-- [ ] `InverseVolume`
-- [ ] `SolidAngle`
-- [ ] `Volume`
+- [x] `Angle`
+- [x] `Area`
+- [x] `InverseAngle`
+- [x] `InverseArea`
+- [x] `InverseSolidAngle`
+- [x] `InverseVolume`
+- [x] `SolidAngle`
+- [x] `Volume`
 
 ### `mechanical`
 
-- [ ] `Acceleration`
-- [ ] `AngularAcceleration`
-- [ ] `AngularMomentum`
-- [ ] `AngularVelocity`
-- [ ] `AreaDensity`
-- [ ] `AreaPerMass`
-- [ ] `Density`
-- [ ] `Energy`
-- [ ] `Force`
-- [ ] `Frequency`
-- [ ] `InverseAcceleration`
-- [ ] `InverseAngularAcceleration`
-- [ ] `InverseAngularMomentum`
-- [ ] `InverseAngularVelocity`
-- [ ] `InverseEnergy`
-- [ ] `InverseForce`
-- [ ] `InverseMomentOfInertia`
-- [ ] `InverseMomentum`
-- [ ] `InversePower`
-- [ ] `InversePressure`
-- [ ] `InverseTorque`
-- [ ] `MomentOfInertia`
-- [ ] `Momentum`
-- [ ] `Power`
-- [ ] `Pressure`
-- [ ] `TimePerDistance`
-- [ ] `Torque`
-- [ ] `Velocity`
-- [ ] `VolumePerMass`
+- [x] `Acceleration`
+- [x] `AngularAcceleration`
+- [x] `AngularMomentum`
+- [x] `AngularVelocity`
+- [x] `AreaDensity`
+- [x] `AreaPerMass`
+- [x] `Density`
+- [x] `Energy`
+- [x] `Force`
+- [x] `Frequency`
+- [x] `InverseAcceleration`
+- [x] `InverseAngularAcceleration`
+- [x] `InverseAngularMomentum`
+- [x] `InverseAngularVelocity`
+- [x] `InverseEnergy`
+- [x] `InverseForce`
+- [x] `InverseMomentOfInertia`
+- [x] `InverseMomentum`
+- [x] `InversePower`
+- [x] `InversePressure`
+- [x] `InverseTorque`
+- [x] `MomentOfInertia`
+- [x] `Momentum`
+- [x] `Power`
+- [x] `Pressure`
+- [x] `TimePerDistance`
+- [x] `Torque`
+- [x] `Velocity`
+- [x] `VolumePerMass`
 
 ### `electromagnetic`
 
-- [ ] `AreaPerLumen`
-- [ ] `Capacitance`
-- [ ] `Charge`
-- [ ] `Conductance`
-- [ ] `Elastance`
-- [ ] `Illuminance`
-- [ ] `Inductance`
-- [ ] `InverseCharge`
-- [ ] `InverseInductance`
-- [ ] `InverseLuminousFlux`
-- [ ] `InverseMagneticFlux`
-- [ ] `InverseMagneticFluxDensity`
-- [ ] `InverseVoltage`
-- [ ] `LuminousFlux`
-- [ ] `MagneticFlux`
-- [ ] `MagneticFluxDensity`
-- [ ] `Resistance`
-- [ ] `Voltage`
+- [x] `AreaPerLumen`
+- [x] `Capacitance`
+- [x] `Charge`
+- [x] `Conductance`
+- [x] `Elastance`
+- [x] `Illuminance`
+- [x] `Inductance`
+- [x] `InverseCharge`
+- [x] `InverseInductance`
+- [x] `InverseLuminousFlux`
+- [x] `InverseMagneticFlux`
+- [x] `InverseMagneticFluxDensity`
+- [x] `InverseVoltage`
+- [x] `LuminousFlux`
+- [x] `MagneticFlux`
+- [x] `MagneticFluxDensity`
+- [x] `Resistance`
+- [x] `Voltage`
 
 ### Additional public reciprocal types
 
-- [ ] `Diopter`
+- [x] `Diopter`

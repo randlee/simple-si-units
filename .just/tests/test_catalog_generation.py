@@ -12,13 +12,14 @@ sys.path.insert(0, str(ROOT / "scripts"))
 from generate_catalog_artifacts import build_summary
 from generate_catalog_artifacts import expected_outputs
 from generate_catalog_artifacts import render_generated_ffi_types
+from generate_catalog_artifacts import render_generated_public_types
 from generate_catalog_artifacts import render_rust_module
 
 
 class CatalogGenerationTests(unittest.TestCase):
     def authoritative_inventory(self) -> set[str]:
         inventory = (ROOT / "docs" / "crates" / "units-x" / "in-scope-type-inventory.md").read_text(encoding="utf-8")
-        return set(re.findall(r"^- \[ \] `([^`]+)`$", inventory, flags=re.MULTILINE))
+        return set(re.findall(r"^- \[[ x]\] `([^`]+)`$", inventory, flags=re.MULTILINE))
 
     def test_bootstrap_catalog_exists(self) -> None:
         catalog = json.loads((ROOT / "catalog" / "units-catalog.json").read_text(encoding="utf-8"))
@@ -53,6 +54,12 @@ class CatalogGenerationTests(unittest.TestCase):
         self.assertIn("temperature.degC", temperature["unit_ids"])
         self.assertIn("temperature.degF", temperature["unit_ids"])
 
+        rendered = render_generated_public_types(summary)
+        self.assertIn("pub struct mm;", rendered)
+        self.assertIn("pub struct Mm;", rendered)
+        self.assertIn("impl DistanceUnit for mm {}", rendered)
+        self.assertIn("impl DistanceUnit for Mm {}", rendered)
+
     def test_render_rust_module_escapes_catalog_strings(self) -> None:
         catalog = json.loads((ROOT / "catalog" / "examples" / "generation-edge-catalog.json").read_text(encoding="utf-8"))
         catalog["dimensions"][0]["public_type"] = 'Café "Quoted" \\\\ Path'
@@ -75,18 +82,29 @@ class CatalogGenerationTests(unittest.TestCase):
         catalog = json.loads((ROOT / "catalog" / "units-catalog.json").read_text(encoding="utf-8"))
         rendered = render_generated_ffi_types(build_summary(catalog))
 
-        self.assertIn("pub struct mm;", rendered)
-        self.assertIn("pub struct degC;", rendered)
         self.assertIn("pub struct distance_mm_i32 {", rendered)
         self.assertIn("pub value_mm: i32,", rendered)
         self.assertIn("pub struct distance_mm_i32_slice {", rendered)
 
-    def test_generated_ffi_types_reject_invalid_marker_names(self) -> None:
+    def test_generated_public_types_are_catalog_owned(self) -> None:
+        catalog = json.loads((ROOT / "catalog" / "units-catalog.json").read_text(encoding="utf-8"))
+        rendered = render_generated_public_types(build_summary(catalog))
+
+        self.assertIn("pub struct mm;", rendered)
+        self.assertIn("pub struct degC;", rendered)
+        self.assertIn("pub trait DistanceUnit: UnitMarker {}", rendered)
+        self.assertIn("impl DistanceUnit for mm {}", rendered)
+        self.assertIn("pub struct Distance<Storage = f64, Unit = m>", rendered)
+        self.assertIn("pub const fn mm(storage: Storage) -> Self {", rendered)
+        self.assertIn("pub struct Diopter<Storage = f64, Unit = dpt>", rendered)
+        self.assertIn("const CANONICAL_DIMENSION_ID: &'static str = \"inverse_distance\";", rendered)
+
+    def test_generated_public_types_reject_invalid_marker_names(self) -> None:
         summary = json.loads((ROOT / "catalog" / "generated" / "units-catalog-summary.json").read_text(encoding="utf-8"))
         summary["dimensions"][0]["units"][0]["unit_code_id"] = "m²"
         summary["dimensions"][0]["units"][0]["reserved_word_alias"] = None
         with self.assertRaises(ValueError):
-            render_generated_ffi_types(summary)
+            render_generated_public_types(summary)
 
     def test_generated_outputs_use_lf_only(self) -> None:
         for path, expected in expected_outputs().items():

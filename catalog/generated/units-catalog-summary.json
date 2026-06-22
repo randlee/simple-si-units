@@ -4,6 +4,7 @@
   "dimensions": [
     {
       "abi_name_stem": "amount",
+      "base_unit_code_id": "mol",
       "binary_schema_id": "units-x.amount.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -11,6 +12,7 @@
       },
       "canonical_dimension_id": "amount",
       "dimension_id": "amount",
+      "family": "base",
       "public_type": "Amount",
       "scalar": {
         "encoding": "object",
@@ -30,12 +32,14 @@
         {
           "binary_unit_id": "amount.mol",
           "reserved_word_alias": null,
-          "unit_code_id": "mol"
+          "unit_code_id": "mol",
+          "unit_symbol": "mol"
         }
       ]
     },
     {
       "abi_name_stem": "current",
+      "base_unit_code_id": "A",
       "binary_schema_id": "units-x.current.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -43,6 +47,7 @@
       },
       "canonical_dimension_id": "current",
       "dimension_id": "current",
+      "family": "base",
       "public_type": "Current",
       "scalar": {
         "encoding": "object",
@@ -62,12 +67,14 @@
         {
           "binary_unit_id": "current.A",
           "reserved_word_alias": null,
-          "unit_code_id": "A"
+          "unit_code_id": "A",
+          "unit_symbol": "A"
         }
       ]
     },
     {
       "abi_name_stem": "distance",
+      "base_unit_code_id": "m",
       "binary_schema_id": "units-x.distance.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -75,6 +82,7 @@
       },
       "canonical_dimension_id": "distance",
       "dimension_id": "distance",
+      "family": "base",
       "public_type": "Distance",
       "scalar": {
         "encoding": "object",
@@ -97,22 +105,26 @@
         {
           "binary_unit_id": "distance.mm",
           "reserved_word_alias": null,
-          "unit_code_id": "mm"
+          "unit_code_id": "mm",
+          "unit_symbol": "mm"
         },
         {
           "binary_unit_id": "distance.m",
           "reserved_word_alias": null,
-          "unit_code_id": "m"
+          "unit_code_id": "m",
+          "unit_symbol": "m"
         },
         {
           "binary_unit_id": "distance.ft",
           "reserved_word_alias": null,
-          "unit_code_id": "ft"
+          "unit_code_id": "ft",
+          "unit_symbol": "ft"
         }
       ]
     },
     {
       "abi_name_stem": "inverse_amount",
+      "base_unit_code_id": "per_mol",
       "binary_schema_id": "units-x.inverse_amount.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -120,6 +132,7 @@
       },
       "canonical_dimension_id": "inverse_amount",
       "dimension_id": "inverse_amount",
+      "family": "base",
       "public_type": "InverseAmount",
       "scalar": {
         "encoding": "object",
@@ -139,12 +152,14 @@
         {
           "binary_unit_id": "inverse_amount.per_mol",
           "reserved_word_alias": null,
-          "unit_code_id": "per_mol"
+          "unit_code_id": "per_mol",
+          "unit_symbol": "1/mol"
         }
       ]
     },
     {
       "abi_name_stem": "inverse_current",
+      "base_unit_code_id": "per_A",
       "binary_schema_id": "units-x.inverse_current.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -152,6 +167,7 @@
       },
       "canonical_dimension_id": "inverse_current",
       "dimension_id": "inverse_current",
+      "family": "base",
       "public_type": "InverseCurrent",
       "scalar": {
         "encoding": "object",
@@ -171,12 +187,14 @@
         {
           "binary_unit_id": "inverse_current.per_A",
           "reserved_word_alias": null,
-          "unit_code_id": "per_A"
+          "unit_code_id": "per_A",
+          "unit_symbol": "1/A"
         }
       ]
     },
     {
       "abi_name_stem": "inverse_distance",
+      "base_unit_code_id": "per_m",
       "binary_schema_id": "units-x.inverse_distance.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -184,6 +202,7 @@
       },
       "canonical_dimension_id": "inverse_distance",
       "dimension_id": "inverse_distance",
+      "family": "base",
       "public_type": "InverseDistance",
       "scalar": {
         "encoding": "object",
@@ -203,12 +222,14 @@
         {
           "binary_unit_id": "inverse_distance.per_m",
           "reserved_word_alias": null,
-          "unit_code_id": "per_m"
+          "unit_code_id": "per_m",
+          "unit_symbol": "1/m"
         }
       ]
     },
     {
       "abi_name_stem": "inverse_luminosity",
+      "base_unit_code_id": "per_cd",
       "binary_schema_id": "units-x.inverse_luminosity.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -216,6 +237,7 @@
       },
       "canonical_dimension_id": "inverse_luminosity",
       "dimension_id": "inverse_luminosity",
+      "family": "base",
       "public_type": "InverseLuminosity",
       "scalar": {
         "encoding": "object",
@@ -235,12 +257,14 @@
         {
           "binary_unit_id": "inverse_luminosity.per_cd",
           "reserved_word_alias": null,
-          "unit_code_id": "per_cd"
+          "unit_code_id": "per_cd",
+          "unit_symbol": "1/cd"
         }
       ]
     },
     {
       "abi_name_stem": "inverse_mass",
+      "base_unit_code_id": "per_kg",
       "binary_schema_id": "units-x.inverse_mass.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -248,6 +272,7 @@
       },
       "canonical_dimension_id": "inverse_mass",
       "dimension_id": "inverse_mass",
+      "family": "base",
       "public_type": "InverseMass",
       "scalar": {
         "encoding": "object",
@@ -267,12 +292,14 @@
         {
           "binary_unit_id": "inverse_mass.per_kg",
           "reserved_word_alias": null,
-          "unit_code_id": "per_kg"
+          "unit_code_id": "per_kg",
+          "unit_symbol": "1/kg"
         }
       ]
     },
     {
       "abi_name_stem": "inverse_temperature",
+      "base_unit_code_id": "per_K",
       "binary_schema_id": "units-x.inverse_temperature.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -280,6 +307,7 @@
       },
       "canonical_dimension_id": "inverse_temperature",
       "dimension_id": "inverse_temperature",
+      "family": "base",
       "public_type": "InverseTemperature",
       "scalar": {
         "encoding": "object",
@@ -299,12 +327,14 @@
         {
           "binary_unit_id": "inverse_temperature.per_K",
           "reserved_word_alias": null,
-          "unit_code_id": "per_K"
+          "unit_code_id": "per_K",
+          "unit_symbol": "1/K"
         }
       ]
     },
     {
       "abi_name_stem": "luminosity",
+      "base_unit_code_id": "cd",
       "binary_schema_id": "units-x.luminosity.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -312,6 +342,7 @@
       },
       "canonical_dimension_id": "luminosity",
       "dimension_id": "luminosity",
+      "family": "base",
       "public_type": "Luminosity",
       "scalar": {
         "encoding": "object",
@@ -331,12 +362,14 @@
         {
           "binary_unit_id": "luminosity.cd",
           "reserved_word_alias": null,
-          "unit_code_id": "cd"
+          "unit_code_id": "cd",
+          "unit_symbol": "cd"
         }
       ]
     },
     {
       "abi_name_stem": "mass",
+      "base_unit_code_id": "kg",
       "binary_schema_id": "units-x.mass.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -344,6 +377,7 @@
       },
       "canonical_dimension_id": "mass",
       "dimension_id": "mass",
+      "family": "base",
       "public_type": "Mass",
       "scalar": {
         "encoding": "object",
@@ -363,12 +397,14 @@
         {
           "binary_unit_id": "mass.kg",
           "reserved_word_alias": null,
-          "unit_code_id": "kg"
+          "unit_code_id": "kg",
+          "unit_symbol": "kg"
         }
       ]
     },
     {
       "abi_name_stem": "temperature",
+      "base_unit_code_id": "K",
       "binary_schema_id": "units-x.temperature.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -376,6 +412,7 @@
       },
       "canonical_dimension_id": "temperature",
       "dimension_id": "temperature",
+      "family": "base",
       "public_type": "Temperature",
       "scalar": {
         "encoding": "object",
@@ -397,22 +434,26 @@
         {
           "binary_unit_id": "temperature.K",
           "reserved_word_alias": null,
-          "unit_code_id": "K"
+          "unit_code_id": "K",
+          "unit_symbol": "K"
         },
         {
           "binary_unit_id": "temperature.degC",
           "reserved_word_alias": null,
-          "unit_code_id": "degC"
+          "unit_code_id": "degC",
+          "unit_symbol": "C"
         },
         {
           "binary_unit_id": "temperature.degF",
           "reserved_word_alias": null,
-          "unit_code_id": "degF"
+          "unit_code_id": "degF",
+          "unit_symbol": "F"
         }
       ]
     },
     {
       "abi_name_stem": "time",
+      "base_unit_code_id": "s",
       "binary_schema_id": "units-x.time.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -420,6 +461,7 @@
       },
       "canonical_dimension_id": "time",
       "dimension_id": "time",
+      "family": "base",
       "public_type": "Time",
       "scalar": {
         "encoding": "object",
@@ -441,17 +483,20 @@
         {
           "binary_unit_id": "time.s",
           "reserved_word_alias": null,
-          "unit_code_id": "s"
+          "unit_code_id": "s",
+          "unit_symbol": "s"
         },
         {
           "binary_unit_id": "time.ms",
           "reserved_word_alias": null,
-          "unit_code_id": "ms"
+          "unit_code_id": "ms",
+          "unit_symbol": "ms"
         }
       ]
     },
     {
       "abi_name_stem": "angle",
+      "base_unit_code_id": "rad",
       "binary_schema_id": "units-x.angle.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -459,6 +504,7 @@
       },
       "canonical_dimension_id": "angle",
       "dimension_id": "angle",
+      "family": "geometry",
       "public_type": "Angle",
       "scalar": {
         "encoding": "object",
@@ -478,12 +524,14 @@
         {
           "binary_unit_id": "angle.rad",
           "reserved_word_alias": null,
-          "unit_code_id": "rad"
+          "unit_code_id": "rad",
+          "unit_symbol": "rad"
         }
       ]
     },
     {
       "abi_name_stem": "area",
+      "base_unit_code_id": "m2",
       "binary_schema_id": "units-x.area.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -491,6 +539,7 @@
       },
       "canonical_dimension_id": "area",
       "dimension_id": "area",
+      "family": "geometry",
       "public_type": "Area",
       "scalar": {
         "encoding": "object",
@@ -510,12 +559,14 @@
         {
           "binary_unit_id": "area.m2",
           "reserved_word_alias": null,
-          "unit_code_id": "m2"
+          "unit_code_id": "m2",
+          "unit_symbol": "m^2"
         }
       ]
     },
     {
       "abi_name_stem": "inverse_angle",
+      "base_unit_code_id": "per_rad",
       "binary_schema_id": "units-x.inverse_angle.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -523,6 +574,7 @@
       },
       "canonical_dimension_id": "inverse_angle",
       "dimension_id": "inverse_angle",
+      "family": "geometry",
       "public_type": "InverseAngle",
       "scalar": {
         "encoding": "object",
@@ -542,12 +594,14 @@
         {
           "binary_unit_id": "inverse_angle.per_rad",
           "reserved_word_alias": null,
-          "unit_code_id": "per_rad"
+          "unit_code_id": "per_rad",
+          "unit_symbol": "1/rad"
         }
       ]
     },
     {
       "abi_name_stem": "inverse_area",
+      "base_unit_code_id": "per_m2",
       "binary_schema_id": "units-x.inverse_area.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -555,6 +609,7 @@
       },
       "canonical_dimension_id": "inverse_area",
       "dimension_id": "inverse_area",
+      "family": "geometry",
       "public_type": "InverseArea",
       "scalar": {
         "encoding": "object",
@@ -574,12 +629,14 @@
         {
           "binary_unit_id": "inverse_area.per_m2",
           "reserved_word_alias": null,
-          "unit_code_id": "per_m2"
+          "unit_code_id": "per_m2",
+          "unit_symbol": "1/m^2"
         }
       ]
     },
     {
       "abi_name_stem": "inverse_solid_angle",
+      "base_unit_code_id": "per_sr",
       "binary_schema_id": "units-x.inverse_solid_angle.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -587,6 +644,7 @@
       },
       "canonical_dimension_id": "inverse_solid_angle",
       "dimension_id": "inverse_solid_angle",
+      "family": "geometry",
       "public_type": "InverseSolidAngle",
       "scalar": {
         "encoding": "object",
@@ -606,12 +664,14 @@
         {
           "binary_unit_id": "inverse_solid_angle.per_sr",
           "reserved_word_alias": null,
-          "unit_code_id": "per_sr"
+          "unit_code_id": "per_sr",
+          "unit_symbol": "1/sr"
         }
       ]
     },
     {
       "abi_name_stem": "inverse_volume",
+      "base_unit_code_id": "per_m3",
       "binary_schema_id": "units-x.inverse_volume.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -619,6 +679,7 @@
       },
       "canonical_dimension_id": "inverse_volume",
       "dimension_id": "inverse_volume",
+      "family": "geometry",
       "public_type": "InverseVolume",
       "scalar": {
         "encoding": "object",
@@ -638,12 +699,14 @@
         {
           "binary_unit_id": "inverse_volume.per_m3",
           "reserved_word_alias": null,
-          "unit_code_id": "per_m3"
+          "unit_code_id": "per_m3",
+          "unit_symbol": "1/m^3"
         }
       ]
     },
     {
       "abi_name_stem": "solid_angle",
+      "base_unit_code_id": "sr",
       "binary_schema_id": "units-x.solid_angle.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -651,6 +714,7 @@
       },
       "canonical_dimension_id": "solid_angle",
       "dimension_id": "solid_angle",
+      "family": "geometry",
       "public_type": "SolidAngle",
       "scalar": {
         "encoding": "object",
@@ -670,12 +734,14 @@
         {
           "binary_unit_id": "solid_angle.sr",
           "reserved_word_alias": null,
-          "unit_code_id": "sr"
+          "unit_code_id": "sr",
+          "unit_symbol": "sr"
         }
       ]
     },
     {
       "abi_name_stem": "volume",
+      "base_unit_code_id": "m3",
       "binary_schema_id": "units-x.volume.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -683,6 +749,7 @@
       },
       "canonical_dimension_id": "volume",
       "dimension_id": "volume",
+      "family": "geometry",
       "public_type": "Volume",
       "scalar": {
         "encoding": "object",
@@ -702,12 +769,14 @@
         {
           "binary_unit_id": "volume.m3",
           "reserved_word_alias": null,
-          "unit_code_id": "m3"
+          "unit_code_id": "m3",
+          "unit_symbol": "m^3"
         }
       ]
     },
     {
       "abi_name_stem": "acceleration",
+      "base_unit_code_id": "mps2",
       "binary_schema_id": "units-x.acceleration.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -715,6 +784,7 @@
       },
       "canonical_dimension_id": "acceleration",
       "dimension_id": "acceleration",
+      "family": "mechanical",
       "public_type": "Acceleration",
       "scalar": {
         "encoding": "object",
@@ -734,12 +804,14 @@
         {
           "binary_unit_id": "acceleration.mps2",
           "reserved_word_alias": null,
-          "unit_code_id": "mps2"
+          "unit_code_id": "mps2",
+          "unit_symbol": "m/(s*s)"
         }
       ]
     },
     {
       "abi_name_stem": "angular_acceleration",
+      "base_unit_code_id": "radps2",
       "binary_schema_id": "units-x.angular_acceleration.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -747,6 +819,7 @@
       },
       "canonical_dimension_id": "angular_acceleration",
       "dimension_id": "angular_acceleration",
+      "family": "mechanical",
       "public_type": "AngularAcceleration",
       "scalar": {
         "encoding": "object",
@@ -766,12 +839,14 @@
         {
           "binary_unit_id": "angular_acceleration.radps2",
           "reserved_word_alias": null,
-          "unit_code_id": "radps2"
+          "unit_code_id": "radps2",
+          "unit_symbol": "rad/(s*s)"
         }
       ]
     },
     {
       "abi_name_stem": "angular_momentum",
+      "base_unit_code_id": "kgm2ps",
       "binary_schema_id": "units-x.angular_momentum.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -779,6 +854,7 @@
       },
       "canonical_dimension_id": "angular_momentum",
       "dimension_id": "angular_momentum",
+      "family": "mechanical",
       "public_type": "AngularMomentum",
       "scalar": {
         "encoding": "object",
@@ -798,12 +874,14 @@
         {
           "binary_unit_id": "angular_momentum.kgm2ps",
           "reserved_word_alias": null,
-          "unit_code_id": "kgm2ps"
+          "unit_code_id": "kgm2ps",
+          "unit_symbol": "kg*m^2/s"
         }
       ]
     },
     {
       "abi_name_stem": "angular_velocity",
+      "base_unit_code_id": "radps",
       "binary_schema_id": "units-x.angular_velocity.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -811,6 +889,7 @@
       },
       "canonical_dimension_id": "angular_velocity",
       "dimension_id": "angular_velocity",
+      "family": "mechanical",
       "public_type": "AngularVelocity",
       "scalar": {
         "encoding": "object",
@@ -830,12 +909,14 @@
         {
           "binary_unit_id": "angular_velocity.radps",
           "reserved_word_alias": null,
-          "unit_code_id": "radps"
+          "unit_code_id": "radps",
+          "unit_symbol": "rad/s"
         }
       ]
     },
     {
       "abi_name_stem": "area_density",
+      "base_unit_code_id": "kgpm2",
       "binary_schema_id": "units-x.area_density.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -843,6 +924,7 @@
       },
       "canonical_dimension_id": "area_density",
       "dimension_id": "area_density",
+      "family": "mechanical",
       "public_type": "AreaDensity",
       "scalar": {
         "encoding": "object",
@@ -862,12 +944,14 @@
         {
           "binary_unit_id": "area_density.kgpm2",
           "reserved_word_alias": null,
-          "unit_code_id": "kgpm2"
+          "unit_code_id": "kgpm2",
+          "unit_symbol": "kg/m^2"
         }
       ]
     },
     {
       "abi_name_stem": "area_per_mass",
+      "base_unit_code_id": "m2pkg",
       "binary_schema_id": "units-x.area_per_mass.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -875,6 +959,7 @@
       },
       "canonical_dimension_id": "area_per_mass",
       "dimension_id": "area_per_mass",
+      "family": "mechanical",
       "public_type": "AreaPerMass",
       "scalar": {
         "encoding": "object",
@@ -894,12 +979,14 @@
         {
           "binary_unit_id": "area_per_mass.m2pkg",
           "reserved_word_alias": null,
-          "unit_code_id": "m2pkg"
+          "unit_code_id": "m2pkg",
+          "unit_symbol": "m^2/kg"
         }
       ]
     },
     {
       "abi_name_stem": "density",
+      "base_unit_code_id": "kgpm3",
       "binary_schema_id": "units-x.density.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -907,6 +994,7 @@
       },
       "canonical_dimension_id": "density",
       "dimension_id": "density",
+      "family": "mechanical",
       "public_type": "Density",
       "scalar": {
         "encoding": "object",
@@ -926,12 +1014,14 @@
         {
           "binary_unit_id": "density.kgpm3",
           "reserved_word_alias": null,
-          "unit_code_id": "kgpm3"
+          "unit_code_id": "kgpm3",
+          "unit_symbol": "kg/m^3"
         }
       ]
     },
     {
       "abi_name_stem": "energy",
+      "base_unit_code_id": "J",
       "binary_schema_id": "units-x.energy.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -939,6 +1029,7 @@
       },
       "canonical_dimension_id": "energy",
       "dimension_id": "energy",
+      "family": "mechanical",
       "public_type": "Energy",
       "scalar": {
         "encoding": "object",
@@ -958,12 +1049,14 @@
         {
           "binary_unit_id": "energy.J",
           "reserved_word_alias": null,
-          "unit_code_id": "J"
+          "unit_code_id": "J",
+          "unit_symbol": "J"
         }
       ]
     },
     {
       "abi_name_stem": "force",
+      "base_unit_code_id": "N",
       "binary_schema_id": "units-x.force.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -971,6 +1064,7 @@
       },
       "canonical_dimension_id": "force",
       "dimension_id": "force",
+      "family": "mechanical",
       "public_type": "Force",
       "scalar": {
         "encoding": "object",
@@ -990,12 +1084,14 @@
         {
           "binary_unit_id": "force.N",
           "reserved_word_alias": null,
-          "unit_code_id": "N"
+          "unit_code_id": "N",
+          "unit_symbol": "N"
         }
       ]
     },
     {
       "abi_name_stem": "frequency",
+      "base_unit_code_id": "Hz",
       "binary_schema_id": "units-x.frequency.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -1003,6 +1099,7 @@
       },
       "canonical_dimension_id": "frequency",
       "dimension_id": "frequency",
+      "family": "mechanical",
       "public_type": "Frequency",
       "scalar": {
         "encoding": "object",
@@ -1022,12 +1119,14 @@
         {
           "binary_unit_id": "frequency.Hz",
           "reserved_word_alias": null,
-          "unit_code_id": "Hz"
+          "unit_code_id": "Hz",
+          "unit_symbol": "Hz"
         }
       ]
     },
     {
       "abi_name_stem": "inverse_acceleration",
+      "base_unit_code_id": "per_mps2",
       "binary_schema_id": "units-x.inverse_acceleration.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -1035,6 +1134,7 @@
       },
       "canonical_dimension_id": "inverse_acceleration",
       "dimension_id": "inverse_acceleration",
+      "family": "mechanical",
       "public_type": "InverseAcceleration",
       "scalar": {
         "encoding": "object",
@@ -1054,12 +1154,14 @@
         {
           "binary_unit_id": "inverse_acceleration.per_mps2",
           "reserved_word_alias": null,
-          "unit_code_id": "per_mps2"
+          "unit_code_id": "per_mps2",
+          "unit_symbol": "1/(m/(s*s))"
         }
       ]
     },
     {
       "abi_name_stem": "inverse_angular_acceleration",
+      "base_unit_code_id": "per_radps2",
       "binary_schema_id": "units-x.inverse_angular_acceleration.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -1067,6 +1169,7 @@
       },
       "canonical_dimension_id": "inverse_angular_acceleration",
       "dimension_id": "inverse_angular_acceleration",
+      "family": "mechanical",
       "public_type": "InverseAngularAcceleration",
       "scalar": {
         "encoding": "object",
@@ -1086,12 +1189,14 @@
         {
           "binary_unit_id": "inverse_angular_acceleration.per_radps2",
           "reserved_word_alias": null,
-          "unit_code_id": "per_radps2"
+          "unit_code_id": "per_radps2",
+          "unit_symbol": "1/(rad/(s*s))"
         }
       ]
     },
     {
       "abi_name_stem": "inverse_angular_momentum",
+      "base_unit_code_id": "per_kgm2ps",
       "binary_schema_id": "units-x.inverse_angular_momentum.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -1099,6 +1204,7 @@
       },
       "canonical_dimension_id": "inverse_angular_momentum",
       "dimension_id": "inverse_angular_momentum",
+      "family": "mechanical",
       "public_type": "InverseAngularMomentum",
       "scalar": {
         "encoding": "object",
@@ -1118,12 +1224,14 @@
         {
           "binary_unit_id": "inverse_angular_momentum.per_kgm2ps",
           "reserved_word_alias": null,
-          "unit_code_id": "per_kgm2ps"
+          "unit_code_id": "per_kgm2ps",
+          "unit_symbol": "1/(kg*m^2/s)"
         }
       ]
     },
     {
       "abi_name_stem": "inverse_angular_velocity",
+      "base_unit_code_id": "per_radps",
       "binary_schema_id": "units-x.inverse_angular_velocity.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -1131,6 +1239,7 @@
       },
       "canonical_dimension_id": "inverse_angular_velocity",
       "dimension_id": "inverse_angular_velocity",
+      "family": "mechanical",
       "public_type": "InverseAngularVelocity",
       "scalar": {
         "encoding": "object",
@@ -1150,12 +1259,14 @@
         {
           "binary_unit_id": "inverse_angular_velocity.per_radps",
           "reserved_word_alias": null,
-          "unit_code_id": "per_radps"
+          "unit_code_id": "per_radps",
+          "unit_symbol": "1/(rad/s)"
         }
       ]
     },
     {
       "abi_name_stem": "inverse_energy",
+      "base_unit_code_id": "per_J",
       "binary_schema_id": "units-x.inverse_energy.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -1163,6 +1274,7 @@
       },
       "canonical_dimension_id": "inverse_energy",
       "dimension_id": "inverse_energy",
+      "family": "mechanical",
       "public_type": "InverseEnergy",
       "scalar": {
         "encoding": "object",
@@ -1182,12 +1294,14 @@
         {
           "binary_unit_id": "inverse_energy.per_J",
           "reserved_word_alias": null,
-          "unit_code_id": "per_J"
+          "unit_code_id": "per_J",
+          "unit_symbol": "1/J"
         }
       ]
     },
     {
       "abi_name_stem": "inverse_force",
+      "base_unit_code_id": "per_N",
       "binary_schema_id": "units-x.inverse_force.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -1195,6 +1309,7 @@
       },
       "canonical_dimension_id": "inverse_force",
       "dimension_id": "inverse_force",
+      "family": "mechanical",
       "public_type": "InverseForce",
       "scalar": {
         "encoding": "object",
@@ -1214,12 +1329,14 @@
         {
           "binary_unit_id": "inverse_force.per_N",
           "reserved_word_alias": null,
-          "unit_code_id": "per_N"
+          "unit_code_id": "per_N",
+          "unit_symbol": "1/N"
         }
       ]
     },
     {
       "abi_name_stem": "inverse_moment_of_inertia",
+      "base_unit_code_id": "per_kgm2",
       "binary_schema_id": "units-x.inverse_moment_of_inertia.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -1227,6 +1344,7 @@
       },
       "canonical_dimension_id": "inverse_moment_of_inertia",
       "dimension_id": "inverse_moment_of_inertia",
+      "family": "mechanical",
       "public_type": "InverseMomentOfInertia",
       "scalar": {
         "encoding": "object",
@@ -1246,12 +1364,14 @@
         {
           "binary_unit_id": "inverse_moment_of_inertia.per_kgm2",
           "reserved_word_alias": null,
-          "unit_code_id": "per_kgm2"
+          "unit_code_id": "per_kgm2",
+          "unit_symbol": "1/(kg*m^2)"
         }
       ]
     },
     {
       "abi_name_stem": "inverse_momentum",
+      "base_unit_code_id": "per_kgmps",
       "binary_schema_id": "units-x.inverse_momentum.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -1259,6 +1379,7 @@
       },
       "canonical_dimension_id": "inverse_momentum",
       "dimension_id": "inverse_momentum",
+      "family": "mechanical",
       "public_type": "InverseMomentum",
       "scalar": {
         "encoding": "object",
@@ -1278,12 +1399,14 @@
         {
           "binary_unit_id": "inverse_momentum.per_kgmps",
           "reserved_word_alias": null,
-          "unit_code_id": "per_kgmps"
+          "unit_code_id": "per_kgmps",
+          "unit_symbol": "1/(kg*m/s)"
         }
       ]
     },
     {
       "abi_name_stem": "inverse_power",
+      "base_unit_code_id": "per_W",
       "binary_schema_id": "units-x.inverse_power.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -1291,6 +1414,7 @@
       },
       "canonical_dimension_id": "inverse_power",
       "dimension_id": "inverse_power",
+      "family": "mechanical",
       "public_type": "InversePower",
       "scalar": {
         "encoding": "object",
@@ -1310,12 +1434,14 @@
         {
           "binary_unit_id": "inverse_power.per_W",
           "reserved_word_alias": null,
-          "unit_code_id": "per_W"
+          "unit_code_id": "per_W",
+          "unit_symbol": "1/W"
         }
       ]
     },
     {
       "abi_name_stem": "inverse_pressure",
+      "base_unit_code_id": "per_Pa",
       "binary_schema_id": "units-x.inverse_pressure.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -1323,6 +1449,7 @@
       },
       "canonical_dimension_id": "inverse_pressure",
       "dimension_id": "inverse_pressure",
+      "family": "mechanical",
       "public_type": "InversePressure",
       "scalar": {
         "encoding": "object",
@@ -1342,12 +1469,14 @@
         {
           "binary_unit_id": "inverse_pressure.per_Pa",
           "reserved_word_alias": null,
-          "unit_code_id": "per_Pa"
+          "unit_code_id": "per_Pa",
+          "unit_symbol": "1/Pa"
         }
       ]
     },
     {
       "abi_name_stem": "inverse_torque",
+      "base_unit_code_id": "per_Nm",
       "binary_schema_id": "units-x.inverse_torque.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -1355,6 +1484,7 @@
       },
       "canonical_dimension_id": "inverse_torque",
       "dimension_id": "inverse_torque",
+      "family": "mechanical",
       "public_type": "InverseTorque",
       "scalar": {
         "encoding": "object",
@@ -1374,12 +1504,14 @@
         {
           "binary_unit_id": "inverse_torque.per_Nm",
           "reserved_word_alias": null,
-          "unit_code_id": "per_Nm"
+          "unit_code_id": "per_Nm",
+          "unit_symbol": "1/(N*m)"
         }
       ]
     },
     {
       "abi_name_stem": "moment_of_inertia",
+      "base_unit_code_id": "kgm2",
       "binary_schema_id": "units-x.moment_of_inertia.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -1387,6 +1519,7 @@
       },
       "canonical_dimension_id": "moment_of_inertia",
       "dimension_id": "moment_of_inertia",
+      "family": "mechanical",
       "public_type": "MomentOfInertia",
       "scalar": {
         "encoding": "object",
@@ -1406,12 +1539,14 @@
         {
           "binary_unit_id": "moment_of_inertia.kgm2",
           "reserved_word_alias": null,
-          "unit_code_id": "kgm2"
+          "unit_code_id": "kgm2",
+          "unit_symbol": "kg*m^2"
         }
       ]
     },
     {
       "abi_name_stem": "momentum",
+      "base_unit_code_id": "kgmps",
       "binary_schema_id": "units-x.momentum.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -1419,6 +1554,7 @@
       },
       "canonical_dimension_id": "momentum",
       "dimension_id": "momentum",
+      "family": "mechanical",
       "public_type": "Momentum",
       "scalar": {
         "encoding": "object",
@@ -1438,12 +1574,14 @@
         {
           "binary_unit_id": "momentum.kgmps",
           "reserved_word_alias": null,
-          "unit_code_id": "kgmps"
+          "unit_code_id": "kgmps",
+          "unit_symbol": "kg*m/s"
         }
       ]
     },
     {
       "abi_name_stem": "power",
+      "base_unit_code_id": "W",
       "binary_schema_id": "units-x.power.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -1451,6 +1589,7 @@
       },
       "canonical_dimension_id": "power",
       "dimension_id": "power",
+      "family": "mechanical",
       "public_type": "Power",
       "scalar": {
         "encoding": "object",
@@ -1470,12 +1609,14 @@
         {
           "binary_unit_id": "power.W",
           "reserved_word_alias": null,
-          "unit_code_id": "W"
+          "unit_code_id": "W",
+          "unit_symbol": "W"
         }
       ]
     },
     {
       "abi_name_stem": "pressure",
+      "base_unit_code_id": "Pa",
       "binary_schema_id": "units-x.pressure.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -1483,6 +1624,7 @@
       },
       "canonical_dimension_id": "pressure",
       "dimension_id": "pressure",
+      "family": "mechanical",
       "public_type": "Pressure",
       "scalar": {
         "encoding": "object",
@@ -1502,12 +1644,14 @@
         {
           "binary_unit_id": "pressure.Pa",
           "reserved_word_alias": null,
-          "unit_code_id": "Pa"
+          "unit_code_id": "Pa",
+          "unit_symbol": "Pa"
         }
       ]
     },
     {
       "abi_name_stem": "time_per_distance",
+      "base_unit_code_id": "spm",
       "binary_schema_id": "units-x.time_per_distance.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -1515,6 +1659,7 @@
       },
       "canonical_dimension_id": "time_per_distance",
       "dimension_id": "time_per_distance",
+      "family": "mechanical",
       "public_type": "TimePerDistance",
       "scalar": {
         "encoding": "object",
@@ -1534,12 +1679,14 @@
         {
           "binary_unit_id": "time_per_distance.spm",
           "reserved_word_alias": null,
-          "unit_code_id": "spm"
+          "unit_code_id": "spm",
+          "unit_symbol": "s/m"
         }
       ]
     },
     {
       "abi_name_stem": "torque",
+      "base_unit_code_id": "Nm",
       "binary_schema_id": "units-x.torque.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -1547,6 +1694,7 @@
       },
       "canonical_dimension_id": "torque",
       "dimension_id": "torque",
+      "family": "mechanical",
       "public_type": "Torque",
       "scalar": {
         "encoding": "object",
@@ -1566,12 +1714,14 @@
         {
           "binary_unit_id": "torque.Nm",
           "reserved_word_alias": null,
-          "unit_code_id": "Nm"
+          "unit_code_id": "Nm",
+          "unit_symbol": "N*m"
         }
       ]
     },
     {
       "abi_name_stem": "velocity",
+      "base_unit_code_id": "mps",
       "binary_schema_id": "units-x.velocity.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -1579,6 +1729,7 @@
       },
       "canonical_dimension_id": "velocity",
       "dimension_id": "velocity",
+      "family": "mechanical",
       "public_type": "Velocity",
       "scalar": {
         "encoding": "object",
@@ -1598,12 +1749,14 @@
         {
           "binary_unit_id": "velocity.mps",
           "reserved_word_alias": null,
-          "unit_code_id": "mps"
+          "unit_code_id": "mps",
+          "unit_symbol": "m/s"
         }
       ]
     },
     {
       "abi_name_stem": "volume_per_mass",
+      "base_unit_code_id": "m3pkg",
       "binary_schema_id": "units-x.volume_per_mass.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -1611,6 +1764,7 @@
       },
       "canonical_dimension_id": "volume_per_mass",
       "dimension_id": "volume_per_mass",
+      "family": "mechanical",
       "public_type": "VolumePerMass",
       "scalar": {
         "encoding": "object",
@@ -1630,12 +1784,14 @@
         {
           "binary_unit_id": "volume_per_mass.m3pkg",
           "reserved_word_alias": null,
-          "unit_code_id": "m3pkg"
+          "unit_code_id": "m3pkg",
+          "unit_symbol": "m^3/kg"
         }
       ]
     },
     {
       "abi_name_stem": "area_per_lumen",
+      "base_unit_code_id": "m2plm",
       "binary_schema_id": "units-x.area_per_lumen.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -1643,6 +1799,7 @@
       },
       "canonical_dimension_id": "area_per_lumen",
       "dimension_id": "area_per_lumen",
+      "family": "electromagnetic",
       "public_type": "AreaPerLumen",
       "scalar": {
         "encoding": "object",
@@ -1662,12 +1819,14 @@
         {
           "binary_unit_id": "area_per_lumen.m2plm",
           "reserved_word_alias": null,
-          "unit_code_id": "m2plm"
+          "unit_code_id": "m2plm",
+          "unit_symbol": "m^2/lm"
         }
       ]
     },
     {
       "abi_name_stem": "capacitance",
+      "base_unit_code_id": "F",
       "binary_schema_id": "units-x.capacitance.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -1675,6 +1834,7 @@
       },
       "canonical_dimension_id": "capacitance",
       "dimension_id": "capacitance",
+      "family": "electromagnetic",
       "public_type": "Capacitance",
       "scalar": {
         "encoding": "object",
@@ -1694,12 +1854,14 @@
         {
           "binary_unit_id": "capacitance.F",
           "reserved_word_alias": null,
-          "unit_code_id": "F"
+          "unit_code_id": "F",
+          "unit_symbol": "F"
         }
       ]
     },
     {
       "abi_name_stem": "charge",
+      "base_unit_code_id": "C",
       "binary_schema_id": "units-x.charge.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -1707,6 +1869,7 @@
       },
       "canonical_dimension_id": "charge",
       "dimension_id": "charge",
+      "family": "electromagnetic",
       "public_type": "Charge",
       "scalar": {
         "encoding": "object",
@@ -1726,12 +1889,14 @@
         {
           "binary_unit_id": "charge.C",
           "reserved_word_alias": null,
-          "unit_code_id": "C"
+          "unit_code_id": "C",
+          "unit_symbol": "C"
         }
       ]
     },
     {
       "abi_name_stem": "conductance",
+      "base_unit_code_id": "S",
       "binary_schema_id": "units-x.conductance.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -1739,6 +1904,7 @@
       },
       "canonical_dimension_id": "conductance",
       "dimension_id": "conductance",
+      "family": "electromagnetic",
       "public_type": "Conductance",
       "scalar": {
         "encoding": "object",
@@ -1758,12 +1924,14 @@
         {
           "binary_unit_id": "conductance.S",
           "reserved_word_alias": null,
-          "unit_code_id": "S"
+          "unit_code_id": "S",
+          "unit_symbol": "S"
         }
       ]
     },
     {
       "abi_name_stem": "elastance",
+      "base_unit_code_id": "per_F",
       "binary_schema_id": "units-x.elastance.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -1771,6 +1939,7 @@
       },
       "canonical_dimension_id": "elastance",
       "dimension_id": "elastance",
+      "family": "electromagnetic",
       "public_type": "Elastance",
       "scalar": {
         "encoding": "object",
@@ -1790,12 +1959,14 @@
         {
           "binary_unit_id": "elastance.per_F",
           "reserved_word_alias": null,
-          "unit_code_id": "per_F"
+          "unit_code_id": "per_F",
+          "unit_symbol": "1/F"
         }
       ]
     },
     {
       "abi_name_stem": "illuminance",
+      "base_unit_code_id": "lx",
       "binary_schema_id": "units-x.illuminance.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -1803,6 +1974,7 @@
       },
       "canonical_dimension_id": "illuminance",
       "dimension_id": "illuminance",
+      "family": "electromagnetic",
       "public_type": "Illuminance",
       "scalar": {
         "encoding": "object",
@@ -1822,12 +1994,14 @@
         {
           "binary_unit_id": "illuminance.lx",
           "reserved_word_alias": null,
-          "unit_code_id": "lx"
+          "unit_code_id": "lx",
+          "unit_symbol": "lx"
         }
       ]
     },
     {
       "abi_name_stem": "inductance",
+      "base_unit_code_id": "H",
       "binary_schema_id": "units-x.inductance.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -1835,6 +2009,7 @@
       },
       "canonical_dimension_id": "inductance",
       "dimension_id": "inductance",
+      "family": "electromagnetic",
       "public_type": "Inductance",
       "scalar": {
         "encoding": "object",
@@ -1854,12 +2029,14 @@
         {
           "binary_unit_id": "inductance.H",
           "reserved_word_alias": null,
-          "unit_code_id": "H"
+          "unit_code_id": "H",
+          "unit_symbol": "H"
         }
       ]
     },
     {
       "abi_name_stem": "inverse_charge",
+      "base_unit_code_id": "per_C",
       "binary_schema_id": "units-x.inverse_charge.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -1867,6 +2044,7 @@
       },
       "canonical_dimension_id": "inverse_charge",
       "dimension_id": "inverse_charge",
+      "family": "electromagnetic",
       "public_type": "InverseCharge",
       "scalar": {
         "encoding": "object",
@@ -1886,12 +2064,14 @@
         {
           "binary_unit_id": "inverse_charge.per_C",
           "reserved_word_alias": null,
-          "unit_code_id": "per_C"
+          "unit_code_id": "per_C",
+          "unit_symbol": "1/C"
         }
       ]
     },
     {
       "abi_name_stem": "inverse_inductance",
+      "base_unit_code_id": "per_H",
       "binary_schema_id": "units-x.inverse_inductance.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -1899,6 +2079,7 @@
       },
       "canonical_dimension_id": "inverse_inductance",
       "dimension_id": "inverse_inductance",
+      "family": "electromagnetic",
       "public_type": "InverseInductance",
       "scalar": {
         "encoding": "object",
@@ -1918,12 +2099,14 @@
         {
           "binary_unit_id": "inverse_inductance.per_H",
           "reserved_word_alias": null,
-          "unit_code_id": "per_H"
+          "unit_code_id": "per_H",
+          "unit_symbol": "1/H"
         }
       ]
     },
     {
       "abi_name_stem": "inverse_luminous_flux",
+      "base_unit_code_id": "per_lm",
       "binary_schema_id": "units-x.inverse_luminous_flux.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -1931,6 +2114,7 @@
       },
       "canonical_dimension_id": "inverse_luminous_flux",
       "dimension_id": "inverse_luminous_flux",
+      "family": "electromagnetic",
       "public_type": "InverseLuminousFlux",
       "scalar": {
         "encoding": "object",
@@ -1950,12 +2134,14 @@
         {
           "binary_unit_id": "inverse_luminous_flux.per_lm",
           "reserved_word_alias": null,
-          "unit_code_id": "per_lm"
+          "unit_code_id": "per_lm",
+          "unit_symbol": "1/lm"
         }
       ]
     },
     {
       "abi_name_stem": "inverse_magnetic_flux",
+      "base_unit_code_id": "per_Wb",
       "binary_schema_id": "units-x.inverse_magnetic_flux.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -1963,6 +2149,7 @@
       },
       "canonical_dimension_id": "inverse_magnetic_flux",
       "dimension_id": "inverse_magnetic_flux",
+      "family": "electromagnetic",
       "public_type": "InverseMagneticFlux",
       "scalar": {
         "encoding": "object",
@@ -1982,12 +2169,14 @@
         {
           "binary_unit_id": "inverse_magnetic_flux.per_Wb",
           "reserved_word_alias": null,
-          "unit_code_id": "per_Wb"
+          "unit_code_id": "per_Wb",
+          "unit_symbol": "1/Wb"
         }
       ]
     },
     {
       "abi_name_stem": "inverse_magnetic_flux_density",
+      "base_unit_code_id": "per_T",
       "binary_schema_id": "units-x.inverse_magnetic_flux_density.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -1995,6 +2184,7 @@
       },
       "canonical_dimension_id": "inverse_magnetic_flux_density",
       "dimension_id": "inverse_magnetic_flux_density",
+      "family": "electromagnetic",
       "public_type": "InverseMagneticFluxDensity",
       "scalar": {
         "encoding": "object",
@@ -2014,12 +2204,14 @@
         {
           "binary_unit_id": "inverse_magnetic_flux_density.per_T",
           "reserved_word_alias": null,
-          "unit_code_id": "per_T"
+          "unit_code_id": "per_T",
+          "unit_symbol": "1/T"
         }
       ]
     },
     {
       "abi_name_stem": "inverse_voltage",
+      "base_unit_code_id": "per_V",
       "binary_schema_id": "units-x.inverse_voltage.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -2027,6 +2219,7 @@
       },
       "canonical_dimension_id": "inverse_voltage",
       "dimension_id": "inverse_voltage",
+      "family": "electromagnetic",
       "public_type": "InverseVoltage",
       "scalar": {
         "encoding": "object",
@@ -2046,12 +2239,14 @@
         {
           "binary_unit_id": "inverse_voltage.per_V",
           "reserved_word_alias": null,
-          "unit_code_id": "per_V"
+          "unit_code_id": "per_V",
+          "unit_symbol": "1/V"
         }
       ]
     },
     {
       "abi_name_stem": "luminous_flux",
+      "base_unit_code_id": "lm",
       "binary_schema_id": "units-x.luminous_flux.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -2059,6 +2254,7 @@
       },
       "canonical_dimension_id": "luminous_flux",
       "dimension_id": "luminous_flux",
+      "family": "electromagnetic",
       "public_type": "LuminousFlux",
       "scalar": {
         "encoding": "object",
@@ -2078,12 +2274,14 @@
         {
           "binary_unit_id": "luminous_flux.lm",
           "reserved_word_alias": null,
-          "unit_code_id": "lm"
+          "unit_code_id": "lm",
+          "unit_symbol": "lm"
         }
       ]
     },
     {
       "abi_name_stem": "magnetic_flux",
+      "base_unit_code_id": "Wb",
       "binary_schema_id": "units-x.magnetic_flux.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -2091,6 +2289,7 @@
       },
       "canonical_dimension_id": "magnetic_flux",
       "dimension_id": "magnetic_flux",
+      "family": "electromagnetic",
       "public_type": "MagneticFlux",
       "scalar": {
         "encoding": "object",
@@ -2110,12 +2309,14 @@
         {
           "binary_unit_id": "magnetic_flux.Wb",
           "reserved_word_alias": null,
-          "unit_code_id": "Wb"
+          "unit_code_id": "Wb",
+          "unit_symbol": "Wb"
         }
       ]
     },
     {
       "abi_name_stem": "magnetic_flux_density",
+      "base_unit_code_id": "T",
       "binary_schema_id": "units-x.magnetic_flux_density.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -2123,6 +2324,7 @@
       },
       "canonical_dimension_id": "magnetic_flux_density",
       "dimension_id": "magnetic_flux_density",
+      "family": "electromagnetic",
       "public_type": "MagneticFluxDensity",
       "scalar": {
         "encoding": "object",
@@ -2142,12 +2344,14 @@
         {
           "binary_unit_id": "magnetic_flux_density.T",
           "reserved_word_alias": null,
-          "unit_code_id": "T"
+          "unit_code_id": "T",
+          "unit_symbol": "T"
         }
       ]
     },
     {
       "abi_name_stem": "resistance",
+      "base_unit_code_id": "Ohm",
       "binary_schema_id": "units-x.resistance.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -2155,6 +2359,7 @@
       },
       "canonical_dimension_id": "resistance",
       "dimension_id": "resistance",
+      "family": "electromagnetic",
       "public_type": "Resistance",
       "scalar": {
         "encoding": "object",
@@ -2174,12 +2379,14 @@
         {
           "binary_unit_id": "resistance.Ohm",
           "reserved_word_alias": null,
-          "unit_code_id": "Ohm"
+          "unit_code_id": "Ohm",
+          "unit_symbol": "Ohm"
         }
       ]
     },
     {
       "abi_name_stem": "voltage",
+      "base_unit_code_id": "V",
       "binary_schema_id": "units-x.voltage.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -2187,6 +2394,7 @@
       },
       "canonical_dimension_id": "voltage",
       "dimension_id": "voltage",
+      "family": "electromagnetic",
       "public_type": "Voltage",
       "scalar": {
         "encoding": "object",
@@ -2206,12 +2414,14 @@
         {
           "binary_unit_id": "voltage.V",
           "reserved_word_alias": null,
-          "unit_code_id": "V"
+          "unit_code_id": "V",
+          "unit_symbol": "V"
         }
       ]
     },
     {
       "abi_name_stem": "diopter",
+      "base_unit_code_id": "dpt",
       "binary_schema_id": "units-x.diopter.v1",
       "buffer": {
         "encoding": "base64-le",
@@ -2219,6 +2429,7 @@
       },
       "canonical_dimension_id": "inverse_distance",
       "dimension_id": "diopter",
+      "family": "base",
       "public_type": "Diopter",
       "scalar": {
         "encoding": "object",
@@ -2238,7 +2449,8 @@
         {
           "binary_unit_id": "diopter.dpt",
           "reserved_word_alias": null,
-          "unit_code_id": "dpt"
+          "unit_code_id": "dpt",
+          "unit_symbol": "D"
         }
       ]
     }
