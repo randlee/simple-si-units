@@ -35,32 +35,9 @@ mod tests {
     use super::{degC, degF, mm, Diopter, Distance, Quantity, Temperature, UnitMarker, VERSION};
     use core::any::TypeId;
     use core::mem::size_of;
-    use std::collections::BTreeSet;
 
     #[allow(non_camel_case_types)]
     struct Mm;
-
-    fn authoritative_inventory() -> BTreeSet<&'static str> {
-        include_str!(concat!(
-            env!("CARGO_MANIFEST_DIR"),
-            "/../../docs/crates/units-x/in-scope-type-inventory.md"
-        ))
-        .lines()
-        .filter_map(|line| {
-            let trimmed = line.trim();
-            if !trimmed.starts_with("- [") || !trimmed.ends_with('`') {
-                return None;
-            }
-            let body = trimmed
-                .strip_prefix("- [ ] `")
-                .or_else(|| trimmed.strip_prefix("- [x] `"))?;
-            if !trimmed.ends_with('`') {
-                return None;
-            }
-            body.strip_suffix('`')
-        })
-        .collect()
-    }
 
     #[test]
     fn version_constant_is_wired() {
@@ -105,18 +82,8 @@ mod tests {
     }
 
     #[test]
-    fn generated_public_surface_matches_authoritative_inventory() {
-        let implemented: BTreeSet<&'static str> = public_types::PUBLIC_TYPE_METADATA
-            .iter()
-            .map(|row| row.public_type)
-            .collect();
-        assert_eq!(implemented, authoritative_inventory());
-        assert_eq!(public_types::GENERATED_PUBLIC_TYPE_COUNT, implemented.len());
-    }
-
-    #[test]
     fn generated_public_surface_matches_catalog_metadata() {
-        let generated_rows: BTreeSet<(&'static str, &'static str, &'static str)> =
+        let generated_rows: std::collections::BTreeSet<(&'static str, &'static str, &'static str)> =
             public_types::PUBLIC_TYPE_METADATA
                 .iter()
                 .map(|row| {
@@ -127,7 +94,7 @@ mod tests {
                     )
                 })
                 .collect();
-        let catalog_rows: BTreeSet<(&'static str, &'static str, &'static str)> =
+        let catalog_rows: std::collections::BTreeSet<(&'static str, &'static str, &'static str)> =
             catalog_metadata::DIMENSIONS
                 .iter()
                 .map(|row| {
@@ -139,6 +106,10 @@ mod tests {
                 })
                 .collect();
         assert_eq!(generated_rows, catalog_rows);
+        assert_eq!(
+            public_types::GENERATED_PUBLIC_TYPE_COUNT,
+            catalog_metadata::DIMENSIONS.len()
+        );
     }
 
     #[test]

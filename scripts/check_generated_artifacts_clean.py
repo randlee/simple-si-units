@@ -30,6 +30,8 @@ def main(argv: list[str]) -> int:
         check=False,
         capture_output=True,
         text=True,
+        encoding="utf-8",
+        errors="replace",
     )
     if completed.returncode != 0:
         return completed.returncode

@@ -17,7 +17,7 @@ from generate_catalog_artifacts import render_rust_module
 
 
 class CatalogGenerationTests(unittest.TestCase):
-    def authoritative_inventory(self) -> set[str]:
+    def derived_inventory(self) -> set[str]:
         inventory = (ROOT / "docs" / "crates" / "units-x" / "in-scope-type-inventory.md").read_text(encoding="utf-8")
         return set(re.findall(r"^- \[[ x]\] `([^`]+)`$", inventory, flags=re.MULTILINE))
 
@@ -38,7 +38,7 @@ class CatalogGenerationTests(unittest.TestCase):
         self.assertIn("distance.mm", dimensions["distance"]["unit_ids"])
         self.assertEqual(dimensions["diopter"]["canonical_dimension_id"], "inverse_distance")
         self.assertIn("temperature.degC", dimensions["temperature"]["unit_ids"])
-        self.assertEqual({dimension["public_type"] for dimension in summary["dimensions"]}, self.authoritative_inventory())
+        self.assertEqual({dimension["public_type"] for dimension in summary["dimensions"]}, self.derived_inventory())
 
     def test_generation_fixture_preserves_case_reserved_alias_and_affine_units(self) -> None:
         fixture = json.loads((ROOT / "catalog" / "examples" / "generation-edge-catalog.json").read_text(encoding="utf-8"))
@@ -59,6 +59,14 @@ class CatalogGenerationTests(unittest.TestCase):
         self.assertIn("pub struct Mm;", rendered)
         self.assertIn("impl DistanceUnit for mm {}", rendered)
         self.assertIn("impl DistanceUnit for Mm {}", rendered)
+
+    def test_generated_public_types_use_reserved_alias_for_default_unit(self) -> None:
+        fixture = json.loads((ROOT / "catalog" / "examples" / "generation-edge-catalog.json").read_text(encoding="utf-8"))
+        fixture["dimensions"][0]["base_unit_code_id"] = "type"
+        summary = build_summary(fixture)
+
+        rendered = render_generated_public_types(summary)
+        self.assertIn("pub struct Distance<Storage = f64, Unit = type_>", rendered)
 
     def test_render_rust_module_escapes_catalog_strings(self) -> None:
         catalog = json.loads((ROOT / "catalog" / "examples" / "generation-edge-catalog.json").read_text(encoding="utf-8"))

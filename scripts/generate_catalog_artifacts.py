@@ -298,12 +298,25 @@ def render_generated_public_types(summary: dict) -> str:
         "}",
         "",
     ]
+
+    def marker_name_for_unit(unit: dict[str, object]) -> str:
+        marker_source = unit["reserved_word_alias"] or unit["unit_code_id"]
+        if not is_valid_rust_identifier(marker_source):
+            raise ValueError(f"invalid generated Rust marker: {marker_source}")
+        return rust_identifier(marker_source)
+
+    def default_marker_for_dimension(dimension: dict[str, object]) -> str:
+        base_unit_code_id = dimension["base_unit_code_id"]
+        for unit in dimension["units"]:
+            if unit["unit_code_id"] == base_unit_code_id:
+                return marker_name_for_unit(unit)
+        raise ValueError(
+            f"missing base unit `{base_unit_code_id}` for dimension `{dimension['dimension_id']}`"
+        )
+
     for dimension in dimensions:
         for unit in dimension["units"]:
-            marker_source = unit["reserved_word_alias"] or unit["unit_code_id"]
-            if not is_valid_rust_identifier(marker_source):
-                raise ValueError(f"invalid generated Rust marker: {marker_source}")
-            marker = rust_identifier(marker_source)
+            marker = marker_name_for_unit(unit)
             if marker in seen_markers:
                 raise ValueError(f"duplicate generated Rust marker: {marker}")
             seen_markers.add(marker)
@@ -358,16 +371,20 @@ def render_generated_public_types(summary: dict) -> str:
 
     for dimension in dimensions:
         public_type = dimension["public_type"]
-        default_unit = rust_identifier(dimension["base_unit_code_id"])
+        default_unit = default_marker_for_dimension(dimension)
         unit_trait = f"{public_type}Unit"
         lines.extend(
             [
+                f"/// Sealed unit-family marker trait for `{public_type}`.",
+                "///",
+                "/// External crates cannot implement this trait; only",
+                "/// catalog-generated unit markers participate in this family.",
                 f"pub trait {unit_trait}: UnitMarker {{}}",
                 "",
             ]
         )
         for unit in dimension["units"]:
-            marker = rust_identifier(unit["reserved_word_alias"] or unit["unit_code_id"])
+            marker = marker_name_for_unit(unit)
             lines.extend(
                 [
                     f"impl {unit_trait} for {marker} {{}}",
@@ -534,6 +551,8 @@ def format_rust_source(source: str) -> str:
         ["rustfmt", "--emit", "stdout"],
         input=source,
         text=True,
+        encoding="utf-8",
+        errors="strict",
         capture_output=True,
         check=True,
     )

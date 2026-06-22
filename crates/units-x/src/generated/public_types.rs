@@ -1580,6 +1580,10 @@ pub const UNIT_METADATA: &[GeneratedUnitMetadata] = &[
     },
 ];
 
+/// Sealed unit-family marker trait for `Amount`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait AmountUnit: UnitMarker {}
 
 impl AmountUnit for mol {}
@@ -1695,6 +1699,10 @@ impl<Storage> Amount<Storage, mol> {
     }
 }
 
+/// Sealed unit-family marker trait for `Current`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait CurrentUnit: UnitMarker {}
 
 impl CurrentUnit for A {}
@@ -1810,6 +1818,10 @@ impl<Storage> Current<Storage, A> {
     }
 }
 
+/// Sealed unit-family marker trait for `Distance`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait DistanceUnit: UnitMarker {}
 
 impl DistanceUnit for mm {}
@@ -1941,6 +1953,10 @@ impl<Storage> Distance<Storage, ft> {
     }
 }
 
+/// Sealed unit-family marker trait for `InverseAmount`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InverseAmountUnit: UnitMarker {}
 
 impl InverseAmountUnit for per_mol {}
@@ -2059,6 +2075,10 @@ impl<Storage> InverseAmount<Storage, per_mol> {
     }
 }
 
+/// Sealed unit-family marker trait for `InverseCurrent`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InverseCurrentUnit: UnitMarker {}
 
 impl InverseCurrentUnit for per_A {}
@@ -2177,6 +2197,10 @@ impl<Storage> InverseCurrent<Storage, per_A> {
     }
 }
 
+/// Sealed unit-family marker trait for `InverseDistance`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InverseDistanceUnit: UnitMarker {}
 
 impl InverseDistanceUnit for per_m {}
@@ -2295,6 +2319,10 @@ impl<Storage> InverseDistance<Storage, per_m> {
     }
 }
 
+/// Sealed unit-family marker trait for `InverseLuminosity`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InverseLuminosityUnit: UnitMarker {}
 
 impl InverseLuminosityUnit for per_cd {}
@@ -2413,6 +2441,10 @@ impl<Storage> InverseLuminosity<Storage, per_cd> {
     }
 }
 
+/// Sealed unit-family marker trait for `InverseMass`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InverseMassUnit: UnitMarker {}
 
 impl InverseMassUnit for per_kg {}
@@ -2531,6 +2563,10 @@ impl<Storage> InverseMass<Storage, per_kg> {
     }
 }
 
+/// Sealed unit-family marker trait for `InverseTemperature`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InverseTemperatureUnit: UnitMarker {}
 
 impl InverseTemperatureUnit for per_K {}
@@ -2649,6 +2685,10 @@ impl<Storage> InverseTemperature<Storage, per_K> {
     }
 }
 
+/// Sealed unit-family marker trait for `Luminosity`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait LuminosityUnit: UnitMarker {}
 
 impl LuminosityUnit for cd {}
@@ -2767,6 +2807,10 @@ impl<Storage> Luminosity<Storage, cd> {
     }
 }
 
+/// Sealed unit-family marker trait for `Mass`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait MassUnit: UnitMarker {}
 
 impl MassUnit for kg {}
@@ -2882,6 +2926,10 @@ impl<Storage> Mass<Storage, kg> {
     }
 }
 
+/// Sealed unit-family marker trait for `Temperature`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait TemperatureUnit: UnitMarker {}
 
 impl TemperatureUnit for K {}
@@ -3016,6 +3064,10 @@ impl<Storage> Temperature<Storage, degF> {
     }
 }
 
+/// Sealed unit-family marker trait for `Time`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait TimeUnit: UnitMarker {}
 
 impl TimeUnit for s {}
@@ -3139,6 +3191,10 @@ impl<Storage> Time<Storage, ms> {
     }
 }
 
+/// Sealed unit-family marker trait for `Angle`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait AngleUnit: UnitMarker {}
 
 impl AngleUnit for rad {}
@@ -3254,6 +3310,10 @@ impl<Storage> Angle<Storage, rad> {
     }
 }
 
+/// Sealed unit-family marker trait for `Area`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait AreaUnit: UnitMarker {}
 
 impl AreaUnit for m2 {}
@@ -3369,6 +3429,10 @@ impl<Storage> Area<Storage, m2> {
     }
 }
 
+/// Sealed unit-family marker trait for `InverseAngle`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InverseAngleUnit: UnitMarker {}
 
 impl InverseAngleUnit for per_rad {}
@@ -3487,6 +3551,10 @@ impl<Storage> InverseAngle<Storage, per_rad> {
     }
 }
 
+/// Sealed unit-family marker trait for `InverseArea`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InverseAreaUnit: UnitMarker {}
 
 impl InverseAreaUnit for per_m2 {}
@@ -3605,6 +3673,10 @@ impl<Storage> InverseArea<Storage, per_m2> {
     }
 }
 
+/// Sealed unit-family marker trait for `InverseSolidAngle`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InverseSolidAngleUnit: UnitMarker {}
 
 impl InverseSolidAngleUnit for per_sr {}
@@ -3723,6 +3795,10 @@ impl<Storage> InverseSolidAngle<Storage, per_sr> {
     }
 }
 
+/// Sealed unit-family marker trait for `InverseVolume`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InverseVolumeUnit: UnitMarker {}
 
 impl InverseVolumeUnit for per_m3 {}
@@ -3841,6 +3917,10 @@ impl<Storage> InverseVolume<Storage, per_m3> {
     }
 }
 
+/// Sealed unit-family marker trait for `SolidAngle`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait SolidAngleUnit: UnitMarker {}
 
 impl SolidAngleUnit for sr {}
@@ -3959,6 +4039,10 @@ impl<Storage> SolidAngle<Storage, sr> {
     }
 }
 
+/// Sealed unit-family marker trait for `Volume`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait VolumeUnit: UnitMarker {}
 
 impl VolumeUnit for m3 {}
@@ -4074,6 +4158,10 @@ impl<Storage> Volume<Storage, m3> {
     }
 }
 
+/// Sealed unit-family marker trait for `Acceleration`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait AccelerationUnit: UnitMarker {}
 
 impl AccelerationUnit for mps2 {}
@@ -4192,6 +4280,10 @@ impl<Storage> Acceleration<Storage, mps2> {
     }
 }
 
+/// Sealed unit-family marker trait for `AngularAcceleration`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait AngularAccelerationUnit: UnitMarker {}
 
 impl AngularAccelerationUnit for radps2 {}
@@ -4310,6 +4402,10 @@ impl<Storage> AngularAcceleration<Storage, radps2> {
     }
 }
 
+/// Sealed unit-family marker trait for `AngularMomentum`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait AngularMomentumUnit: UnitMarker {}
 
 impl AngularMomentumUnit for kgm2ps {}
@@ -4428,6 +4524,10 @@ impl<Storage> AngularMomentum<Storage, kgm2ps> {
     }
 }
 
+/// Sealed unit-family marker trait for `AngularVelocity`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait AngularVelocityUnit: UnitMarker {}
 
 impl AngularVelocityUnit for radps {}
@@ -4546,6 +4646,10 @@ impl<Storage> AngularVelocity<Storage, radps> {
     }
 }
 
+/// Sealed unit-family marker trait for `AreaDensity`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait AreaDensityUnit: UnitMarker {}
 
 impl AreaDensityUnit for kgpm2 {}
@@ -4664,6 +4768,10 @@ impl<Storage> AreaDensity<Storage, kgpm2> {
     }
 }
 
+/// Sealed unit-family marker trait for `AreaPerMass`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait AreaPerMassUnit: UnitMarker {}
 
 impl AreaPerMassUnit for m2pkg {}
@@ -4782,6 +4890,10 @@ impl<Storage> AreaPerMass<Storage, m2pkg> {
     }
 }
 
+/// Sealed unit-family marker trait for `Density`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait DensityUnit: UnitMarker {}
 
 impl DensityUnit for kgpm3 {}
@@ -4897,6 +5009,10 @@ impl<Storage> Density<Storage, kgpm3> {
     }
 }
 
+/// Sealed unit-family marker trait for `Energy`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait EnergyUnit: UnitMarker {}
 
 impl EnergyUnit for J {}
@@ -5012,6 +5128,10 @@ impl<Storage> Energy<Storage, J> {
     }
 }
 
+/// Sealed unit-family marker trait for `Force`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait ForceUnit: UnitMarker {}
 
 impl ForceUnit for N {}
@@ -5127,6 +5247,10 @@ impl<Storage> Force<Storage, N> {
     }
 }
 
+/// Sealed unit-family marker trait for `Frequency`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait FrequencyUnit: UnitMarker {}
 
 impl FrequencyUnit for Hz {}
@@ -5245,6 +5369,10 @@ impl<Storage> Frequency<Storage, Hz> {
     }
 }
 
+/// Sealed unit-family marker trait for `InverseAcceleration`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InverseAccelerationUnit: UnitMarker {}
 
 impl InverseAccelerationUnit for per_mps2 {}
@@ -5363,6 +5491,10 @@ impl<Storage> InverseAcceleration<Storage, per_mps2> {
     }
 }
 
+/// Sealed unit-family marker trait for `InverseAngularAcceleration`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InverseAngularAccelerationUnit: UnitMarker {}
 
 impl InverseAngularAccelerationUnit for per_radps2 {}
@@ -5481,6 +5613,10 @@ impl<Storage> InverseAngularAcceleration<Storage, per_radps2> {
     }
 }
 
+/// Sealed unit-family marker trait for `InverseAngularMomentum`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InverseAngularMomentumUnit: UnitMarker {}
 
 impl InverseAngularMomentumUnit for per_kgm2ps {}
@@ -5599,6 +5735,10 @@ impl<Storage> InverseAngularMomentum<Storage, per_kgm2ps> {
     }
 }
 
+/// Sealed unit-family marker trait for `InverseAngularVelocity`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InverseAngularVelocityUnit: UnitMarker {}
 
 impl InverseAngularVelocityUnit for per_radps {}
@@ -5717,6 +5857,10 @@ impl<Storage> InverseAngularVelocity<Storage, per_radps> {
     }
 }
 
+/// Sealed unit-family marker trait for `InverseEnergy`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InverseEnergyUnit: UnitMarker {}
 
 impl InverseEnergyUnit for per_J {}
@@ -5835,6 +5979,10 @@ impl<Storage> InverseEnergy<Storage, per_J> {
     }
 }
 
+/// Sealed unit-family marker trait for `InverseForce`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InverseForceUnit: UnitMarker {}
 
 impl InverseForceUnit for per_N {}
@@ -5953,6 +6101,10 @@ impl<Storage> InverseForce<Storage, per_N> {
     }
 }
 
+/// Sealed unit-family marker trait for `InverseMomentOfInertia`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InverseMomentOfInertiaUnit: UnitMarker {}
 
 impl InverseMomentOfInertiaUnit for per_kgm2 {}
@@ -6071,6 +6223,10 @@ impl<Storage> InverseMomentOfInertia<Storage, per_kgm2> {
     }
 }
 
+/// Sealed unit-family marker trait for `InverseMomentum`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InverseMomentumUnit: UnitMarker {}
 
 impl InverseMomentumUnit for per_kgmps {}
@@ -6189,6 +6345,10 @@ impl<Storage> InverseMomentum<Storage, per_kgmps> {
     }
 }
 
+/// Sealed unit-family marker trait for `InversePower`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InversePowerUnit: UnitMarker {}
 
 impl InversePowerUnit for per_W {}
@@ -6307,6 +6467,10 @@ impl<Storage> InversePower<Storage, per_W> {
     }
 }
 
+/// Sealed unit-family marker trait for `InversePressure`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InversePressureUnit: UnitMarker {}
 
 impl InversePressureUnit for per_Pa {}
@@ -6425,6 +6589,10 @@ impl<Storage> InversePressure<Storage, per_Pa> {
     }
 }
 
+/// Sealed unit-family marker trait for `InverseTorque`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InverseTorqueUnit: UnitMarker {}
 
 impl InverseTorqueUnit for per_Nm {}
@@ -6543,6 +6711,10 @@ impl<Storage> InverseTorque<Storage, per_Nm> {
     }
 }
 
+/// Sealed unit-family marker trait for `MomentOfInertia`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait MomentOfInertiaUnit: UnitMarker {}
 
 impl MomentOfInertiaUnit for kgm2 {}
@@ -6661,6 +6833,10 @@ impl<Storage> MomentOfInertia<Storage, kgm2> {
     }
 }
 
+/// Sealed unit-family marker trait for `Momentum`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait MomentumUnit: UnitMarker {}
 
 impl MomentumUnit for kgmps {}
@@ -6776,6 +6952,10 @@ impl<Storage> Momentum<Storage, kgmps> {
     }
 }
 
+/// Sealed unit-family marker trait for `Power`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait PowerUnit: UnitMarker {}
 
 impl PowerUnit for W {}
@@ -6891,6 +7071,10 @@ impl<Storage> Power<Storage, W> {
     }
 }
 
+/// Sealed unit-family marker trait for `Pressure`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait PressureUnit: UnitMarker {}
 
 impl PressureUnit for Pa {}
@@ -7006,6 +7190,10 @@ impl<Storage> Pressure<Storage, Pa> {
     }
 }
 
+/// Sealed unit-family marker trait for `TimePerDistance`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait TimePerDistanceUnit: UnitMarker {}
 
 impl TimePerDistanceUnit for spm {}
@@ -7124,6 +7312,10 @@ impl<Storage> TimePerDistance<Storage, spm> {
     }
 }
 
+/// Sealed unit-family marker trait for `Torque`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait TorqueUnit: UnitMarker {}
 
 impl TorqueUnit for Nm {}
@@ -7239,6 +7431,10 @@ impl<Storage> Torque<Storage, Nm> {
     }
 }
 
+/// Sealed unit-family marker trait for `Velocity`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait VelocityUnit: UnitMarker {}
 
 impl VelocityUnit for mps {}
@@ -7354,6 +7550,10 @@ impl<Storage> Velocity<Storage, mps> {
     }
 }
 
+/// Sealed unit-family marker trait for `VolumePerMass`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait VolumePerMassUnit: UnitMarker {}
 
 impl VolumePerMassUnit for m3pkg {}
@@ -7472,6 +7672,10 @@ impl<Storage> VolumePerMass<Storage, m3pkg> {
     }
 }
 
+/// Sealed unit-family marker trait for `AreaPerLumen`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait AreaPerLumenUnit: UnitMarker {}
 
 impl AreaPerLumenUnit for m2plm {}
@@ -7590,6 +7794,10 @@ impl<Storage> AreaPerLumen<Storage, m2plm> {
     }
 }
 
+/// Sealed unit-family marker trait for `Capacitance`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait CapacitanceUnit: UnitMarker {}
 
 impl CapacitanceUnit for F {}
@@ -7708,6 +7916,10 @@ impl<Storage> Capacitance<Storage, F> {
     }
 }
 
+/// Sealed unit-family marker trait for `Charge`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait ChargeUnit: UnitMarker {}
 
 impl ChargeUnit for C {}
@@ -7823,6 +8035,10 @@ impl<Storage> Charge<Storage, C> {
     }
 }
 
+/// Sealed unit-family marker trait for `Conductance`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait ConductanceUnit: UnitMarker {}
 
 impl ConductanceUnit for S {}
@@ -7941,6 +8157,10 @@ impl<Storage> Conductance<Storage, S> {
     }
 }
 
+/// Sealed unit-family marker trait for `Elastance`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait ElastanceUnit: UnitMarker {}
 
 impl ElastanceUnit for per_F {}
@@ -8059,6 +8279,10 @@ impl<Storage> Elastance<Storage, per_F> {
     }
 }
 
+/// Sealed unit-family marker trait for `Illuminance`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait IlluminanceUnit: UnitMarker {}
 
 impl IlluminanceUnit for lx {}
@@ -8177,6 +8401,10 @@ impl<Storage> Illuminance<Storage, lx> {
     }
 }
 
+/// Sealed unit-family marker trait for `Inductance`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InductanceUnit: UnitMarker {}
 
 impl InductanceUnit for H {}
@@ -8295,6 +8523,10 @@ impl<Storage> Inductance<Storage, H> {
     }
 }
 
+/// Sealed unit-family marker trait for `InverseCharge`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InverseChargeUnit: UnitMarker {}
 
 impl InverseChargeUnit for per_C {}
@@ -8413,6 +8645,10 @@ impl<Storage> InverseCharge<Storage, per_C> {
     }
 }
 
+/// Sealed unit-family marker trait for `InverseInductance`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InverseInductanceUnit: UnitMarker {}
 
 impl InverseInductanceUnit for per_H {}
@@ -8531,6 +8767,10 @@ impl<Storage> InverseInductance<Storage, per_H> {
     }
 }
 
+/// Sealed unit-family marker trait for `InverseLuminousFlux`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InverseLuminousFluxUnit: UnitMarker {}
 
 impl InverseLuminousFluxUnit for per_lm {}
@@ -8649,6 +8889,10 @@ impl<Storage> InverseLuminousFlux<Storage, per_lm> {
     }
 }
 
+/// Sealed unit-family marker trait for `InverseMagneticFlux`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InverseMagneticFluxUnit: UnitMarker {}
 
 impl InverseMagneticFluxUnit for per_Wb {}
@@ -8767,6 +9011,10 @@ impl<Storage> InverseMagneticFlux<Storage, per_Wb> {
     }
 }
 
+/// Sealed unit-family marker trait for `InverseMagneticFluxDensity`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InverseMagneticFluxDensityUnit: UnitMarker {}
 
 impl InverseMagneticFluxDensityUnit for per_T {}
@@ -8885,6 +9133,10 @@ impl<Storage> InverseMagneticFluxDensity<Storage, per_T> {
     }
 }
 
+/// Sealed unit-family marker trait for `InverseVoltage`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait InverseVoltageUnit: UnitMarker {}
 
 impl InverseVoltageUnit for per_V {}
@@ -9003,6 +9255,10 @@ impl<Storage> InverseVoltage<Storage, per_V> {
     }
 }
 
+/// Sealed unit-family marker trait for `LuminousFlux`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait LuminousFluxUnit: UnitMarker {}
 
 impl LuminousFluxUnit for lm {}
@@ -9121,6 +9377,10 @@ impl<Storage> LuminousFlux<Storage, lm> {
     }
 }
 
+/// Sealed unit-family marker trait for `MagneticFlux`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait MagneticFluxUnit: UnitMarker {}
 
 impl MagneticFluxUnit for Wb {}
@@ -9239,6 +9499,10 @@ impl<Storage> MagneticFlux<Storage, Wb> {
     }
 }
 
+/// Sealed unit-family marker trait for `MagneticFluxDensity`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait MagneticFluxDensityUnit: UnitMarker {}
 
 impl MagneticFluxDensityUnit for T {}
@@ -9357,6 +9621,10 @@ impl<Storage> MagneticFluxDensity<Storage, T> {
     }
 }
 
+/// Sealed unit-family marker trait for `Resistance`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait ResistanceUnit: UnitMarker {}
 
 impl ResistanceUnit for Ohm {}
@@ -9475,6 +9743,10 @@ impl<Storage> Resistance<Storage, Ohm> {
     }
 }
 
+/// Sealed unit-family marker trait for `Voltage`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait VoltageUnit: UnitMarker {}
 
 impl VoltageUnit for V {}
@@ -9590,6 +9862,10 @@ impl<Storage> Voltage<Storage, V> {
     }
 }
 
+/// Sealed unit-family marker trait for `Diopter`.
+///
+/// External crates cannot implement this trait; only
+/// catalog-generated unit markers participate in this family.
 pub trait DiopterUnit: UnitMarker {}
 
 impl DiopterUnit for dpt {}
