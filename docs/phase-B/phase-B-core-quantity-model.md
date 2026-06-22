@@ -54,9 +54,9 @@ canonical-dimension arithmetic semantics, and array/buffer model.
 
 | Sprint | Focus | Depends On | Parallel With | Status |
 |---|---|---|---|---|
-| [Sprint B-1](sprint-B-1-core-storage-types-and-unit-markers.md) | Core storage types and unit markers | Sprint A-6 | None | `Complete` |
-| [Sprint B-2](sprint-B-2-unit-conversions-and-temperature-offsets.md) | Catalog-owned conversions plus Celsius/Fahrenheit support | Sprint A-6, Sprint B-1 | None | `Not Started` |
-| [Sprint B-3](sprint-B-3-arithmetic-semantics-and-canonical-compute-bridges.md) | Arithmetic semantics and canonical compute bridges | Sprint A-6, Sprint B-1, Sprint B-2 | Sprint B-4 | `Not Started` |
+| [Sprint B-1](sprint-B-1-core-storage-types-and-unit-markers.md) | Core storage types and unit markers | Sprint A-6 | None | `Done` |
+| [Sprint B-2](sprint-B-2-unit-conversions-and-temperature-offsets.md) | Catalog-owned conversions plus Celsius/Fahrenheit support | Sprint A-6, Sprint B-1 | None | `Done` |
+| [Sprint B-3](sprint-B-3-arithmetic-semantics-and-canonical-compute-bridges.md) | Arithmetic semantics and canonical compute bridges | Sprint A-6, Sprint B-1, Sprint B-2 | Sprint B-4 | `In Progress` |
 | [Sprint B-4](sprint-B-4-array-and-buffer-quantity-model.md) | Array and buffer quantity model | Sprint A-6, Sprint B-1 | Sprint B-3 | `Not Started` |
 
 ## Phase Completion Criteria
