@@ -1,6 +1,6 @@
 use crate::conversion::{from_base_value, lookup_unit_metadata, to_base_value, ValueStorage};
 use crate::generated::public_types::*;
-use crate::model::{Quantity, QuantityType, UnitMarker};
+use crate::model::{Quantity, QuantityType, ScalarStorageFor, UnitMarker};
 use core::ops::{Add, Div, Mul, Sub};
 
 mod private {
@@ -214,7 +214,7 @@ where
     Lhs::Storage: ValueStorage + CheckedAddSubPromotion<Rhs::Storage, Output = OutStorage>,
     Lhs::Unit: QuantityForStorage<OutStorage>,
     Rhs::Storage: ValueStorage,
-    OutStorage: CheckedArithmeticStorage,
+    OutStorage: CheckedArithmeticStorage + ScalarStorageFor<Lhs::Unit>,
 {
     let lhs_value = convert_quantity_for_arithmetic::<
         Lhs,
@@ -239,7 +239,7 @@ where
     Lhs::Storage: ValueStorage + CheckedAddSubPromotion<Rhs::Storage, Output = OutStorage>,
     Lhs::Unit: QuantityForStorage<OutStorage>,
     Rhs::Storage: ValueStorage,
-    OutStorage: CheckedArithmeticStorage,
+    OutStorage: CheckedArithmeticStorage + ScalarStorageFor<Lhs::Unit>,
 {
     let lhs_value = convert_quantity_for_arithmetic::<
         Lhs,
@@ -263,7 +263,7 @@ where
     Lhs::Storage: ValueStorage + CheckedMulPromotion<Rhs, Output = OutStorage>,
     Lhs::Unit: QuantityForStorage<OutStorage>,
     Rhs: ValueStorage,
-    OutStorage: CheckedArithmeticStorage,
+    OutStorage: CheckedArithmeticStorage + ScalarStorageFor<Lhs::Unit>,
 {
     let lhs_value = convert_quantity_for_arithmetic::<
         Lhs,
@@ -283,7 +283,7 @@ where
     Lhs::Storage: ValueStorage + CheckedDivPromotion<Rhs, Output = OutStorage>,
     Lhs::Unit: QuantityForStorage<OutStorage>,
     Rhs: ValueStorage,
-    OutStorage: CheckedArithmeticStorage,
+    OutStorage: CheckedArithmeticStorage + ScalarStorageFor<Lhs::Unit>,
 {
     let lhs_value = convert_quantity_for_arithmetic::<
         Lhs,
@@ -304,7 +304,7 @@ where
     Lhs::Storage: ValueStorage + AddSubPromotion<Rhs::Storage, Output = OutStorage>,
     Lhs::Unit: QuantityForStorage<OutStorage>,
     Rhs::Storage: ValueStorage,
-    OutStorage: InfallibleArithmeticStorage,
+    OutStorage: InfallibleArithmeticStorage + ScalarStorageFor<Lhs::Unit>,
 {
     let lhs_value = convert_quantity_for_arithmetic_infallible::<
         Lhs,
@@ -329,7 +329,7 @@ where
     Lhs::Storage: ValueStorage + AddSubPromotion<Rhs::Storage, Output = OutStorage>,
     Lhs::Unit: QuantityForStorage<OutStorage>,
     Rhs::Storage: ValueStorage,
-    OutStorage: InfallibleArithmeticStorage,
+    OutStorage: InfallibleArithmeticStorage + ScalarStorageFor<Lhs::Unit>,
 {
     let lhs_value = convert_quantity_for_arithmetic_infallible::<
         Lhs,
@@ -353,7 +353,7 @@ where
     Lhs::Storage: ValueStorage + MulPromotion<Rhs, Output = OutStorage>,
     Lhs::Unit: QuantityForStorage<OutStorage>,
     Rhs: ValueStorage,
-    OutStorage: InfallibleArithmeticStorage,
+    OutStorage: InfallibleArithmeticStorage + ScalarStorageFor<Lhs::Unit>,
 {
     let lhs_value = convert_quantity_for_arithmetic_infallible::<
         Lhs,
@@ -373,7 +373,7 @@ where
     Lhs::Storage: ValueStorage + DivPromotion<Rhs, Output = OutStorage>,
     Lhs::Unit: QuantityForStorage<OutStorage>,
     Rhs: ValueStorage,
-    OutStorage: InfallibleArithmeticStorage,
+    OutStorage: InfallibleArithmeticStorage + ScalarStorageFor<Lhs::Unit>,
 {
     let lhs_value = convert_quantity_for_arithmetic_infallible::<
         Lhs,
@@ -389,9 +389,9 @@ pub fn velocity_from_distance_and_time<DistanceStorage, DistanceMeasure, TimeSto
     duration: Time<TimeStorage, TimeMeasure>,
 ) -> Result<Velocity<f64, mps>, ComputeError>
 where
-    DistanceStorage: ValueStorage,
+    DistanceStorage: ValueStorage + ScalarStorageFor<DistanceMeasure>,
     DistanceMeasure: DistanceUnit,
-    TimeStorage: ValueStorage,
+    TimeStorage: ValueStorage + ScalarStorageFor<TimeMeasure>,
     TimeMeasure: TimeUnit,
 {
     let distance_canonical =
@@ -416,9 +416,9 @@ pub fn acceleration_from_velocity_and_time<
     duration: Time<TimeStorage, TimeMeasure>,
 ) -> Result<Acceleration<f64, mps2>, ComputeError>
 where
-    VelocityStorage: ValueStorage,
+    VelocityStorage: ValueStorage + ScalarStorageFor<VelocityMeasure>,
     VelocityMeasure: VelocityUnit,
-    TimeStorage: ValueStorage,
+    TimeStorage: ValueStorage + ScalarStorageFor<TimeMeasure>,
     TimeMeasure: TimeUnit,
 {
     let velocity_canonical =
@@ -507,7 +507,7 @@ macro_rules! impl_same_public_type_arithmetic {
     ($public_type:ident, $unit_trait:ident) => {
         impl<LhsStorage, LhsUnit> $public_type<LhsStorage, LhsUnit>
         where
-            LhsStorage: ValueStorage,
+            LhsStorage: ValueStorage + ScalarStorageFor<LhsUnit>,
             LhsUnit: $unit_trait,
         {
             pub fn checked_add<RhsStorage, RhsUnit, OutStorage>(
@@ -516,10 +516,10 @@ macro_rules! impl_same_public_type_arithmetic {
             ) -> Result<<LhsUnit as QuantityForStorage<OutStorage>>::Quantity, ArithmeticError>
             where
                 LhsStorage: CheckedAddSubPromotion<RhsStorage, Output = OutStorage>,
-                RhsStorage: ValueStorage,
+                RhsStorage: ValueStorage + ScalarStorageFor<RhsUnit>,
                 RhsUnit: $unit_trait,
                 LhsUnit: QuantityForStorage<OutStorage>,
-                OutStorage: CheckedArithmeticStorage,
+                OutStorage: CheckedArithmeticStorage + ScalarStorageFor<LhsUnit>,
             {
                 checked_add_quantities::<Self, $public_type<RhsStorage, RhsUnit>, OutStorage>(
                     self, rhs,
@@ -532,10 +532,10 @@ macro_rules! impl_same_public_type_arithmetic {
             ) -> Result<<LhsUnit as QuantityForStorage<OutStorage>>::Quantity, ArithmeticError>
             where
                 LhsStorage: CheckedAddSubPromotion<RhsStorage, Output = OutStorage>,
-                RhsStorage: ValueStorage,
+                RhsStorage: ValueStorage + ScalarStorageFor<RhsUnit>,
                 RhsUnit: $unit_trait,
                 LhsUnit: QuantityForStorage<OutStorage>,
-                OutStorage: CheckedArithmeticStorage,
+                OutStorage: CheckedArithmeticStorage + ScalarStorageFor<LhsUnit>,
             {
                 checked_sub_quantities::<Self, $public_type<RhsStorage, RhsUnit>, OutStorage>(
                     self, rhs,
@@ -546,12 +546,14 @@ macro_rules! impl_same_public_type_arithmetic {
         impl<LhsStorage, LhsUnit, RhsStorage, RhsUnit> Add<$public_type<RhsStorage, RhsUnit>>
             for $public_type<LhsStorage, LhsUnit>
         where
-            LhsStorage: ValueStorage + InfallibleAddSubPromotion<RhsStorage>,
-            RhsStorage: ValueStorage,
+            LhsStorage:
+                ValueStorage + ScalarStorageFor<LhsUnit> + InfallibleAddSubPromotion<RhsStorage>,
+            RhsStorage: ValueStorage + ScalarStorageFor<RhsUnit>,
             LhsUnit: $unit_trait
                 + QuantityForStorage<<LhsStorage as AddSubPromotion<RhsStorage>>::Output>,
             RhsUnit: $unit_trait,
-            <LhsStorage as AddSubPromotion<RhsStorage>>::Output: InfallibleArithmeticStorage,
+            <LhsStorage as AddSubPromotion<RhsStorage>>::Output:
+                InfallibleArithmeticStorage + ScalarStorageFor<LhsUnit>,
         {
             type Output = <LhsUnit as QuantityForStorage<
                 <LhsStorage as AddSubPromotion<RhsStorage>>::Output,
@@ -569,12 +571,14 @@ macro_rules! impl_same_public_type_arithmetic {
         impl<LhsStorage, LhsUnit, RhsStorage, RhsUnit> Sub<$public_type<RhsStorage, RhsUnit>>
             for $public_type<LhsStorage, LhsUnit>
         where
-            LhsStorage: ValueStorage + InfallibleAddSubPromotion<RhsStorage>,
-            RhsStorage: ValueStorage,
+            LhsStorage:
+                ValueStorage + ScalarStorageFor<LhsUnit> + InfallibleAddSubPromotion<RhsStorage>,
+            RhsStorage: ValueStorage + ScalarStorageFor<RhsUnit>,
             LhsUnit: $unit_trait
                 + QuantityForStorage<<LhsStorage as AddSubPromotion<RhsStorage>>::Output>,
             RhsUnit: $unit_trait,
-            <LhsStorage as AddSubPromotion<RhsStorage>>::Output: InfallibleArithmeticStorage,
+            <LhsStorage as AddSubPromotion<RhsStorage>>::Output:
+                InfallibleArithmeticStorage + ScalarStorageFor<LhsUnit>,
         {
             type Output = <LhsUnit as QuantityForStorage<
                 <LhsStorage as AddSubPromotion<RhsStorage>>::Output,
@@ -595,7 +599,7 @@ macro_rules! impl_scalar_arithmetic {
     ($public_type:ident, $unit_trait:ident) => {
         impl<LhsStorage, LhsUnit> $public_type<LhsStorage, LhsUnit>
         where
-            LhsStorage: ValueStorage,
+            LhsStorage: ValueStorage + ScalarStorageFor<LhsUnit>,
             LhsUnit: $unit_trait,
         {
             pub fn checked_mul<Rhs, OutStorage>(
@@ -606,7 +610,7 @@ macro_rules! impl_scalar_arithmetic {
                 LhsStorage: CheckedMulPromotion<Rhs, Output = OutStorage>,
                 Rhs: ValueStorage,
                 LhsUnit: QuantityForStorage<OutStorage>,
-                OutStorage: CheckedArithmeticStorage,
+                OutStorage: CheckedArithmeticStorage + ScalarStorageFor<LhsUnit>,
             {
                 checked_mul_scalar::<Self, Rhs, OutStorage>(self, rhs)
             }
@@ -619,7 +623,7 @@ macro_rules! impl_scalar_arithmetic {
                 LhsStorage: CheckedDivPromotion<Rhs, Output = OutStorage>,
                 Rhs: ValueStorage,
                 LhsUnit: QuantityForStorage<OutStorage>,
-                OutStorage: CheckedArithmeticStorage,
+                OutStorage: CheckedArithmeticStorage + ScalarStorageFor<LhsUnit>,
             {
                 checked_div_scalar::<Self, Rhs, OutStorage>(self, rhs)
             }
@@ -627,10 +631,11 @@ macro_rules! impl_scalar_arithmetic {
 
         impl<LhsStorage, LhsUnit, Rhs> Mul<Rhs> for $public_type<LhsStorage, LhsUnit>
         where
-            LhsStorage: ValueStorage + InfallibleMulPromotion<Rhs>,
+            LhsStorage: ValueStorage + ScalarStorageFor<LhsUnit> + InfallibleMulPromotion<Rhs>,
             Rhs: ValueStorage,
             LhsUnit: $unit_trait + QuantityForStorage<<LhsStorage as MulPromotion<Rhs>>::Output>,
-            <LhsStorage as MulPromotion<Rhs>>::Output: InfallibleArithmeticStorage,
+            <LhsStorage as MulPromotion<Rhs>>::Output:
+                InfallibleArithmeticStorage + ScalarStorageFor<LhsUnit>,
         {
             type Output = <LhsUnit as QuantityForStorage<
                 <LhsStorage as MulPromotion<Rhs>>::Output,
@@ -645,10 +650,11 @@ macro_rules! impl_scalar_arithmetic {
 
         impl<LhsStorage, LhsUnit, Rhs> Div<Rhs> for $public_type<LhsStorage, LhsUnit>
         where
-            LhsStorage: ValueStorage + InfallibleDivPromotion<Rhs>,
+            LhsStorage: ValueStorage + ScalarStorageFor<LhsUnit> + InfallibleDivPromotion<Rhs>,
             Rhs: ValueStorage,
             LhsUnit: $unit_trait + QuantityForStorage<<LhsStorage as DivPromotion<Rhs>>::Output>,
-            <LhsStorage as DivPromotion<Rhs>>::Output: InfallibleArithmeticStorage,
+            <LhsStorage as DivPromotion<Rhs>>::Output:
+                InfallibleArithmeticStorage + ScalarStorageFor<LhsUnit>,
         {
             type Output = <LhsUnit as QuantityForStorage<
                 <LhsStorage as DivPromotion<Rhs>>::Output,
@@ -668,12 +674,14 @@ macro_rules! impl_cross_public_add_sub {
         impl<LhsStorage, LhsUnit, RhsStorage, RhsUnit> Add<$rhs_type<RhsStorage, RhsUnit>>
             for $lhs_type<LhsStorage, LhsUnit>
         where
-            LhsStorage: ValueStorage + InfallibleAddSubPromotion<RhsStorage>,
-            RhsStorage: ValueStorage,
+            LhsStorage:
+                ValueStorage + ScalarStorageFor<LhsUnit> + InfallibleAddSubPromotion<RhsStorage>,
+            RhsStorage: ValueStorage + ScalarStorageFor<RhsUnit>,
             LhsUnit: $lhs_unit_trait
                 + QuantityForStorage<<LhsStorage as AddSubPromotion<RhsStorage>>::Output>,
             RhsUnit: $rhs_unit_trait,
-            <LhsStorage as AddSubPromotion<RhsStorage>>::Output: InfallibleArithmeticStorage,
+            <LhsStorage as AddSubPromotion<RhsStorage>>::Output:
+                InfallibleArithmeticStorage + ScalarStorageFor<LhsUnit>,
         {
             type Output = <LhsUnit as QuantityForStorage<
                 <LhsStorage as AddSubPromotion<RhsStorage>>::Output,
@@ -691,12 +699,14 @@ macro_rules! impl_cross_public_add_sub {
         impl<LhsStorage, LhsUnit, RhsStorage, RhsUnit> Sub<$rhs_type<RhsStorage, RhsUnit>>
             for $lhs_type<LhsStorage, LhsUnit>
         where
-            LhsStorage: ValueStorage + InfallibleAddSubPromotion<RhsStorage>,
-            RhsStorage: ValueStorage,
+            LhsStorage:
+                ValueStorage + ScalarStorageFor<LhsUnit> + InfallibleAddSubPromotion<RhsStorage>,
+            RhsStorage: ValueStorage + ScalarStorageFor<RhsUnit>,
             LhsUnit: $lhs_unit_trait
                 + QuantityForStorage<<LhsStorage as AddSubPromotion<RhsStorage>>::Output>,
             RhsUnit: $rhs_unit_trait,
-            <LhsStorage as AddSubPromotion<RhsStorage>>::Output: InfallibleArithmeticStorage,
+            <LhsStorage as AddSubPromotion<RhsStorage>>::Output:
+                InfallibleArithmeticStorage + ScalarStorageFor<LhsUnit>,
         {
             type Output = <LhsUnit as QuantityForStorage<
                 <LhsStorage as AddSubPromotion<RhsStorage>>::Output,

@@ -6,7 +6,7 @@ use crate::conversion::{
     try_convert_same_public_type, ConvertUnit, InfallibleUnitStorage, ReciprocalBridge,
     TryConvertQuantity, TryConvertUnit, ValueStorage,
 };
-use crate::model::{private, Quantity, QuantityType, UnitMarker};
+use crate::model::{private, Quantity, QuantityType, ScalarStorageFor, UnitMarker};
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct GeneratedUnitMetadata {
@@ -51,6 +51,14 @@ impl UnitMarker for mol {
 
 impl ScalarArithmeticUnit for mol {}
 
+impl private::SealedScalarStorageFor<mol> for f32 {}
+
+impl ScalarStorageFor<mol> for f32 {}
+
+impl private::SealedScalarStorageFor<mol> for f64 {}
+
+impl ScalarStorageFor<mol> for f64 {}
+
 /// Unit marker generated from catalog unit `A`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct A;
@@ -66,6 +74,14 @@ impl UnitMarker for A {
 }
 
 impl ScalarArithmeticUnit for A {}
+
+impl private::SealedScalarStorageFor<A> for f32 {}
+
+impl ScalarStorageFor<A> for f32 {}
+
+impl private::SealedScalarStorageFor<A> for f64 {}
+
+impl ScalarStorageFor<A> for f64 {}
 
 /// Unit marker generated from catalog unit `mm`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -115,6 +131,42 @@ impl UnitMarker for ft {
 
 impl ScalarArithmeticUnit for ft {}
 
+impl private::SealedScalarStorageFor<mm> for i32 {}
+
+impl ScalarStorageFor<mm> for i32 {}
+
+impl private::SealedScalarStorageFor<mm> for f32 {}
+
+impl ScalarStorageFor<mm> for f32 {}
+
+impl private::SealedScalarStorageFor<mm> for f64 {}
+
+impl ScalarStorageFor<mm> for f64 {}
+
+impl private::SealedScalarStorageFor<m> for i32 {}
+
+impl ScalarStorageFor<m> for i32 {}
+
+impl private::SealedScalarStorageFor<m> for f32 {}
+
+impl ScalarStorageFor<m> for f32 {}
+
+impl private::SealedScalarStorageFor<m> for f64 {}
+
+impl ScalarStorageFor<m> for f64 {}
+
+impl private::SealedScalarStorageFor<ft> for i32 {}
+
+impl ScalarStorageFor<ft> for i32 {}
+
+impl private::SealedScalarStorageFor<ft> for f32 {}
+
+impl ScalarStorageFor<ft> for f32 {}
+
+impl private::SealedScalarStorageFor<ft> for f64 {}
+
+impl ScalarStorageFor<ft> for f64 {}
+
 /// Unit marker generated from catalog unit `per_mol`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct per_mol;
@@ -130,6 +182,14 @@ impl UnitMarker for per_mol {
 }
 
 impl ScalarArithmeticUnit for per_mol {}
+
+impl private::SealedScalarStorageFor<per_mol> for f32 {}
+
+impl ScalarStorageFor<per_mol> for f32 {}
+
+impl private::SealedScalarStorageFor<per_mol> for f64 {}
+
+impl ScalarStorageFor<per_mol> for f64 {}
 
 /// Unit marker generated from catalog unit `per_A`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -147,6 +207,14 @@ impl UnitMarker for per_A {
 
 impl ScalarArithmeticUnit for per_A {}
 
+impl private::SealedScalarStorageFor<per_A> for f32 {}
+
+impl ScalarStorageFor<per_A> for f32 {}
+
+impl private::SealedScalarStorageFor<per_A> for f64 {}
+
+impl ScalarStorageFor<per_A> for f64 {}
+
 /// Unit marker generated from catalog unit `per_m`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct per_m;
@@ -162,6 +230,14 @@ impl UnitMarker for per_m {
 }
 
 impl ScalarArithmeticUnit for per_m {}
+
+impl private::SealedScalarStorageFor<per_m> for f32 {}
+
+impl ScalarStorageFor<per_m> for f32 {}
+
+impl private::SealedScalarStorageFor<per_m> for f64 {}
+
+impl ScalarStorageFor<per_m> for f64 {}
 
 /// Unit marker generated from catalog unit `per_cd`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -179,6 +255,14 @@ impl UnitMarker for per_cd {
 
 impl ScalarArithmeticUnit for per_cd {}
 
+impl private::SealedScalarStorageFor<per_cd> for f32 {}
+
+impl ScalarStorageFor<per_cd> for f32 {}
+
+impl private::SealedScalarStorageFor<per_cd> for f64 {}
+
+impl ScalarStorageFor<per_cd> for f64 {}
+
 /// Unit marker generated from catalog unit `per_kg`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct per_kg;
@@ -194,6 +278,14 @@ impl UnitMarker for per_kg {
 }
 
 impl ScalarArithmeticUnit for per_kg {}
+
+impl private::SealedScalarStorageFor<per_kg> for f32 {}
+
+impl ScalarStorageFor<per_kg> for f32 {}
+
+impl private::SealedScalarStorageFor<per_kg> for f64 {}
+
+impl ScalarStorageFor<per_kg> for f64 {}
 
 /// Unit marker generated from catalog unit `per_K`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -211,6 +303,14 @@ impl UnitMarker for per_K {
 
 impl ScalarArithmeticUnit for per_K {}
 
+impl private::SealedScalarStorageFor<per_K> for f32 {}
+
+impl ScalarStorageFor<per_K> for f32 {}
+
+impl private::SealedScalarStorageFor<per_K> for f64 {}
+
+impl ScalarStorageFor<per_K> for f64 {}
+
 /// Unit marker generated from catalog unit `cd`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct cd;
@@ -227,6 +327,14 @@ impl UnitMarker for cd {
 
 impl ScalarArithmeticUnit for cd {}
 
+impl private::SealedScalarStorageFor<cd> for f32 {}
+
+impl ScalarStorageFor<cd> for f32 {}
+
+impl private::SealedScalarStorageFor<cd> for f64 {}
+
+impl ScalarStorageFor<cd> for f64 {}
+
 /// Unit marker generated from catalog unit `kg`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct kg;
@@ -242,6 +350,14 @@ impl UnitMarker for kg {
 }
 
 impl ScalarArithmeticUnit for kg {}
+
+impl private::SealedScalarStorageFor<kg> for f32 {}
+
+impl ScalarStorageFor<kg> for f32 {}
+
+impl private::SealedScalarStorageFor<kg> for f64 {}
+
+impl ScalarStorageFor<kg> for f64 {}
 
 /// Unit marker generated from catalog unit `K`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -285,6 +401,30 @@ impl UnitMarker for degF {
     const PUBLIC_TYPE: &'static str = "Temperature";
 }
 
+impl private::SealedScalarStorageFor<K> for f32 {}
+
+impl ScalarStorageFor<K> for f32 {}
+
+impl private::SealedScalarStorageFor<K> for f64 {}
+
+impl ScalarStorageFor<K> for f64 {}
+
+impl private::SealedScalarStorageFor<degC> for f32 {}
+
+impl ScalarStorageFor<degC> for f32 {}
+
+impl private::SealedScalarStorageFor<degC> for f64 {}
+
+impl ScalarStorageFor<degC> for f64 {}
+
+impl private::SealedScalarStorageFor<degF> for f32 {}
+
+impl ScalarStorageFor<degF> for f32 {}
+
+impl private::SealedScalarStorageFor<degF> for f64 {}
+
+impl ScalarStorageFor<degF> for f64 {}
+
 /// Unit marker generated from catalog unit `s`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct s;
@@ -317,6 +457,30 @@ impl UnitMarker for ms {
 
 impl ScalarArithmeticUnit for ms {}
 
+impl private::SealedScalarStorageFor<s> for i32 {}
+
+impl ScalarStorageFor<s> for i32 {}
+
+impl private::SealedScalarStorageFor<s> for f32 {}
+
+impl ScalarStorageFor<s> for f32 {}
+
+impl private::SealedScalarStorageFor<s> for f64 {}
+
+impl ScalarStorageFor<s> for f64 {}
+
+impl private::SealedScalarStorageFor<ms> for i32 {}
+
+impl ScalarStorageFor<ms> for i32 {}
+
+impl private::SealedScalarStorageFor<ms> for f32 {}
+
+impl ScalarStorageFor<ms> for f32 {}
+
+impl private::SealedScalarStorageFor<ms> for f64 {}
+
+impl ScalarStorageFor<ms> for f64 {}
+
 /// Unit marker generated from catalog unit `rad`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct rad;
@@ -332,6 +496,14 @@ impl UnitMarker for rad {
 }
 
 impl ScalarArithmeticUnit for rad {}
+
+impl private::SealedScalarStorageFor<rad> for f32 {}
+
+impl ScalarStorageFor<rad> for f32 {}
+
+impl private::SealedScalarStorageFor<rad> for f64 {}
+
+impl ScalarStorageFor<rad> for f64 {}
 
 /// Unit marker generated from catalog unit `m2`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -349,6 +521,14 @@ impl UnitMarker for m2 {
 
 impl ScalarArithmeticUnit for m2 {}
 
+impl private::SealedScalarStorageFor<m2> for f32 {}
+
+impl ScalarStorageFor<m2> for f32 {}
+
+impl private::SealedScalarStorageFor<m2> for f64 {}
+
+impl ScalarStorageFor<m2> for f64 {}
+
 /// Unit marker generated from catalog unit `per_rad`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct per_rad;
@@ -364,6 +544,14 @@ impl UnitMarker for per_rad {
 }
 
 impl ScalarArithmeticUnit for per_rad {}
+
+impl private::SealedScalarStorageFor<per_rad> for f32 {}
+
+impl ScalarStorageFor<per_rad> for f32 {}
+
+impl private::SealedScalarStorageFor<per_rad> for f64 {}
+
+impl ScalarStorageFor<per_rad> for f64 {}
 
 /// Unit marker generated from catalog unit `per_m2`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -381,6 +569,14 @@ impl UnitMarker for per_m2 {
 
 impl ScalarArithmeticUnit for per_m2 {}
 
+impl private::SealedScalarStorageFor<per_m2> for f32 {}
+
+impl ScalarStorageFor<per_m2> for f32 {}
+
+impl private::SealedScalarStorageFor<per_m2> for f64 {}
+
+impl ScalarStorageFor<per_m2> for f64 {}
+
 /// Unit marker generated from catalog unit `per_sr`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct per_sr;
@@ -396,6 +592,14 @@ impl UnitMarker for per_sr {
 }
 
 impl ScalarArithmeticUnit for per_sr {}
+
+impl private::SealedScalarStorageFor<per_sr> for f32 {}
+
+impl ScalarStorageFor<per_sr> for f32 {}
+
+impl private::SealedScalarStorageFor<per_sr> for f64 {}
+
+impl ScalarStorageFor<per_sr> for f64 {}
 
 /// Unit marker generated from catalog unit `per_m3`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -413,6 +617,14 @@ impl UnitMarker for per_m3 {
 
 impl ScalarArithmeticUnit for per_m3 {}
 
+impl private::SealedScalarStorageFor<per_m3> for f32 {}
+
+impl ScalarStorageFor<per_m3> for f32 {}
+
+impl private::SealedScalarStorageFor<per_m3> for f64 {}
+
+impl ScalarStorageFor<per_m3> for f64 {}
+
 /// Unit marker generated from catalog unit `sr`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct sr;
@@ -428,6 +640,14 @@ impl UnitMarker for sr {
 }
 
 impl ScalarArithmeticUnit for sr {}
+
+impl private::SealedScalarStorageFor<sr> for f32 {}
+
+impl ScalarStorageFor<sr> for f32 {}
+
+impl private::SealedScalarStorageFor<sr> for f64 {}
+
+impl ScalarStorageFor<sr> for f64 {}
 
 /// Unit marker generated from catalog unit `m3`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -445,6 +665,14 @@ impl UnitMarker for m3 {
 
 impl ScalarArithmeticUnit for m3 {}
 
+impl private::SealedScalarStorageFor<m3> for f32 {}
+
+impl ScalarStorageFor<m3> for f32 {}
+
+impl private::SealedScalarStorageFor<m3> for f64 {}
+
+impl ScalarStorageFor<m3> for f64 {}
+
 /// Unit marker generated from catalog unit `mps2`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct mps2;
@@ -460,6 +688,14 @@ impl UnitMarker for mps2 {
 }
 
 impl ScalarArithmeticUnit for mps2 {}
+
+impl private::SealedScalarStorageFor<mps2> for f32 {}
+
+impl ScalarStorageFor<mps2> for f32 {}
+
+impl private::SealedScalarStorageFor<mps2> for f64 {}
+
+impl ScalarStorageFor<mps2> for f64 {}
 
 /// Unit marker generated from catalog unit `radps2`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -477,6 +713,14 @@ impl UnitMarker for radps2 {
 
 impl ScalarArithmeticUnit for radps2 {}
 
+impl private::SealedScalarStorageFor<radps2> for f32 {}
+
+impl ScalarStorageFor<radps2> for f32 {}
+
+impl private::SealedScalarStorageFor<radps2> for f64 {}
+
+impl ScalarStorageFor<radps2> for f64 {}
+
 /// Unit marker generated from catalog unit `kgm2ps`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct kgm2ps;
@@ -492,6 +736,14 @@ impl UnitMarker for kgm2ps {
 }
 
 impl ScalarArithmeticUnit for kgm2ps {}
+
+impl private::SealedScalarStorageFor<kgm2ps> for f32 {}
+
+impl ScalarStorageFor<kgm2ps> for f32 {}
+
+impl private::SealedScalarStorageFor<kgm2ps> for f64 {}
+
+impl ScalarStorageFor<kgm2ps> for f64 {}
 
 /// Unit marker generated from catalog unit `radps`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -509,6 +761,14 @@ impl UnitMarker for radps {
 
 impl ScalarArithmeticUnit for radps {}
 
+impl private::SealedScalarStorageFor<radps> for f32 {}
+
+impl ScalarStorageFor<radps> for f32 {}
+
+impl private::SealedScalarStorageFor<radps> for f64 {}
+
+impl ScalarStorageFor<radps> for f64 {}
+
 /// Unit marker generated from catalog unit `kgpm2`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct kgpm2;
@@ -524,6 +784,14 @@ impl UnitMarker for kgpm2 {
 }
 
 impl ScalarArithmeticUnit for kgpm2 {}
+
+impl private::SealedScalarStorageFor<kgpm2> for f32 {}
+
+impl ScalarStorageFor<kgpm2> for f32 {}
+
+impl private::SealedScalarStorageFor<kgpm2> for f64 {}
+
+impl ScalarStorageFor<kgpm2> for f64 {}
 
 /// Unit marker generated from catalog unit `m2pkg`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -541,6 +809,14 @@ impl UnitMarker for m2pkg {
 
 impl ScalarArithmeticUnit for m2pkg {}
 
+impl private::SealedScalarStorageFor<m2pkg> for f32 {}
+
+impl ScalarStorageFor<m2pkg> for f32 {}
+
+impl private::SealedScalarStorageFor<m2pkg> for f64 {}
+
+impl ScalarStorageFor<m2pkg> for f64 {}
+
 /// Unit marker generated from catalog unit `kgpm3`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct kgpm3;
@@ -556,6 +832,14 @@ impl UnitMarker for kgpm3 {
 }
 
 impl ScalarArithmeticUnit for kgpm3 {}
+
+impl private::SealedScalarStorageFor<kgpm3> for f32 {}
+
+impl ScalarStorageFor<kgpm3> for f32 {}
+
+impl private::SealedScalarStorageFor<kgpm3> for f64 {}
+
+impl ScalarStorageFor<kgpm3> for f64 {}
 
 /// Unit marker generated from catalog unit `J`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -573,6 +857,14 @@ impl UnitMarker for J {
 
 impl ScalarArithmeticUnit for J {}
 
+impl private::SealedScalarStorageFor<J> for f32 {}
+
+impl ScalarStorageFor<J> for f32 {}
+
+impl private::SealedScalarStorageFor<J> for f64 {}
+
+impl ScalarStorageFor<J> for f64 {}
+
 /// Unit marker generated from catalog unit `N`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct N;
@@ -588,6 +880,14 @@ impl UnitMarker for N {
 }
 
 impl ScalarArithmeticUnit for N {}
+
+impl private::SealedScalarStorageFor<N> for f32 {}
+
+impl ScalarStorageFor<N> for f32 {}
+
+impl private::SealedScalarStorageFor<N> for f64 {}
+
+impl ScalarStorageFor<N> for f64 {}
 
 /// Unit marker generated from catalog unit `Hz`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -605,6 +905,14 @@ impl UnitMarker for Hz {
 
 impl ScalarArithmeticUnit for Hz {}
 
+impl private::SealedScalarStorageFor<Hz> for f32 {}
+
+impl ScalarStorageFor<Hz> for f32 {}
+
+impl private::SealedScalarStorageFor<Hz> for f64 {}
+
+impl ScalarStorageFor<Hz> for f64 {}
+
 /// Unit marker generated from catalog unit `per_mps2`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct per_mps2;
@@ -620,6 +928,14 @@ impl UnitMarker for per_mps2 {
 }
 
 impl ScalarArithmeticUnit for per_mps2 {}
+
+impl private::SealedScalarStorageFor<per_mps2> for f32 {}
+
+impl ScalarStorageFor<per_mps2> for f32 {}
+
+impl private::SealedScalarStorageFor<per_mps2> for f64 {}
+
+impl ScalarStorageFor<per_mps2> for f64 {}
 
 /// Unit marker generated from catalog unit `per_radps2`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -637,6 +953,14 @@ impl UnitMarker for per_radps2 {
 
 impl ScalarArithmeticUnit for per_radps2 {}
 
+impl private::SealedScalarStorageFor<per_radps2> for f32 {}
+
+impl ScalarStorageFor<per_radps2> for f32 {}
+
+impl private::SealedScalarStorageFor<per_radps2> for f64 {}
+
+impl ScalarStorageFor<per_radps2> for f64 {}
+
 /// Unit marker generated from catalog unit `per_kgm2ps`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct per_kgm2ps;
@@ -652,6 +976,14 @@ impl UnitMarker for per_kgm2ps {
 }
 
 impl ScalarArithmeticUnit for per_kgm2ps {}
+
+impl private::SealedScalarStorageFor<per_kgm2ps> for f32 {}
+
+impl ScalarStorageFor<per_kgm2ps> for f32 {}
+
+impl private::SealedScalarStorageFor<per_kgm2ps> for f64 {}
+
+impl ScalarStorageFor<per_kgm2ps> for f64 {}
 
 /// Unit marker generated from catalog unit `per_radps`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -669,6 +1001,14 @@ impl UnitMarker for per_radps {
 
 impl ScalarArithmeticUnit for per_radps {}
 
+impl private::SealedScalarStorageFor<per_radps> for f32 {}
+
+impl ScalarStorageFor<per_radps> for f32 {}
+
+impl private::SealedScalarStorageFor<per_radps> for f64 {}
+
+impl ScalarStorageFor<per_radps> for f64 {}
+
 /// Unit marker generated from catalog unit `per_J`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct per_J;
@@ -684,6 +1024,14 @@ impl UnitMarker for per_J {
 }
 
 impl ScalarArithmeticUnit for per_J {}
+
+impl private::SealedScalarStorageFor<per_J> for f32 {}
+
+impl ScalarStorageFor<per_J> for f32 {}
+
+impl private::SealedScalarStorageFor<per_J> for f64 {}
+
+impl ScalarStorageFor<per_J> for f64 {}
 
 /// Unit marker generated from catalog unit `per_N`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -701,6 +1049,14 @@ impl UnitMarker for per_N {
 
 impl ScalarArithmeticUnit for per_N {}
 
+impl private::SealedScalarStorageFor<per_N> for f32 {}
+
+impl ScalarStorageFor<per_N> for f32 {}
+
+impl private::SealedScalarStorageFor<per_N> for f64 {}
+
+impl ScalarStorageFor<per_N> for f64 {}
+
 /// Unit marker generated from catalog unit `per_kgm2`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct per_kgm2;
@@ -716,6 +1072,14 @@ impl UnitMarker for per_kgm2 {
 }
 
 impl ScalarArithmeticUnit for per_kgm2 {}
+
+impl private::SealedScalarStorageFor<per_kgm2> for f32 {}
+
+impl ScalarStorageFor<per_kgm2> for f32 {}
+
+impl private::SealedScalarStorageFor<per_kgm2> for f64 {}
+
+impl ScalarStorageFor<per_kgm2> for f64 {}
 
 /// Unit marker generated from catalog unit `per_kgmps`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -733,6 +1097,14 @@ impl UnitMarker for per_kgmps {
 
 impl ScalarArithmeticUnit for per_kgmps {}
 
+impl private::SealedScalarStorageFor<per_kgmps> for f32 {}
+
+impl ScalarStorageFor<per_kgmps> for f32 {}
+
+impl private::SealedScalarStorageFor<per_kgmps> for f64 {}
+
+impl ScalarStorageFor<per_kgmps> for f64 {}
+
 /// Unit marker generated from catalog unit `per_W`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct per_W;
@@ -748,6 +1120,14 @@ impl UnitMarker for per_W {
 }
 
 impl ScalarArithmeticUnit for per_W {}
+
+impl private::SealedScalarStorageFor<per_W> for f32 {}
+
+impl ScalarStorageFor<per_W> for f32 {}
+
+impl private::SealedScalarStorageFor<per_W> for f64 {}
+
+impl ScalarStorageFor<per_W> for f64 {}
 
 /// Unit marker generated from catalog unit `per_Pa`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -765,6 +1145,14 @@ impl UnitMarker for per_Pa {
 
 impl ScalarArithmeticUnit for per_Pa {}
 
+impl private::SealedScalarStorageFor<per_Pa> for f32 {}
+
+impl ScalarStorageFor<per_Pa> for f32 {}
+
+impl private::SealedScalarStorageFor<per_Pa> for f64 {}
+
+impl ScalarStorageFor<per_Pa> for f64 {}
+
 /// Unit marker generated from catalog unit `per_Nm`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct per_Nm;
@@ -780,6 +1168,14 @@ impl UnitMarker for per_Nm {
 }
 
 impl ScalarArithmeticUnit for per_Nm {}
+
+impl private::SealedScalarStorageFor<per_Nm> for f32 {}
+
+impl ScalarStorageFor<per_Nm> for f32 {}
+
+impl private::SealedScalarStorageFor<per_Nm> for f64 {}
+
+impl ScalarStorageFor<per_Nm> for f64 {}
 
 /// Unit marker generated from catalog unit `kgm2`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -797,6 +1193,14 @@ impl UnitMarker for kgm2 {
 
 impl ScalarArithmeticUnit for kgm2 {}
 
+impl private::SealedScalarStorageFor<kgm2> for f32 {}
+
+impl ScalarStorageFor<kgm2> for f32 {}
+
+impl private::SealedScalarStorageFor<kgm2> for f64 {}
+
+impl ScalarStorageFor<kgm2> for f64 {}
+
 /// Unit marker generated from catalog unit `kgmps`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct kgmps;
@@ -812,6 +1216,14 @@ impl UnitMarker for kgmps {
 }
 
 impl ScalarArithmeticUnit for kgmps {}
+
+impl private::SealedScalarStorageFor<kgmps> for f32 {}
+
+impl ScalarStorageFor<kgmps> for f32 {}
+
+impl private::SealedScalarStorageFor<kgmps> for f64 {}
+
+impl ScalarStorageFor<kgmps> for f64 {}
 
 /// Unit marker generated from catalog unit `W`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -829,6 +1241,14 @@ impl UnitMarker for W {
 
 impl ScalarArithmeticUnit for W {}
 
+impl private::SealedScalarStorageFor<W> for f32 {}
+
+impl ScalarStorageFor<W> for f32 {}
+
+impl private::SealedScalarStorageFor<W> for f64 {}
+
+impl ScalarStorageFor<W> for f64 {}
+
 /// Unit marker generated from catalog unit `Pa`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct Pa;
@@ -844,6 +1264,14 @@ impl UnitMarker for Pa {
 }
 
 impl ScalarArithmeticUnit for Pa {}
+
+impl private::SealedScalarStorageFor<Pa> for f32 {}
+
+impl ScalarStorageFor<Pa> for f32 {}
+
+impl private::SealedScalarStorageFor<Pa> for f64 {}
+
+impl ScalarStorageFor<Pa> for f64 {}
 
 /// Unit marker generated from catalog unit `spm`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -861,6 +1289,14 @@ impl UnitMarker for spm {
 
 impl ScalarArithmeticUnit for spm {}
 
+impl private::SealedScalarStorageFor<spm> for f32 {}
+
+impl ScalarStorageFor<spm> for f32 {}
+
+impl private::SealedScalarStorageFor<spm> for f64 {}
+
+impl ScalarStorageFor<spm> for f64 {}
+
 /// Unit marker generated from catalog unit `Nm`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct Nm;
@@ -876,6 +1312,14 @@ impl UnitMarker for Nm {
 }
 
 impl ScalarArithmeticUnit for Nm {}
+
+impl private::SealedScalarStorageFor<Nm> for f32 {}
+
+impl ScalarStorageFor<Nm> for f32 {}
+
+impl private::SealedScalarStorageFor<Nm> for f64 {}
+
+impl ScalarStorageFor<Nm> for f64 {}
 
 /// Unit marker generated from catalog unit `mps`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -893,6 +1337,14 @@ impl UnitMarker for mps {
 
 impl ScalarArithmeticUnit for mps {}
 
+impl private::SealedScalarStorageFor<mps> for f32 {}
+
+impl ScalarStorageFor<mps> for f32 {}
+
+impl private::SealedScalarStorageFor<mps> for f64 {}
+
+impl ScalarStorageFor<mps> for f64 {}
+
 /// Unit marker generated from catalog unit `m3pkg`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct m3pkg;
@@ -908,6 +1360,14 @@ impl UnitMarker for m3pkg {
 }
 
 impl ScalarArithmeticUnit for m3pkg {}
+
+impl private::SealedScalarStorageFor<m3pkg> for f32 {}
+
+impl ScalarStorageFor<m3pkg> for f32 {}
+
+impl private::SealedScalarStorageFor<m3pkg> for f64 {}
+
+impl ScalarStorageFor<m3pkg> for f64 {}
 
 /// Unit marker generated from catalog unit `m2plm`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -925,6 +1385,14 @@ impl UnitMarker for m2plm {
 
 impl ScalarArithmeticUnit for m2plm {}
 
+impl private::SealedScalarStorageFor<m2plm> for f32 {}
+
+impl ScalarStorageFor<m2plm> for f32 {}
+
+impl private::SealedScalarStorageFor<m2plm> for f64 {}
+
+impl ScalarStorageFor<m2plm> for f64 {}
+
 /// Unit marker generated from catalog unit `F`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct F;
@@ -940,6 +1408,14 @@ impl UnitMarker for F {
 }
 
 impl ScalarArithmeticUnit for F {}
+
+impl private::SealedScalarStorageFor<F> for f32 {}
+
+impl ScalarStorageFor<F> for f32 {}
+
+impl private::SealedScalarStorageFor<F> for f64 {}
+
+impl ScalarStorageFor<F> for f64 {}
 
 /// Unit marker generated from catalog unit `C`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -957,6 +1433,14 @@ impl UnitMarker for C {
 
 impl ScalarArithmeticUnit for C {}
 
+impl private::SealedScalarStorageFor<C> for f32 {}
+
+impl ScalarStorageFor<C> for f32 {}
+
+impl private::SealedScalarStorageFor<C> for f64 {}
+
+impl ScalarStorageFor<C> for f64 {}
+
 /// Unit marker generated from catalog unit `S`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct S;
@@ -972,6 +1456,14 @@ impl UnitMarker for S {
 }
 
 impl ScalarArithmeticUnit for S {}
+
+impl private::SealedScalarStorageFor<S> for f32 {}
+
+impl ScalarStorageFor<S> for f32 {}
+
+impl private::SealedScalarStorageFor<S> for f64 {}
+
+impl ScalarStorageFor<S> for f64 {}
 
 /// Unit marker generated from catalog unit `per_F`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -989,6 +1481,14 @@ impl UnitMarker for per_F {
 
 impl ScalarArithmeticUnit for per_F {}
 
+impl private::SealedScalarStorageFor<per_F> for f32 {}
+
+impl ScalarStorageFor<per_F> for f32 {}
+
+impl private::SealedScalarStorageFor<per_F> for f64 {}
+
+impl ScalarStorageFor<per_F> for f64 {}
+
 /// Unit marker generated from catalog unit `lx`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct lx;
@@ -1004,6 +1504,14 @@ impl UnitMarker for lx {
 }
 
 impl ScalarArithmeticUnit for lx {}
+
+impl private::SealedScalarStorageFor<lx> for f32 {}
+
+impl ScalarStorageFor<lx> for f32 {}
+
+impl private::SealedScalarStorageFor<lx> for f64 {}
+
+impl ScalarStorageFor<lx> for f64 {}
 
 /// Unit marker generated from catalog unit `H`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -1021,6 +1529,14 @@ impl UnitMarker for H {
 
 impl ScalarArithmeticUnit for H {}
 
+impl private::SealedScalarStorageFor<H> for f32 {}
+
+impl ScalarStorageFor<H> for f32 {}
+
+impl private::SealedScalarStorageFor<H> for f64 {}
+
+impl ScalarStorageFor<H> for f64 {}
+
 /// Unit marker generated from catalog unit `per_C`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct per_C;
@@ -1036,6 +1552,14 @@ impl UnitMarker for per_C {
 }
 
 impl ScalarArithmeticUnit for per_C {}
+
+impl private::SealedScalarStorageFor<per_C> for f32 {}
+
+impl ScalarStorageFor<per_C> for f32 {}
+
+impl private::SealedScalarStorageFor<per_C> for f64 {}
+
+impl ScalarStorageFor<per_C> for f64 {}
 
 /// Unit marker generated from catalog unit `per_H`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -1053,6 +1577,14 @@ impl UnitMarker for per_H {
 
 impl ScalarArithmeticUnit for per_H {}
 
+impl private::SealedScalarStorageFor<per_H> for f32 {}
+
+impl ScalarStorageFor<per_H> for f32 {}
+
+impl private::SealedScalarStorageFor<per_H> for f64 {}
+
+impl ScalarStorageFor<per_H> for f64 {}
+
 /// Unit marker generated from catalog unit `per_lm`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct per_lm;
@@ -1068,6 +1600,14 @@ impl UnitMarker for per_lm {
 }
 
 impl ScalarArithmeticUnit for per_lm {}
+
+impl private::SealedScalarStorageFor<per_lm> for f32 {}
+
+impl ScalarStorageFor<per_lm> for f32 {}
+
+impl private::SealedScalarStorageFor<per_lm> for f64 {}
+
+impl ScalarStorageFor<per_lm> for f64 {}
 
 /// Unit marker generated from catalog unit `per_Wb`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -1085,6 +1625,14 @@ impl UnitMarker for per_Wb {
 
 impl ScalarArithmeticUnit for per_Wb {}
 
+impl private::SealedScalarStorageFor<per_Wb> for f32 {}
+
+impl ScalarStorageFor<per_Wb> for f32 {}
+
+impl private::SealedScalarStorageFor<per_Wb> for f64 {}
+
+impl ScalarStorageFor<per_Wb> for f64 {}
+
 /// Unit marker generated from catalog unit `per_T`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct per_T;
@@ -1100,6 +1648,14 @@ impl UnitMarker for per_T {
 }
 
 impl ScalarArithmeticUnit for per_T {}
+
+impl private::SealedScalarStorageFor<per_T> for f32 {}
+
+impl ScalarStorageFor<per_T> for f32 {}
+
+impl private::SealedScalarStorageFor<per_T> for f64 {}
+
+impl ScalarStorageFor<per_T> for f64 {}
 
 /// Unit marker generated from catalog unit `per_V`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -1117,6 +1673,14 @@ impl UnitMarker for per_V {
 
 impl ScalarArithmeticUnit for per_V {}
 
+impl private::SealedScalarStorageFor<per_V> for f32 {}
+
+impl ScalarStorageFor<per_V> for f32 {}
+
+impl private::SealedScalarStorageFor<per_V> for f64 {}
+
+impl ScalarStorageFor<per_V> for f64 {}
+
 /// Unit marker generated from catalog unit `lm`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct lm;
@@ -1132,6 +1696,14 @@ impl UnitMarker for lm {
 }
 
 impl ScalarArithmeticUnit for lm {}
+
+impl private::SealedScalarStorageFor<lm> for f32 {}
+
+impl ScalarStorageFor<lm> for f32 {}
+
+impl private::SealedScalarStorageFor<lm> for f64 {}
+
+impl ScalarStorageFor<lm> for f64 {}
 
 /// Unit marker generated from catalog unit `Wb`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -1149,6 +1721,14 @@ impl UnitMarker for Wb {
 
 impl ScalarArithmeticUnit for Wb {}
 
+impl private::SealedScalarStorageFor<Wb> for f32 {}
+
+impl ScalarStorageFor<Wb> for f32 {}
+
+impl private::SealedScalarStorageFor<Wb> for f64 {}
+
+impl ScalarStorageFor<Wb> for f64 {}
+
 /// Unit marker generated from catalog unit `T`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct T;
@@ -1164,6 +1744,14 @@ impl UnitMarker for T {
 }
 
 impl ScalarArithmeticUnit for T {}
+
+impl private::SealedScalarStorageFor<T> for f32 {}
+
+impl ScalarStorageFor<T> for f32 {}
+
+impl private::SealedScalarStorageFor<T> for f64 {}
+
+impl ScalarStorageFor<T> for f64 {}
 
 /// Unit marker generated from catalog unit `Ohm`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -1181,6 +1769,14 @@ impl UnitMarker for Ohm {
 
 impl ScalarArithmeticUnit for Ohm {}
 
+impl private::SealedScalarStorageFor<Ohm> for f32 {}
+
+impl ScalarStorageFor<Ohm> for f32 {}
+
+impl private::SealedScalarStorageFor<Ohm> for f64 {}
+
+impl ScalarStorageFor<Ohm> for f64 {}
+
 /// Unit marker generated from catalog unit `V`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct V;
@@ -1197,6 +1793,14 @@ impl UnitMarker for V {
 
 impl ScalarArithmeticUnit for V {}
 
+impl private::SealedScalarStorageFor<V> for f32 {}
+
+impl ScalarStorageFor<V> for f32 {}
+
+impl private::SealedScalarStorageFor<V> for f64 {}
+
+impl ScalarStorageFor<V> for f64 {}
+
 /// Unit marker generated from catalog unit `dpt`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct dpt;
@@ -1212,6 +1816,14 @@ impl UnitMarker for dpt {
 }
 
 impl ScalarArithmeticUnit for dpt {}
+
+impl private::SealedScalarStorageFor<dpt> for f32 {}
+
+impl ScalarStorageFor<dpt> for f32 {}
+
+impl private::SealedScalarStorageFor<dpt> for f64 {}
+
+impl ScalarStorageFor<dpt> for f64 {}
 
 pub const GENERATED_UNIT_COUNT: usize = 74;
 pub const UNIT_METADATA: &[GeneratedUnitMetadata] = &[
@@ -1754,15 +2366,22 @@ impl AmountInfallibleUnitPath<mol, f64> for mol {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct Amount<Storage = f64, Unit = mol>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: AmountUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for Amount<Storage, Unit> where Unit: AmountUnit {}
+impl<Storage, Unit> private::SealedQuantityType for Amount<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: AmountUnit,
+{
+}
 
 impl<Storage, Unit> Amount<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: AmountUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "Amount";
@@ -1829,6 +2448,7 @@ where
 
 impl<Storage, Unit> QuantityType for Amount<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: AmountUnit,
 {
     type Storage = Storage;
@@ -1857,11 +2477,12 @@ where
 
 impl<Storage, Unit> Amount<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: AmountUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> Amount<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: AmountUnit,
         Unit: AmountInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -1871,7 +2492,7 @@ where
 
 impl<Storage, Unit> Amount<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: AmountUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -1879,7 +2500,7 @@ where
     ) -> Result<Amount<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: AmountUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, Amount<TargetStorage, TargetUnit>>(self)
     }
@@ -1909,7 +2530,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Amount<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: AmountUnit + AmountInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: AmountUnit,
 {
@@ -1923,10 +2544,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for Amount<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: AmountUnit,
     TargetUnit: AmountUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = Amount<TargetStorage, TargetUnit>;
 
@@ -1938,7 +2559,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for Amount<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: AmountUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -1952,7 +2573,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for Amount<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: AmountUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -1963,13 +2584,19 @@ where
     }
 }
 
-impl<Storage> Amount<Storage, mol> {
+impl<Storage> Amount<Storage, mol>
+where
+    Storage: ScalarStorageFor<mol>,
+{
     pub const fn mol(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for mol {
+impl<Storage> QuantityForStorage<Storage> for mol
+where
+    Storage: ScalarStorageFor<mol>,
+{
     type Quantity = Amount<Storage, mol>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -1996,15 +2623,22 @@ impl CurrentInfallibleUnitPath<A, f64> for A {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct Current<Storage = f64, Unit = A>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: CurrentUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for Current<Storage, Unit> where Unit: CurrentUnit {}
+impl<Storage, Unit> private::SealedQuantityType for Current<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: CurrentUnit,
+{
+}
 
 impl<Storage, Unit> Current<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: CurrentUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "Current";
@@ -2071,6 +2705,7 @@ where
 
 impl<Storage, Unit> QuantityType for Current<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: CurrentUnit,
 {
     type Storage = Storage;
@@ -2099,11 +2734,12 @@ where
 
 impl<Storage, Unit> Current<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: CurrentUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> Current<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: CurrentUnit,
         Unit: CurrentInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -2113,7 +2749,7 @@ where
 
 impl<Storage, Unit> Current<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: CurrentUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -2121,7 +2757,7 @@ where
     ) -> Result<Current<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: CurrentUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, Current<TargetStorage, TargetUnit>>(self)
     }
@@ -2151,7 +2787,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Current<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: CurrentUnit + CurrentInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: CurrentUnit,
 {
@@ -2165,10 +2801,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for Current<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: CurrentUnit,
     TargetUnit: CurrentUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = Current<TargetStorage, TargetUnit>;
 
@@ -2180,7 +2816,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for Current<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: CurrentUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -2194,7 +2830,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for Current<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: CurrentUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -2205,13 +2841,19 @@ where
     }
 }
 
-impl<Storage> Current<Storage, A> {
+impl<Storage> Current<Storage, A>
+where
+    Storage: ScalarStorageFor<A>,
+{
     pub const fn A(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for A {
+impl<Storage> QuantityForStorage<Storage> for A
+where
+    Storage: ScalarStorageFor<A>,
+{
     type Quantity = Current<Storage, A>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -2268,15 +2910,22 @@ impl DistanceInfallibleUnitPath<ft, f64> for ft {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct Distance<Storage = f64, Unit = m>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: DistanceUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for Distance<Storage, Unit> where Unit: DistanceUnit {}
+impl<Storage, Unit> private::SealedQuantityType for Distance<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: DistanceUnit,
+{
+}
 
 impl<Storage, Unit> Distance<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: DistanceUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "Distance";
@@ -2343,6 +2992,7 @@ where
 
 impl<Storage, Unit> QuantityType for Distance<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: DistanceUnit,
 {
     type Storage = Storage;
@@ -2371,11 +3021,12 @@ where
 
 impl<Storage, Unit> Distance<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: DistanceUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> Distance<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: DistanceUnit,
         Unit: DistanceInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -2385,7 +3036,7 @@ where
 
 impl<Storage, Unit> Distance<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: DistanceUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -2393,7 +3044,7 @@ where
     ) -> Result<Distance<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: DistanceUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, Distance<TargetStorage, TargetUnit>>(self)
     }
@@ -2423,7 +3074,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Distance<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: DistanceUnit + DistanceInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: DistanceUnit,
 {
@@ -2437,10 +3088,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for Distance<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: DistanceUnit,
     TargetUnit: DistanceUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = Distance<TargetStorage, TargetUnit>;
 
@@ -2452,7 +3103,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for Distance<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: DistanceUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -2466,7 +3117,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for Distance<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: DistanceUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -2477,13 +3128,19 @@ where
     }
 }
 
-impl<Storage> Distance<Storage, mm> {
+impl<Storage> Distance<Storage, mm>
+where
+    Storage: ScalarStorageFor<mm>,
+{
     pub const fn mm(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for mm {
+impl<Storage> QuantityForStorage<Storage> for mm
+where
+    Storage: ScalarStorageFor<mm>,
+{
     type Quantity = Distance<Storage, mm>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -2491,13 +3148,19 @@ impl<Storage> QuantityForStorage<Storage> for mm {
     }
 }
 
-impl<Storage> Distance<Storage, m> {
+impl<Storage> Distance<Storage, m>
+where
+    Storage: ScalarStorageFor<m>,
+{
     pub const fn m(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for m {
+impl<Storage> QuantityForStorage<Storage> for m
+where
+    Storage: ScalarStorageFor<m>,
+{
     type Quantity = Distance<Storage, m>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -2505,13 +3168,19 @@ impl<Storage> QuantityForStorage<Storage> for m {
     }
 }
 
-impl<Storage> Distance<Storage, ft> {
+impl<Storage> Distance<Storage, ft>
+where
+    Storage: ScalarStorageFor<ft>,
+{
     pub const fn ft(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for ft {
+impl<Storage> QuantityForStorage<Storage> for ft
+where
+    Storage: ScalarStorageFor<ft>,
+{
     type Quantity = Distance<Storage, ft>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -2538,18 +3207,22 @@ impl InverseAmountInfallibleUnitPath<per_mol, f64> for per_mol {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct InverseAmount<Storage = f64, Unit = per_mol>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseAmountUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for InverseAmount<Storage, Unit> where
-    Unit: InverseAmountUnit
+impl<Storage, Unit> private::SealedQuantityType for InverseAmount<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: InverseAmountUnit,
 {
 }
 
 impl<Storage, Unit> InverseAmount<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseAmountUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "InverseAmount";
@@ -2616,6 +3289,7 @@ where
 
 impl<Storage, Unit> QuantityType for InverseAmount<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseAmountUnit,
 {
     type Storage = Storage;
@@ -2644,11 +3318,12 @@ where
 
 impl<Storage, Unit> InverseAmount<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: InverseAmountUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> InverseAmount<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: InverseAmountUnit,
         Unit: InverseAmountInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -2658,7 +3333,7 @@ where
 
 impl<Storage, Unit> InverseAmount<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseAmountUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -2666,7 +3341,7 @@ where
     ) -> Result<InverseAmount<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: InverseAmountUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, InverseAmount<TargetStorage, TargetUnit>>(self)
     }
@@ -2696,7 +3371,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for InverseAmount<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: InverseAmountUnit + InverseAmountInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InverseAmountUnit,
 {
@@ -2710,10 +3385,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for InverseAmount<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseAmountUnit,
     TargetUnit: InverseAmountUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = InverseAmount<TargetStorage, TargetUnit>;
 
@@ -2725,7 +3400,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for InverseAmount<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseAmountUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -2739,7 +3414,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for InverseAmount<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseAmountUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -2750,13 +3425,19 @@ where
     }
 }
 
-impl<Storage> InverseAmount<Storage, per_mol> {
+impl<Storage> InverseAmount<Storage, per_mol>
+where
+    Storage: ScalarStorageFor<per_mol>,
+{
     pub const fn per_mol(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for per_mol {
+impl<Storage> QuantityForStorage<Storage> for per_mol
+where
+    Storage: ScalarStorageFor<per_mol>,
+{
     type Quantity = InverseAmount<Storage, per_mol>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -2783,18 +3464,22 @@ impl InverseCurrentInfallibleUnitPath<per_A, f64> for per_A {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct InverseCurrent<Storage = f64, Unit = per_A>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseCurrentUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for InverseCurrent<Storage, Unit> where
-    Unit: InverseCurrentUnit
+impl<Storage, Unit> private::SealedQuantityType for InverseCurrent<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: InverseCurrentUnit,
 {
 }
 
 impl<Storage, Unit> InverseCurrent<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseCurrentUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "InverseCurrent";
@@ -2861,6 +3546,7 @@ where
 
 impl<Storage, Unit> QuantityType for InverseCurrent<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseCurrentUnit,
 {
     type Storage = Storage;
@@ -2889,11 +3575,12 @@ where
 
 impl<Storage, Unit> InverseCurrent<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: InverseCurrentUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> InverseCurrent<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: InverseCurrentUnit,
         Unit: InverseCurrentInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -2903,7 +3590,7 @@ where
 
 impl<Storage, Unit> InverseCurrent<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseCurrentUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -2911,7 +3598,7 @@ where
     ) -> Result<InverseCurrent<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: InverseCurrentUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, InverseCurrent<TargetStorage, TargetUnit>>(self)
     }
@@ -2941,7 +3628,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for InverseCurrent<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: InverseCurrentUnit + InverseCurrentInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InverseCurrentUnit,
 {
@@ -2955,10 +3642,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for InverseCurrent<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseCurrentUnit,
     TargetUnit: InverseCurrentUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = InverseCurrent<TargetStorage, TargetUnit>;
 
@@ -2970,7 +3657,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for InverseCurrent<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseCurrentUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -2984,7 +3671,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for InverseCurrent<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseCurrentUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -2995,13 +3682,19 @@ where
     }
 }
 
-impl<Storage> InverseCurrent<Storage, per_A> {
+impl<Storage> InverseCurrent<Storage, per_A>
+where
+    Storage: ScalarStorageFor<per_A>,
+{
     pub const fn per_A(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for per_A {
+impl<Storage> QuantityForStorage<Storage> for per_A
+where
+    Storage: ScalarStorageFor<per_A>,
+{
     type Quantity = InverseCurrent<Storage, per_A>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -3028,18 +3721,22 @@ impl InverseDistanceInfallibleUnitPath<per_m, f64> for per_m {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct InverseDistance<Storage = f64, Unit = per_m>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseDistanceUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for InverseDistance<Storage, Unit> where
-    Unit: InverseDistanceUnit
+impl<Storage, Unit> private::SealedQuantityType for InverseDistance<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: InverseDistanceUnit,
 {
 }
 
 impl<Storage, Unit> InverseDistance<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseDistanceUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "InverseDistance";
@@ -3106,6 +3803,7 @@ where
 
 impl<Storage, Unit> QuantityType for InverseDistance<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseDistanceUnit,
 {
     type Storage = Storage;
@@ -3134,11 +3832,12 @@ where
 
 impl<Storage, Unit> InverseDistance<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: InverseDistanceUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> InverseDistance<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: InverseDistanceUnit,
         Unit: InverseDistanceInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -3148,7 +3847,7 @@ where
 
 impl<Storage, Unit> InverseDistance<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseDistanceUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -3156,7 +3855,7 @@ where
     ) -> Result<InverseDistance<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: InverseDistanceUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, InverseDistance<TargetStorage, TargetUnit>>(self)
     }
@@ -3186,7 +3885,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for InverseDistance<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: InverseDistanceUnit + InverseDistanceInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InverseDistanceUnit,
 {
@@ -3200,10 +3899,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for InverseDistance<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseDistanceUnit,
     TargetUnit: InverseDistanceUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = InverseDistance<TargetStorage, TargetUnit>;
 
@@ -3215,7 +3914,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for InverseDistance<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseDistanceUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -3229,7 +3928,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for InverseDistance<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseDistanceUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -3240,13 +3939,19 @@ where
     }
 }
 
-impl<Storage> InverseDistance<Storage, per_m> {
+impl<Storage> InverseDistance<Storage, per_m>
+where
+    Storage: ScalarStorageFor<per_m>,
+{
     pub const fn per_m(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for per_m {
+impl<Storage> QuantityForStorage<Storage> for per_m
+where
+    Storage: ScalarStorageFor<per_m>,
+{
     type Quantity = InverseDistance<Storage, per_m>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -3273,18 +3978,22 @@ impl InverseLuminosityInfallibleUnitPath<per_cd, f64> for per_cd {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct InverseLuminosity<Storage = f64, Unit = per_cd>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseLuminosityUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for InverseLuminosity<Storage, Unit> where
-    Unit: InverseLuminosityUnit
+impl<Storage, Unit> private::SealedQuantityType for InverseLuminosity<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: InverseLuminosityUnit,
 {
 }
 
 impl<Storage, Unit> InverseLuminosity<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseLuminosityUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "InverseLuminosity";
@@ -3351,6 +4060,7 @@ where
 
 impl<Storage, Unit> QuantityType for InverseLuminosity<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseLuminosityUnit,
 {
     type Storage = Storage;
@@ -3379,11 +4089,12 @@ where
 
 impl<Storage, Unit> InverseLuminosity<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: InverseLuminosityUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> InverseLuminosity<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: InverseLuminosityUnit,
         Unit: InverseLuminosityInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -3393,7 +4104,7 @@ where
 
 impl<Storage, Unit> InverseLuminosity<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseLuminosityUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -3401,7 +4112,7 @@ where
     ) -> Result<InverseLuminosity<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: InverseLuminosityUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, InverseLuminosity<TargetStorage, TargetUnit>>(self)
     }
@@ -3431,7 +4142,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for InverseLuminosity<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: InverseLuminosityUnit + InverseLuminosityInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InverseLuminosityUnit,
 {
@@ -3445,10 +4156,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for InverseLuminosity<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseLuminosityUnit,
     TargetUnit: InverseLuminosityUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = InverseLuminosity<TargetStorage, TargetUnit>;
 
@@ -3461,7 +4172,7 @@ impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage>
     for InverseLuminosity<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseLuminosityUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -3475,7 +4186,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for InverseLuminosity<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseLuminosityUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -3486,13 +4197,19 @@ where
     }
 }
 
-impl<Storage> InverseLuminosity<Storage, per_cd> {
+impl<Storage> InverseLuminosity<Storage, per_cd>
+where
+    Storage: ScalarStorageFor<per_cd>,
+{
     pub const fn per_cd(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for per_cd {
+impl<Storage> QuantityForStorage<Storage> for per_cd
+where
+    Storage: ScalarStorageFor<per_cd>,
+{
     type Quantity = InverseLuminosity<Storage, per_cd>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -3519,18 +4236,22 @@ impl InverseMassInfallibleUnitPath<per_kg, f64> for per_kg {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct InverseMass<Storage = f64, Unit = per_kg>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseMassUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for InverseMass<Storage, Unit> where
-    Unit: InverseMassUnit
+impl<Storage, Unit> private::SealedQuantityType for InverseMass<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: InverseMassUnit,
 {
 }
 
 impl<Storage, Unit> InverseMass<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseMassUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "InverseMass";
@@ -3597,6 +4318,7 @@ where
 
 impl<Storage, Unit> QuantityType for InverseMass<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseMassUnit,
 {
     type Storage = Storage;
@@ -3625,11 +4347,12 @@ where
 
 impl<Storage, Unit> InverseMass<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: InverseMassUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> InverseMass<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: InverseMassUnit,
         Unit: InverseMassInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -3639,7 +4362,7 @@ where
 
 impl<Storage, Unit> InverseMass<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseMassUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -3647,7 +4370,7 @@ where
     ) -> Result<InverseMass<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: InverseMassUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, InverseMass<TargetStorage, TargetUnit>>(self)
     }
@@ -3677,7 +4400,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for InverseMass<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: InverseMassUnit + InverseMassInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InverseMassUnit,
 {
@@ -3691,10 +4414,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for InverseMass<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseMassUnit,
     TargetUnit: InverseMassUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = InverseMass<TargetStorage, TargetUnit>;
 
@@ -3706,7 +4429,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for InverseMass<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseMassUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -3720,7 +4443,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for InverseMass<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseMassUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -3731,13 +4454,19 @@ where
     }
 }
 
-impl<Storage> InverseMass<Storage, per_kg> {
+impl<Storage> InverseMass<Storage, per_kg>
+where
+    Storage: ScalarStorageFor<per_kg>,
+{
     pub const fn per_kg(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for per_kg {
+impl<Storage> QuantityForStorage<Storage> for per_kg
+where
+    Storage: ScalarStorageFor<per_kg>,
+{
     type Quantity = InverseMass<Storage, per_kg>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -3767,18 +4496,22 @@ impl InverseTemperatureInfallibleUnitPath<per_K, f64> for per_K {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct InverseTemperature<Storage = f64, Unit = per_K>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseTemperatureUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for InverseTemperature<Storage, Unit> where
-    Unit: InverseTemperatureUnit
+impl<Storage, Unit> private::SealedQuantityType for InverseTemperature<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: InverseTemperatureUnit,
 {
 }
 
 impl<Storage, Unit> InverseTemperature<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseTemperatureUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "InverseTemperature";
@@ -3845,6 +4578,7 @@ where
 
 impl<Storage, Unit> QuantityType for InverseTemperature<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseTemperatureUnit,
 {
     type Storage = Storage;
@@ -3873,11 +4607,12 @@ where
 
 impl<Storage, Unit> InverseTemperature<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: InverseTemperatureUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> InverseTemperature<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: InverseTemperatureUnit,
         Unit: InverseTemperatureInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -3887,7 +4622,7 @@ where
 
 impl<Storage, Unit> InverseTemperature<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseTemperatureUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -3895,7 +4630,7 @@ where
     ) -> Result<InverseTemperature<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: InverseTemperatureUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, InverseTemperature<TargetStorage, TargetUnit>>(self)
     }
@@ -3925,7 +4660,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for InverseTemperature<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: InverseTemperatureUnit + InverseTemperatureInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InverseTemperatureUnit,
 {
@@ -3939,10 +4674,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for InverseTemperature<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseTemperatureUnit,
     TargetUnit: InverseTemperatureUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = InverseTemperature<TargetStorage, TargetUnit>;
 
@@ -3955,7 +4690,7 @@ impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage>
     for InverseTemperature<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseTemperatureUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -3970,7 +4705,7 @@ impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage>
     for InverseTemperature<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseTemperatureUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -3981,13 +4716,19 @@ where
     }
 }
 
-impl<Storage> InverseTemperature<Storage, per_K> {
+impl<Storage> InverseTemperature<Storage, per_K>
+where
+    Storage: ScalarStorageFor<per_K>,
+{
     pub const fn per_K(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for per_K {
+impl<Storage> QuantityForStorage<Storage> for per_K
+where
+    Storage: ScalarStorageFor<per_K>,
+{
     type Quantity = InverseTemperature<Storage, per_K>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -4014,18 +4755,22 @@ impl LuminosityInfallibleUnitPath<cd, f64> for cd {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct Luminosity<Storage = f64, Unit = cd>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: LuminosityUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for Luminosity<Storage, Unit> where
-    Unit: LuminosityUnit
+impl<Storage, Unit> private::SealedQuantityType for Luminosity<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: LuminosityUnit,
 {
 }
 
 impl<Storage, Unit> Luminosity<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: LuminosityUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "Luminosity";
@@ -4092,6 +4837,7 @@ where
 
 impl<Storage, Unit> QuantityType for Luminosity<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: LuminosityUnit,
 {
     type Storage = Storage;
@@ -4120,11 +4866,12 @@ where
 
 impl<Storage, Unit> Luminosity<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: LuminosityUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> Luminosity<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: LuminosityUnit,
         Unit: LuminosityInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -4134,7 +4881,7 @@ where
 
 impl<Storage, Unit> Luminosity<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: LuminosityUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -4142,7 +4889,7 @@ where
     ) -> Result<Luminosity<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: LuminosityUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, Luminosity<TargetStorage, TargetUnit>>(self)
     }
@@ -4172,7 +4919,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Luminosity<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: LuminosityUnit + LuminosityInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: LuminosityUnit,
 {
@@ -4186,10 +4933,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for Luminosity<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: LuminosityUnit,
     TargetUnit: LuminosityUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = Luminosity<TargetStorage, TargetUnit>;
 
@@ -4201,7 +4948,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for Luminosity<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: LuminosityUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -4215,7 +4962,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for Luminosity<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: LuminosityUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -4226,13 +4973,19 @@ where
     }
 }
 
-impl<Storage> Luminosity<Storage, cd> {
+impl<Storage> Luminosity<Storage, cd>
+where
+    Storage: ScalarStorageFor<cd>,
+{
     pub const fn cd(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for cd {
+impl<Storage> QuantityForStorage<Storage> for cd
+where
+    Storage: ScalarStorageFor<cd>,
+{
     type Quantity = Luminosity<Storage, cd>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -4259,15 +5012,22 @@ impl MassInfallibleUnitPath<kg, f64> for kg {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct Mass<Storage = f64, Unit = kg>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: MassUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for Mass<Storage, Unit> where Unit: MassUnit {}
+impl<Storage, Unit> private::SealedQuantityType for Mass<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: MassUnit,
+{
+}
 
 impl<Storage, Unit> Mass<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: MassUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "Mass";
@@ -4334,6 +5094,7 @@ where
 
 impl<Storage, Unit> QuantityType for Mass<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: MassUnit,
 {
     type Storage = Storage;
@@ -4362,11 +5123,12 @@ where
 
 impl<Storage, Unit> Mass<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: MassUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> Mass<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: MassUnit,
         Unit: MassInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -4376,7 +5138,7 @@ where
 
 impl<Storage, Unit> Mass<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: MassUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -4384,7 +5146,7 @@ where
     ) -> Result<Mass<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: MassUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, Mass<TargetStorage, TargetUnit>>(self)
     }
@@ -4414,7 +5176,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Mass<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: MassUnit + MassInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: MassUnit,
 {
@@ -4428,10 +5190,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for Mass<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: MassUnit,
     TargetUnit: MassUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = Mass<TargetStorage, TargetUnit>;
 
@@ -4443,7 +5205,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for Mass<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: MassUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -4457,7 +5219,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for Mass<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: MassUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -4468,13 +5230,19 @@ where
     }
 }
 
-impl<Storage> Mass<Storage, kg> {
+impl<Storage> Mass<Storage, kg>
+where
+    Storage: ScalarStorageFor<kg>,
+{
     pub const fn kg(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for kg {
+impl<Storage> QuantityForStorage<Storage> for kg
+where
+    Storage: ScalarStorageFor<kg>,
+{
     type Quantity = Mass<Storage, kg>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -4525,18 +5293,22 @@ impl TemperatureInfallibleUnitPath<degF, f64> for degF {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct Temperature<Storage = f64, Unit = K>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: TemperatureUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for Temperature<Storage, Unit> where
-    Unit: TemperatureUnit
+impl<Storage, Unit> private::SealedQuantityType for Temperature<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: TemperatureUnit,
 {
 }
 
 impl<Storage, Unit> Temperature<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: TemperatureUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "Temperature";
@@ -4603,6 +5375,7 @@ where
 
 impl<Storage, Unit> QuantityType for Temperature<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: TemperatureUnit,
 {
     type Storage = Storage;
@@ -4631,11 +5404,12 @@ where
 
 impl<Storage, Unit> Temperature<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: TemperatureUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> Temperature<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: TemperatureUnit,
         Unit: TemperatureInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -4645,7 +5419,7 @@ where
 
 impl<Storage, Unit> Temperature<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: TemperatureUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -4653,7 +5427,7 @@ where
     ) -> Result<Temperature<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: TemperatureUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, Temperature<TargetStorage, TargetUnit>>(self)
     }
@@ -4683,7 +5457,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Temperature<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: TemperatureUnit + TemperatureInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: TemperatureUnit,
 {
@@ -4697,10 +5471,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for Temperature<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: TemperatureUnit,
     TargetUnit: TemperatureUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = Temperature<TargetStorage, TargetUnit>;
 
@@ -4712,7 +5486,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for Temperature<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: TemperatureUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -4726,7 +5500,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for Temperature<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: TemperatureUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -4737,13 +5511,19 @@ where
     }
 }
 
-impl<Storage> Temperature<Storage, K> {
+impl<Storage> Temperature<Storage, K>
+where
+    Storage: ScalarStorageFor<K>,
+{
     pub const fn K(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for K {
+impl<Storage> QuantityForStorage<Storage> for K
+where
+    Storage: ScalarStorageFor<K>,
+{
     type Quantity = Temperature<Storage, K>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -4751,13 +5531,19 @@ impl<Storage> QuantityForStorage<Storage> for K {
     }
 }
 
-impl<Storage> Temperature<Storage, degC> {
+impl<Storage> Temperature<Storage, degC>
+where
+    Storage: ScalarStorageFor<degC>,
+{
     pub const fn degC(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for degC {
+impl<Storage> QuantityForStorage<Storage> for degC
+where
+    Storage: ScalarStorageFor<degC>,
+{
     type Quantity = Temperature<Storage, degC>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -4765,13 +5551,19 @@ impl<Storage> QuantityForStorage<Storage> for degC {
     }
 }
 
-impl<Storage> Temperature<Storage, degF> {
+impl<Storage> Temperature<Storage, degF>
+where
+    Storage: ScalarStorageFor<degF>,
+{
     pub const fn degF(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for degF {
+impl<Storage> QuantityForStorage<Storage> for degF
+where
+    Storage: ScalarStorageFor<degF>,
+{
     type Quantity = Temperature<Storage, degF>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -4812,15 +5604,22 @@ impl TimeInfallibleUnitPath<ms, f64> for ms {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct Time<Storage = f64, Unit = s>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: TimeUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for Time<Storage, Unit> where Unit: TimeUnit {}
+impl<Storage, Unit> private::SealedQuantityType for Time<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: TimeUnit,
+{
+}
 
 impl<Storage, Unit> Time<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: TimeUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "Time";
@@ -4887,6 +5686,7 @@ where
 
 impl<Storage, Unit> QuantityType for Time<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: TimeUnit,
 {
     type Storage = Storage;
@@ -4915,11 +5715,12 @@ where
 
 impl<Storage, Unit> Time<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: TimeUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> Time<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: TimeUnit,
         Unit: TimeInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -4929,7 +5730,7 @@ where
 
 impl<Storage, Unit> Time<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: TimeUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -4937,7 +5738,7 @@ where
     ) -> Result<Time<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: TimeUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, Time<TargetStorage, TargetUnit>>(self)
     }
@@ -4967,7 +5768,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Time<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: TimeUnit + TimeInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: TimeUnit,
 {
@@ -4981,10 +5782,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for Time<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: TimeUnit,
     TargetUnit: TimeUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = Time<TargetStorage, TargetUnit>;
 
@@ -4996,7 +5797,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for Time<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: TimeUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -5010,7 +5811,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for Time<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: TimeUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -5021,13 +5822,19 @@ where
     }
 }
 
-impl<Storage> Time<Storage, s> {
+impl<Storage> Time<Storage, s>
+where
+    Storage: ScalarStorageFor<s>,
+{
     pub const fn s(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for s {
+impl<Storage> QuantityForStorage<Storage> for s
+where
+    Storage: ScalarStorageFor<s>,
+{
     type Quantity = Time<Storage, s>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -5035,13 +5842,19 @@ impl<Storage> QuantityForStorage<Storage> for s {
     }
 }
 
-impl<Storage> Time<Storage, ms> {
+impl<Storage> Time<Storage, ms>
+where
+    Storage: ScalarStorageFor<ms>,
+{
     pub const fn ms(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for ms {
+impl<Storage> QuantityForStorage<Storage> for ms
+where
+    Storage: ScalarStorageFor<ms>,
+{
     type Quantity = Time<Storage, ms>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -5068,15 +5881,22 @@ impl AngleInfallibleUnitPath<rad, f64> for rad {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct Angle<Storage = f64, Unit = rad>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: AngleUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for Angle<Storage, Unit> where Unit: AngleUnit {}
+impl<Storage, Unit> private::SealedQuantityType for Angle<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: AngleUnit,
+{
+}
 
 impl<Storage, Unit> Angle<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: AngleUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "Angle";
@@ -5143,6 +5963,7 @@ where
 
 impl<Storage, Unit> QuantityType for Angle<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: AngleUnit,
 {
     type Storage = Storage;
@@ -5171,11 +5992,12 @@ where
 
 impl<Storage, Unit> Angle<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: AngleUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> Angle<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: AngleUnit,
         Unit: AngleInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -5185,7 +6007,7 @@ where
 
 impl<Storage, Unit> Angle<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: AngleUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -5193,7 +6015,7 @@ where
     ) -> Result<Angle<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: AngleUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, Angle<TargetStorage, TargetUnit>>(self)
     }
@@ -5223,7 +6045,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Angle<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: AngleUnit + AngleInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: AngleUnit,
 {
@@ -5237,10 +6059,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for Angle<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: AngleUnit,
     TargetUnit: AngleUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = Angle<TargetStorage, TargetUnit>;
 
@@ -5252,7 +6074,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for Angle<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: AngleUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -5266,7 +6088,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for Angle<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: AngleUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -5277,13 +6099,19 @@ where
     }
 }
 
-impl<Storage> Angle<Storage, rad> {
+impl<Storage> Angle<Storage, rad>
+where
+    Storage: ScalarStorageFor<rad>,
+{
     pub const fn rad(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for rad {
+impl<Storage> QuantityForStorage<Storage> for rad
+where
+    Storage: ScalarStorageFor<rad>,
+{
     type Quantity = Angle<Storage, rad>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -5310,15 +6138,22 @@ impl AreaInfallibleUnitPath<m2, f64> for m2 {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct Area<Storage = f64, Unit = m2>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: AreaUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for Area<Storage, Unit> where Unit: AreaUnit {}
+impl<Storage, Unit> private::SealedQuantityType for Area<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: AreaUnit,
+{
+}
 
 impl<Storage, Unit> Area<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: AreaUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "Area";
@@ -5385,6 +6220,7 @@ where
 
 impl<Storage, Unit> QuantityType for Area<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: AreaUnit,
 {
     type Storage = Storage;
@@ -5413,11 +6249,12 @@ where
 
 impl<Storage, Unit> Area<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: AreaUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> Area<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: AreaUnit,
         Unit: AreaInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -5427,7 +6264,7 @@ where
 
 impl<Storage, Unit> Area<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: AreaUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -5435,7 +6272,7 @@ where
     ) -> Result<Area<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: AreaUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, Area<TargetStorage, TargetUnit>>(self)
     }
@@ -5465,7 +6302,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Area<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: AreaUnit + AreaInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: AreaUnit,
 {
@@ -5479,10 +6316,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for Area<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: AreaUnit,
     TargetUnit: AreaUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = Area<TargetStorage, TargetUnit>;
 
@@ -5494,7 +6331,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for Area<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: AreaUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -5508,7 +6345,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for Area<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: AreaUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -5519,13 +6356,19 @@ where
     }
 }
 
-impl<Storage> Area<Storage, m2> {
+impl<Storage> Area<Storage, m2>
+where
+    Storage: ScalarStorageFor<m2>,
+{
     pub const fn m2(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for m2 {
+impl<Storage> QuantityForStorage<Storage> for m2
+where
+    Storage: ScalarStorageFor<m2>,
+{
     type Quantity = Area<Storage, m2>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -5552,18 +6395,22 @@ impl InverseAngleInfallibleUnitPath<per_rad, f64> for per_rad {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct InverseAngle<Storage = f64, Unit = per_rad>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseAngleUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for InverseAngle<Storage, Unit> where
-    Unit: InverseAngleUnit
+impl<Storage, Unit> private::SealedQuantityType for InverseAngle<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: InverseAngleUnit,
 {
 }
 
 impl<Storage, Unit> InverseAngle<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseAngleUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "InverseAngle";
@@ -5630,6 +6477,7 @@ where
 
 impl<Storage, Unit> QuantityType for InverseAngle<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseAngleUnit,
 {
     type Storage = Storage;
@@ -5658,11 +6506,12 @@ where
 
 impl<Storage, Unit> InverseAngle<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: InverseAngleUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> InverseAngle<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: InverseAngleUnit,
         Unit: InverseAngleInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -5672,7 +6521,7 @@ where
 
 impl<Storage, Unit> InverseAngle<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseAngleUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -5680,7 +6529,7 @@ where
     ) -> Result<InverseAngle<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: InverseAngleUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, InverseAngle<TargetStorage, TargetUnit>>(self)
     }
@@ -5710,7 +6559,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for InverseAngle<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: InverseAngleUnit + InverseAngleInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InverseAngleUnit,
 {
@@ -5724,10 +6573,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for InverseAngle<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseAngleUnit,
     TargetUnit: InverseAngleUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = InverseAngle<TargetStorage, TargetUnit>;
 
@@ -5739,7 +6588,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for InverseAngle<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseAngleUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -5753,7 +6602,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for InverseAngle<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseAngleUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -5764,13 +6613,19 @@ where
     }
 }
 
-impl<Storage> InverseAngle<Storage, per_rad> {
+impl<Storage> InverseAngle<Storage, per_rad>
+where
+    Storage: ScalarStorageFor<per_rad>,
+{
     pub const fn per_rad(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for per_rad {
+impl<Storage> QuantityForStorage<Storage> for per_rad
+where
+    Storage: ScalarStorageFor<per_rad>,
+{
     type Quantity = InverseAngle<Storage, per_rad>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -5797,18 +6652,22 @@ impl InverseAreaInfallibleUnitPath<per_m2, f64> for per_m2 {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct InverseArea<Storage = f64, Unit = per_m2>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseAreaUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for InverseArea<Storage, Unit> where
-    Unit: InverseAreaUnit
+impl<Storage, Unit> private::SealedQuantityType for InverseArea<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: InverseAreaUnit,
 {
 }
 
 impl<Storage, Unit> InverseArea<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseAreaUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "InverseArea";
@@ -5875,6 +6734,7 @@ where
 
 impl<Storage, Unit> QuantityType for InverseArea<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseAreaUnit,
 {
     type Storage = Storage;
@@ -5903,11 +6763,12 @@ where
 
 impl<Storage, Unit> InverseArea<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: InverseAreaUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> InverseArea<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: InverseAreaUnit,
         Unit: InverseAreaInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -5917,7 +6778,7 @@ where
 
 impl<Storage, Unit> InverseArea<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseAreaUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -5925,7 +6786,7 @@ where
     ) -> Result<InverseArea<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: InverseAreaUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, InverseArea<TargetStorage, TargetUnit>>(self)
     }
@@ -5955,7 +6816,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for InverseArea<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: InverseAreaUnit + InverseAreaInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InverseAreaUnit,
 {
@@ -5969,10 +6830,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for InverseArea<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseAreaUnit,
     TargetUnit: InverseAreaUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = InverseArea<TargetStorage, TargetUnit>;
 
@@ -5984,7 +6845,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for InverseArea<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseAreaUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -5998,7 +6859,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for InverseArea<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseAreaUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -6009,13 +6870,19 @@ where
     }
 }
 
-impl<Storage> InverseArea<Storage, per_m2> {
+impl<Storage> InverseArea<Storage, per_m2>
+where
+    Storage: ScalarStorageFor<per_m2>,
+{
     pub const fn per_m2(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for per_m2 {
+impl<Storage> QuantityForStorage<Storage> for per_m2
+where
+    Storage: ScalarStorageFor<per_m2>,
+{
     type Quantity = InverseArea<Storage, per_m2>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -6042,18 +6909,22 @@ impl InverseSolidAngleInfallibleUnitPath<per_sr, f64> for per_sr {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct InverseSolidAngle<Storage = f64, Unit = per_sr>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseSolidAngleUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for InverseSolidAngle<Storage, Unit> where
-    Unit: InverseSolidAngleUnit
+impl<Storage, Unit> private::SealedQuantityType for InverseSolidAngle<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: InverseSolidAngleUnit,
 {
 }
 
 impl<Storage, Unit> InverseSolidAngle<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseSolidAngleUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "InverseSolidAngle";
@@ -6120,6 +6991,7 @@ where
 
 impl<Storage, Unit> QuantityType for InverseSolidAngle<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseSolidAngleUnit,
 {
     type Storage = Storage;
@@ -6148,11 +7020,12 @@ where
 
 impl<Storage, Unit> InverseSolidAngle<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: InverseSolidAngleUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> InverseSolidAngle<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: InverseSolidAngleUnit,
         Unit: InverseSolidAngleInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -6162,7 +7035,7 @@ where
 
 impl<Storage, Unit> InverseSolidAngle<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseSolidAngleUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -6170,7 +7043,7 @@ where
     ) -> Result<InverseSolidAngle<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: InverseSolidAngleUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, InverseSolidAngle<TargetStorage, TargetUnit>>(self)
     }
@@ -6200,7 +7073,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for InverseSolidAngle<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: InverseSolidAngleUnit + InverseSolidAngleInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InverseSolidAngleUnit,
 {
@@ -6214,10 +7087,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for InverseSolidAngle<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseSolidAngleUnit,
     TargetUnit: InverseSolidAngleUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = InverseSolidAngle<TargetStorage, TargetUnit>;
 
@@ -6230,7 +7103,7 @@ impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage>
     for InverseSolidAngle<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseSolidAngleUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -6244,7 +7117,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for InverseSolidAngle<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseSolidAngleUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -6255,13 +7128,19 @@ where
     }
 }
 
-impl<Storage> InverseSolidAngle<Storage, per_sr> {
+impl<Storage> InverseSolidAngle<Storage, per_sr>
+where
+    Storage: ScalarStorageFor<per_sr>,
+{
     pub const fn per_sr(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for per_sr {
+impl<Storage> QuantityForStorage<Storage> for per_sr
+where
+    Storage: ScalarStorageFor<per_sr>,
+{
     type Quantity = InverseSolidAngle<Storage, per_sr>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -6288,18 +7167,22 @@ impl InverseVolumeInfallibleUnitPath<per_m3, f64> for per_m3 {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct InverseVolume<Storage = f64, Unit = per_m3>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseVolumeUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for InverseVolume<Storage, Unit> where
-    Unit: InverseVolumeUnit
+impl<Storage, Unit> private::SealedQuantityType for InverseVolume<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: InverseVolumeUnit,
 {
 }
 
 impl<Storage, Unit> InverseVolume<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseVolumeUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "InverseVolume";
@@ -6366,6 +7249,7 @@ where
 
 impl<Storage, Unit> QuantityType for InverseVolume<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseVolumeUnit,
 {
     type Storage = Storage;
@@ -6394,11 +7278,12 @@ where
 
 impl<Storage, Unit> InverseVolume<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: InverseVolumeUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> InverseVolume<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: InverseVolumeUnit,
         Unit: InverseVolumeInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -6408,7 +7293,7 @@ where
 
 impl<Storage, Unit> InverseVolume<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseVolumeUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -6416,7 +7301,7 @@ where
     ) -> Result<InverseVolume<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: InverseVolumeUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, InverseVolume<TargetStorage, TargetUnit>>(self)
     }
@@ -6446,7 +7331,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for InverseVolume<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: InverseVolumeUnit + InverseVolumeInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InverseVolumeUnit,
 {
@@ -6460,10 +7345,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for InverseVolume<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseVolumeUnit,
     TargetUnit: InverseVolumeUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = InverseVolume<TargetStorage, TargetUnit>;
 
@@ -6475,7 +7360,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for InverseVolume<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseVolumeUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -6489,7 +7374,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for InverseVolume<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseVolumeUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -6500,13 +7385,19 @@ where
     }
 }
 
-impl<Storage> InverseVolume<Storage, per_m3> {
+impl<Storage> InverseVolume<Storage, per_m3>
+where
+    Storage: ScalarStorageFor<per_m3>,
+{
     pub const fn per_m3(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for per_m3 {
+impl<Storage> QuantityForStorage<Storage> for per_m3
+where
+    Storage: ScalarStorageFor<per_m3>,
+{
     type Quantity = InverseVolume<Storage, per_m3>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -6533,18 +7424,22 @@ impl SolidAngleInfallibleUnitPath<sr, f64> for sr {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct SolidAngle<Storage = f64, Unit = sr>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: SolidAngleUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for SolidAngle<Storage, Unit> where
-    Unit: SolidAngleUnit
+impl<Storage, Unit> private::SealedQuantityType for SolidAngle<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: SolidAngleUnit,
 {
 }
 
 impl<Storage, Unit> SolidAngle<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: SolidAngleUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "SolidAngle";
@@ -6611,6 +7506,7 @@ where
 
 impl<Storage, Unit> QuantityType for SolidAngle<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: SolidAngleUnit,
 {
     type Storage = Storage;
@@ -6639,11 +7535,12 @@ where
 
 impl<Storage, Unit> SolidAngle<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: SolidAngleUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> SolidAngle<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: SolidAngleUnit,
         Unit: SolidAngleInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -6653,7 +7550,7 @@ where
 
 impl<Storage, Unit> SolidAngle<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: SolidAngleUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -6661,7 +7558,7 @@ where
     ) -> Result<SolidAngle<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: SolidAngleUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, SolidAngle<TargetStorage, TargetUnit>>(self)
     }
@@ -6691,7 +7588,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for SolidAngle<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: SolidAngleUnit + SolidAngleInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: SolidAngleUnit,
 {
@@ -6705,10 +7602,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for SolidAngle<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: SolidAngleUnit,
     TargetUnit: SolidAngleUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = SolidAngle<TargetStorage, TargetUnit>;
 
@@ -6720,7 +7617,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for SolidAngle<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: SolidAngleUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -6734,7 +7631,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for SolidAngle<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: SolidAngleUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -6745,13 +7642,19 @@ where
     }
 }
 
-impl<Storage> SolidAngle<Storage, sr> {
+impl<Storage> SolidAngle<Storage, sr>
+where
+    Storage: ScalarStorageFor<sr>,
+{
     pub const fn sr(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for sr {
+impl<Storage> QuantityForStorage<Storage> for sr
+where
+    Storage: ScalarStorageFor<sr>,
+{
     type Quantity = SolidAngle<Storage, sr>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -6778,15 +7681,22 @@ impl VolumeInfallibleUnitPath<m3, f64> for m3 {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct Volume<Storage = f64, Unit = m3>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: VolumeUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for Volume<Storage, Unit> where Unit: VolumeUnit {}
+impl<Storage, Unit> private::SealedQuantityType for Volume<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: VolumeUnit,
+{
+}
 
 impl<Storage, Unit> Volume<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: VolumeUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "Volume";
@@ -6853,6 +7763,7 @@ where
 
 impl<Storage, Unit> QuantityType for Volume<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: VolumeUnit,
 {
     type Storage = Storage;
@@ -6881,11 +7792,12 @@ where
 
 impl<Storage, Unit> Volume<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: VolumeUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> Volume<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: VolumeUnit,
         Unit: VolumeInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -6895,7 +7807,7 @@ where
 
 impl<Storage, Unit> Volume<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: VolumeUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -6903,7 +7815,7 @@ where
     ) -> Result<Volume<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: VolumeUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, Volume<TargetStorage, TargetUnit>>(self)
     }
@@ -6933,7 +7845,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Volume<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: VolumeUnit + VolumeInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: VolumeUnit,
 {
@@ -6947,10 +7859,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for Volume<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: VolumeUnit,
     TargetUnit: VolumeUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = Volume<TargetStorage, TargetUnit>;
 
@@ -6962,7 +7874,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for Volume<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: VolumeUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -6976,7 +7888,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for Volume<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: VolumeUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -6987,13 +7899,19 @@ where
     }
 }
 
-impl<Storage> Volume<Storage, m3> {
+impl<Storage> Volume<Storage, m3>
+where
+    Storage: ScalarStorageFor<m3>,
+{
     pub const fn m3(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for m3 {
+impl<Storage> QuantityForStorage<Storage> for m3
+where
+    Storage: ScalarStorageFor<m3>,
+{
     type Quantity = Volume<Storage, m3>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -7020,18 +7938,22 @@ impl AccelerationInfallibleUnitPath<mps2, f64> for mps2 {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct Acceleration<Storage = f64, Unit = mps2>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: AccelerationUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for Acceleration<Storage, Unit> where
-    Unit: AccelerationUnit
+impl<Storage, Unit> private::SealedQuantityType for Acceleration<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: AccelerationUnit,
 {
 }
 
 impl<Storage, Unit> Acceleration<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: AccelerationUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "Acceleration";
@@ -7098,6 +8020,7 @@ where
 
 impl<Storage, Unit> QuantityType for Acceleration<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: AccelerationUnit,
 {
     type Storage = Storage;
@@ -7126,11 +8049,12 @@ where
 
 impl<Storage, Unit> Acceleration<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: AccelerationUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> Acceleration<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: AccelerationUnit,
         Unit: AccelerationInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -7140,7 +8064,7 @@ where
 
 impl<Storage, Unit> Acceleration<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: AccelerationUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -7148,7 +8072,7 @@ where
     ) -> Result<Acceleration<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: AccelerationUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, Acceleration<TargetStorage, TargetUnit>>(self)
     }
@@ -7178,7 +8102,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Acceleration<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: AccelerationUnit + AccelerationInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: AccelerationUnit,
 {
@@ -7192,10 +8116,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for Acceleration<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: AccelerationUnit,
     TargetUnit: AccelerationUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = Acceleration<TargetStorage, TargetUnit>;
 
@@ -7207,7 +8131,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for Acceleration<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: AccelerationUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -7221,7 +8145,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for Acceleration<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: AccelerationUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -7232,13 +8156,19 @@ where
     }
 }
 
-impl<Storage> Acceleration<Storage, mps2> {
+impl<Storage> Acceleration<Storage, mps2>
+where
+    Storage: ScalarStorageFor<mps2>,
+{
     pub const fn mps2(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for mps2 {
+impl<Storage> QuantityForStorage<Storage> for mps2
+where
+    Storage: ScalarStorageFor<mps2>,
+{
     type Quantity = Acceleration<Storage, mps2>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -7268,18 +8198,22 @@ impl AngularAccelerationInfallibleUnitPath<radps2, f64> for radps2 {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct AngularAcceleration<Storage = f64, Unit = radps2>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: AngularAccelerationUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for AngularAcceleration<Storage, Unit> where
-    Unit: AngularAccelerationUnit
+impl<Storage, Unit> private::SealedQuantityType for AngularAcceleration<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: AngularAccelerationUnit,
 {
 }
 
 impl<Storage, Unit> AngularAcceleration<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: AngularAccelerationUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "AngularAcceleration";
@@ -7346,6 +8280,7 @@ where
 
 impl<Storage, Unit> QuantityType for AngularAcceleration<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: AngularAccelerationUnit,
 {
     type Storage = Storage;
@@ -7374,11 +8309,12 @@ where
 
 impl<Storage, Unit> AngularAcceleration<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: AngularAccelerationUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> AngularAcceleration<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: AngularAccelerationUnit,
         Unit: AngularAccelerationInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -7388,7 +8324,7 @@ where
 
 impl<Storage, Unit> AngularAcceleration<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: AngularAccelerationUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -7396,7 +8332,7 @@ where
     ) -> Result<AngularAcceleration<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: AngularAccelerationUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, AngularAcceleration<TargetStorage, TargetUnit>>(self)
     }
@@ -7426,7 +8362,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for AngularAcceleration<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: AngularAccelerationUnit + AngularAccelerationInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: AngularAccelerationUnit,
 {
@@ -7440,10 +8376,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for AngularAcceleration<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: AngularAccelerationUnit,
     TargetUnit: AngularAccelerationUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = AngularAcceleration<TargetStorage, TargetUnit>;
 
@@ -7456,7 +8392,7 @@ impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage>
     for AngularAcceleration<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: AngularAccelerationUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -7471,7 +8407,7 @@ impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage>
     for AngularAcceleration<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: AngularAccelerationUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -7482,13 +8418,19 @@ where
     }
 }
 
-impl<Storage> AngularAcceleration<Storage, radps2> {
+impl<Storage> AngularAcceleration<Storage, radps2>
+where
+    Storage: ScalarStorageFor<radps2>,
+{
     pub const fn radps2(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for radps2 {
+impl<Storage> QuantityForStorage<Storage> for radps2
+where
+    Storage: ScalarStorageFor<radps2>,
+{
     type Quantity = AngularAcceleration<Storage, radps2>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -7515,18 +8457,22 @@ impl AngularMomentumInfallibleUnitPath<kgm2ps, f64> for kgm2ps {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct AngularMomentum<Storage = f64, Unit = kgm2ps>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: AngularMomentumUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for AngularMomentum<Storage, Unit> where
-    Unit: AngularMomentumUnit
+impl<Storage, Unit> private::SealedQuantityType for AngularMomentum<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: AngularMomentumUnit,
 {
 }
 
 impl<Storage, Unit> AngularMomentum<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: AngularMomentumUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "AngularMomentum";
@@ -7593,6 +8539,7 @@ where
 
 impl<Storage, Unit> QuantityType for AngularMomentum<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: AngularMomentumUnit,
 {
     type Storage = Storage;
@@ -7621,11 +8568,12 @@ where
 
 impl<Storage, Unit> AngularMomentum<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: AngularMomentumUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> AngularMomentum<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: AngularMomentumUnit,
         Unit: AngularMomentumInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -7635,7 +8583,7 @@ where
 
 impl<Storage, Unit> AngularMomentum<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: AngularMomentumUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -7643,7 +8591,7 @@ where
     ) -> Result<AngularMomentum<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: AngularMomentumUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, AngularMomentum<TargetStorage, TargetUnit>>(self)
     }
@@ -7673,7 +8621,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for AngularMomentum<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: AngularMomentumUnit + AngularMomentumInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: AngularMomentumUnit,
 {
@@ -7687,10 +8635,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for AngularMomentum<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: AngularMomentumUnit,
     TargetUnit: AngularMomentumUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = AngularMomentum<TargetStorage, TargetUnit>;
 
@@ -7702,7 +8650,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for AngularMomentum<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: AngularMomentumUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -7716,7 +8664,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for AngularMomentum<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: AngularMomentumUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -7727,13 +8675,19 @@ where
     }
 }
 
-impl<Storage> AngularMomentum<Storage, kgm2ps> {
+impl<Storage> AngularMomentum<Storage, kgm2ps>
+where
+    Storage: ScalarStorageFor<kgm2ps>,
+{
     pub const fn kgm2ps(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for kgm2ps {
+impl<Storage> QuantityForStorage<Storage> for kgm2ps
+where
+    Storage: ScalarStorageFor<kgm2ps>,
+{
     type Quantity = AngularMomentum<Storage, kgm2ps>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -7760,18 +8714,22 @@ impl AngularVelocityInfallibleUnitPath<radps, f64> for radps {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct AngularVelocity<Storage = f64, Unit = radps>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: AngularVelocityUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for AngularVelocity<Storage, Unit> where
-    Unit: AngularVelocityUnit
+impl<Storage, Unit> private::SealedQuantityType for AngularVelocity<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: AngularVelocityUnit,
 {
 }
 
 impl<Storage, Unit> AngularVelocity<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: AngularVelocityUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "AngularVelocity";
@@ -7838,6 +8796,7 @@ where
 
 impl<Storage, Unit> QuantityType for AngularVelocity<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: AngularVelocityUnit,
 {
     type Storage = Storage;
@@ -7866,11 +8825,12 @@ where
 
 impl<Storage, Unit> AngularVelocity<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: AngularVelocityUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> AngularVelocity<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: AngularVelocityUnit,
         Unit: AngularVelocityInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -7880,7 +8840,7 @@ where
 
 impl<Storage, Unit> AngularVelocity<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: AngularVelocityUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -7888,7 +8848,7 @@ where
     ) -> Result<AngularVelocity<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: AngularVelocityUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, AngularVelocity<TargetStorage, TargetUnit>>(self)
     }
@@ -7918,7 +8878,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for AngularVelocity<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: AngularVelocityUnit + AngularVelocityInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: AngularVelocityUnit,
 {
@@ -7932,10 +8892,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for AngularVelocity<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: AngularVelocityUnit,
     TargetUnit: AngularVelocityUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = AngularVelocity<TargetStorage, TargetUnit>;
 
@@ -7947,7 +8907,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for AngularVelocity<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: AngularVelocityUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -7961,7 +8921,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for AngularVelocity<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: AngularVelocityUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -7972,13 +8932,19 @@ where
     }
 }
 
-impl<Storage> AngularVelocity<Storage, radps> {
+impl<Storage> AngularVelocity<Storage, radps>
+where
+    Storage: ScalarStorageFor<radps>,
+{
     pub const fn radps(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for radps {
+impl<Storage> QuantityForStorage<Storage> for radps
+where
+    Storage: ScalarStorageFor<radps>,
+{
     type Quantity = AngularVelocity<Storage, radps>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -8005,18 +8971,22 @@ impl AreaDensityInfallibleUnitPath<kgpm2, f64> for kgpm2 {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct AreaDensity<Storage = f64, Unit = kgpm2>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: AreaDensityUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for AreaDensity<Storage, Unit> where
-    Unit: AreaDensityUnit
+impl<Storage, Unit> private::SealedQuantityType for AreaDensity<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: AreaDensityUnit,
 {
 }
 
 impl<Storage, Unit> AreaDensity<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: AreaDensityUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "AreaDensity";
@@ -8083,6 +9053,7 @@ where
 
 impl<Storage, Unit> QuantityType for AreaDensity<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: AreaDensityUnit,
 {
     type Storage = Storage;
@@ -8111,11 +9082,12 @@ where
 
 impl<Storage, Unit> AreaDensity<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: AreaDensityUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> AreaDensity<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: AreaDensityUnit,
         Unit: AreaDensityInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -8125,7 +9097,7 @@ where
 
 impl<Storage, Unit> AreaDensity<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: AreaDensityUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -8133,7 +9105,7 @@ where
     ) -> Result<AreaDensity<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: AreaDensityUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, AreaDensity<TargetStorage, TargetUnit>>(self)
     }
@@ -8163,7 +9135,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for AreaDensity<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: AreaDensityUnit + AreaDensityInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: AreaDensityUnit,
 {
@@ -8177,10 +9149,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for AreaDensity<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: AreaDensityUnit,
     TargetUnit: AreaDensityUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = AreaDensity<TargetStorage, TargetUnit>;
 
@@ -8192,7 +9164,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for AreaDensity<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: AreaDensityUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -8206,7 +9178,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for AreaDensity<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: AreaDensityUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -8217,13 +9189,19 @@ where
     }
 }
 
-impl<Storage> AreaDensity<Storage, kgpm2> {
+impl<Storage> AreaDensity<Storage, kgpm2>
+where
+    Storage: ScalarStorageFor<kgpm2>,
+{
     pub const fn kgpm2(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for kgpm2 {
+impl<Storage> QuantityForStorage<Storage> for kgpm2
+where
+    Storage: ScalarStorageFor<kgpm2>,
+{
     type Quantity = AreaDensity<Storage, kgpm2>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -8250,18 +9228,22 @@ impl AreaPerMassInfallibleUnitPath<m2pkg, f64> for m2pkg {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct AreaPerMass<Storage = f64, Unit = m2pkg>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: AreaPerMassUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for AreaPerMass<Storage, Unit> where
-    Unit: AreaPerMassUnit
+impl<Storage, Unit> private::SealedQuantityType for AreaPerMass<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: AreaPerMassUnit,
 {
 }
 
 impl<Storage, Unit> AreaPerMass<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: AreaPerMassUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "AreaPerMass";
@@ -8328,6 +9310,7 @@ where
 
 impl<Storage, Unit> QuantityType for AreaPerMass<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: AreaPerMassUnit,
 {
     type Storage = Storage;
@@ -8356,11 +9339,12 @@ where
 
 impl<Storage, Unit> AreaPerMass<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: AreaPerMassUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> AreaPerMass<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: AreaPerMassUnit,
         Unit: AreaPerMassInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -8370,7 +9354,7 @@ where
 
 impl<Storage, Unit> AreaPerMass<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: AreaPerMassUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -8378,7 +9362,7 @@ where
     ) -> Result<AreaPerMass<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: AreaPerMassUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, AreaPerMass<TargetStorage, TargetUnit>>(self)
     }
@@ -8408,7 +9392,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for AreaPerMass<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: AreaPerMassUnit + AreaPerMassInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: AreaPerMassUnit,
 {
@@ -8422,10 +9406,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for AreaPerMass<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: AreaPerMassUnit,
     TargetUnit: AreaPerMassUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = AreaPerMass<TargetStorage, TargetUnit>;
 
@@ -8437,7 +9421,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for AreaPerMass<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: AreaPerMassUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -8451,7 +9435,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for AreaPerMass<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: AreaPerMassUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -8462,13 +9446,19 @@ where
     }
 }
 
-impl<Storage> AreaPerMass<Storage, m2pkg> {
+impl<Storage> AreaPerMass<Storage, m2pkg>
+where
+    Storage: ScalarStorageFor<m2pkg>,
+{
     pub const fn m2pkg(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for m2pkg {
+impl<Storage> QuantityForStorage<Storage> for m2pkg
+where
+    Storage: ScalarStorageFor<m2pkg>,
+{
     type Quantity = AreaPerMass<Storage, m2pkg>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -8495,15 +9485,22 @@ impl DensityInfallibleUnitPath<kgpm3, f64> for kgpm3 {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct Density<Storage = f64, Unit = kgpm3>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: DensityUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for Density<Storage, Unit> where Unit: DensityUnit {}
+impl<Storage, Unit> private::SealedQuantityType for Density<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: DensityUnit,
+{
+}
 
 impl<Storage, Unit> Density<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: DensityUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "Density";
@@ -8570,6 +9567,7 @@ where
 
 impl<Storage, Unit> QuantityType for Density<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: DensityUnit,
 {
     type Storage = Storage;
@@ -8598,11 +9596,12 @@ where
 
 impl<Storage, Unit> Density<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: DensityUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> Density<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: DensityUnit,
         Unit: DensityInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -8612,7 +9611,7 @@ where
 
 impl<Storage, Unit> Density<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: DensityUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -8620,7 +9619,7 @@ where
     ) -> Result<Density<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: DensityUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, Density<TargetStorage, TargetUnit>>(self)
     }
@@ -8650,7 +9649,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Density<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: DensityUnit + DensityInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: DensityUnit,
 {
@@ -8664,10 +9663,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for Density<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: DensityUnit,
     TargetUnit: DensityUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = Density<TargetStorage, TargetUnit>;
 
@@ -8679,7 +9678,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for Density<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: DensityUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -8693,7 +9692,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for Density<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: DensityUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -8704,13 +9703,19 @@ where
     }
 }
 
-impl<Storage> Density<Storage, kgpm3> {
+impl<Storage> Density<Storage, kgpm3>
+where
+    Storage: ScalarStorageFor<kgpm3>,
+{
     pub const fn kgpm3(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for kgpm3 {
+impl<Storage> QuantityForStorage<Storage> for kgpm3
+where
+    Storage: ScalarStorageFor<kgpm3>,
+{
     type Quantity = Density<Storage, kgpm3>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -8737,15 +9742,22 @@ impl EnergyInfallibleUnitPath<J, f64> for J {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct Energy<Storage = f64, Unit = J>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: EnergyUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for Energy<Storage, Unit> where Unit: EnergyUnit {}
+impl<Storage, Unit> private::SealedQuantityType for Energy<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: EnergyUnit,
+{
+}
 
 impl<Storage, Unit> Energy<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: EnergyUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "Energy";
@@ -8812,6 +9824,7 @@ where
 
 impl<Storage, Unit> QuantityType for Energy<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: EnergyUnit,
 {
     type Storage = Storage;
@@ -8840,11 +9853,12 @@ where
 
 impl<Storage, Unit> Energy<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: EnergyUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> Energy<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: EnergyUnit,
         Unit: EnergyInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -8854,7 +9868,7 @@ where
 
 impl<Storage, Unit> Energy<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: EnergyUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -8862,7 +9876,7 @@ where
     ) -> Result<Energy<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: EnergyUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, Energy<TargetStorage, TargetUnit>>(self)
     }
@@ -8892,7 +9906,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Energy<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: EnergyUnit + EnergyInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: EnergyUnit,
 {
@@ -8906,10 +9920,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for Energy<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: EnergyUnit,
     TargetUnit: EnergyUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = Energy<TargetStorage, TargetUnit>;
 
@@ -8921,7 +9935,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for Energy<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: EnergyUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -8935,7 +9949,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for Energy<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: EnergyUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -8946,13 +9960,19 @@ where
     }
 }
 
-impl<Storage> Energy<Storage, J> {
+impl<Storage> Energy<Storage, J>
+where
+    Storage: ScalarStorageFor<J>,
+{
     pub const fn J(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for J {
+impl<Storage> QuantityForStorage<Storage> for J
+where
+    Storage: ScalarStorageFor<J>,
+{
     type Quantity = Energy<Storage, J>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -8979,15 +9999,22 @@ impl ForceInfallibleUnitPath<N, f64> for N {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct Force<Storage = f64, Unit = N>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: ForceUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for Force<Storage, Unit> where Unit: ForceUnit {}
+impl<Storage, Unit> private::SealedQuantityType for Force<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: ForceUnit,
+{
+}
 
 impl<Storage, Unit> Force<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: ForceUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "Force";
@@ -9054,6 +10081,7 @@ where
 
 impl<Storage, Unit> QuantityType for Force<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: ForceUnit,
 {
     type Storage = Storage;
@@ -9082,11 +10110,12 @@ where
 
 impl<Storage, Unit> Force<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: ForceUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> Force<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: ForceUnit,
         Unit: ForceInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -9096,7 +10125,7 @@ where
 
 impl<Storage, Unit> Force<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: ForceUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -9104,7 +10133,7 @@ where
     ) -> Result<Force<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: ForceUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, Force<TargetStorage, TargetUnit>>(self)
     }
@@ -9134,7 +10163,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Force<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: ForceUnit + ForceInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: ForceUnit,
 {
@@ -9148,10 +10177,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for Force<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: ForceUnit,
     TargetUnit: ForceUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = Force<TargetStorage, TargetUnit>;
 
@@ -9163,7 +10192,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for Force<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: ForceUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -9177,7 +10206,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for Force<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: ForceUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -9188,13 +10217,19 @@ where
     }
 }
 
-impl<Storage> Force<Storage, N> {
+impl<Storage> Force<Storage, N>
+where
+    Storage: ScalarStorageFor<N>,
+{
     pub const fn N(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for N {
+impl<Storage> QuantityForStorage<Storage> for N
+where
+    Storage: ScalarStorageFor<N>,
+{
     type Quantity = Force<Storage, N>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -9221,18 +10256,22 @@ impl FrequencyInfallibleUnitPath<Hz, f64> for Hz {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct Frequency<Storage = f64, Unit = Hz>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: FrequencyUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for Frequency<Storage, Unit> where
-    Unit: FrequencyUnit
+impl<Storage, Unit> private::SealedQuantityType for Frequency<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: FrequencyUnit,
 {
 }
 
 impl<Storage, Unit> Frequency<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: FrequencyUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "Frequency";
@@ -9299,6 +10338,7 @@ where
 
 impl<Storage, Unit> QuantityType for Frequency<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: FrequencyUnit,
 {
     type Storage = Storage;
@@ -9327,11 +10367,12 @@ where
 
 impl<Storage, Unit> Frequency<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: FrequencyUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> Frequency<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: FrequencyUnit,
         Unit: FrequencyInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -9341,7 +10382,7 @@ where
 
 impl<Storage, Unit> Frequency<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: FrequencyUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -9349,7 +10390,7 @@ where
     ) -> Result<Frequency<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: FrequencyUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, Frequency<TargetStorage, TargetUnit>>(self)
     }
@@ -9379,7 +10420,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Frequency<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: FrequencyUnit + FrequencyInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: FrequencyUnit,
 {
@@ -9393,10 +10434,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for Frequency<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: FrequencyUnit,
     TargetUnit: FrequencyUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = Frequency<TargetStorage, TargetUnit>;
 
@@ -9408,7 +10449,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for Frequency<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: FrequencyUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -9422,7 +10463,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for Frequency<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: FrequencyUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -9433,13 +10474,19 @@ where
     }
 }
 
-impl<Storage> Frequency<Storage, Hz> {
+impl<Storage> Frequency<Storage, Hz>
+where
+    Storage: ScalarStorageFor<Hz>,
+{
     pub const fn Hz(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for Hz {
+impl<Storage> QuantityForStorage<Storage> for Hz
+where
+    Storage: ScalarStorageFor<Hz>,
+{
     type Quantity = Frequency<Storage, Hz>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -9469,18 +10516,22 @@ impl InverseAccelerationInfallibleUnitPath<per_mps2, f64> for per_mps2 {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct InverseAcceleration<Storage = f64, Unit = per_mps2>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseAccelerationUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for InverseAcceleration<Storage, Unit> where
-    Unit: InverseAccelerationUnit
+impl<Storage, Unit> private::SealedQuantityType for InverseAcceleration<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: InverseAccelerationUnit,
 {
 }
 
 impl<Storage, Unit> InverseAcceleration<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseAccelerationUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "InverseAcceleration";
@@ -9547,6 +10598,7 @@ where
 
 impl<Storage, Unit> QuantityType for InverseAcceleration<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseAccelerationUnit,
 {
     type Storage = Storage;
@@ -9575,11 +10627,12 @@ where
 
 impl<Storage, Unit> InverseAcceleration<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: InverseAccelerationUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> InverseAcceleration<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: InverseAccelerationUnit,
         Unit: InverseAccelerationInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -9589,7 +10642,7 @@ where
 
 impl<Storage, Unit> InverseAcceleration<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseAccelerationUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -9597,7 +10650,7 @@ where
     ) -> Result<InverseAcceleration<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: InverseAccelerationUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, InverseAcceleration<TargetStorage, TargetUnit>>(self)
     }
@@ -9627,7 +10680,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for InverseAcceleration<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: InverseAccelerationUnit + InverseAccelerationInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InverseAccelerationUnit,
 {
@@ -9641,10 +10694,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for InverseAcceleration<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseAccelerationUnit,
     TargetUnit: InverseAccelerationUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = InverseAcceleration<TargetStorage, TargetUnit>;
 
@@ -9657,7 +10710,7 @@ impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage>
     for InverseAcceleration<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseAccelerationUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -9672,7 +10725,7 @@ impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage>
     for InverseAcceleration<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseAccelerationUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -9683,13 +10736,19 @@ where
     }
 }
 
-impl<Storage> InverseAcceleration<Storage, per_mps2> {
+impl<Storage> InverseAcceleration<Storage, per_mps2>
+where
+    Storage: ScalarStorageFor<per_mps2>,
+{
     pub const fn per_mps2(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for per_mps2 {
+impl<Storage> QuantityForStorage<Storage> for per_mps2
+where
+    Storage: ScalarStorageFor<per_mps2>,
+{
     type Quantity = InverseAcceleration<Storage, per_mps2>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -9719,18 +10778,22 @@ impl InverseAngularAccelerationInfallibleUnitPath<per_radps2, f64> for per_radps
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct InverseAngularAcceleration<Storage = f64, Unit = per_radps2>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseAngularAccelerationUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for InverseAngularAcceleration<Storage, Unit> where
-    Unit: InverseAngularAccelerationUnit
+impl<Storage, Unit> private::SealedQuantityType for InverseAngularAcceleration<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: InverseAngularAccelerationUnit,
 {
 }
 
 impl<Storage, Unit> InverseAngularAcceleration<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseAngularAccelerationUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "InverseAngularAcceleration";
@@ -9797,6 +10860,7 @@ where
 
 impl<Storage, Unit> QuantityType for InverseAngularAcceleration<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseAngularAccelerationUnit,
 {
     type Storage = Storage;
@@ -9825,11 +10889,12 @@ where
 
 impl<Storage, Unit> InverseAngularAcceleration<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: InverseAngularAccelerationUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> InverseAngularAcceleration<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: InverseAngularAccelerationUnit,
         Unit: InverseAngularAccelerationInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -9841,7 +10906,7 @@ where
 
 impl<Storage, Unit> InverseAngularAcceleration<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseAngularAccelerationUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -9852,7 +10917,7 @@ where
     >
     where
         TargetUnit: InverseAngularAccelerationUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, InverseAngularAcceleration<TargetStorage, TargetUnit>>(
             self,
@@ -9885,7 +10950,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit>
     for InverseAngularAcceleration<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: InverseAngularAccelerationUnit
         + InverseAngularAccelerationInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InverseAngularAccelerationUnit,
@@ -9902,10 +10967,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for InverseAngularAcceleration<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseAngularAccelerationUnit,
     TargetUnit: InverseAngularAccelerationUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = InverseAngularAcceleration<TargetStorage, TargetUnit>;
 
@@ -9920,7 +10985,7 @@ impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage>
     for InverseAngularAcceleration<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseAngularAccelerationUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -9935,7 +11000,7 @@ impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage>
     for InverseAngularAcceleration<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseAngularAccelerationUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -9946,13 +11011,19 @@ where
     }
 }
 
-impl<Storage> InverseAngularAcceleration<Storage, per_radps2> {
+impl<Storage> InverseAngularAcceleration<Storage, per_radps2>
+where
+    Storage: ScalarStorageFor<per_radps2>,
+{
     pub const fn per_radps2(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for per_radps2 {
+impl<Storage> QuantityForStorage<Storage> for per_radps2
+where
+    Storage: ScalarStorageFor<per_radps2>,
+{
     type Quantity = InverseAngularAcceleration<Storage, per_radps2>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -9982,18 +11053,22 @@ impl InverseAngularMomentumInfallibleUnitPath<per_kgm2ps, f64> for per_kgm2ps {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct InverseAngularMomentum<Storage = f64, Unit = per_kgm2ps>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseAngularMomentumUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for InverseAngularMomentum<Storage, Unit> where
-    Unit: InverseAngularMomentumUnit
+impl<Storage, Unit> private::SealedQuantityType for InverseAngularMomentum<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: InverseAngularMomentumUnit,
 {
 }
 
 impl<Storage, Unit> InverseAngularMomentum<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseAngularMomentumUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "InverseAngularMomentum";
@@ -10060,6 +11135,7 @@ where
 
 impl<Storage, Unit> QuantityType for InverseAngularMomentum<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseAngularMomentumUnit,
 {
     type Storage = Storage;
@@ -10088,11 +11164,12 @@ where
 
 impl<Storage, Unit> InverseAngularMomentum<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: InverseAngularMomentumUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> InverseAngularMomentum<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: InverseAngularMomentumUnit,
         Unit: InverseAngularMomentumInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -10104,7 +11181,7 @@ where
 
 impl<Storage, Unit> InverseAngularMomentum<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseAngularMomentumUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -10112,7 +11189,7 @@ where
     ) -> Result<InverseAngularMomentum<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: InverseAngularMomentumUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, InverseAngularMomentum<TargetStorage, TargetUnit>>(
             self,
@@ -10144,7 +11221,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for InverseAngularMomentum<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit:
         InverseAngularMomentumUnit + InverseAngularMomentumInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InverseAngularMomentumUnit,
@@ -10161,10 +11238,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for InverseAngularMomentum<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseAngularMomentumUnit,
     TargetUnit: InverseAngularMomentumUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = InverseAngularMomentum<TargetStorage, TargetUnit>;
 
@@ -10179,7 +11256,7 @@ impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage>
     for InverseAngularMomentum<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseAngularMomentumUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -10194,7 +11271,7 @@ impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage>
     for InverseAngularMomentum<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseAngularMomentumUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -10205,13 +11282,19 @@ where
     }
 }
 
-impl<Storage> InverseAngularMomentum<Storage, per_kgm2ps> {
+impl<Storage> InverseAngularMomentum<Storage, per_kgm2ps>
+where
+    Storage: ScalarStorageFor<per_kgm2ps>,
+{
     pub const fn per_kgm2ps(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for per_kgm2ps {
+impl<Storage> QuantityForStorage<Storage> for per_kgm2ps
+where
+    Storage: ScalarStorageFor<per_kgm2ps>,
+{
     type Quantity = InverseAngularMomentum<Storage, per_kgm2ps>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -10241,18 +11324,22 @@ impl InverseAngularVelocityInfallibleUnitPath<per_radps, f64> for per_radps {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct InverseAngularVelocity<Storage = f64, Unit = per_radps>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseAngularVelocityUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for InverseAngularVelocity<Storage, Unit> where
-    Unit: InverseAngularVelocityUnit
+impl<Storage, Unit> private::SealedQuantityType for InverseAngularVelocity<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: InverseAngularVelocityUnit,
 {
 }
 
 impl<Storage, Unit> InverseAngularVelocity<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseAngularVelocityUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "InverseAngularVelocity";
@@ -10319,6 +11406,7 @@ where
 
 impl<Storage, Unit> QuantityType for InverseAngularVelocity<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseAngularVelocityUnit,
 {
     type Storage = Storage;
@@ -10347,11 +11435,12 @@ where
 
 impl<Storage, Unit> InverseAngularVelocity<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: InverseAngularVelocityUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> InverseAngularVelocity<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: InverseAngularVelocityUnit,
         Unit: InverseAngularVelocityInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -10363,7 +11452,7 @@ where
 
 impl<Storage, Unit> InverseAngularVelocity<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseAngularVelocityUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -10371,7 +11460,7 @@ where
     ) -> Result<InverseAngularVelocity<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: InverseAngularVelocityUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, InverseAngularVelocity<TargetStorage, TargetUnit>>(
             self,
@@ -10403,7 +11492,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for InverseAngularVelocity<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit:
         InverseAngularVelocityUnit + InverseAngularVelocityInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InverseAngularVelocityUnit,
@@ -10420,10 +11509,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for InverseAngularVelocity<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseAngularVelocityUnit,
     TargetUnit: InverseAngularVelocityUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = InverseAngularVelocity<TargetStorage, TargetUnit>;
 
@@ -10438,7 +11527,7 @@ impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage>
     for InverseAngularVelocity<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseAngularVelocityUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -10453,7 +11542,7 @@ impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage>
     for InverseAngularVelocity<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseAngularVelocityUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -10464,13 +11553,19 @@ where
     }
 }
 
-impl<Storage> InverseAngularVelocity<Storage, per_radps> {
+impl<Storage> InverseAngularVelocity<Storage, per_radps>
+where
+    Storage: ScalarStorageFor<per_radps>,
+{
     pub const fn per_radps(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for per_radps {
+impl<Storage> QuantityForStorage<Storage> for per_radps
+where
+    Storage: ScalarStorageFor<per_radps>,
+{
     type Quantity = InverseAngularVelocity<Storage, per_radps>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -10497,18 +11592,22 @@ impl InverseEnergyInfallibleUnitPath<per_J, f64> for per_J {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct InverseEnergy<Storage = f64, Unit = per_J>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseEnergyUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for InverseEnergy<Storage, Unit> where
-    Unit: InverseEnergyUnit
+impl<Storage, Unit> private::SealedQuantityType for InverseEnergy<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: InverseEnergyUnit,
 {
 }
 
 impl<Storage, Unit> InverseEnergy<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseEnergyUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "InverseEnergy";
@@ -10575,6 +11674,7 @@ where
 
 impl<Storage, Unit> QuantityType for InverseEnergy<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseEnergyUnit,
 {
     type Storage = Storage;
@@ -10603,11 +11703,12 @@ where
 
 impl<Storage, Unit> InverseEnergy<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: InverseEnergyUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> InverseEnergy<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: InverseEnergyUnit,
         Unit: InverseEnergyInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -10617,7 +11718,7 @@ where
 
 impl<Storage, Unit> InverseEnergy<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseEnergyUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -10625,7 +11726,7 @@ where
     ) -> Result<InverseEnergy<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: InverseEnergyUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, InverseEnergy<TargetStorage, TargetUnit>>(self)
     }
@@ -10655,7 +11756,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for InverseEnergy<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: InverseEnergyUnit + InverseEnergyInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InverseEnergyUnit,
 {
@@ -10669,10 +11770,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for InverseEnergy<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseEnergyUnit,
     TargetUnit: InverseEnergyUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = InverseEnergy<TargetStorage, TargetUnit>;
 
@@ -10684,7 +11785,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for InverseEnergy<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseEnergyUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -10698,7 +11799,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for InverseEnergy<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseEnergyUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -10709,13 +11810,19 @@ where
     }
 }
 
-impl<Storage> InverseEnergy<Storage, per_J> {
+impl<Storage> InverseEnergy<Storage, per_J>
+where
+    Storage: ScalarStorageFor<per_J>,
+{
     pub const fn per_J(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for per_J {
+impl<Storage> QuantityForStorage<Storage> for per_J
+where
+    Storage: ScalarStorageFor<per_J>,
+{
     type Quantity = InverseEnergy<Storage, per_J>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -10742,18 +11849,22 @@ impl InverseForceInfallibleUnitPath<per_N, f64> for per_N {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct InverseForce<Storage = f64, Unit = per_N>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseForceUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for InverseForce<Storage, Unit> where
-    Unit: InverseForceUnit
+impl<Storage, Unit> private::SealedQuantityType for InverseForce<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: InverseForceUnit,
 {
 }
 
 impl<Storage, Unit> InverseForce<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseForceUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "InverseForce";
@@ -10820,6 +11931,7 @@ where
 
 impl<Storage, Unit> QuantityType for InverseForce<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseForceUnit,
 {
     type Storage = Storage;
@@ -10848,11 +11960,12 @@ where
 
 impl<Storage, Unit> InverseForce<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: InverseForceUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> InverseForce<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: InverseForceUnit,
         Unit: InverseForceInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -10862,7 +11975,7 @@ where
 
 impl<Storage, Unit> InverseForce<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseForceUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -10870,7 +11983,7 @@ where
     ) -> Result<InverseForce<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: InverseForceUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, InverseForce<TargetStorage, TargetUnit>>(self)
     }
@@ -10900,7 +12013,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for InverseForce<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: InverseForceUnit + InverseForceInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InverseForceUnit,
 {
@@ -10914,10 +12027,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for InverseForce<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseForceUnit,
     TargetUnit: InverseForceUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = InverseForce<TargetStorage, TargetUnit>;
 
@@ -10929,7 +12042,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for InverseForce<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseForceUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -10943,7 +12056,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for InverseForce<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseForceUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -10954,13 +12067,19 @@ where
     }
 }
 
-impl<Storage> InverseForce<Storage, per_N> {
+impl<Storage> InverseForce<Storage, per_N>
+where
+    Storage: ScalarStorageFor<per_N>,
+{
     pub const fn per_N(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for per_N {
+impl<Storage> QuantityForStorage<Storage> for per_N
+where
+    Storage: ScalarStorageFor<per_N>,
+{
     type Quantity = InverseForce<Storage, per_N>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -10990,18 +12109,22 @@ impl InverseMomentOfInertiaInfallibleUnitPath<per_kgm2, f64> for per_kgm2 {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct InverseMomentOfInertia<Storage = f64, Unit = per_kgm2>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseMomentOfInertiaUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for InverseMomentOfInertia<Storage, Unit> where
-    Unit: InverseMomentOfInertiaUnit
+impl<Storage, Unit> private::SealedQuantityType for InverseMomentOfInertia<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: InverseMomentOfInertiaUnit,
 {
 }
 
 impl<Storage, Unit> InverseMomentOfInertia<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseMomentOfInertiaUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "InverseMomentOfInertia";
@@ -11068,6 +12191,7 @@ where
 
 impl<Storage, Unit> QuantityType for InverseMomentOfInertia<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseMomentOfInertiaUnit,
 {
     type Storage = Storage;
@@ -11096,11 +12220,12 @@ where
 
 impl<Storage, Unit> InverseMomentOfInertia<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: InverseMomentOfInertiaUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> InverseMomentOfInertia<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: InverseMomentOfInertiaUnit,
         Unit: InverseMomentOfInertiaInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -11112,7 +12237,7 @@ where
 
 impl<Storage, Unit> InverseMomentOfInertia<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseMomentOfInertiaUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -11120,7 +12245,7 @@ where
     ) -> Result<InverseMomentOfInertia<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: InverseMomentOfInertiaUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, InverseMomentOfInertia<TargetStorage, TargetUnit>>(
             self,
@@ -11152,7 +12277,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for InverseMomentOfInertia<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit:
         InverseMomentOfInertiaUnit + InverseMomentOfInertiaInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InverseMomentOfInertiaUnit,
@@ -11169,10 +12294,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for InverseMomentOfInertia<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseMomentOfInertiaUnit,
     TargetUnit: InverseMomentOfInertiaUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = InverseMomentOfInertia<TargetStorage, TargetUnit>;
 
@@ -11187,7 +12312,7 @@ impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage>
     for InverseMomentOfInertia<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseMomentOfInertiaUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -11202,7 +12327,7 @@ impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage>
     for InverseMomentOfInertia<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseMomentOfInertiaUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -11213,13 +12338,19 @@ where
     }
 }
 
-impl<Storage> InverseMomentOfInertia<Storage, per_kgm2> {
+impl<Storage> InverseMomentOfInertia<Storage, per_kgm2>
+where
+    Storage: ScalarStorageFor<per_kgm2>,
+{
     pub const fn per_kgm2(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for per_kgm2 {
+impl<Storage> QuantityForStorage<Storage> for per_kgm2
+where
+    Storage: ScalarStorageFor<per_kgm2>,
+{
     type Quantity = InverseMomentOfInertia<Storage, per_kgm2>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -11246,18 +12377,22 @@ impl InverseMomentumInfallibleUnitPath<per_kgmps, f64> for per_kgmps {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct InverseMomentum<Storage = f64, Unit = per_kgmps>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseMomentumUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for InverseMomentum<Storage, Unit> where
-    Unit: InverseMomentumUnit
+impl<Storage, Unit> private::SealedQuantityType for InverseMomentum<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: InverseMomentumUnit,
 {
 }
 
 impl<Storage, Unit> InverseMomentum<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseMomentumUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "InverseMomentum";
@@ -11324,6 +12459,7 @@ where
 
 impl<Storage, Unit> QuantityType for InverseMomentum<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseMomentumUnit,
 {
     type Storage = Storage;
@@ -11352,11 +12488,12 @@ where
 
 impl<Storage, Unit> InverseMomentum<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: InverseMomentumUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> InverseMomentum<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: InverseMomentumUnit,
         Unit: InverseMomentumInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -11366,7 +12503,7 @@ where
 
 impl<Storage, Unit> InverseMomentum<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseMomentumUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -11374,7 +12511,7 @@ where
     ) -> Result<InverseMomentum<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: InverseMomentumUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, InverseMomentum<TargetStorage, TargetUnit>>(self)
     }
@@ -11404,7 +12541,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for InverseMomentum<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: InverseMomentumUnit + InverseMomentumInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InverseMomentumUnit,
 {
@@ -11418,10 +12555,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for InverseMomentum<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseMomentumUnit,
     TargetUnit: InverseMomentumUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = InverseMomentum<TargetStorage, TargetUnit>;
 
@@ -11433,7 +12570,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for InverseMomentum<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseMomentumUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -11447,7 +12584,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for InverseMomentum<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseMomentumUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -11458,13 +12595,19 @@ where
     }
 }
 
-impl<Storage> InverseMomentum<Storage, per_kgmps> {
+impl<Storage> InverseMomentum<Storage, per_kgmps>
+where
+    Storage: ScalarStorageFor<per_kgmps>,
+{
     pub const fn per_kgmps(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for per_kgmps {
+impl<Storage> QuantityForStorage<Storage> for per_kgmps
+where
+    Storage: ScalarStorageFor<per_kgmps>,
+{
     type Quantity = InverseMomentum<Storage, per_kgmps>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -11491,18 +12634,22 @@ impl InversePowerInfallibleUnitPath<per_W, f64> for per_W {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct InversePower<Storage = f64, Unit = per_W>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InversePowerUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for InversePower<Storage, Unit> where
-    Unit: InversePowerUnit
+impl<Storage, Unit> private::SealedQuantityType for InversePower<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: InversePowerUnit,
 {
 }
 
 impl<Storage, Unit> InversePower<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InversePowerUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "InversePower";
@@ -11569,6 +12716,7 @@ where
 
 impl<Storage, Unit> QuantityType for InversePower<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InversePowerUnit,
 {
     type Storage = Storage;
@@ -11597,11 +12745,12 @@ where
 
 impl<Storage, Unit> InversePower<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: InversePowerUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> InversePower<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: InversePowerUnit,
         Unit: InversePowerInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -11611,7 +12760,7 @@ where
 
 impl<Storage, Unit> InversePower<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InversePowerUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -11619,7 +12768,7 @@ where
     ) -> Result<InversePower<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: InversePowerUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, InversePower<TargetStorage, TargetUnit>>(self)
     }
@@ -11649,7 +12798,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for InversePower<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: InversePowerUnit + InversePowerInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InversePowerUnit,
 {
@@ -11663,10 +12812,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for InversePower<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InversePowerUnit,
     TargetUnit: InversePowerUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = InversePower<TargetStorage, TargetUnit>;
 
@@ -11678,7 +12827,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for InversePower<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InversePowerUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -11692,7 +12841,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for InversePower<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InversePowerUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -11703,13 +12852,19 @@ where
     }
 }
 
-impl<Storage> InversePower<Storage, per_W> {
+impl<Storage> InversePower<Storage, per_W>
+where
+    Storage: ScalarStorageFor<per_W>,
+{
     pub const fn per_W(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for per_W {
+impl<Storage> QuantityForStorage<Storage> for per_W
+where
+    Storage: ScalarStorageFor<per_W>,
+{
     type Quantity = InversePower<Storage, per_W>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -11736,18 +12891,22 @@ impl InversePressureInfallibleUnitPath<per_Pa, f64> for per_Pa {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct InversePressure<Storage = f64, Unit = per_Pa>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InversePressureUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for InversePressure<Storage, Unit> where
-    Unit: InversePressureUnit
+impl<Storage, Unit> private::SealedQuantityType for InversePressure<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: InversePressureUnit,
 {
 }
 
 impl<Storage, Unit> InversePressure<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InversePressureUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "InversePressure";
@@ -11814,6 +12973,7 @@ where
 
 impl<Storage, Unit> QuantityType for InversePressure<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InversePressureUnit,
 {
     type Storage = Storage;
@@ -11842,11 +13002,12 @@ where
 
 impl<Storage, Unit> InversePressure<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: InversePressureUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> InversePressure<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: InversePressureUnit,
         Unit: InversePressureInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -11856,7 +13017,7 @@ where
 
 impl<Storage, Unit> InversePressure<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InversePressureUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -11864,7 +13025,7 @@ where
     ) -> Result<InversePressure<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: InversePressureUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, InversePressure<TargetStorage, TargetUnit>>(self)
     }
@@ -11894,7 +13055,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for InversePressure<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: InversePressureUnit + InversePressureInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InversePressureUnit,
 {
@@ -11908,10 +13069,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for InversePressure<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InversePressureUnit,
     TargetUnit: InversePressureUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = InversePressure<TargetStorage, TargetUnit>;
 
@@ -11923,7 +13084,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for InversePressure<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InversePressureUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -11937,7 +13098,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for InversePressure<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InversePressureUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -11948,13 +13109,19 @@ where
     }
 }
 
-impl<Storage> InversePressure<Storage, per_Pa> {
+impl<Storage> InversePressure<Storage, per_Pa>
+where
+    Storage: ScalarStorageFor<per_Pa>,
+{
     pub const fn per_Pa(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for per_Pa {
+impl<Storage> QuantityForStorage<Storage> for per_Pa
+where
+    Storage: ScalarStorageFor<per_Pa>,
+{
     type Quantity = InversePressure<Storage, per_Pa>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -11981,18 +13148,22 @@ impl InverseTorqueInfallibleUnitPath<per_Nm, f64> for per_Nm {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct InverseTorque<Storage = f64, Unit = per_Nm>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseTorqueUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for InverseTorque<Storage, Unit> where
-    Unit: InverseTorqueUnit
+impl<Storage, Unit> private::SealedQuantityType for InverseTorque<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: InverseTorqueUnit,
 {
 }
 
 impl<Storage, Unit> InverseTorque<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseTorqueUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "InverseTorque";
@@ -12059,6 +13230,7 @@ where
 
 impl<Storage, Unit> QuantityType for InverseTorque<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseTorqueUnit,
 {
     type Storage = Storage;
@@ -12087,11 +13259,12 @@ where
 
 impl<Storage, Unit> InverseTorque<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: InverseTorqueUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> InverseTorque<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: InverseTorqueUnit,
         Unit: InverseTorqueInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -12101,7 +13274,7 @@ where
 
 impl<Storage, Unit> InverseTorque<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseTorqueUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -12109,7 +13282,7 @@ where
     ) -> Result<InverseTorque<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: InverseTorqueUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, InverseTorque<TargetStorage, TargetUnit>>(self)
     }
@@ -12139,7 +13312,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for InverseTorque<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: InverseTorqueUnit + InverseTorqueInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InverseTorqueUnit,
 {
@@ -12153,10 +13326,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for InverseTorque<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseTorqueUnit,
     TargetUnit: InverseTorqueUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = InverseTorque<TargetStorage, TargetUnit>;
 
@@ -12168,7 +13341,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for InverseTorque<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseTorqueUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -12182,7 +13355,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for InverseTorque<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseTorqueUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -12193,13 +13366,19 @@ where
     }
 }
 
-impl<Storage> InverseTorque<Storage, per_Nm> {
+impl<Storage> InverseTorque<Storage, per_Nm>
+where
+    Storage: ScalarStorageFor<per_Nm>,
+{
     pub const fn per_Nm(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for per_Nm {
+impl<Storage> QuantityForStorage<Storage> for per_Nm
+where
+    Storage: ScalarStorageFor<per_Nm>,
+{
     type Quantity = InverseTorque<Storage, per_Nm>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -12226,18 +13405,22 @@ impl MomentOfInertiaInfallibleUnitPath<kgm2, f64> for kgm2 {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct MomentOfInertia<Storage = f64, Unit = kgm2>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: MomentOfInertiaUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for MomentOfInertia<Storage, Unit> where
-    Unit: MomentOfInertiaUnit
+impl<Storage, Unit> private::SealedQuantityType for MomentOfInertia<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: MomentOfInertiaUnit,
 {
 }
 
 impl<Storage, Unit> MomentOfInertia<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: MomentOfInertiaUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "MomentOfInertia";
@@ -12304,6 +13487,7 @@ where
 
 impl<Storage, Unit> QuantityType for MomentOfInertia<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: MomentOfInertiaUnit,
 {
     type Storage = Storage;
@@ -12332,11 +13516,12 @@ where
 
 impl<Storage, Unit> MomentOfInertia<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: MomentOfInertiaUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> MomentOfInertia<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: MomentOfInertiaUnit,
         Unit: MomentOfInertiaInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -12346,7 +13531,7 @@ where
 
 impl<Storage, Unit> MomentOfInertia<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: MomentOfInertiaUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -12354,7 +13539,7 @@ where
     ) -> Result<MomentOfInertia<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: MomentOfInertiaUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, MomentOfInertia<TargetStorage, TargetUnit>>(self)
     }
@@ -12384,7 +13569,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for MomentOfInertia<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: MomentOfInertiaUnit + MomentOfInertiaInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: MomentOfInertiaUnit,
 {
@@ -12398,10 +13583,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for MomentOfInertia<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: MomentOfInertiaUnit,
     TargetUnit: MomentOfInertiaUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = MomentOfInertia<TargetStorage, TargetUnit>;
 
@@ -12413,7 +13598,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for MomentOfInertia<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: MomentOfInertiaUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -12427,7 +13612,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for MomentOfInertia<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: MomentOfInertiaUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -12438,13 +13623,19 @@ where
     }
 }
 
-impl<Storage> MomentOfInertia<Storage, kgm2> {
+impl<Storage> MomentOfInertia<Storage, kgm2>
+where
+    Storage: ScalarStorageFor<kgm2>,
+{
     pub const fn kgm2(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for kgm2 {
+impl<Storage> QuantityForStorage<Storage> for kgm2
+where
+    Storage: ScalarStorageFor<kgm2>,
+{
     type Quantity = MomentOfInertia<Storage, kgm2>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -12471,15 +13662,22 @@ impl MomentumInfallibleUnitPath<kgmps, f64> for kgmps {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct Momentum<Storage = f64, Unit = kgmps>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: MomentumUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for Momentum<Storage, Unit> where Unit: MomentumUnit {}
+impl<Storage, Unit> private::SealedQuantityType for Momentum<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: MomentumUnit,
+{
+}
 
 impl<Storage, Unit> Momentum<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: MomentumUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "Momentum";
@@ -12546,6 +13744,7 @@ where
 
 impl<Storage, Unit> QuantityType for Momentum<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: MomentumUnit,
 {
     type Storage = Storage;
@@ -12574,11 +13773,12 @@ where
 
 impl<Storage, Unit> Momentum<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: MomentumUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> Momentum<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: MomentumUnit,
         Unit: MomentumInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -12588,7 +13788,7 @@ where
 
 impl<Storage, Unit> Momentum<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: MomentumUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -12596,7 +13796,7 @@ where
     ) -> Result<Momentum<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: MomentumUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, Momentum<TargetStorage, TargetUnit>>(self)
     }
@@ -12626,7 +13826,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Momentum<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: MomentumUnit + MomentumInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: MomentumUnit,
 {
@@ -12640,10 +13840,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for Momentum<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: MomentumUnit,
     TargetUnit: MomentumUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = Momentum<TargetStorage, TargetUnit>;
 
@@ -12655,7 +13855,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for Momentum<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: MomentumUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -12669,7 +13869,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for Momentum<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: MomentumUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -12680,13 +13880,19 @@ where
     }
 }
 
-impl<Storage> Momentum<Storage, kgmps> {
+impl<Storage> Momentum<Storage, kgmps>
+where
+    Storage: ScalarStorageFor<kgmps>,
+{
     pub const fn kgmps(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for kgmps {
+impl<Storage> QuantityForStorage<Storage> for kgmps
+where
+    Storage: ScalarStorageFor<kgmps>,
+{
     type Quantity = Momentum<Storage, kgmps>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -12713,15 +13919,22 @@ impl PowerInfallibleUnitPath<W, f64> for W {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct Power<Storage = f64, Unit = W>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: PowerUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for Power<Storage, Unit> where Unit: PowerUnit {}
+impl<Storage, Unit> private::SealedQuantityType for Power<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: PowerUnit,
+{
+}
 
 impl<Storage, Unit> Power<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: PowerUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "Power";
@@ -12788,6 +14001,7 @@ where
 
 impl<Storage, Unit> QuantityType for Power<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: PowerUnit,
 {
     type Storage = Storage;
@@ -12816,11 +14030,12 @@ where
 
 impl<Storage, Unit> Power<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: PowerUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> Power<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: PowerUnit,
         Unit: PowerInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -12830,7 +14045,7 @@ where
 
 impl<Storage, Unit> Power<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: PowerUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -12838,7 +14053,7 @@ where
     ) -> Result<Power<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: PowerUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, Power<TargetStorage, TargetUnit>>(self)
     }
@@ -12868,7 +14083,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Power<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: PowerUnit + PowerInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: PowerUnit,
 {
@@ -12882,10 +14097,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for Power<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: PowerUnit,
     TargetUnit: PowerUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = Power<TargetStorage, TargetUnit>;
 
@@ -12897,7 +14112,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for Power<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: PowerUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -12911,7 +14126,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for Power<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: PowerUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -12922,13 +14137,19 @@ where
     }
 }
 
-impl<Storage> Power<Storage, W> {
+impl<Storage> Power<Storage, W>
+where
+    Storage: ScalarStorageFor<W>,
+{
     pub const fn W(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for W {
+impl<Storage> QuantityForStorage<Storage> for W
+where
+    Storage: ScalarStorageFor<W>,
+{
     type Quantity = Power<Storage, W>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -12955,15 +14176,22 @@ impl PressureInfallibleUnitPath<Pa, f64> for Pa {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct Pressure<Storage = f64, Unit = Pa>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: PressureUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for Pressure<Storage, Unit> where Unit: PressureUnit {}
+impl<Storage, Unit> private::SealedQuantityType for Pressure<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: PressureUnit,
+{
+}
 
 impl<Storage, Unit> Pressure<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: PressureUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "Pressure";
@@ -13030,6 +14258,7 @@ where
 
 impl<Storage, Unit> QuantityType for Pressure<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: PressureUnit,
 {
     type Storage = Storage;
@@ -13058,11 +14287,12 @@ where
 
 impl<Storage, Unit> Pressure<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: PressureUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> Pressure<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: PressureUnit,
         Unit: PressureInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -13072,7 +14302,7 @@ where
 
 impl<Storage, Unit> Pressure<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: PressureUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -13080,7 +14310,7 @@ where
     ) -> Result<Pressure<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: PressureUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, Pressure<TargetStorage, TargetUnit>>(self)
     }
@@ -13110,7 +14340,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Pressure<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: PressureUnit + PressureInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: PressureUnit,
 {
@@ -13124,10 +14354,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for Pressure<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: PressureUnit,
     TargetUnit: PressureUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = Pressure<TargetStorage, TargetUnit>;
 
@@ -13139,7 +14369,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for Pressure<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: PressureUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -13153,7 +14383,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for Pressure<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: PressureUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -13164,13 +14394,19 @@ where
     }
 }
 
-impl<Storage> Pressure<Storage, Pa> {
+impl<Storage> Pressure<Storage, Pa>
+where
+    Storage: ScalarStorageFor<Pa>,
+{
     pub const fn Pa(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for Pa {
+impl<Storage> QuantityForStorage<Storage> for Pa
+where
+    Storage: ScalarStorageFor<Pa>,
+{
     type Quantity = Pressure<Storage, Pa>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -13197,18 +14433,22 @@ impl TimePerDistanceInfallibleUnitPath<spm, f64> for spm {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct TimePerDistance<Storage = f64, Unit = spm>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: TimePerDistanceUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for TimePerDistance<Storage, Unit> where
-    Unit: TimePerDistanceUnit
+impl<Storage, Unit> private::SealedQuantityType for TimePerDistance<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: TimePerDistanceUnit,
 {
 }
 
 impl<Storage, Unit> TimePerDistance<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: TimePerDistanceUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "TimePerDistance";
@@ -13275,6 +14515,7 @@ where
 
 impl<Storage, Unit> QuantityType for TimePerDistance<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: TimePerDistanceUnit,
 {
     type Storage = Storage;
@@ -13303,11 +14544,12 @@ where
 
 impl<Storage, Unit> TimePerDistance<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: TimePerDistanceUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> TimePerDistance<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: TimePerDistanceUnit,
         Unit: TimePerDistanceInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -13317,7 +14559,7 @@ where
 
 impl<Storage, Unit> TimePerDistance<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: TimePerDistanceUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -13325,7 +14567,7 @@ where
     ) -> Result<TimePerDistance<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: TimePerDistanceUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, TimePerDistance<TargetStorage, TargetUnit>>(self)
     }
@@ -13355,7 +14597,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for TimePerDistance<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: TimePerDistanceUnit + TimePerDistanceInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: TimePerDistanceUnit,
 {
@@ -13369,10 +14611,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for TimePerDistance<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: TimePerDistanceUnit,
     TargetUnit: TimePerDistanceUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = TimePerDistance<TargetStorage, TargetUnit>;
 
@@ -13384,7 +14626,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for TimePerDistance<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: TimePerDistanceUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -13398,7 +14640,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for TimePerDistance<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: TimePerDistanceUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -13409,13 +14651,19 @@ where
     }
 }
 
-impl<Storage> TimePerDistance<Storage, spm> {
+impl<Storage> TimePerDistance<Storage, spm>
+where
+    Storage: ScalarStorageFor<spm>,
+{
     pub const fn spm(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for spm {
+impl<Storage> QuantityForStorage<Storage> for spm
+where
+    Storage: ScalarStorageFor<spm>,
+{
     type Quantity = TimePerDistance<Storage, spm>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -13442,15 +14690,22 @@ impl TorqueInfallibleUnitPath<Nm, f64> for Nm {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct Torque<Storage = f64, Unit = Nm>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: TorqueUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for Torque<Storage, Unit> where Unit: TorqueUnit {}
+impl<Storage, Unit> private::SealedQuantityType for Torque<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: TorqueUnit,
+{
+}
 
 impl<Storage, Unit> Torque<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: TorqueUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "Torque";
@@ -13517,6 +14772,7 @@ where
 
 impl<Storage, Unit> QuantityType for Torque<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: TorqueUnit,
 {
     type Storage = Storage;
@@ -13545,11 +14801,12 @@ where
 
 impl<Storage, Unit> Torque<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: TorqueUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> Torque<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: TorqueUnit,
         Unit: TorqueInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -13559,7 +14816,7 @@ where
 
 impl<Storage, Unit> Torque<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: TorqueUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -13567,7 +14824,7 @@ where
     ) -> Result<Torque<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: TorqueUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, Torque<TargetStorage, TargetUnit>>(self)
     }
@@ -13597,7 +14854,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Torque<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: TorqueUnit + TorqueInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: TorqueUnit,
 {
@@ -13611,10 +14868,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for Torque<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: TorqueUnit,
     TargetUnit: TorqueUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = Torque<TargetStorage, TargetUnit>;
 
@@ -13626,7 +14883,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for Torque<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: TorqueUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -13640,7 +14897,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for Torque<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: TorqueUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -13651,13 +14908,19 @@ where
     }
 }
 
-impl<Storage> Torque<Storage, Nm> {
+impl<Storage> Torque<Storage, Nm>
+where
+    Storage: ScalarStorageFor<Nm>,
+{
     pub const fn Nm(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for Nm {
+impl<Storage> QuantityForStorage<Storage> for Nm
+where
+    Storage: ScalarStorageFor<Nm>,
+{
     type Quantity = Torque<Storage, Nm>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -13684,15 +14947,22 @@ impl VelocityInfallibleUnitPath<mps, f64> for mps {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct Velocity<Storage = f64, Unit = mps>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: VelocityUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for Velocity<Storage, Unit> where Unit: VelocityUnit {}
+impl<Storage, Unit> private::SealedQuantityType for Velocity<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: VelocityUnit,
+{
+}
 
 impl<Storage, Unit> Velocity<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: VelocityUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "Velocity";
@@ -13759,6 +15029,7 @@ where
 
 impl<Storage, Unit> QuantityType for Velocity<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: VelocityUnit,
 {
     type Storage = Storage;
@@ -13787,11 +15058,12 @@ where
 
 impl<Storage, Unit> Velocity<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: VelocityUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> Velocity<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: VelocityUnit,
         Unit: VelocityInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -13801,7 +15073,7 @@ where
 
 impl<Storage, Unit> Velocity<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: VelocityUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -13809,7 +15081,7 @@ where
     ) -> Result<Velocity<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: VelocityUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, Velocity<TargetStorage, TargetUnit>>(self)
     }
@@ -13839,7 +15111,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Velocity<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: VelocityUnit + VelocityInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: VelocityUnit,
 {
@@ -13853,10 +15125,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for Velocity<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: VelocityUnit,
     TargetUnit: VelocityUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = Velocity<TargetStorage, TargetUnit>;
 
@@ -13868,7 +15140,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for Velocity<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: VelocityUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -13882,7 +15154,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for Velocity<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: VelocityUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -13893,13 +15165,19 @@ where
     }
 }
 
-impl<Storage> Velocity<Storage, mps> {
+impl<Storage> Velocity<Storage, mps>
+where
+    Storage: ScalarStorageFor<mps>,
+{
     pub const fn mps(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for mps {
+impl<Storage> QuantityForStorage<Storage> for mps
+where
+    Storage: ScalarStorageFor<mps>,
+{
     type Quantity = Velocity<Storage, mps>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -13926,18 +15204,22 @@ impl VolumePerMassInfallibleUnitPath<m3pkg, f64> for m3pkg {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct VolumePerMass<Storage = f64, Unit = m3pkg>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: VolumePerMassUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for VolumePerMass<Storage, Unit> where
-    Unit: VolumePerMassUnit
+impl<Storage, Unit> private::SealedQuantityType for VolumePerMass<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: VolumePerMassUnit,
 {
 }
 
 impl<Storage, Unit> VolumePerMass<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: VolumePerMassUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "VolumePerMass";
@@ -14004,6 +15286,7 @@ where
 
 impl<Storage, Unit> QuantityType for VolumePerMass<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: VolumePerMassUnit,
 {
     type Storage = Storage;
@@ -14032,11 +15315,12 @@ where
 
 impl<Storage, Unit> VolumePerMass<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: VolumePerMassUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> VolumePerMass<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: VolumePerMassUnit,
         Unit: VolumePerMassInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -14046,7 +15330,7 @@ where
 
 impl<Storage, Unit> VolumePerMass<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: VolumePerMassUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -14054,7 +15338,7 @@ where
     ) -> Result<VolumePerMass<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: VolumePerMassUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, VolumePerMass<TargetStorage, TargetUnit>>(self)
     }
@@ -14084,7 +15368,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for VolumePerMass<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: VolumePerMassUnit + VolumePerMassInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: VolumePerMassUnit,
 {
@@ -14098,10 +15382,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for VolumePerMass<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: VolumePerMassUnit,
     TargetUnit: VolumePerMassUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = VolumePerMass<TargetStorage, TargetUnit>;
 
@@ -14113,7 +15397,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for VolumePerMass<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: VolumePerMassUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -14127,7 +15411,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for VolumePerMass<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: VolumePerMassUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -14138,13 +15422,19 @@ where
     }
 }
 
-impl<Storage> VolumePerMass<Storage, m3pkg> {
+impl<Storage> VolumePerMass<Storage, m3pkg>
+where
+    Storage: ScalarStorageFor<m3pkg>,
+{
     pub const fn m3pkg(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for m3pkg {
+impl<Storage> QuantityForStorage<Storage> for m3pkg
+where
+    Storage: ScalarStorageFor<m3pkg>,
+{
     type Quantity = VolumePerMass<Storage, m3pkg>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -14171,18 +15461,22 @@ impl AreaPerLumenInfallibleUnitPath<m2plm, f64> for m2plm {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct AreaPerLumen<Storage = f64, Unit = m2plm>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: AreaPerLumenUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for AreaPerLumen<Storage, Unit> where
-    Unit: AreaPerLumenUnit
+impl<Storage, Unit> private::SealedQuantityType for AreaPerLumen<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: AreaPerLumenUnit,
 {
 }
 
 impl<Storage, Unit> AreaPerLumen<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: AreaPerLumenUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "AreaPerLumen";
@@ -14249,6 +15543,7 @@ where
 
 impl<Storage, Unit> QuantityType for AreaPerLumen<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: AreaPerLumenUnit,
 {
     type Storage = Storage;
@@ -14277,11 +15572,12 @@ where
 
 impl<Storage, Unit> AreaPerLumen<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: AreaPerLumenUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> AreaPerLumen<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: AreaPerLumenUnit,
         Unit: AreaPerLumenInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -14291,7 +15587,7 @@ where
 
 impl<Storage, Unit> AreaPerLumen<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: AreaPerLumenUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -14299,7 +15595,7 @@ where
     ) -> Result<AreaPerLumen<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: AreaPerLumenUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, AreaPerLumen<TargetStorage, TargetUnit>>(self)
     }
@@ -14329,7 +15625,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for AreaPerLumen<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: AreaPerLumenUnit + AreaPerLumenInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: AreaPerLumenUnit,
 {
@@ -14343,10 +15639,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for AreaPerLumen<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: AreaPerLumenUnit,
     TargetUnit: AreaPerLumenUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = AreaPerLumen<TargetStorage, TargetUnit>;
 
@@ -14358,7 +15654,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for AreaPerLumen<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: AreaPerLumenUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -14372,7 +15668,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for AreaPerLumen<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: AreaPerLumenUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -14383,13 +15679,19 @@ where
     }
 }
 
-impl<Storage> AreaPerLumen<Storage, m2plm> {
+impl<Storage> AreaPerLumen<Storage, m2plm>
+where
+    Storage: ScalarStorageFor<m2plm>,
+{
     pub const fn m2plm(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for m2plm {
+impl<Storage> QuantityForStorage<Storage> for m2plm
+where
+    Storage: ScalarStorageFor<m2plm>,
+{
     type Quantity = AreaPerLumen<Storage, m2plm>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -14416,18 +15718,22 @@ impl CapacitanceInfallibleUnitPath<F, f64> for F {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct Capacitance<Storage = f64, Unit = F>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: CapacitanceUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for Capacitance<Storage, Unit> where
-    Unit: CapacitanceUnit
+impl<Storage, Unit> private::SealedQuantityType for Capacitance<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: CapacitanceUnit,
 {
 }
 
 impl<Storage, Unit> Capacitance<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: CapacitanceUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "Capacitance";
@@ -14494,6 +15800,7 @@ where
 
 impl<Storage, Unit> QuantityType for Capacitance<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: CapacitanceUnit,
 {
     type Storage = Storage;
@@ -14522,11 +15829,12 @@ where
 
 impl<Storage, Unit> Capacitance<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: CapacitanceUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> Capacitance<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: CapacitanceUnit,
         Unit: CapacitanceInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -14536,7 +15844,7 @@ where
 
 impl<Storage, Unit> Capacitance<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: CapacitanceUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -14544,7 +15852,7 @@ where
     ) -> Result<Capacitance<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: CapacitanceUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, Capacitance<TargetStorage, TargetUnit>>(self)
     }
@@ -14574,7 +15882,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Capacitance<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: CapacitanceUnit + CapacitanceInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: CapacitanceUnit,
 {
@@ -14588,10 +15896,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for Capacitance<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: CapacitanceUnit,
     TargetUnit: CapacitanceUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = Capacitance<TargetStorage, TargetUnit>;
 
@@ -14603,7 +15911,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for Capacitance<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: CapacitanceUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -14617,7 +15925,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for Capacitance<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: CapacitanceUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -14628,13 +15936,19 @@ where
     }
 }
 
-impl<Storage> Capacitance<Storage, F> {
+impl<Storage> Capacitance<Storage, F>
+where
+    Storage: ScalarStorageFor<F>,
+{
     pub const fn F(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for F {
+impl<Storage> QuantityForStorage<Storage> for F
+where
+    Storage: ScalarStorageFor<F>,
+{
     type Quantity = Capacitance<Storage, F>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -14661,15 +15975,22 @@ impl ChargeInfallibleUnitPath<C, f64> for C {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct Charge<Storage = f64, Unit = C>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: ChargeUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for Charge<Storage, Unit> where Unit: ChargeUnit {}
+impl<Storage, Unit> private::SealedQuantityType for Charge<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: ChargeUnit,
+{
+}
 
 impl<Storage, Unit> Charge<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: ChargeUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "Charge";
@@ -14736,6 +16057,7 @@ where
 
 impl<Storage, Unit> QuantityType for Charge<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: ChargeUnit,
 {
     type Storage = Storage;
@@ -14764,11 +16086,12 @@ where
 
 impl<Storage, Unit> Charge<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: ChargeUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> Charge<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: ChargeUnit,
         Unit: ChargeInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -14778,7 +16101,7 @@ where
 
 impl<Storage, Unit> Charge<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: ChargeUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -14786,7 +16109,7 @@ where
     ) -> Result<Charge<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: ChargeUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, Charge<TargetStorage, TargetUnit>>(self)
     }
@@ -14816,7 +16139,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Charge<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: ChargeUnit + ChargeInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: ChargeUnit,
 {
@@ -14830,10 +16153,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for Charge<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: ChargeUnit,
     TargetUnit: ChargeUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = Charge<TargetStorage, TargetUnit>;
 
@@ -14845,7 +16168,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for Charge<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: ChargeUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -14859,7 +16182,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for Charge<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: ChargeUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -14870,13 +16193,19 @@ where
     }
 }
 
-impl<Storage> Charge<Storage, C> {
+impl<Storage> Charge<Storage, C>
+where
+    Storage: ScalarStorageFor<C>,
+{
     pub const fn C(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for C {
+impl<Storage> QuantityForStorage<Storage> for C
+where
+    Storage: ScalarStorageFor<C>,
+{
     type Quantity = Charge<Storage, C>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -14903,18 +16232,22 @@ impl ConductanceInfallibleUnitPath<S, f64> for S {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct Conductance<Storage = f64, Unit = S>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: ConductanceUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for Conductance<Storage, Unit> where
-    Unit: ConductanceUnit
+impl<Storage, Unit> private::SealedQuantityType for Conductance<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: ConductanceUnit,
 {
 }
 
 impl<Storage, Unit> Conductance<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: ConductanceUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "Conductance";
@@ -14981,6 +16314,7 @@ where
 
 impl<Storage, Unit> QuantityType for Conductance<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: ConductanceUnit,
 {
     type Storage = Storage;
@@ -15009,11 +16343,12 @@ where
 
 impl<Storage, Unit> Conductance<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: ConductanceUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> Conductance<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: ConductanceUnit,
         Unit: ConductanceInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -15023,7 +16358,7 @@ where
 
 impl<Storage, Unit> Conductance<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: ConductanceUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -15031,7 +16366,7 @@ where
     ) -> Result<Conductance<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: ConductanceUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, Conductance<TargetStorage, TargetUnit>>(self)
     }
@@ -15061,7 +16396,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Conductance<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: ConductanceUnit + ConductanceInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: ConductanceUnit,
 {
@@ -15075,10 +16410,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for Conductance<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: ConductanceUnit,
     TargetUnit: ConductanceUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = Conductance<TargetStorage, TargetUnit>;
 
@@ -15090,7 +16425,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for Conductance<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: ConductanceUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -15104,7 +16439,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for Conductance<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: ConductanceUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -15115,13 +16450,19 @@ where
     }
 }
 
-impl<Storage> Conductance<Storage, S> {
+impl<Storage> Conductance<Storage, S>
+where
+    Storage: ScalarStorageFor<S>,
+{
     pub const fn S(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for S {
+impl<Storage> QuantityForStorage<Storage> for S
+where
+    Storage: ScalarStorageFor<S>,
+{
     type Quantity = Conductance<Storage, S>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -15148,18 +16489,22 @@ impl ElastanceInfallibleUnitPath<per_F, f64> for per_F {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct Elastance<Storage = f64, Unit = per_F>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: ElastanceUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for Elastance<Storage, Unit> where
-    Unit: ElastanceUnit
+impl<Storage, Unit> private::SealedQuantityType for Elastance<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: ElastanceUnit,
 {
 }
 
 impl<Storage, Unit> Elastance<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: ElastanceUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "Elastance";
@@ -15226,6 +16571,7 @@ where
 
 impl<Storage, Unit> QuantityType for Elastance<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: ElastanceUnit,
 {
     type Storage = Storage;
@@ -15254,11 +16600,12 @@ where
 
 impl<Storage, Unit> Elastance<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: ElastanceUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> Elastance<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: ElastanceUnit,
         Unit: ElastanceInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -15268,7 +16615,7 @@ where
 
 impl<Storage, Unit> Elastance<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: ElastanceUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -15276,7 +16623,7 @@ where
     ) -> Result<Elastance<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: ElastanceUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, Elastance<TargetStorage, TargetUnit>>(self)
     }
@@ -15306,7 +16653,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Elastance<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: ElastanceUnit + ElastanceInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: ElastanceUnit,
 {
@@ -15320,10 +16667,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for Elastance<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: ElastanceUnit,
     TargetUnit: ElastanceUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = Elastance<TargetStorage, TargetUnit>;
 
@@ -15335,7 +16682,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for Elastance<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: ElastanceUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -15349,7 +16696,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for Elastance<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: ElastanceUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -15360,13 +16707,19 @@ where
     }
 }
 
-impl<Storage> Elastance<Storage, per_F> {
+impl<Storage> Elastance<Storage, per_F>
+where
+    Storage: ScalarStorageFor<per_F>,
+{
     pub const fn per_F(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for per_F {
+impl<Storage> QuantityForStorage<Storage> for per_F
+where
+    Storage: ScalarStorageFor<per_F>,
+{
     type Quantity = Elastance<Storage, per_F>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -15393,18 +16746,22 @@ impl IlluminanceInfallibleUnitPath<lx, f64> for lx {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct Illuminance<Storage = f64, Unit = lx>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: IlluminanceUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for Illuminance<Storage, Unit> where
-    Unit: IlluminanceUnit
+impl<Storage, Unit> private::SealedQuantityType for Illuminance<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: IlluminanceUnit,
 {
 }
 
 impl<Storage, Unit> Illuminance<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: IlluminanceUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "Illuminance";
@@ -15471,6 +16828,7 @@ where
 
 impl<Storage, Unit> QuantityType for Illuminance<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: IlluminanceUnit,
 {
     type Storage = Storage;
@@ -15499,11 +16857,12 @@ where
 
 impl<Storage, Unit> Illuminance<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: IlluminanceUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> Illuminance<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: IlluminanceUnit,
         Unit: IlluminanceInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -15513,7 +16872,7 @@ where
 
 impl<Storage, Unit> Illuminance<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: IlluminanceUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -15521,7 +16880,7 @@ where
     ) -> Result<Illuminance<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: IlluminanceUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, Illuminance<TargetStorage, TargetUnit>>(self)
     }
@@ -15551,7 +16910,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Illuminance<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: IlluminanceUnit + IlluminanceInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: IlluminanceUnit,
 {
@@ -15565,10 +16924,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for Illuminance<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: IlluminanceUnit,
     TargetUnit: IlluminanceUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = Illuminance<TargetStorage, TargetUnit>;
 
@@ -15580,7 +16939,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for Illuminance<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: IlluminanceUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -15594,7 +16953,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for Illuminance<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: IlluminanceUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -15605,13 +16964,19 @@ where
     }
 }
 
-impl<Storage> Illuminance<Storage, lx> {
+impl<Storage> Illuminance<Storage, lx>
+where
+    Storage: ScalarStorageFor<lx>,
+{
     pub const fn lx(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for lx {
+impl<Storage> QuantityForStorage<Storage> for lx
+where
+    Storage: ScalarStorageFor<lx>,
+{
     type Quantity = Illuminance<Storage, lx>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -15638,18 +17003,22 @@ impl InductanceInfallibleUnitPath<H, f64> for H {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct Inductance<Storage = f64, Unit = H>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InductanceUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for Inductance<Storage, Unit> where
-    Unit: InductanceUnit
+impl<Storage, Unit> private::SealedQuantityType for Inductance<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: InductanceUnit,
 {
 }
 
 impl<Storage, Unit> Inductance<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InductanceUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "Inductance";
@@ -15716,6 +17085,7 @@ where
 
 impl<Storage, Unit> QuantityType for Inductance<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InductanceUnit,
 {
     type Storage = Storage;
@@ -15744,11 +17114,12 @@ where
 
 impl<Storage, Unit> Inductance<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: InductanceUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> Inductance<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: InductanceUnit,
         Unit: InductanceInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -15758,7 +17129,7 @@ where
 
 impl<Storage, Unit> Inductance<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InductanceUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -15766,7 +17137,7 @@ where
     ) -> Result<Inductance<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: InductanceUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, Inductance<TargetStorage, TargetUnit>>(self)
     }
@@ -15796,7 +17167,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Inductance<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: InductanceUnit + InductanceInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InductanceUnit,
 {
@@ -15810,10 +17181,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for Inductance<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InductanceUnit,
     TargetUnit: InductanceUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = Inductance<TargetStorage, TargetUnit>;
 
@@ -15825,7 +17196,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for Inductance<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InductanceUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -15839,7 +17210,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for Inductance<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InductanceUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -15850,13 +17221,19 @@ where
     }
 }
 
-impl<Storage> Inductance<Storage, H> {
+impl<Storage> Inductance<Storage, H>
+where
+    Storage: ScalarStorageFor<H>,
+{
     pub const fn H(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for H {
+impl<Storage> QuantityForStorage<Storage> for H
+where
+    Storage: ScalarStorageFor<H>,
+{
     type Quantity = Inductance<Storage, H>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -15883,18 +17260,22 @@ impl InverseChargeInfallibleUnitPath<per_C, f64> for per_C {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct InverseCharge<Storage = f64, Unit = per_C>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseChargeUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for InverseCharge<Storage, Unit> where
-    Unit: InverseChargeUnit
+impl<Storage, Unit> private::SealedQuantityType for InverseCharge<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: InverseChargeUnit,
 {
 }
 
 impl<Storage, Unit> InverseCharge<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseChargeUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "InverseCharge";
@@ -15961,6 +17342,7 @@ where
 
 impl<Storage, Unit> QuantityType for InverseCharge<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseChargeUnit,
 {
     type Storage = Storage;
@@ -15989,11 +17371,12 @@ where
 
 impl<Storage, Unit> InverseCharge<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: InverseChargeUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> InverseCharge<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: InverseChargeUnit,
         Unit: InverseChargeInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -16003,7 +17386,7 @@ where
 
 impl<Storage, Unit> InverseCharge<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseChargeUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -16011,7 +17394,7 @@ where
     ) -> Result<InverseCharge<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: InverseChargeUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, InverseCharge<TargetStorage, TargetUnit>>(self)
     }
@@ -16041,7 +17424,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for InverseCharge<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: InverseChargeUnit + InverseChargeInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InverseChargeUnit,
 {
@@ -16055,10 +17438,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for InverseCharge<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseChargeUnit,
     TargetUnit: InverseChargeUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = InverseCharge<TargetStorage, TargetUnit>;
 
@@ -16070,7 +17453,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for InverseCharge<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseChargeUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -16084,7 +17467,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for InverseCharge<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseChargeUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -16095,13 +17478,19 @@ where
     }
 }
 
-impl<Storage> InverseCharge<Storage, per_C> {
+impl<Storage> InverseCharge<Storage, per_C>
+where
+    Storage: ScalarStorageFor<per_C>,
+{
     pub const fn per_C(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for per_C {
+impl<Storage> QuantityForStorage<Storage> for per_C
+where
+    Storage: ScalarStorageFor<per_C>,
+{
     type Quantity = InverseCharge<Storage, per_C>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -16128,18 +17517,22 @@ impl InverseInductanceInfallibleUnitPath<per_H, f64> for per_H {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct InverseInductance<Storage = f64, Unit = per_H>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseInductanceUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for InverseInductance<Storage, Unit> where
-    Unit: InverseInductanceUnit
+impl<Storage, Unit> private::SealedQuantityType for InverseInductance<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: InverseInductanceUnit,
 {
 }
 
 impl<Storage, Unit> InverseInductance<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseInductanceUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "InverseInductance";
@@ -16206,6 +17599,7 @@ where
 
 impl<Storage, Unit> QuantityType for InverseInductance<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseInductanceUnit,
 {
     type Storage = Storage;
@@ -16234,11 +17628,12 @@ where
 
 impl<Storage, Unit> InverseInductance<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: InverseInductanceUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> InverseInductance<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: InverseInductanceUnit,
         Unit: InverseInductanceInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -16248,7 +17643,7 @@ where
 
 impl<Storage, Unit> InverseInductance<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseInductanceUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -16256,7 +17651,7 @@ where
     ) -> Result<InverseInductance<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: InverseInductanceUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, InverseInductance<TargetStorage, TargetUnit>>(self)
     }
@@ -16286,7 +17681,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for InverseInductance<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: InverseInductanceUnit + InverseInductanceInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InverseInductanceUnit,
 {
@@ -16300,10 +17695,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for InverseInductance<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseInductanceUnit,
     TargetUnit: InverseInductanceUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = InverseInductance<TargetStorage, TargetUnit>;
 
@@ -16316,7 +17711,7 @@ impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage>
     for InverseInductance<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseInductanceUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -16330,7 +17725,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for InverseInductance<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseInductanceUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -16341,13 +17736,19 @@ where
     }
 }
 
-impl<Storage> InverseInductance<Storage, per_H> {
+impl<Storage> InverseInductance<Storage, per_H>
+where
+    Storage: ScalarStorageFor<per_H>,
+{
     pub const fn per_H(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for per_H {
+impl<Storage> QuantityForStorage<Storage> for per_H
+where
+    Storage: ScalarStorageFor<per_H>,
+{
     type Quantity = InverseInductance<Storage, per_H>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -16377,18 +17778,22 @@ impl InverseLuminousFluxInfallibleUnitPath<per_lm, f64> for per_lm {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct InverseLuminousFlux<Storage = f64, Unit = per_lm>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseLuminousFluxUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for InverseLuminousFlux<Storage, Unit> where
-    Unit: InverseLuminousFluxUnit
+impl<Storage, Unit> private::SealedQuantityType for InverseLuminousFlux<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: InverseLuminousFluxUnit,
 {
 }
 
 impl<Storage, Unit> InverseLuminousFlux<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseLuminousFluxUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "InverseLuminousFlux";
@@ -16455,6 +17860,7 @@ where
 
 impl<Storage, Unit> QuantityType for InverseLuminousFlux<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseLuminousFluxUnit,
 {
     type Storage = Storage;
@@ -16483,11 +17889,12 @@ where
 
 impl<Storage, Unit> InverseLuminousFlux<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: InverseLuminousFluxUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> InverseLuminousFlux<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: InverseLuminousFluxUnit,
         Unit: InverseLuminousFluxInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -16497,7 +17904,7 @@ where
 
 impl<Storage, Unit> InverseLuminousFlux<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseLuminousFluxUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -16505,7 +17912,7 @@ where
     ) -> Result<InverseLuminousFlux<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: InverseLuminousFluxUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, InverseLuminousFlux<TargetStorage, TargetUnit>>(self)
     }
@@ -16535,7 +17942,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for InverseLuminousFlux<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: InverseLuminousFluxUnit + InverseLuminousFluxInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InverseLuminousFluxUnit,
 {
@@ -16549,10 +17956,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for InverseLuminousFlux<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseLuminousFluxUnit,
     TargetUnit: InverseLuminousFluxUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = InverseLuminousFlux<TargetStorage, TargetUnit>;
 
@@ -16565,7 +17972,7 @@ impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage>
     for InverseLuminousFlux<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseLuminousFluxUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -16580,7 +17987,7 @@ impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage>
     for InverseLuminousFlux<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseLuminousFluxUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -16591,13 +17998,19 @@ where
     }
 }
 
-impl<Storage> InverseLuminousFlux<Storage, per_lm> {
+impl<Storage> InverseLuminousFlux<Storage, per_lm>
+where
+    Storage: ScalarStorageFor<per_lm>,
+{
     pub const fn per_lm(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for per_lm {
+impl<Storage> QuantityForStorage<Storage> for per_lm
+where
+    Storage: ScalarStorageFor<per_lm>,
+{
     type Quantity = InverseLuminousFlux<Storage, per_lm>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -16627,18 +18040,22 @@ impl InverseMagneticFluxInfallibleUnitPath<per_Wb, f64> for per_Wb {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct InverseMagneticFlux<Storage = f64, Unit = per_Wb>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseMagneticFluxUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for InverseMagneticFlux<Storage, Unit> where
-    Unit: InverseMagneticFluxUnit
+impl<Storage, Unit> private::SealedQuantityType for InverseMagneticFlux<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: InverseMagneticFluxUnit,
 {
 }
 
 impl<Storage, Unit> InverseMagneticFlux<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseMagneticFluxUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "InverseMagneticFlux";
@@ -16705,6 +18122,7 @@ where
 
 impl<Storage, Unit> QuantityType for InverseMagneticFlux<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseMagneticFluxUnit,
 {
     type Storage = Storage;
@@ -16733,11 +18151,12 @@ where
 
 impl<Storage, Unit> InverseMagneticFlux<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: InverseMagneticFluxUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> InverseMagneticFlux<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: InverseMagneticFluxUnit,
         Unit: InverseMagneticFluxInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -16747,7 +18166,7 @@ where
 
 impl<Storage, Unit> InverseMagneticFlux<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseMagneticFluxUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -16755,7 +18174,7 @@ where
     ) -> Result<InverseMagneticFlux<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: InverseMagneticFluxUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, InverseMagneticFlux<TargetStorage, TargetUnit>>(self)
     }
@@ -16785,7 +18204,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for InverseMagneticFlux<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: InverseMagneticFluxUnit + InverseMagneticFluxInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InverseMagneticFluxUnit,
 {
@@ -16799,10 +18218,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for InverseMagneticFlux<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseMagneticFluxUnit,
     TargetUnit: InverseMagneticFluxUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = InverseMagneticFlux<TargetStorage, TargetUnit>;
 
@@ -16815,7 +18234,7 @@ impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage>
     for InverseMagneticFlux<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseMagneticFluxUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -16830,7 +18249,7 @@ impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage>
     for InverseMagneticFlux<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseMagneticFluxUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -16841,13 +18260,19 @@ where
     }
 }
 
-impl<Storage> InverseMagneticFlux<Storage, per_Wb> {
+impl<Storage> InverseMagneticFlux<Storage, per_Wb>
+where
+    Storage: ScalarStorageFor<per_Wb>,
+{
     pub const fn per_Wb(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for per_Wb {
+impl<Storage> QuantityForStorage<Storage> for per_Wb
+where
+    Storage: ScalarStorageFor<per_Wb>,
+{
     type Quantity = InverseMagneticFlux<Storage, per_Wb>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -16877,18 +18302,22 @@ impl InverseMagneticFluxDensityInfallibleUnitPath<per_T, f64> for per_T {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct InverseMagneticFluxDensity<Storage = f64, Unit = per_T>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseMagneticFluxDensityUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for InverseMagneticFluxDensity<Storage, Unit> where
-    Unit: InverseMagneticFluxDensityUnit
+impl<Storage, Unit> private::SealedQuantityType for InverseMagneticFluxDensity<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: InverseMagneticFluxDensityUnit,
 {
 }
 
 impl<Storage, Unit> InverseMagneticFluxDensity<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseMagneticFluxDensityUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "InverseMagneticFluxDensity";
@@ -16955,6 +18384,7 @@ where
 
 impl<Storage, Unit> QuantityType for InverseMagneticFluxDensity<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseMagneticFluxDensityUnit,
 {
     type Storage = Storage;
@@ -16983,11 +18413,12 @@ where
 
 impl<Storage, Unit> InverseMagneticFluxDensity<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: InverseMagneticFluxDensityUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> InverseMagneticFluxDensity<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: InverseMagneticFluxDensityUnit,
         Unit: InverseMagneticFluxDensityInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -16999,7 +18430,7 @@ where
 
 impl<Storage, Unit> InverseMagneticFluxDensity<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseMagneticFluxDensityUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -17010,7 +18441,7 @@ where
     >
     where
         TargetUnit: InverseMagneticFluxDensityUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, InverseMagneticFluxDensity<TargetStorage, TargetUnit>>(
             self,
@@ -17043,7 +18474,7 @@ where
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit>
     for InverseMagneticFluxDensity<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: InverseMagneticFluxDensityUnit
         + InverseMagneticFluxDensityInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InverseMagneticFluxDensityUnit,
@@ -17060,10 +18491,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for InverseMagneticFluxDensity<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseMagneticFluxDensityUnit,
     TargetUnit: InverseMagneticFluxDensityUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = InverseMagneticFluxDensity<TargetStorage, TargetUnit>;
 
@@ -17078,7 +18509,7 @@ impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage>
     for InverseMagneticFluxDensity<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseMagneticFluxDensityUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -17093,7 +18524,7 @@ impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage>
     for InverseMagneticFluxDensity<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseMagneticFluxDensityUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -17104,13 +18535,19 @@ where
     }
 }
 
-impl<Storage> InverseMagneticFluxDensity<Storage, per_T> {
+impl<Storage> InverseMagneticFluxDensity<Storage, per_T>
+where
+    Storage: ScalarStorageFor<per_T>,
+{
     pub const fn per_T(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for per_T {
+impl<Storage> QuantityForStorage<Storage> for per_T
+where
+    Storage: ScalarStorageFor<per_T>,
+{
     type Quantity = InverseMagneticFluxDensity<Storage, per_T>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -17137,18 +18574,22 @@ impl InverseVoltageInfallibleUnitPath<per_V, f64> for per_V {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct InverseVoltage<Storage = f64, Unit = per_V>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseVoltageUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for InverseVoltage<Storage, Unit> where
-    Unit: InverseVoltageUnit
+impl<Storage, Unit> private::SealedQuantityType for InverseVoltage<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: InverseVoltageUnit,
 {
 }
 
 impl<Storage, Unit> InverseVoltage<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseVoltageUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "InverseVoltage";
@@ -17215,6 +18656,7 @@ where
 
 impl<Storage, Unit> QuantityType for InverseVoltage<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: InverseVoltageUnit,
 {
     type Storage = Storage;
@@ -17243,11 +18685,12 @@ where
 
 impl<Storage, Unit> InverseVoltage<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: InverseVoltageUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> InverseVoltage<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: InverseVoltageUnit,
         Unit: InverseVoltageInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -17257,7 +18700,7 @@ where
 
 impl<Storage, Unit> InverseVoltage<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseVoltageUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -17265,7 +18708,7 @@ where
     ) -> Result<InverseVoltage<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: InverseVoltageUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, InverseVoltage<TargetStorage, TargetUnit>>(self)
     }
@@ -17295,7 +18738,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for InverseVoltage<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: InverseVoltageUnit + InverseVoltageInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: InverseVoltageUnit,
 {
@@ -17309,10 +18752,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for InverseVoltage<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseVoltageUnit,
     TargetUnit: InverseVoltageUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = InverseVoltage<TargetStorage, TargetUnit>;
 
@@ -17324,7 +18767,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for InverseVoltage<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseVoltageUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -17338,7 +18781,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for InverseVoltage<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: InverseVoltageUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -17349,13 +18792,19 @@ where
     }
 }
 
-impl<Storage> InverseVoltage<Storage, per_V> {
+impl<Storage> InverseVoltage<Storage, per_V>
+where
+    Storage: ScalarStorageFor<per_V>,
+{
     pub const fn per_V(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for per_V {
+impl<Storage> QuantityForStorage<Storage> for per_V
+where
+    Storage: ScalarStorageFor<per_V>,
+{
     type Quantity = InverseVoltage<Storage, per_V>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -17382,18 +18831,22 @@ impl LuminousFluxInfallibleUnitPath<lm, f64> for lm {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct LuminousFlux<Storage = f64, Unit = lm>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: LuminousFluxUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for LuminousFlux<Storage, Unit> where
-    Unit: LuminousFluxUnit
+impl<Storage, Unit> private::SealedQuantityType for LuminousFlux<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: LuminousFluxUnit,
 {
 }
 
 impl<Storage, Unit> LuminousFlux<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: LuminousFluxUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "LuminousFlux";
@@ -17460,6 +18913,7 @@ where
 
 impl<Storage, Unit> QuantityType for LuminousFlux<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: LuminousFluxUnit,
 {
     type Storage = Storage;
@@ -17488,11 +18942,12 @@ where
 
 impl<Storage, Unit> LuminousFlux<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: LuminousFluxUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> LuminousFlux<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: LuminousFluxUnit,
         Unit: LuminousFluxInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -17502,7 +18957,7 @@ where
 
 impl<Storage, Unit> LuminousFlux<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: LuminousFluxUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -17510,7 +18965,7 @@ where
     ) -> Result<LuminousFlux<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: LuminousFluxUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, LuminousFlux<TargetStorage, TargetUnit>>(self)
     }
@@ -17540,7 +18995,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for LuminousFlux<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: LuminousFluxUnit + LuminousFluxInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: LuminousFluxUnit,
 {
@@ -17554,10 +19009,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for LuminousFlux<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: LuminousFluxUnit,
     TargetUnit: LuminousFluxUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = LuminousFlux<TargetStorage, TargetUnit>;
 
@@ -17569,7 +19024,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for LuminousFlux<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: LuminousFluxUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -17583,7 +19038,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for LuminousFlux<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: LuminousFluxUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -17594,13 +19049,19 @@ where
     }
 }
 
-impl<Storage> LuminousFlux<Storage, lm> {
+impl<Storage> LuminousFlux<Storage, lm>
+where
+    Storage: ScalarStorageFor<lm>,
+{
     pub const fn lm(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for lm {
+impl<Storage> QuantityForStorage<Storage> for lm
+where
+    Storage: ScalarStorageFor<lm>,
+{
     type Quantity = LuminousFlux<Storage, lm>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -17627,18 +19088,22 @@ impl MagneticFluxInfallibleUnitPath<Wb, f64> for Wb {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct MagneticFlux<Storage = f64, Unit = Wb>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: MagneticFluxUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for MagneticFlux<Storage, Unit> where
-    Unit: MagneticFluxUnit
+impl<Storage, Unit> private::SealedQuantityType for MagneticFlux<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: MagneticFluxUnit,
 {
 }
 
 impl<Storage, Unit> MagneticFlux<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: MagneticFluxUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "MagneticFlux";
@@ -17705,6 +19170,7 @@ where
 
 impl<Storage, Unit> QuantityType for MagneticFlux<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: MagneticFluxUnit,
 {
     type Storage = Storage;
@@ -17733,11 +19199,12 @@ where
 
 impl<Storage, Unit> MagneticFlux<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: MagneticFluxUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> MagneticFlux<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: MagneticFluxUnit,
         Unit: MagneticFluxInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -17747,7 +19214,7 @@ where
 
 impl<Storage, Unit> MagneticFlux<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: MagneticFluxUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -17755,7 +19222,7 @@ where
     ) -> Result<MagneticFlux<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: MagneticFluxUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, MagneticFlux<TargetStorage, TargetUnit>>(self)
     }
@@ -17785,7 +19252,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for MagneticFlux<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: MagneticFluxUnit + MagneticFluxInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: MagneticFluxUnit,
 {
@@ -17799,10 +19266,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for MagneticFlux<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: MagneticFluxUnit,
     TargetUnit: MagneticFluxUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = MagneticFlux<TargetStorage, TargetUnit>;
 
@@ -17814,7 +19281,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for MagneticFlux<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: MagneticFluxUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -17828,7 +19295,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for MagneticFlux<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: MagneticFluxUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -17839,13 +19306,19 @@ where
     }
 }
 
-impl<Storage> MagneticFlux<Storage, Wb> {
+impl<Storage> MagneticFlux<Storage, Wb>
+where
+    Storage: ScalarStorageFor<Wb>,
+{
     pub const fn Wb(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for Wb {
+impl<Storage> QuantityForStorage<Storage> for Wb
+where
+    Storage: ScalarStorageFor<Wb>,
+{
     type Quantity = MagneticFlux<Storage, Wb>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -17875,18 +19348,22 @@ impl MagneticFluxDensityInfallibleUnitPath<T, f64> for T {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct MagneticFluxDensity<Storage = f64, Unit = T>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: MagneticFluxDensityUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for MagneticFluxDensity<Storage, Unit> where
-    Unit: MagneticFluxDensityUnit
+impl<Storage, Unit> private::SealedQuantityType for MagneticFluxDensity<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: MagneticFluxDensityUnit,
 {
 }
 
 impl<Storage, Unit> MagneticFluxDensity<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: MagneticFluxDensityUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "MagneticFluxDensity";
@@ -17953,6 +19430,7 @@ where
 
 impl<Storage, Unit> QuantityType for MagneticFluxDensity<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: MagneticFluxDensityUnit,
 {
     type Storage = Storage;
@@ -17981,11 +19459,12 @@ where
 
 impl<Storage, Unit> MagneticFluxDensity<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: MagneticFluxDensityUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> MagneticFluxDensity<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: MagneticFluxDensityUnit,
         Unit: MagneticFluxDensityInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -17995,7 +19474,7 @@ where
 
 impl<Storage, Unit> MagneticFluxDensity<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: MagneticFluxDensityUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -18003,7 +19482,7 @@ where
     ) -> Result<MagneticFluxDensity<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: MagneticFluxDensityUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, MagneticFluxDensity<TargetStorage, TargetUnit>>(self)
     }
@@ -18033,7 +19512,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for MagneticFluxDensity<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: MagneticFluxDensityUnit + MagneticFluxDensityInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: MagneticFluxDensityUnit,
 {
@@ -18047,10 +19526,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for MagneticFluxDensity<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: MagneticFluxDensityUnit,
     TargetUnit: MagneticFluxDensityUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = MagneticFluxDensity<TargetStorage, TargetUnit>;
 
@@ -18063,7 +19542,7 @@ impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage>
     for MagneticFluxDensity<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: MagneticFluxDensityUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -18078,7 +19557,7 @@ impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage>
     for MagneticFluxDensity<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: MagneticFluxDensityUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -18089,13 +19568,19 @@ where
     }
 }
 
-impl<Storage> MagneticFluxDensity<Storage, T> {
+impl<Storage> MagneticFluxDensity<Storage, T>
+where
+    Storage: ScalarStorageFor<T>,
+{
     pub const fn T(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for T {
+impl<Storage> QuantityForStorage<Storage> for T
+where
+    Storage: ScalarStorageFor<T>,
+{
     type Quantity = MagneticFluxDensity<Storage, T>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -18122,18 +19607,22 @@ impl ResistanceInfallibleUnitPath<Ohm, f64> for Ohm {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct Resistance<Storage = f64, Unit = Ohm>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: ResistanceUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for Resistance<Storage, Unit> where
-    Unit: ResistanceUnit
+impl<Storage, Unit> private::SealedQuantityType for Resistance<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: ResistanceUnit,
 {
 }
 
 impl<Storage, Unit> Resistance<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: ResistanceUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "Resistance";
@@ -18200,6 +19689,7 @@ where
 
 impl<Storage, Unit> QuantityType for Resistance<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: ResistanceUnit,
 {
     type Storage = Storage;
@@ -18228,11 +19718,12 @@ where
 
 impl<Storage, Unit> Resistance<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: ResistanceUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> Resistance<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: ResistanceUnit,
         Unit: ResistanceInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -18242,7 +19733,7 @@ where
 
 impl<Storage, Unit> Resistance<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: ResistanceUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -18250,7 +19741,7 @@ where
     ) -> Result<Resistance<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: ResistanceUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, Resistance<TargetStorage, TargetUnit>>(self)
     }
@@ -18280,7 +19771,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Resistance<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: ResistanceUnit + ResistanceInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: ResistanceUnit,
 {
@@ -18294,10 +19785,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for Resistance<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: ResistanceUnit,
     TargetUnit: ResistanceUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = Resistance<TargetStorage, TargetUnit>;
 
@@ -18309,7 +19800,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for Resistance<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: ResistanceUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -18323,7 +19814,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for Resistance<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: ResistanceUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -18334,13 +19825,19 @@ where
     }
 }
 
-impl<Storage> Resistance<Storage, Ohm> {
+impl<Storage> Resistance<Storage, Ohm>
+where
+    Storage: ScalarStorageFor<Ohm>,
+{
     pub const fn Ohm(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for Ohm {
+impl<Storage> QuantityForStorage<Storage> for Ohm
+where
+    Storage: ScalarStorageFor<Ohm>,
+{
     type Quantity = Resistance<Storage, Ohm>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -18367,15 +19864,22 @@ impl VoltageInfallibleUnitPath<V, f64> for V {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct Voltage<Storage = f64, Unit = V>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: VoltageUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for Voltage<Storage, Unit> where Unit: VoltageUnit {}
+impl<Storage, Unit> private::SealedQuantityType for Voltage<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: VoltageUnit,
+{
+}
 
 impl<Storage, Unit> Voltage<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: VoltageUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "Voltage";
@@ -18442,6 +19946,7 @@ where
 
 impl<Storage, Unit> QuantityType for Voltage<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: VoltageUnit,
 {
     type Storage = Storage;
@@ -18470,11 +19975,12 @@ where
 
 impl<Storage, Unit> Voltage<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: VoltageUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> Voltage<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: VoltageUnit,
         Unit: VoltageInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -18484,7 +19990,7 @@ where
 
 impl<Storage, Unit> Voltage<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: VoltageUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -18492,7 +19998,7 @@ where
     ) -> Result<Voltage<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: VoltageUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, Voltage<TargetStorage, TargetUnit>>(self)
     }
@@ -18522,7 +20028,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Voltage<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: VoltageUnit + VoltageInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: VoltageUnit,
 {
@@ -18536,10 +20042,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for Voltage<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: VoltageUnit,
     TargetUnit: VoltageUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = Voltage<TargetStorage, TargetUnit>;
 
@@ -18551,7 +20057,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for Voltage<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: VoltageUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -18565,7 +20071,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for Voltage<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: VoltageUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -18576,13 +20082,19 @@ where
     }
 }
 
-impl<Storage> Voltage<Storage, V> {
+impl<Storage> Voltage<Storage, V>
+where
+    Storage: ScalarStorageFor<V>,
+{
     pub const fn V(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for V {
+impl<Storage> QuantityForStorage<Storage> for V
+where
+    Storage: ScalarStorageFor<V>,
+{
     type Quantity = Voltage<Storage, V>;
 
     fn wrap(storage: Storage) -> Self::Quantity {
@@ -18609,15 +20121,22 @@ impl DiopterInfallibleUnitPath<dpt, f64> for dpt {}
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct Diopter<Storage = f64, Unit = dpt>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: DiopterUnit,
 {
     quantity: Quantity<Unit, Storage>,
 }
 
-impl<Storage, Unit> private::SealedQuantityType for Diopter<Storage, Unit> where Unit: DiopterUnit {}
+impl<Storage, Unit> private::SealedQuantityType for Diopter<Storage, Unit>
+where
+    Storage: ScalarStorageFor<Unit>,
+    Unit: DiopterUnit,
+{
+}
 
 impl<Storage, Unit> Diopter<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: DiopterUnit,
 {
     pub const PUBLIC_TYPE: &'static str = "Diopter";
@@ -18684,6 +20203,7 @@ where
 
 impl<Storage, Unit> QuantityType for Diopter<Storage, Unit>
 where
+    Storage: ScalarStorageFor<Unit>,
     Unit: DiopterUnit,
 {
     type Storage = Storage;
@@ -18712,11 +20232,12 @@ where
 
 impl<Storage, Unit> Diopter<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,
     Unit: DiopterUnit,
 {
     pub fn to_unit<TargetUnit>(self) -> Diopter<Storage, TargetUnit>
     where
+        Storage: ScalarStorageFor<TargetUnit>,
         TargetUnit: DiopterUnit,
         Unit: DiopterInfallibleUnitPath<TargetUnit, Storage>,
     {
@@ -18726,7 +20247,7 @@ where
 
 impl<Storage, Unit> Diopter<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: DiopterUnit,
 {
     pub fn try_to_unit<TargetUnit, TargetStorage>(
@@ -18734,7 +20255,7 @@ where
     ) -> Result<Diopter<TargetStorage, TargetUnit>, crate::conversion::ConversionError>
     where
         TargetUnit: DiopterUnit,
-        TargetStorage: ValueStorage,
+        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
     {
         try_convert_same_public_type::<Self, Diopter<TargetStorage, TargetUnit>>(self)
     }
@@ -18764,7 +20285,7 @@ where
 
 impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for Diopter<Storage, Unit>
 where
-    Storage: InfallibleUnitStorage,
+    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,
     Unit: DiopterUnit + DiopterInfallibleUnitPath<TargetUnit, Storage>,
     TargetUnit: DiopterUnit,
 {
@@ -18778,10 +20299,10 @@ where
 impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage>
     for Diopter<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: DiopterUnit,
     TargetUnit: DiopterUnit,
-    TargetStorage: ValueStorage,
+    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,
 {
     type Output = Diopter<TargetStorage, TargetUnit>;
 
@@ -18793,7 +20314,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for Diopter<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: DiopterUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -18807,7 +20328,7 @@ where
 impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage>
     ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for Diopter<Storage, Unit>
 where
-    Storage: ValueStorage,
+    Storage: ScalarStorageFor<Unit> + ValueStorage,
     Unit: DiopterUnit,
     TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,
     TargetStorage: ValueStorage,
@@ -18818,13 +20339,19 @@ where
     }
 }
 
-impl<Storage> Diopter<Storage, dpt> {
+impl<Storage> Diopter<Storage, dpt>
+where
+    Storage: ScalarStorageFor<dpt>,
+{
     pub const fn dpt(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
-impl<Storage> QuantityForStorage<Storage> for dpt {
+impl<Storage> QuantityForStorage<Storage> for dpt
+where
+    Storage: ScalarStorageFor<dpt>,
+{
     type Quantity = Diopter<Storage, dpt>;
 
     fn wrap(storage: Storage) -> Self::Quantity {

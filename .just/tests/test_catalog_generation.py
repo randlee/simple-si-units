@@ -144,8 +144,13 @@ class CatalogGenerationTests(unittest.TestCase):
         self.assertIn("TryConvertQuantity", rendered)
         self.assertIn("pub trait DistanceUnit: UnitMarker {}", rendered)
         self.assertIn("impl DistanceUnit for mm {}", rendered)
+        self.assertIn("impl private::SealedScalarStorageFor<mm> for i32 {}", rendered)
+        self.assertIn("impl ScalarStorageFor<mm> for i32 {}", rendered)
         self.assertIn("pub struct Distance<Storage = f64, Unit = m>", rendered)
+        self.assertIn("impl<Storage> Distance<Storage, mm>", rendered)
+        self.assertIn("Storage: ScalarStorageFor<mm>,", rendered)
         self.assertIn("pub const fn mm(storage: Storage) -> Self {", rendered)
+        self.assertIn("impl<Storage> QuantityForStorage<Storage> for mm", rendered)
         self.assertIn("pub struct Diopter<Storage = f64, Unit = dpt>", rendered)
         self.assertIn("const CANONICAL_DIMENSION_ID: &'static str = \"inverse_distance\";", rendered)
 
@@ -182,7 +187,9 @@ class CatalogGenerationTests(unittest.TestCase):
         catalog = json.loads((ROOT / "catalog" / "units-catalog.json").read_text(encoding="utf-8"))
         rendered = render_generated_bulk_storage_impls(build_summary(catalog))
 
+        self.assertIn("impl private::SealedBulkStorageFor<mm> for i32 {}", rendered)
         self.assertIn("impl BulkStorageFor<mm> for i32 {}", rendered)
+        self.assertIn("impl private::SealedBulkStorageFor<mol> for f32 {}", rendered)
         self.assertIn("impl BulkStorageFor<mol> for f32 {}", rendered)
         self.assertNotIn("impl BulkStorageFor<mol> for i32 {}", rendered)
 

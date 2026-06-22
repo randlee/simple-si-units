@@ -29,6 +29,13 @@
 //! ```
 //!
 //! ```compile_fail
+//! use units_x::{mm, mol, Amount, Distance};
+//!
+//! let _ = Distance::<bool, mm>::new(true);
+//! let _ = Amount::<i32, mol>::new(1);
+//! ```
+//!
+//! ```compile_fail
 //! use units_x::conversion::ConvertUnit;
 //! use units_x::{Distance, ft, mm};
 //!
@@ -48,6 +55,15 @@
 //! fn takes_array(_: QuantityArray<mol, i32, 2>) {}
 //! fn takes_buffer(_: QuantityBuffer<mol, i32>) {}
 //! fn takes_view(_: QuantityBufferView<'static, mol, i32>) {}
+//! ```
+//!
+//! ```compile_fail
+//! use units_x::{mm, QuantityArray};
+//!
+//! #[derive(Copy, Clone)]
+//! struct LocalStorage(i32);
+//!
+//! fn takes_array(_: QuantityArray<mm, LocalStorage, 2>) {}
 //! ```
 
 pub mod arithmetic;

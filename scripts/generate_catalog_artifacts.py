@@ -328,7 +328,7 @@ def render_generated_public_types(summary: dict) -> str:
         "    TryConvertQuantity, TryConvertUnit, ValueStorage, try_convert_quantity,",
         "    try_convert_reciprocal, try_convert_same_public_type,",
         "};",
-        "use crate::model::{private, Quantity, QuantityType, UnitMarker};",
+        "use crate::model::{private, Quantity, QuantityType, ScalarStorageFor, UnitMarker};",
         "",
         "#[derive(Copy, Clone, Debug, PartialEq, Eq)]",
         "pub struct GeneratedUnitMetadata {",
@@ -397,6 +397,18 @@ def render_generated_public_types(summary: dict) -> str:
                 lines.extend(
                     [
                         f"impl ScalarArithmeticUnit for {marker} {{}}",
+                        "",
+                    ]
+                )
+        storages = [scalar_storage_name(type_id) for type_id in dimension["scalar"]["type_ids"]]
+        for unit in dimension["units"]:
+            marker = marker_name_for_unit(unit)
+            for storage in storages:
+                lines.extend(
+                    [
+                        f"impl private::SealedScalarStorageFor<{marker}> for {storage} {{}}",
+                        "",
+                        f"impl ScalarStorageFor<{marker}> for {storage} {{}}",
                         "",
                     ]
                 )
@@ -471,6 +483,7 @@ def render_generated_public_types(summary: dict) -> str:
                 "#[derive(Copy, Clone, Debug, PartialEq, Eq)]",
                 f"pub struct {public_type}<Storage = f64, Unit = {default_unit}>",
                 "where",
+                "    Storage: ScalarStorageFor<Unit>,",
                 f"    Unit: {unit_trait},",
                 "{",
                 "    quantity: Quantity<Unit, Storage>,",
@@ -478,11 +491,13 @@ def render_generated_public_types(summary: dict) -> str:
                 "",
                 f"impl<Storage, Unit> private::SealedQuantityType for {public_type}<Storage, Unit>",
                 "where",
+                "    Storage: ScalarStorageFor<Unit>,",
                 f"    Unit: {unit_trait},",
                 "{}",
                 "",
                 f"impl<Storage, Unit> {public_type}<Storage, Unit>",
                 "where",
+                "    Storage: ScalarStorageFor<Unit>,",
                 f"    Unit: {unit_trait},",
                 "{",
                 f"    pub const PUBLIC_TYPE: &'static str = {rust_string_literal(dimension['public_type'])};",
@@ -549,6 +564,7 @@ def render_generated_public_types(summary: dict) -> str:
                 "",
                 f"impl<Storage, Unit> QuantityType for {public_type}<Storage, Unit>",
                 "where",
+                "    Storage: ScalarStorageFor<Unit>,",
                 f"    Unit: {unit_trait},",
                 "{",
                 "    type Storage = Storage;",
@@ -577,12 +593,13 @@ def render_generated_public_types(summary: dict) -> str:
                 "",
                 f"impl<Storage, Unit> {public_type}<Storage, Unit>",
                 "where",
-                "    Storage: InfallibleUnitStorage,",
+                "    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,",
                 f"    Unit: {unit_trait},",
                 "{",
                 "    pub fn to_unit<TargetUnit>(self) -> "
                 f"{public_type}<Storage, TargetUnit>",
                 "    where",
+                "        Storage: ScalarStorageFor<TargetUnit>,",
                 f"        TargetUnit: {unit_trait},",
                 f"        Unit: {infallible_trait}<TargetUnit, Storage>,",
                 "    {",
@@ -592,7 +609,7 @@ def render_generated_public_types(summary: dict) -> str:
                 "",
                 f"impl<Storage, Unit> {public_type}<Storage, Unit>",
                 "where",
-                "    Storage: ValueStorage,",
+                "    Storage: ScalarStorageFor<Unit> + ValueStorage,",
                 f"    Unit: {unit_trait},",
                 "{",
                 "    pub fn try_to_unit<TargetUnit, TargetStorage>(",
@@ -600,7 +617,7 @@ def render_generated_public_types(summary: dict) -> str:
                 f"    ) -> Result<{public_type}<TargetStorage, TargetUnit>, crate::conversion::ConversionError>",
                 "    where",
                 f"        TargetUnit: {unit_trait},",
-                "        TargetStorage: ValueStorage,",
+                "        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,",
                 "    {",
                 f"        try_convert_same_public_type::<Self, {public_type}<TargetStorage, TargetUnit>>(self)",
                 "    }",
@@ -630,7 +647,7 @@ def render_generated_public_types(summary: dict) -> str:
                 "",
                 f"impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for {public_type}<Storage, Unit>",
                 "where",
-                "    Storage: InfallibleUnitStorage,",
+                "    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,",
                 f"    Unit: {unit_trait} + {infallible_trait}<TargetUnit, Storage>,",
                 f"    TargetUnit: {unit_trait},",
                 "{",
@@ -643,10 +660,10 @@ def render_generated_public_types(summary: dict) -> str:
                 "",
                 f"impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage> for {public_type}<Storage, Unit>",
                 "where",
-                "    Storage: ValueStorage,",
+                "    Storage: ScalarStorageFor<Unit> + ValueStorage,",
                 f"    Unit: {unit_trait},",
                 f"    TargetUnit: {unit_trait},",
-                "    TargetStorage: ValueStorage,",
+                "    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,",
                 "{",
                 f"    type Output = {public_type}<TargetStorage, TargetUnit>;",
                 "",
@@ -657,7 +674,7 @@ def render_generated_public_types(summary: dict) -> str:
                 "",
                 f"impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage> TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for {public_type}<Storage, Unit>",
                 "where",
-                "    Storage: ValueStorage,",
+                "    Storage: ScalarStorageFor<Unit> + ValueStorage,",
                 f"    Unit: {unit_trait},",
                 "    TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,",
                 "    TargetStorage: ValueStorage,",
@@ -670,7 +687,7 @@ def render_generated_public_types(summary: dict) -> str:
                 "",
                 f"impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage> ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for {public_type}<Storage, Unit>",
                 "where",
-                "    Storage: ValueStorage,",
+                "    Storage: ScalarStorageFor<Unit> + ValueStorage,",
                 f"    Unit: {unit_trait},",
                 "    TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,",
                 "    TargetStorage: ValueStorage,",
@@ -688,13 +705,19 @@ def render_generated_public_types(summary: dict) -> str:
             ctor = marker
             lines.extend(
                 [
-                    f"impl<Storage> {public_type}<Storage, {marker}> {{",
+                    f"impl<Storage> {public_type}<Storage, {marker}>",
+                    "where",
+                    f"    Storage: ScalarStorageFor<{marker}>,",
+                    "{",
                     f"    pub const fn {ctor}(storage: Storage) -> Self {{",
                     "        Self::new(storage)",
                     "    }",
                     "}",
                     "",
-                    f"impl<Storage> QuantityForStorage<Storage> for {marker} {{",
+                    f"impl<Storage> QuantityForStorage<Storage> for {marker}",
+                    "where",
+                    f"    Storage: ScalarStorageFor<{marker}>,",
+                    "{",
                     f"    type Quantity = {public_type}<Storage, {marker}>;",
                     "",
                     "    fn wrap(storage: Storage) -> Self::Quantity {",
@@ -745,6 +768,7 @@ def render_generated_bulk_storage_impls(summary: dict) -> str:
         markers = [marker_name_for_unit(unit) for unit in dimension["units"]]
         for marker in markers:
             for storage in storages:
+                lines.append(f"impl private::SealedBulkStorageFor<{marker}> for {storage} {{}}")
                 lines.append(f"impl BulkStorageFor<{marker}> for {storage} {{}}")
         lines.append("")
     return "\n".join(lines) + "\n"

@@ -2,6 +2,11 @@ use crate::generated::catalog_metadata::{CatalogJsonEncoding, DIMENSIONS};
 use crate::model::UnitMarker;
 use core::marker::PhantomData;
 
+mod private {
+    pub trait SealedBulkStorage {}
+    pub trait SealedBulkStorageFor<Unit> {}
+}
+
 #[allow(dead_code)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum BulkKind {
@@ -16,25 +21,28 @@ pub enum BulkClassification {
     Buffer,
 }
 
-pub trait BulkStorage: Copy + 'static {
+pub trait BulkStorage: Copy + 'static + private::SealedBulkStorage {
     const STORAGE_ID: &'static str;
 }
 
 #[doc(hidden)]
-pub trait BulkStorageFor<Unit>: BulkStorage
+pub trait BulkStorageFor<Unit>: BulkStorage + private::SealedBulkStorageFor<Unit>
 where
     Unit: UnitMarker,
 {
 }
 
+impl private::SealedBulkStorage for i32 {}
 impl BulkStorage for i32 {
     const STORAGE_ID: &'static str = "i32";
 }
 
+impl private::SealedBulkStorage for f32 {}
 impl BulkStorage for f32 {
     const STORAGE_ID: &'static str = "f32";
 }
 
+impl private::SealedBulkStorage for f64 {}
 impl BulkStorage for f64 {
     const STORAGE_ID: &'static str = "f64";
 }

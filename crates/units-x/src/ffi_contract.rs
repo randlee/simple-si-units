@@ -4,7 +4,6 @@ pub use crate::generated::ffi_contract_types::{
     distance_mm_i32, distance_mm_i32_slice, distance_mm_i32_slice_mut,
 };
 pub use crate::generated::public_types::{degC, degF, m, mm};
-pub type quantity<Unit, Storage> = crate::model::Quantity<Unit, Storage>;
 use core::ffi::{c_char, c_void};
 use core::slice;
 use std::vec::Vec;
