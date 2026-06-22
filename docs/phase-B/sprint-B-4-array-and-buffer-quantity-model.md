@@ -2,7 +2,8 @@
 
 ## Goal
 
-Implement quantity wrappers for arrays, vectors, slices, and other bulk payload forms.
+Implement quantity wrappers for fixed arrays, owned buffers, and borrowed slice
+views.
 
 ## Status
 
@@ -66,6 +67,9 @@ Implement quantity wrappers for arrays, vectors, slices, and other bulk payload 
 7. Fixed-array rows in the authoritative bulk-support artifact are uniquely
    keyed by array arity so per-array-size classification can be reviewed
    without inference.
+8. The authoritative bulk-support artifact uses the review arity set
+   `{0, 2, 3, 4}` in V1; the runtime `QuantityArray<Unit, T, N>` surface
+   remains generic over any `N`.
 
 ## Required Validation
 

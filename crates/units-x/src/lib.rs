@@ -29,6 +29,7 @@
 //! ```
 
 pub mod arithmetic;
+pub mod bulk;
 pub mod conversion;
 pub mod ffi_contract;
 pub mod generated;
@@ -37,6 +38,10 @@ pub mod model;
 pub use arithmetic::{
     acceleration_from_velocity_and_time, velocity_from_distance_and_time, ArithmeticError,
     CheckedScalarArithmeticOps, ComputeError,
+};
+pub use bulk::{
+    bulk_encoding_for_unit, render_buffer_type_id, render_small_array_type_id, BulkClassification,
+    BulkKind, BulkStorage, QuantityArray, QuantityBuffer, QuantityBufferView, BULK_REVIEW_ARITIES,
 };
 pub use conversion::{
     ConversionError, ConvertUnit, InfallibleUnitStorage, ReciprocalBridge, TryConvertQuantity,

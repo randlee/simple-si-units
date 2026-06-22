@@ -11,6 +11,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 from generate_catalog_artifacts import arithmetic_support_rows
 from generate_catalog_artifacts import build_summary
+from generate_catalog_artifacts import bulk_support_rows
 from generate_catalog_artifacts import conversion_coverage_rows
 from generate_catalog_artifacts import expected_outputs
 from generate_catalog_artifacts import render_generated_conversion_metadata
@@ -150,6 +151,14 @@ class CatalogGenerationTests(unittest.TestCase):
         self.assertTrue(any(row["path_family"] == "same_canonical_add_sub" and row["lhs_public_type"] == "Diopter" and row["rhs_public_type"] == "InverseDistance" for row in support))
         self.assertTrue(any(row["path_family"] == "compute_bridge" and row["result_public_type"] == "Velocity" for row in support))
         self.assertTrue(any(row["lhs_public_type"] == "Temperature" and row["support_status"] == "unsupported" for row in support))
+
+    def test_bulk_support_report_is_complete_for_b4_scope(self) -> None:
+        summary = build_summary(json.loads((ROOT / "catalog" / "units-catalog.json").read_text(encoding="utf-8")))
+        support = bulk_support_rows(summary)
+
+        self.assertTrue(any(row["bulk_kind"] == "array" and row["array_arity"] == 0 for row in support))
+        self.assertTrue(any(row["bulk_kind"] == "buffer" and row["public_type"] == "Distance" for row in support))
+        self.assertTrue(any(row["bulk_kind"] == "buffer_view" and row["storage"] == "f64" for row in support))
 
     def test_generated_public_types_reject_invalid_marker_names(self) -> None:
         summary = json.loads((ROOT / "catalog" / "generated" / "units-catalog-summary.json").read_text(encoding="utf-8"))

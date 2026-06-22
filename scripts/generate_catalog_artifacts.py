@@ -15,6 +15,7 @@ CATALOG_PATH = ROOT / "catalog" / "units-catalog.json"
 SUMMARY_PATH = ROOT / "catalog" / "generated" / "units-catalog-summary.json"
 CONVERSION_COVERAGE_PATH = ROOT / "catalog" / "generated" / "phase-b-conversion-coverage.json"
 ARITHMETIC_SUPPORT_PATH = ROOT / "catalog" / "generated" / "phase-b-arithmetic-support.json"
+BULK_SUPPORT_PATH = ROOT / "catalog" / "generated" / "phase-b-bulk-support.json"
 RUST_PATH = ROOT / "crates" / "units-x" / "src" / "generated" / "catalog_metadata.rs"
 FFI_TYPES_PATH = ROOT / "crates" / "units-x" / "src" / "generated" / "ffi_contract_types.rs"
 PUBLIC_TYPES_PATH = ROOT / "crates" / "units-x" / "src" / "generated" / "public_types.rs"
@@ -1010,6 +1011,50 @@ def arithmetic_support_rows(summary: dict) -> list[dict[str, str | None]]:
     return rows
 
 
+def bulk_support_rows(summary: dict) -> list[dict[str, str | None]]:
+    review_arities = (0, 2, 3, 4)
+    rows: list[dict[str, str | None]] = []
+    for dimension in summary["dimensions"]:
+        public_type = dimension["public_type"]
+        storages = [scalar_storage_name(type_id) for type_id in dimension["scalar"]["type_ids"]]
+        for storage in storages:
+            for arity in review_arities:
+                rows.append(
+                    {
+                        "public_type": public_type,
+                        "bulk_kind": "array",
+                        "array_arity": arity,
+                        "storage": storage,
+                        "classification": dimension["small_array"]["encoding"],
+                        "support_status": "supported",
+                        "expected_failure": None,
+                    }
+                )
+            rows.append(
+                {
+                    "public_type": public_type,
+                    "bulk_kind": "buffer",
+                    "array_arity": None,
+                    "storage": storage,
+                    "classification": dimension["buffer"]["encoding"],
+                    "support_status": "supported",
+                    "expected_failure": None,
+                }
+            )
+            rows.append(
+                {
+                    "public_type": public_type,
+                    "bulk_kind": "buffer_view",
+                    "array_arity": None,
+                    "storage": storage,
+                    "classification": dimension["buffer"]["encoding"],
+                    "support_status": "supported",
+                    "expected_failure": None,
+                }
+            )
+    return rows
+
+
 def format_rust_source(source: str) -> str:
     completed = subprocess.run(
         ["rustfmt", "--emit", "stdout"],
@@ -1028,6 +1073,7 @@ def expected_outputs() -> dict[Path, str]:
         SUMMARY_PATH: json.dumps(summary, indent=2, sort_keys=True) + "\n",
         CONVERSION_COVERAGE_PATH: json.dumps(conversion_coverage_rows(summary), indent=2, sort_keys=True) + "\n",
         ARITHMETIC_SUPPORT_PATH: json.dumps(arithmetic_support_rows(summary), indent=2, sort_keys=True) + "\n",
+        BULK_SUPPORT_PATH: json.dumps(bulk_support_rows(summary), indent=2, sort_keys=True) + "\n",
         RUST_PATH: format_rust_source(render_rust_module(summary)),
         FFI_TYPES_PATH: format_rust_source(render_generated_ffi_types(summary)),
         PUBLIC_TYPES_PATH: format_rust_source(render_generated_public_types(summary)),
