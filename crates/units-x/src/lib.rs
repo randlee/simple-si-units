@@ -27,6 +27,13 @@
 //! let _ = Distance::<f64, degC>::new(1.0);
 //! let _ = Temperature::<f64, mm>::new(1.0);
 //! ```
+//!
+//! ```compile_fail
+//! use units_x::conversion::ConvertUnit;
+//! use units_x::{Distance, ft, mm};
+//!
+//! let _ = Distance::ft(1.0_f32).to_unit::<mm>();
+//! ```
 
 pub mod conversion;
 pub mod ffi_contract;

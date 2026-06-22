@@ -146,6 +146,31 @@ class CatalogGenerationTests(unittest.TestCase):
             {dimension["public_type"] for dimension in summary["dimensions"]},
             {row["source_public_type"] for row in coverage},
         )
+        ft_to_mm_f32 = next(
+            row
+            for row in coverage
+            if row["source_public_type"] == "Distance"
+            and row["source_unit"] == "ft"
+            and row["source_storage"] == "f32"
+            and row["target_public_type"] == "Distance"
+            and row["target_unit"] == "mm"
+            and row["target_storage"] == "f32"
+        )
+        self.assertEqual(ft_to_mm_f32["api_surface"], "try_to_unit")
+        self.assertEqual(ft_to_mm_f32["expected_failure"], "Overflow")
+
+        mm_to_m_f64 = next(
+            row
+            for row in coverage
+            if row["source_public_type"] == "Distance"
+            and row["source_unit"] == "mm"
+            and row["source_storage"] == "f64"
+            and row["target_public_type"] == "Distance"
+            and row["target_unit"] == "m"
+            and row["target_storage"] == "f64"
+        )
+        self.assertEqual(mm_to_m_f64["api_surface"], "to_unit")
+        self.assertIsNone(mm_to_m_f64["expected_failure"])
 
     def test_generated_public_types_reject_invalid_marker_names(self) -> None:
         summary = json.loads((ROOT / "catalog" / "generated" / "units-catalog-summary.json").read_text(encoding="utf-8"))

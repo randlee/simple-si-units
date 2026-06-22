@@ -259,7 +259,7 @@ mod tests {
     use super::*;
     use crate::generated::conversion_metadata;
     use crate::generated::public_types::{
-        degC, degF, dpt, m, mm, per_m, s, Diopter, Distance, InverseDistance, Temperature, Time,
+        degC, degF, dpt, ft, m, mm, per_m, s, Diopter, Distance, InverseDistance, Temperature, Time,
     };
     use crate::model::{private, Quantity, QuantityType, UnitMarker};
 
@@ -331,6 +331,14 @@ mod tests {
     }
 
     #[test]
+    fn distance_round_trip_ft_to_m_and_back() {
+        let meters = Distance::ft(3.280839895013123_f64).to_unit::<m>();
+        assert_close(meters.value(), 1.0);
+        let feet = meters.to_unit::<ft>();
+        assert_close(feet.value(), 3.280839895013123);
+    }
+
+    #[test]
     fn temperature_offsets_are_correct() {
         let freezing = Temperature::degC(0.0_f64).to_unit::<degF>();
         assert_close(freezing.value(), 32.0);
@@ -359,6 +367,12 @@ mod tests {
             .unwrap();
         assert_eq!(inverse.value(), 2.0);
         assert_eq!(inverse.canonical_dimension_id(), "inverse_distance");
+
+        let diopter = InverseDistance::per_m(2.0_f64)
+            .try_to_quantity::<Diopter<f64, dpt>, dpt, f64>()
+            .unwrap();
+        assert_eq!(diopter.value(), 2.0);
+        assert_eq!(diopter.canonical_dimension_id(), "inverse_distance");
     }
 
     #[test]

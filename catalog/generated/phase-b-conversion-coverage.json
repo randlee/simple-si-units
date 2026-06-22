@@ -564,8 +564,8 @@
     "target_unit": "ft"
   },
   {
-    "api_surface": "to_unit",
-    "expected_failure": null,
+    "api_surface": "try_to_unit",
+    "expected_failure": "Overflow",
     "path_kind": "same_public_type",
     "source_public_type": "Distance",
     "source_storage": "f32",
@@ -588,8 +588,8 @@
     "target_unit": "m"
   },
   {
-    "api_surface": "to_unit",
-    "expected_failure": null,
+    "api_surface": "try_to_unit",
+    "expected_failure": "Overflow",
     "path_kind": "same_public_type",
     "source_public_type": "Distance",
     "source_storage": "f32",
@@ -600,8 +600,8 @@
     "target_unit": "ft"
   },
   {
-    "api_surface": "to_unit",
-    "expected_failure": null,
+    "api_surface": "try_to_unit",
+    "expected_failure": "Overflow",
     "path_kind": "same_public_type",
     "source_public_type": "Distance",
     "source_storage": "f32",
@@ -1476,8 +1476,8 @@
     "target_unit": "degC"
   },
   {
-    "api_surface": "to_unit",
-    "expected_failure": null,
+    "api_surface": "try_to_unit",
+    "expected_failure": "Overflow",
     "path_kind": "same_public_type",
     "source_public_type": "Temperature",
     "source_storage": "f32",
@@ -1512,8 +1512,8 @@
     "target_unit": "degC"
   },
   {
-    "api_surface": "to_unit",
-    "expected_failure": null,
+    "api_surface": "try_to_unit",
+    "expected_failure": "Overflow",
     "path_kind": "same_public_type",
     "source_public_type": "Temperature",
     "source_storage": "f32",
@@ -2088,8 +2088,8 @@
     "target_unit": "s"
   },
   {
-    "api_surface": "to_unit",
-    "expected_failure": null,
+    "api_surface": "try_to_unit",
+    "expected_failure": "Overflow",
     "path_kind": "same_public_type",
     "source_public_type": "Time",
     "source_storage": "f32",

@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 from pathlib import Path
 import subprocess
 import sys
@@ -292,6 +293,7 @@ def render_generated_ffi_types(summary: dict) -> str:
 
 def render_generated_public_types(summary: dict) -> str:
     dimensions = summary["dimensions"]
+    coverage_rows = conversion_coverage_rows(summary)
     unit_rows: list[dict[str, str]] = []
     seen_markers: set[str] = set()
     lines = [
@@ -400,6 +402,10 @@ def render_generated_public_types(summary: dict) -> str:
         public_type = dimension["public_type"]
         default_unit = default_marker_for_dimension(dimension)
         unit_trait = f"{public_type}Unit"
+        infallible_trait = f"{public_type}InfallibleUnitPath"
+        markers_by_unit_code = {
+            unit["unit_code_id"]: marker_name_for_unit(unit) for unit in dimension["units"]
+        }
         lines.extend(
             [
                 f"/// Sealed unit-family marker trait for `{public_type}`.",
@@ -408,6 +414,9 @@ def render_generated_public_types(summary: dict) -> str:
                 "/// catalog-generated unit markers participate in this family.",
                 f"pub trait {unit_trait}: UnitMarker {{}}",
                 "",
+                "#[doc(hidden)]",
+                f"pub trait {infallible_trait}<TargetUnit, Storage>: {unit_trait} {{}}",
+                "",
             ]
         )
         for unit in dimension["units"]:
@@ -415,6 +424,21 @@ def render_generated_public_types(summary: dict) -> str:
             lines.extend(
                 [
                     f"impl {unit_trait} for {marker} {{}}",
+                    "",
+                ]
+            )
+        for row in coverage_rows:
+            if row["path_kind"] != "same_public_type":
+                continue
+            if row["source_public_type"] != public_type:
+                continue
+            if row["api_surface"] not in {"identity", "to_unit"}:
+                continue
+            source_marker = markers_by_unit_code[row["source_unit"]]
+            target_marker = markers_by_unit_code[row["target_unit"]]
+            lines.extend(
+                [
+                    f"impl {infallible_trait}<{target_marker}, {row['source_storage']}> for {source_marker} {{}}",
                     "",
                 ]
             )
@@ -537,6 +561,7 @@ def render_generated_public_types(summary: dict) -> str:
                 f"{public_type}<Storage, TargetUnit>",
                 "    where",
                 f"        TargetUnit: {unit_trait},",
+                f"        Unit: {infallible_trait}<TargetUnit, Storage>,",
                 "    {",
                 f"        convert_same_public_type_infallible::<Self, {public_type}<Storage, TargetUnit>>(self)",
                 "    }",
@@ -583,7 +608,7 @@ def render_generated_public_types(summary: dict) -> str:
                 f"impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for {public_type}<Storage, Unit>",
                 "where",
                 "    Storage: InfallibleUnitStorage,",
-                f"    Unit: {unit_trait},",
+                f"    Unit: {unit_trait} + {infallible_trait}<TargetUnit, Storage>,",
                 f"    TargetUnit: {unit_trait},",
                 "{",
                 f"    type Output = {public_type}<Storage, TargetUnit>;",
@@ -750,6 +775,72 @@ def expected_storage_failure(source_storage: str, target_storage: str) -> str | 
     return None
 
 
+def storage_bounds(storage: str) -> tuple[float, float]:
+    if storage == "i32":
+        return (float(-(2**31)), float(2**31 - 1))
+    if storage == "f32":
+        f32_max = float.fromhex("0x1.fffffep127")
+        return (-f32_max, f32_max)
+    if storage == "f64":
+        return (-sys.float_info.max, sys.float_info.max)
+    raise ValueError(f"unsupported storage `{storage}`")
+
+
+def to_base_value(value: float, unit: dict[str, object]) -> float:
+    conversion = unit["conversion"]
+    if conversion["kind"] == "linear":
+        return value * conversion["scale_to_base"]
+    return value * conversion["scale_to_base"] + conversion["offset_to_base"]
+
+
+def from_base_value(base_value: float, unit: dict[str, object]) -> float:
+    conversion = unit["conversion"]
+    if conversion["kind"] == "linear":
+        return base_value / conversion["scale_to_base"]
+    return (base_value - conversion["offset_to_base"]) / conversion["scale_to_base"]
+
+
+def converted_value(value: float, source_unit: dict[str, object], target_unit: dict[str, object]) -> float:
+    return from_base_value(to_base_value(value, source_unit), target_unit)
+
+
+def same_storage_float_path_is_infallible(
+    storage: str, source_unit: dict[str, object], target_unit: dict[str, object]
+) -> bool:
+    lower, upper = storage_bounds(storage)
+    target_lower, target_upper = storage_bounds(storage)
+    for source_value in (lower, upper):
+        candidate = converted_value(source_value, source_unit, target_unit)
+        if not math.isfinite(candidate):
+            return False
+        if candidate < target_lower or candidate > target_upper:
+            return False
+    return True
+
+
+def classify_same_public_type_path(
+    source_storage: str,
+    target_storage: str,
+    source_unit: dict[str, object],
+    target_unit: dict[str, object],
+) -> tuple[str, str | None]:
+    if source_unit["unit_code_id"] == target_unit["unit_code_id"] and source_storage == target_storage:
+        return ("identity", None)
+
+    if source_storage == target_storage == "f64":
+        return ("to_unit", None)
+
+    if source_storage == target_storage == "f32":
+        if same_storage_float_path_is_infallible(source_storage, source_unit, target_unit):
+            return ("to_unit", None)
+        return ("try_to_unit", "Overflow")
+
+    expected_failure = expected_storage_failure(source_storage, target_storage)
+    if expected_failure is None and source_storage == target_storage == "i32":
+        expected_failure = "Overflow|PrecisionLoss"
+    return ("try_to_unit", expected_failure)
+
+
 def conversion_coverage_rows(summary: dict) -> list[dict[str, str | None]]:
     dimensions = summary["dimensions"]
     rows: list[dict[str, str | None]] = []
@@ -757,29 +848,24 @@ def conversion_coverage_rows(summary: dict) -> list[dict[str, str | None]]:
     for dimension in dimensions:
         source_public_type = dimension["public_type"]
         storages = [scalar_storage_name(type_id) for type_id in dimension["scalar"]["type_ids"]]
-        units = [unit["unit_code_id"] for unit in dimension["units"]]
+        units = dimension["units"]
         for source_storage in storages:
             for target_storage in storages:
                 for source_unit in units:
                     for target_unit in units:
-                        if source_unit == target_unit and source_storage == target_storage:
-                            api_surface = "identity"
-                            expected_failure = None
-                        elif source_storage == target_storage and source_storage in {"f32", "f64"}:
-                            api_surface = "to_unit"
-                            expected_failure = None
-                        else:
-                            api_surface = "try_to_unit"
-                            expected_failure = expected_storage_failure(source_storage, target_storage)
-                            if expected_failure is None and source_storage == target_storage == "i32" and source_unit != target_unit:
-                                expected_failure = "Overflow|PrecisionLoss"
+                        api_surface, expected_failure = classify_same_public_type_path(
+                            source_storage,
+                            target_storage,
+                            source_unit,
+                            target_unit,
+                        )
                         rows.append(
                             {
                                 "source_public_type": source_public_type,
-                                "source_unit": source_unit,
+                                "source_unit": source_unit["unit_code_id"],
                                 "source_storage": source_storage,
                                 "target_public_type": source_public_type,
-                                "target_unit": target_unit,
+                                "target_unit": target_unit["unit_code_id"],
                                 "target_storage": target_storage,
                                 "path_kind": "same_public_type",
                                 "api_surface": api_surface,
