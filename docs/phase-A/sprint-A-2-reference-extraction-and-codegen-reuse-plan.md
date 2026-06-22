@@ -6,7 +6,7 @@ Define the master catalog and isolate what can be reused from the existing proje
 
 ## Status
 
-`Not Started`
+`Done`
 
 ## Scope References
 
@@ -77,16 +77,48 @@ Representative catalog shape:
 
 ```json
 {
-  "dimension": "temperature",
-  "unit_code_id": "degC",
-  "unit_symbol": "C",
-  "reserved_word_alias": null,
-  "binary_unit_id": "temperature.degC",
-  "json_type_id": "temperature_f32",
-  "conversion": {
-    "kind": "affine",
-    "scale_to_base": 1.0,
-    "offset_to_base": 273.15
-  }
+  "dimension_id": "temperature",
+  "family": "base",
+  "public_type": "Temperature",
+  "base_unit_code_id": "K",
+  "abi": {
+    "abi_name_stem": "temperature",
+    "binary_schema_id": "units-x.temperature.v1"
+  },
+  "json_forms": {
+    "scalar": {
+      "type_ids": ["temperature_f32", "temperature_f64"],
+      "encoding": "object"
+    },
+    "small_array": {
+      "type_id_template": "temperature{arity}_{storage}",
+      "encoding": "array"
+    },
+    "buffer": {
+      "type_id_template": "temperature_buffer_{storage}",
+      "encoding": "base64-le"
+    }
+  },
+  "units": [
+    {
+      "unit_code_id": "degC",
+      "unit_symbol": "C",
+      "display_name": "celsius",
+      "reserved_word_alias": null,
+      "binary_unit_id": "temperature.degC",
+      "aliases": ["celsius"],
+      "conversion": {
+        "kind": "affine",
+        "scale_to_base": 1.0,
+        "offset_to_base": 273.15
+      }
+    }
+  ]
 }
 ```
+
+Source of truth note:
+
+- The authoritative contract remains `catalog/schema/units-catalog.schema.json`
+  plus `catalog/examples/phase-a-sample-catalog.json`. This example is a valid
+  schema-aligned excerpt, not an alternate contract.

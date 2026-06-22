@@ -1,0 +1,260 @@
+{
+  "schema_version": "1.0.0",
+  "catalog_version": "0.1.0-phase-a-generation-edge",
+  "dimensions": [
+    {
+      "dimension_id": "distance",
+      "canonical_dimension_id": "distance",
+      "family": "base",
+      "public_type": "Distance",
+      "base_unit_code_id": "m",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "distance_i32",
+            "distance_f32",
+            "distance_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "distance{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "distance_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "distance",
+        "binary_schema_id": "units-x.distance.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "mm",
+          "unit_symbol": "mm",
+          "display_name": "millimeter",
+          "binary_unit_id": "distance.mm",
+          "reserved_word_alias": null,
+          "aliases": [
+            "millimeters"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 0.001,
+            "offset_to_base": null
+          }
+        },
+        {
+          "unit_code_id": "Mm",
+          "unit_symbol": "Mm",
+          "display_name": "megameter",
+          "binary_unit_id": "distance.Mm",
+          "reserved_word_alias": null,
+          "aliases": [
+            "megameters"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1000000.0,
+            "offset_to_base": null
+          }
+        },
+        {
+          "unit_code_id": "m",
+          "unit_symbol": "m",
+          "display_name": "meter",
+          "binary_unit_id": "distance.m",
+          "reserved_word_alias": null,
+          "aliases": [
+            "meters"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        },
+        {
+          "unit_code_id": "type",
+          "unit_symbol": "type",
+          "display_name": "reserved alias unit",
+          "binary_unit_id": "distance.type",
+          "reserved_word_alias": "type_",
+          "aliases": [
+            "types"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 2.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "inverse_distance",
+      "canonical_dimension_id": "inverse_distance",
+      "family": "base",
+      "public_type": "InverseDistance",
+      "base_unit_code_id": "per_m",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "inverse_distance_f32",
+            "inverse_distance_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "inverse_distance{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "inverse_distance_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "inverse_distance",
+        "binary_schema_id": "units-x.inverse_distance.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "per_m",
+          "unit_symbol": "1/m",
+          "display_name": "reciprocal meter",
+          "binary_unit_id": "inverse_distance.per_m",
+          "reserved_word_alias": null,
+          "aliases": [
+            "per meter"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "diopter",
+      "canonical_dimension_id": "inverse_distance",
+      "family": "base",
+      "public_type": "Diopter",
+      "base_unit_code_id": "dpt",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "diopter_f32",
+            "diopter_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "diopter{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "diopter_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "diopter",
+        "binary_schema_id": "units-x.diopter.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "dpt",
+          "unit_symbol": "D",
+          "display_name": "diopter",
+          "binary_unit_id": "diopter.dpt",
+          "reserved_word_alias": null,
+          "aliases": [
+            "diopters"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "temperature",
+      "canonical_dimension_id": "temperature",
+      "family": "base",
+      "public_type": "Temperature",
+      "base_unit_code_id": "K",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "temperature_f32",
+            "temperature_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "temperature{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "temperature_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "temperature",
+        "binary_schema_id": "units-x.temperature.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "K",
+          "unit_symbol": "K",
+          "display_name": "kelvin",
+          "binary_unit_id": "temperature.K",
+          "reserved_word_alias": null,
+          "aliases": [],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        },
+        {
+          "unit_code_id": "degC",
+          "unit_symbol": "C",
+          "display_name": "celsius",
+          "binary_unit_id": "temperature.degC",
+          "reserved_word_alias": null,
+          "aliases": [
+            "celsius"
+          ],
+          "conversion": {
+            "kind": "affine",
+            "scale_to_base": 1.0,
+            "offset_to_base": 273.15
+          }
+        },
+        {
+          "unit_code_id": "degF",
+          "unit_symbol": "F",
+          "display_name": "fahrenheit",
+          "binary_unit_id": "temperature.degF",
+          "reserved_word_alias": null,
+          "aliases": [
+            "fahrenheit"
+          ],
+          "conversion": {
+            "kind": "affine",
+            "scale_to_base": 0.555555555555556,
+            "offset_to_base": 255.372222222222
+          }
+        }
+      ]
+    }
+  ]
+}

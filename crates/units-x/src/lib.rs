@@ -3,15 +3,36 @@
 //! Phase A provides scaffolding only. The quantity model, catalog-driven
 //! generation, serialization, and interop surfaces land in later phases.
 
+pub mod ffi_contract;
+pub mod generated;
+pub use ffi_contract::quantity;
+
 /// Current package version exposed for scaffolding and smoke-test use.
 pub const VERSION: &str = env!("CARGO_PKG_VERSION");
 
 #[cfg(test)]
 mod tests {
+    use super::generated::catalog_metadata;
     use super::VERSION;
 
     #[test]
     fn version_constant_is_wired() {
         assert_eq!(VERSION, env!("CARGO_PKG_VERSION"));
+    }
+
+    #[test]
+    fn generated_catalog_metadata_is_present() {
+        assert!(catalog_metadata::DIMENSIONS
+            .iter()
+            .any(|dimension| dimension.dimension_id.as_str() == "distance"));
+    }
+
+    #[test]
+    fn diopter_maps_to_inverse_distance_in_generated_metadata() {
+        let diopter = catalog_metadata::DIMENSIONS
+            .iter()
+            .find(|dimension| dimension.public_type == "Diopter")
+            .expect("Diopter metadata row must exist");
+        assert_eq!(diopter.canonical_dimension_id.as_str(), "inverse_distance");
     }
 }

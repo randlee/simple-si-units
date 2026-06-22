@@ -17,12 +17,15 @@ class WorkspaceScaffoldTests(unittest.TestCase):
             ROOT / "crates" / "units-x-python" / "Cargo.toml",
             ROOT / "crates" / "units-x-python" / "src" / "lib.rs",
             ROOT / "python" / "pyproject.toml",
+            ROOT / "python" / "requirements-ci.txt",
             ROOT / "python" / "units_x" / "__init__.py",
             ROOT / "python" / "units_x" / "_version.py",
             ROOT / "dotnet" / "Directory.Build.props",
             ROOT / "dotnet" / "src" / "UnitsX" / "UnitsX.csproj",
+            ROOT / ".just" / "run_python_package_smoke.py",
             ROOT / "scripts" / "sync_version_files.py",
             ROOT / "boundaries" / "units-x" / "core-surface.toml",
+            ROOT / "boundaries" / "units-x-python" / "python-surface.toml",
         )
         for path in expected:
             self.assertTrue(path.exists(), path.as_posix())

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+import argparse
 import json
 import re
 import sys
@@ -9,7 +10,7 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 
 
-ROOT = Path(__file__).resolve().parent.parent
+DEFAULT_ROOT = Path(__file__).resolve().parent.parent
 
 
 def fail(message: str) -> None:
@@ -24,30 +25,30 @@ def load_toml(path: Path) -> dict:
     return tomllib.loads(read_text(path))
 
 
-def root_version() -> str:
-    payload = json.loads(read_text(ROOT / "version.json"))
+def root_version(repo_root: Path = DEFAULT_ROOT) -> str:
+    payload = json.loads(read_text(repo_root / "version.json"))
     version = payload.get("version")
     if not isinstance(version, str) or not version.strip():
         fail("version.json must contain a non-empty string field `version`")
     return version
 
 
-def workspace_version() -> str:
-    manifest = load_toml(ROOT / "Cargo.toml")
+def workspace_version(repo_root: Path = DEFAULT_ROOT) -> str:
+    manifest = load_toml(repo_root / "Cargo.toml")
     version = manifest.get("workspace", {}).get("package", {}).get("version")
     if not isinstance(version, str) or not version.strip():
         fail("Cargo.toml is missing [workspace.package].version")
     return version
 
 
-def workspace_manifests() -> list[Path]:
-    manifest = load_toml(ROOT / "Cargo.toml")
+def workspace_manifests(repo_root: Path = DEFAULT_ROOT) -> list[Path]:
+    manifest = load_toml(repo_root / "Cargo.toml")
     members = manifest.get("workspace", {}).get("members", [])
     manifests: list[Path] = []
     for member in members:
         if not isinstance(member, str):
             continue
-        manifest_path = ROOT / member / "Cargo.toml"
+        manifest_path = repo_root / member / "Cargo.toml"
         if manifest_path.exists():
             manifests.append(manifest_path)
     return manifests
@@ -72,13 +73,13 @@ def dependency_sections(manifest: dict) -> list[tuple[str, dict]]:
     return sections
 
 
-def validate_path_dependency_versions() -> None:
-    fallback = workspace_version()
-    manifests = workspace_manifests()
+def validate_path_dependency_versions(repo_root: Path = DEFAULT_ROOT) -> None:
+    fallback = workspace_version(repo_root)
+    manifests = workspace_manifests(repo_root)
     versions: dict[Path, str] = {}
     parsed: dict[Path, tuple[str, dict]] = {}
     for manifest_path in manifests:
-        rel_manifest = manifest_path.relative_to(ROOT).as_posix()
+        rel_manifest = manifest_path.relative_to(repo_root).as_posix()
         manifest = load_toml(manifest_path)
         parsed[manifest_path] = (rel_manifest, manifest)
         versions[manifest_path.parent.resolve()] = package_version(manifest, rel_manifest, fallback)
@@ -103,8 +104,8 @@ def validate_path_dependency_versions() -> None:
                     )
 
 
-def validate_python_version(expected_version: str) -> bool:
-    pyproject = ROOT / "python" / "pyproject.toml"
+def validate_python_version(expected_version: str, repo_root: Path = DEFAULT_ROOT) -> bool:
+    pyproject = repo_root / "python" / "pyproject.toml"
     if not pyproject.exists():
         return False
     manifest = load_toml(pyproject)
@@ -114,7 +115,7 @@ def validate_python_version(expected_version: str) -> bool:
             f"python/pyproject.toml project.version ({project_version}) "
             f"does not match version.json ({expected_version})"
         )
-    version_module = ROOT / "python" / "units_x" / "_version.py"
+    version_module = repo_root / "python" / "units_x" / "_version.py"
     text = read_text(version_module)
     match = re.search(r'__version__ = "([^"]+)"', text)
     if match is None:
@@ -135,8 +136,8 @@ def expected_assembly_version(version: str) -> str:
     return f"{major}.{minor}.{patch}.0"
 
 
-def validate_dotnet_version(expected_version: str) -> bool:
-    props_path = ROOT / "dotnet" / "Directory.Build.props"
+def validate_dotnet_version(expected_version: str, repo_root: Path = DEFAULT_ROOT) -> bool:
+    props_path = repo_root / "dotnet" / "Directory.Build.props"
     if not props_path.exists():
         return False
     root = ET.fromstring(read_text(props_path))
@@ -164,18 +165,23 @@ def validate_dotnet_version(expected_version: str) -> bool:
     return True
 
 
-def main() -> int:
-    expected = root_version()
-    workspace = workspace_version()
+def main(argv: list[str]) -> int:
+    parser = argparse.ArgumentParser(description="Verify repo version synchronization.")
+    parser.add_argument("--root", help="Repo root to inspect.")
+    args = parser.parse_args(argv[1:])
+    repo_root = Path(args.root).resolve() if args.root else DEFAULT_ROOT
+
+    expected = root_version(repo_root)
+    workspace = workspace_version(repo_root)
     if workspace != expected:
         fail(f"Cargo.toml workspace version ({workspace}) does not match version.json ({expected})")
 
-    validate_path_dependency_versions()
+    validate_path_dependency_versions(repo_root)
 
     checked = ["version.json", "Cargo.toml", "workspace path dependency versions"]
-    if validate_python_version(expected):
+    if validate_python_version(expected, repo_root):
         checked.extend(["python/pyproject.toml", "python/units_x/_version.py"])
-    if validate_dotnet_version(expected):
+    if validate_dotnet_version(expected, repo_root):
         checked.append("dotnet/Directory.Build.props")
 
     print(f"version sync check passed: {expected} [{', '.join(checked)}]")
@@ -183,4 +189,4 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    raise SystemExit(main(sys.argv))

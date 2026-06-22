@@ -58,8 +58,8 @@ def build_tasks(repo_root: Path) -> dict[str, LintTask]:
     return {
         "fmt": LintTask("fmt", ["just", "_fmt-check"]),
         "version": LintTask("version", [py, str(repo_root / ".just/check_version_sync.py")]),
-        "check": LintTask("check", ["sc-lint", "--root", str(repo_root), "check", "native"]),
-        "clippy": LintTask("clippy", ["sc-lint", "--root", str(repo_root), "clippy", "native"]),
+        "check": LintTask("check", [py, str(repo_root / ".just/run_scoped_rust_lint.py"), "check"]),
+        "clippy": LintTask("clippy", [py, str(repo_root / ".just/run_scoped_rust_lint.py"), "clippy"]),
         "sc-boundary": LintTask("sc-boundary", [py, str(repo_root / ".just/lint_sc_boundary.py")]),
         "identity-literals": LintTask(
             "identity-literals",

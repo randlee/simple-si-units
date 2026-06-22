@@ -207,13 +207,13 @@ Representative FFI forms:
 
 ```rust
 #[repr(C)]
-pub struct DistanceMmI32 {
+pub struct distance_mm_i32 {
     pub value_mm: i32,
 }
 
 #[repr(C)]
-pub struct DistanceMmI32Slice {
-    pub ptr: *const DistanceMmI32,
+pub struct distance_mm_i32_slice {
+    pub ptr: *const distance_mm_i32,
     pub len: u64,
 }
 ```
@@ -533,7 +533,7 @@ Representative exported functions:
 
 - `distance_mm_i32_to_m_f64`
 - `distance_cm_i16_add_distance_m_f64_as_cm_f64`
-- `velocity_mps_from_distance_m_and_time_s`
+- `velocity_mps_f64_from_distance_m_f64_and_time_s_f64`
 
 ## Relationship To Existing Project
 
