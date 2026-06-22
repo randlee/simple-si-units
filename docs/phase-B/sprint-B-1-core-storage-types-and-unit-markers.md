@@ -7,7 +7,7 @@ scalar type set.
 
 ## Status
 
-`Complete`
+`Done`
 
 ## Scope References
 

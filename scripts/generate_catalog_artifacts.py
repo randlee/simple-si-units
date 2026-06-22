@@ -1092,6 +1092,7 @@ def arithmetic_support_rows(summary: dict) -> list[dict[str, str | None]]:
                                     "rhs_unit": rhs_unit,
                                     "rhs_storage": rhs_storage,
                                     "result_public_type": public_type,
+                                    "result_unit_code_id": lhs_unit,
                                     "result_unit_rule": "lhs_unit",
                                     "result_storage": row_policy["result_storage"],
                                     "path_family": "same_canonical_add_sub",
@@ -1123,6 +1124,7 @@ def arithmetic_support_rows(summary: dict) -> list[dict[str, str | None]]:
                                 "rhs_unit": "scalar",
                                 "rhs_storage": rhs_storage_scalar,
                                 "result_public_type": public_type,
+                                "result_unit_code_id": lhs_unit,
                                 "result_unit_rule": "lhs_unit",
                                 "result_storage": row_policy["result_storage"],
                                 "path_family": "scalar_arithmetic",
@@ -1166,6 +1168,7 @@ def arithmetic_support_rows(summary: dict) -> list[dict[str, str | None]]:
                                         "rhs_unit": rhs_unit,
                                         "rhs_storage": rhs_storage,
                                         "result_public_type": lhs_dimension["public_type"],
+                                        "result_unit_code_id": lhs_unit,
                                         "result_unit_rule": "lhs_unit",
                                         "result_storage": row_policy["result_storage"],
                                         "path_family": "same_canonical_add_sub",
@@ -1198,17 +1201,48 @@ def arithmetic_support_rows(summary: dict) -> list[dict[str, str | None]]:
                                 "operator": bridge["operator"],
                                 "rhs_public_type": rhs_dimension["public_type"],
                                 "rhs_unit": rhs_unit,
-                                "rhs_storage": rhs_storage,
-                                "result_public_type": result_dimension["public_type"],
-                                "result_unit_rule": "canonical_compute_unit",
-                                "result_storage": bridge["result_storage"],
-                                "path_family": "compute_bridge",
+                                    "rhs_storage": rhs_storage,
+                                    "result_public_type": result_dimension["public_type"],
+                                    "result_unit_code_id": bridge["result_unit_code_id"],
+                                    "result_unit_rule": "canonical_compute_unit",
+                                    "result_storage": bridge["result_storage"],
+                                    "path_family": "compute_bridge",
                                 "api_mode": bridge["api_mode"],
                                 "exact_division_policy": "not-applicable",
                                 "support_status": "supported",
                                 "expected_failure": bridge["expected_failure"],
                             }
                         )
+
+    for lhs_dimension in dimensions:
+        lhs_base_unit = lhs_dimension["base_unit_code_id"]
+        for rhs_dimension in dimensions:
+            if lhs_dimension["public_type"] == rhs_dimension["public_type"]:
+                continue
+            if lhs_dimension["canonical_dimension_id"] == rhs_dimension["canonical_dimension_id"]:
+                continue
+            rhs_base_unit = rhs_dimension["base_unit_code_id"]
+            for operator in ("add", "sub", "mul_quantity", "div_quantity"):
+                rows.append(
+                    {
+                        "lhs_public_type": lhs_dimension["public_type"],
+                        "lhs_unit": lhs_base_unit,
+                        "lhs_storage": "f64",
+                        "operator": operator,
+                        "rhs_public_type": rhs_dimension["public_type"],
+                        "rhs_unit": rhs_base_unit,
+                        "rhs_storage": "f64",
+                        "result_public_type": lhs_dimension["public_type"],
+                        "result_unit_code_id": lhs_base_unit,
+                        "result_unit_rule": "lhs_unit",
+                        "result_storage": "f64",
+                        "path_family": "cross_dimension_non_support",
+                        "api_mode": "absent",
+                        "exact_division_policy": "not-applicable",
+                        "support_status": "unsupported",
+                        "expected_failure": "IntentionallyUnsupported",
+                    }
+                )
 
     return rows
 

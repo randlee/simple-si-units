@@ -277,8 +277,31 @@ class CatalogGenerationTests(unittest.TestCase):
             and row["operator"] == "velocity_from_time"
             and row["rhs_public_type"] == "Time"
         )
+        self.assertEqual(compute_bridge["result_unit_code_id"], "mps")
         self.assertEqual(compute_bridge["result_storage"], "f64")
         self.assertEqual(compute_bridge["expected_failure"], "ZeroDuration")
+
+        unsupported_add = next(
+            row
+            for row in support
+            if row["lhs_public_type"] == "Distance"
+            and row["operator"] == "add"
+            and row["rhs_public_type"] == "Time"
+            and row["path_family"] == "cross_dimension_non_support"
+        )
+        self.assertEqual(unsupported_add["api_mode"], "absent")
+        self.assertEqual(unsupported_add["support_status"], "unsupported")
+        self.assertEqual(unsupported_add["expected_failure"], "IntentionallyUnsupported")
+
+        unsupported_mul = next(
+            row
+            for row in support
+            if row["lhs_public_type"] == "Velocity"
+            and row["operator"] == "mul_quantity"
+            and row["rhs_public_type"] == "Time"
+            and row["path_family"] == "cross_dimension_non_support"
+        )
+        self.assertEqual(unsupported_mul["api_mode"], "absent")
 
     def test_bulk_support_report_is_complete_for_b4_scope(self) -> None:
         summary = build_summary(json.loads((ROOT / "catalog" / "units-catalog.json").read_text(encoding="utf-8")))

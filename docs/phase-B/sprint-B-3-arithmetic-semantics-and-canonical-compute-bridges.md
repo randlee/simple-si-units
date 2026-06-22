@@ -6,7 +6,7 @@ Define and implement scalar arithmetic, mixed-unit addition/subtraction, and bri
 
 ## Status
 
-`Not Started`
+`In Progress`
 
 ## Scope References
 
@@ -235,6 +235,10 @@ Result-identity rule:
 - any cross-public-type pair not named supported in
   `catalog/generated/phase-b-arithmetic-support.json` is intentionally
   unsupported in V1
+- intentional non-support rows for the out-of-scope cross-dimension operator
+  graph are recorded once per `(lhs_public_type, operator, rhs_public_type)` at
+  base-unit / `f64` granularity because API absence is declared at the
+  public-type boundary rather than per-unit runtime dispatch
 - unsupported type pairs and unsupported storage pairs are absent from the
   infallible and checked arithmetic traits rather than returning runtime
   `UnsupportedTypePair` or `UnsupportedStoragePair` variants
@@ -250,9 +254,9 @@ assert_eq!(out.unit(), "dpt");
 
 Representative compute-bridge matrix row:
 
-| lhs_public_type | operator | rhs_public_type | result_public_type | result_storage | path_family | api_mode | expected_failure |
-|---|---|---|---|---|---|---|---|
-| `Distance` | `velocity_from_time` | `Time` | `Velocity` | `f64` | `compute_bridge` | `checked` | `ZeroDuration` when rhs == 0 |
+| lhs_public_type | operator | rhs_public_type | result_public_type | result_unit_code_id | result_storage | path_family | api_mode | expected_failure |
+|---|---|---|---|---|---|---|---|---|
+| `Distance` | `velocity_from_time` | `Time` | `Velocity` | `mps` | `f64` | `compute_bridge` | `checked` | `ZeroDuration` when rhs == 0 |
 
 Authoritative arithmetic-support artifact columns:
 
@@ -264,6 +268,7 @@ Authoritative arithmetic-support artifact columns:
 - `rhs_unit`
 - `rhs_storage`
 - `result_public_type`
+- `result_unit_code_id`
 - `result_unit_rule`
 - `result_storage`
 - `path_family`
