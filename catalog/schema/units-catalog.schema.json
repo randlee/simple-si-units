@@ -7,6 +7,7 @@
   "required": [
     "schema_version",
     "catalog_version",
+    "conversion_policies",
     "dimensions",
     "bridges"
   ],
@@ -29,6 +30,9 @@
       "items": {
         "$ref": "#/$defs/bridge"
       }
+    },
+    "conversion_policies": {
+      "$ref": "#/$defs/conversion_policies"
     }
   },
   "$defs": {
@@ -69,6 +73,162 @@
           "type": "null"
         }
       ]
+    },
+    "nullable_expected_failure_string": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "api_surface": {
+      "type": "string",
+      "enum": [
+        "identity",
+        "to_unit",
+        "try_to_unit",
+        "try_to_quantity",
+        "to_reciprocal_quantity"
+      ]
+    },
+    "infallibility_guard": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        "same_storage_float_range",
+        null
+      ]
+    },
+    "storage_name": {
+      "type": "string",
+      "enum": [
+        "i32",
+        "f32",
+        "f64"
+      ]
+    },
+    "conversion_policy_entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "policy_id",
+        "api_surface",
+        "expected_failure",
+        "infallibility_guard",
+        "fallback_policy_id"
+      ],
+      "properties": {
+        "policy_id": {
+          "$ref": "#/$defs/non_blank_string"
+        },
+        "api_surface": {
+          "$ref": "#/$defs/api_surface"
+        },
+        "expected_failure": {
+          "$ref": "#/$defs/nullable_expected_failure_string"
+        },
+        "infallibility_guard": {
+          "$ref": "#/$defs/infallibility_guard"
+        },
+        "fallback_policy_id": {
+          "$ref": "#/$defs/nullable_non_blank_string"
+        }
+      }
+    },
+    "storage_pair_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_storage",
+        "target_storage",
+        "policy_id"
+      ],
+      "properties": {
+        "source_storage": {
+          "$ref": "#/$defs/storage_name"
+        },
+        "target_storage": {
+          "$ref": "#/$defs/storage_name"
+        },
+        "policy_id": {
+          "$ref": "#/$defs/non_blank_string"
+        }
+      }
+    },
+    "same_public_type_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identity_policy_id",
+        "storage_pair_policies"
+      ],
+      "properties": {
+        "identity_policy_id": {
+          "$ref": "#/$defs/non_blank_string"
+        },
+        "storage_pair_policies": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/storage_pair_policy"
+          }
+        }
+      }
+    },
+    "cross_public_type_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "api_surface",
+        "storage_pair_policies"
+      ],
+      "properties": {
+        "api_surface": {
+          "$ref": "#/$defs/api_surface"
+        },
+        "storage_pair_policies": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/storage_pair_policy"
+          }
+        },
+        "base_failures": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/non_blank_string"
+          }
+        }
+      }
+    },
+    "conversion_policies": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "same_public_type",
+        "same_canonical_dimension",
+        "reciprocal_bridge",
+        "policies"
+      ],
+      "properties": {
+        "same_public_type": {
+          "$ref": "#/$defs/same_public_type_policy"
+        },
+        "same_canonical_dimension": {
+          "$ref": "#/$defs/cross_public_type_policy"
+        },
+        "reciprocal_bridge": {
+          "$ref": "#/$defs/cross_public_type_policy"
+        },
+        "policies": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/conversion_policy_entry"
+          }
+        }
+      }
     },
     "conversion": {
       "type": "object",

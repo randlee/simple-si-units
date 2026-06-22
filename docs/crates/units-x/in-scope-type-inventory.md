@@ -2,14 +2,15 @@
 
 ## Purpose
 
-This document is the authoritative checklist for the MVP public type surface.
+This document is a derived reference checklist for the MVP public type surface.
 
-Sprint plans, validation work, and documentation work must reference this file
-instead of maintaining diverging copies of the same inventory.
+The authoritative source is `catalog/generated/units-catalog-summary.json`.
+This markdown checklist exists for human review and planning readability and
+must mirror the catalog-derived summary instead of replacing it.
 
 ## Scope Rule
 
-The MVP in-scope public type inventory consists of:
+The MVP reference checklist mirrors the catalog-derived public type surface for:
 
 - every reference type from `base`
 - every reference type from `geometry`

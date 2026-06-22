@@ -39,6 +39,10 @@ where
     }
 }
 
+/// Catalog-backed unit marker metadata for generated public quantity units.
+///
+/// This trait is sealed through `private::SealedUnit`; external crates cannot
+/// implement it.
 pub trait UnitMarker: private::SealedUnit + Copy + 'static {
     const UNIT_SYMBOL: &'static str;
     const UNIT_CODE_ID: &'static str;

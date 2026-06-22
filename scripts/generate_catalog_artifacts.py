@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 from pathlib import Path
 import subprocess
 import sys
@@ -30,6 +31,7 @@ def build_summary(catalog: dict) -> dict:
     return {
         "catalog_version": catalog["catalog_version"],
         "bridges": catalog["bridges"],
+        "conversion_policies": catalog["conversion_policies"],
         "dimension_count": len(dimensions),
         "dimensions": [
             {
@@ -293,6 +295,7 @@ def render_generated_ffi_types(summary: dict) -> str:
 
 def render_generated_public_types(summary: dict) -> str:
     dimensions = summary["dimensions"]
+    coverage_rows = conversion_coverage_rows(summary)
     unit_rows: list[dict[str, str]] = []
     seen_markers: set[str] = set()
     lines = [
@@ -334,12 +337,25 @@ def render_generated_public_types(summary: dict) -> str:
         "pub trait ScalarArithmeticUnit: UnitMarker {}",
         "",
     ]
+
+    def marker_name_for_unit(unit: dict[str, object]) -> str:
+        marker_source = unit["reserved_word_alias"] or unit["unit_code_id"]
+        if not is_valid_rust_identifier(marker_source):
+            raise ValueError(f"invalid generated Rust marker: {marker_source}")
+        return rust_identifier(marker_source)
+
+    def default_marker_for_dimension(dimension: dict[str, object]) -> str:
+        base_unit_code_id = dimension["base_unit_code_id"]
+        for unit in dimension["units"]:
+            if unit["unit_code_id"] == base_unit_code_id:
+                return marker_name_for_unit(unit)
+        raise ValueError(
+            f"missing base unit `{base_unit_code_id}` for dimension `{dimension['dimension_id']}`"
+        )
+
     for dimension in dimensions:
         for unit in dimension["units"]:
-            marker_source = unit["reserved_word_alias"] or unit["unit_code_id"]
-            if not is_valid_rust_identifier(marker_source):
-                raise ValueError(f"invalid generated Rust marker: {marker_source}")
-            marker = rust_identifier(marker_source)
+            marker = marker_name_for_unit(unit)
             if marker in seen_markers:
                 raise ValueError(f"duplicate generated Rust marker: {marker}")
             seen_markers.add(marker)
@@ -401,19 +417,45 @@ def render_generated_public_types(summary: dict) -> str:
 
     for dimension in dimensions:
         public_type = dimension["public_type"]
-        default_unit = rust_identifier(dimension["base_unit_code_id"])
+        default_unit = default_marker_for_dimension(dimension)
         unit_trait = f"{public_type}Unit"
+        infallible_trait = f"{public_type}InfallibleUnitPath"
+        markers_by_unit_code = {
+            unit["unit_code_id"]: marker_name_for_unit(unit) for unit in dimension["units"]
+        }
         lines.extend(
             [
+                f"/// Sealed unit-family marker trait for `{public_type}`.",
+                "///",
+                "/// External crates cannot implement this trait; only",
+                "/// catalog-generated unit markers participate in this family.",
                 f"pub trait {unit_trait}: UnitMarker {{}}",
+                "",
+                "#[doc(hidden)]",
+                f"pub trait {infallible_trait}<TargetUnit, Storage>: {unit_trait} {{}}",
                 "",
             ]
         )
         for unit in dimension["units"]:
-            marker = rust_identifier(unit["reserved_word_alias"] or unit["unit_code_id"])
+            marker = marker_name_for_unit(unit)
             lines.extend(
                 [
                     f"impl {unit_trait} for {marker} {{}}",
+                    "",
+                ]
+            )
+        for row in coverage_rows:
+            if row["path_kind"] != "same_public_type":
+                continue
+            if row["source_public_type"] != public_type:
+                continue
+            if row["api_surface"] not in {"identity", "to_unit"}:
+                continue
+            source_marker = markers_by_unit_code[row["source_unit"]]
+            target_marker = markers_by_unit_code[row["target_unit"]]
+            lines.extend(
+                [
+                    f"impl {infallible_trait}<{target_marker}, {row['source_storage']}> for {source_marker} {{}}",
                     "",
                 ]
             )
@@ -536,6 +578,7 @@ def render_generated_public_types(summary: dict) -> str:
                 f"{public_type}<Storage, TargetUnit>",
                 "    where",
                 f"        TargetUnit: {unit_trait},",
+                f"        Unit: {infallible_trait}<TargetUnit, Storage>,",
                 "    {",
                 f"        convert_same_public_type_infallible::<Self, {public_type}<Storage, TargetUnit>>(self)",
                 "    }",
@@ -582,7 +625,7 @@ def render_generated_public_types(summary: dict) -> str:
                 f"impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for {public_type}<Storage, Unit>",
                 "where",
                 "    Storage: InfallibleUnitStorage,",
-                f"    Unit: {unit_trait},",
+                f"    Unit: {unit_trait} + {infallible_trait}<TargetUnit, Storage>,",
                 f"    TargetUnit: {unit_trait},",
                 "{",
                 f"    type Output = {public_type}<Storage, TargetUnit>;",
@@ -745,48 +788,160 @@ def render_generated_conversion_metadata(summary: dict) -> str:
     return "\n".join(lines) + "\n"
 
 
-def expected_storage_failure(source_storage: str, target_storage: str) -> str | None:
-    if source_storage == target_storage:
+def policy_index(summary: dict) -> dict[str, dict[str, object]]:
+    return {
+        policy["policy_id"]: policy for policy in summary["conversion_policies"]["policies"]
+    }
+
+
+def storage_pair_policy_id(path_policy: dict[str, object], source_storage: str, target_storage: str) -> str:
+    for row in path_policy["storage_pair_policies"]:
+        if row["source_storage"] == source_storage and row["target_storage"] == target_storage:
+            return str(row["policy_id"])
+    raise ValueError(f"missing storage pair policy for {source_storage}->{target_storage}")
+
+
+def combine_failure_tags(*fragments: str | None) -> str | None:
+    tags: list[str] = []
+    for fragment in fragments:
+        if fragment is None:
+            continue
+        for token in fragment.split("|"):
+            if token and token not in tags:
+                tags.append(token)
+    if not tags:
         return None
-    if target_storage == "i32":
-        return "Overflow|PrecisionLoss"
-    if source_storage == "i32" and target_storage == "f32":
-        return "PrecisionLoss"
-    if source_storage == "f64" and target_storage == "f32":
-        return "Overflow|PrecisionLoss"
-    return None
+    return "|".join(tags)
+
+
+def resolve_policy(
+    summary: dict,
+    policy_id: str,
+    source_unit: dict[str, object],
+    target_unit: dict[str, object],
+    source_storage: str,
+) -> dict[str, object]:
+    policies = policy_index(summary)
+    policy = policies[policy_id]
+    guard = policy["infallibility_guard"]
+    if guard is None:
+        return policy
+    if guard == "same_storage_float_range":
+        if same_storage_float_path_is_infallible(source_storage, source_unit, target_unit):
+            return policy
+        fallback_policy_id = policy["fallback_policy_id"]
+        if fallback_policy_id is None:
+            raise ValueError(f"guarded policy `{policy_id}` is missing fallback")
+        return policies[fallback_policy_id]
+    raise ValueError(f"unsupported infallibility guard `{guard}`")
+
+
+def storage_bounds(storage: str) -> tuple[float, float]:
+    if storage == "i32":
+        return (float(-(2**31)), float(2**31 - 1))
+    if storage == "f32":
+        f32_max = float.fromhex("0x1.fffffep127")
+        return (-f32_max, f32_max)
+    if storage == "f64":
+        return (-sys.float_info.max, sys.float_info.max)
+    raise ValueError(f"unsupported storage `{storage}`")
+
+
+def to_base_value(value: float, unit: dict[str, object]) -> float:
+    conversion = unit["conversion"]
+    if conversion["kind"] == "linear":
+        return value * conversion["scale_to_base"]
+    return value * conversion["scale_to_base"] + conversion["offset_to_base"]
+
+
+def from_base_value(base_value: float, unit: dict[str, object]) -> float:
+    conversion = unit["conversion"]
+    if conversion["kind"] == "linear":
+        return base_value / conversion["scale_to_base"]
+    return (base_value - conversion["offset_to_base"]) / conversion["scale_to_base"]
+
+
+def converted_value(value: float, source_unit: dict[str, object], target_unit: dict[str, object]) -> float:
+    return from_base_value(to_base_value(value, source_unit), target_unit)
+
+
+def same_storage_float_path_is_infallible(
+    storage: str, source_unit: dict[str, object], target_unit: dict[str, object]
+) -> bool:
+    # For same-storage float paths we only expose `to_unit` when every source
+    # value is preserved exactly, not merely when the endpoints stay in range.
+    # With the current catalog contract, differing conversion coefficients imply
+    # runtime precision loss for at least some values, so those paths stay
+    # explicitly fallible.
+    if source_unit["conversion"] != target_unit["conversion"]:
+        return False
+    lower, upper = storage_bounds(storage)
+    target_lower, target_upper = storage_bounds(storage)
+    for source_value in (lower, upper):
+        candidate = converted_value(source_value, source_unit, target_unit)
+        if not math.isfinite(candidate):
+            return False
+        if candidate < target_lower or candidate > target_upper:
+            return False
+    return True
+
+
+def classify_same_public_type_path(
+    summary: dict,
+    source_storage: str,
+    target_storage: str,
+    source_unit: dict[str, object],
+    target_unit: dict[str, object],
+) -> tuple[str, str | None]:
+    path_policy = summary["conversion_policies"]["same_public_type"]
+    if source_unit["unit_code_id"] == target_unit["unit_code_id"] and source_storage == target_storage:
+        policy = resolve_policy(
+            summary,
+            str(path_policy["identity_policy_id"]),
+            source_unit,
+            target_unit,
+            source_storage,
+        )
+        return (str(policy["api_surface"]), policy["expected_failure"])
+
+    policy = resolve_policy(
+        summary,
+        storage_pair_policy_id(path_policy, source_storage, target_storage),
+        source_unit,
+        target_unit,
+        source_storage,
+    )
+    return (str(policy["api_surface"]), policy["expected_failure"])
 
 
 def conversion_coverage_rows(summary: dict) -> list[dict[str, str | None]]:
     dimensions = summary["dimensions"]
     rows: list[dict[str, str | None]] = []
+    same_canonical_policy = summary["conversion_policies"]["same_canonical_dimension"]
+    reciprocal_policy = summary["conversion_policies"]["reciprocal_bridge"]
 
     for dimension in dimensions:
         source_public_type = dimension["public_type"]
         storages = [scalar_storage_name(type_id) for type_id in dimension["scalar"]["type_ids"]]
-        units = [unit["unit_code_id"] for unit in dimension["units"]]
+        units = dimension["units"]
         for source_storage in storages:
             for target_storage in storages:
                 for source_unit in units:
                     for target_unit in units:
-                        if source_unit == target_unit and source_storage == target_storage:
-                            api_surface = "identity"
-                            expected_failure = None
-                        elif source_storage == target_storage and source_storage in {"f32", "f64"}:
-                            api_surface = "to_unit"
-                            expected_failure = None
-                        else:
-                            api_surface = "try_to_unit"
-                            expected_failure = expected_storage_failure(source_storage, target_storage)
-                            if expected_failure is None and source_storage == target_storage == "i32" and source_unit != target_unit:
-                                expected_failure = "Overflow|PrecisionLoss"
+                        api_surface, expected_failure = classify_same_public_type_path(
+                            summary,
+                            source_storage,
+                            target_storage,
+                            source_unit,
+                            target_unit,
+                        )
                         rows.append(
                             {
                                 "source_public_type": source_public_type,
-                                "source_unit": source_unit,
+                                "source_unit": source_unit["unit_code_id"],
                                 "source_storage": source_storage,
                                 "target_public_type": source_public_type,
-                                "target_unit": target_unit,
+                                "target_unit": target_unit["unit_code_id"],
                                 "target_storage": target_storage,
                                 "path_kind": "same_public_type",
                                 "api_surface": api_surface,
@@ -810,20 +965,27 @@ def conversion_coverage_rows(summary: dict) -> list[dict[str, str | None]]:
                 target_storages = [scalar_storage_name(type_id) for type_id in target_dimension["scalar"]["type_ids"]]
                 for source_storage in source_storages:
                     for target_storage in target_storages:
-                        for source_unit in [unit["unit_code_id"] for unit in source_dimension["units"]]:
-                            for target_unit in [unit["unit_code_id"] for unit in target_dimension["units"]]:
+                        for source_unit in source_dimension["units"]:
+                            for target_unit in target_dimension["units"]:
+                                policy = resolve_policy(
+                                    summary,
+                                    storage_pair_policy_id(same_canonical_policy, source_storage, target_storage),
+                                    source_unit,
+                                    target_unit,
+                                    source_storage,
+                                )
                                 rows.append(
                                     {
                                         "source_public_type": source_dimension["public_type"],
-                                        "source_unit": source_unit,
+                                        "source_unit": source_unit["unit_code_id"],
                                         "source_storage": source_storage,
                                         "target_public_type": target_dimension["public_type"],
-                                        "target_unit": target_unit,
+                                        "target_unit": target_unit["unit_code_id"],
                                         "target_storage": target_storage,
                                         "path_kind": "same_canonical_dimension",
-                                        "api_surface": "try_to_quantity",
+                                        "api_surface": same_canonical_policy["api_surface"],
                                         "support_status": "supported",
-                                        "expected_failure": expected_storage_failure(source_storage, target_storage),
+                                        "expected_failure": policy["expected_failure"],
                                     }
                                 )
 
@@ -836,22 +998,30 @@ def conversion_coverage_rows(summary: dict) -> list[dict[str, str | None]]:
             target_storages = [scalar_storage_name(type_id) for type_id in target_dimension["scalar"]["type_ids"]]
             for source_storage in source_storages:
                 for target_storage in target_storages:
-                    for source_unit in [unit["unit_code_id"] for unit in source_dimension["units"]]:
-                        for target_unit in [unit["unit_code_id"] for unit in target_dimension["units"]]:
-                            failure = expected_storage_failure(source_storage, target_storage)
-                            expected_failure = "DomainViolation" if failure is None else f"DomainViolation|{failure}"
+                    for source_unit in source_dimension["units"]:
+                        for target_unit in target_dimension["units"]:
+                            policy = resolve_policy(
+                                summary,
+                                storage_pair_policy_id(reciprocal_policy, source_storage, target_storage),
+                                source_unit,
+                                target_unit,
+                                source_storage,
+                            )
                             rows.append(
                                 {
                                     "source_public_type": source_dimension["public_type"],
-                                    "source_unit": source_unit,
+                                    "source_unit": source_unit["unit_code_id"],
                                     "source_storage": source_storage,
                                     "target_public_type": target_dimension["public_type"],
-                                    "target_unit": target_unit,
+                                    "target_unit": target_unit["unit_code_id"],
                                     "target_storage": target_storage,
                                     "path_kind": "reciprocal_bridge",
-                                    "api_surface": "to_reciprocal_quantity",
+                                    "api_surface": reciprocal_policy["api_surface"],
                                     "support_status": "supported",
-                                    "expected_failure": expected_failure,
+                                    "expected_failure": combine_failure_tags(
+                                        "|".join(reciprocal_policy.get("base_failures", [])),
+                                        policy["expected_failure"],
+                                    ),
                                 }
                             )
 
@@ -1015,6 +1185,8 @@ def format_rust_source(source: str) -> str:
         ["rustfmt", "--emit", "stdout"],
         input=source,
         text=True,
+        encoding="utf-8",
+        errors="strict",
         capture_output=True,
         check=True,
     )

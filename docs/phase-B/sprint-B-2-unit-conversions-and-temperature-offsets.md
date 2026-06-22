@@ -42,8 +42,8 @@ Implement conversion logic for multiplicative units and MVP offset-temperature u
    including `Diopter`
 4. Catalog-owned conversion tables and runtime metadata derived from
    `catalog/units-catalog.json`
-5. Conversion-coverage completion for every item in
-   [docs/crates/units-x/in-scope-type-inventory.md](/Volumes/Extreme%20Pro/github/simple-si-units/docs/crates/units-x/in-scope-type-inventory.md)
+5. Conversion-coverage completion for every public type row in
+   `catalog/generated/units-catalog-summary.json`
 6. Reference-source parity fixtures or tests that validate the catalog without
    replacing it as the source of truth
 7. Generated conversion-coverage report at
@@ -258,8 +258,8 @@ Authoritative conversion-coverage artifact columns:
 
 ## Closure Gate
 
-The authoritative inventory gate for this sprint is
-[docs/crates/units-x/in-scope-type-inventory.md](/Volumes/Extreme%20Pro/github/simple-si-units/docs/crates/units-x/in-scope-type-inventory.md).
+The authoritative public-type coverage gate for this sprint is
+`catalog/generated/units-catalog-summary.json`.
 This sprint does not close until the authoritative
 per-conversion-path matrix in `catalog/generated/phase-b-conversion-coverage.json`
 enumerates every supported or intentionally unsupported path exactly once.

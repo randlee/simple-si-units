@@ -20,7 +20,7 @@ from generate_catalog_artifacts import render_rust_module
 
 
 class CatalogGenerationTests(unittest.TestCase):
-    def authoritative_inventory(self) -> set[str]:
+    def derived_inventory(self) -> set[str]:
         inventory = (ROOT / "docs" / "crates" / "units-x" / "in-scope-type-inventory.md").read_text(encoding="utf-8")
         return set(re.findall(r"^- \[[ x]\] `([^`]+)`$", inventory, flags=re.MULTILINE))
 
@@ -40,6 +40,18 @@ class CatalogGenerationTests(unittest.TestCase):
                 }
             ],
         )
+        self.assertEqual(
+            summary["conversion_policies"]["same_public_type"]["identity_policy_id"],
+            "identity",
+        )
+        self.assertEqual(
+            summary["conversion_policies"]["same_canonical_dimension"]["api_surface"],
+            "try_to_quantity",
+        )
+        self.assertEqual(
+            summary["conversion_policies"]["reciprocal_bridge"]["api_surface"],
+            "to_reciprocal_quantity",
+        )
         dimensions = {dimension["dimension_id"]: dimension for dimension in summary["dimensions"]}
         self.assertIn("distance", dimensions)
         self.assertIn("distance_i32", dimensions["distance"]["scalar"]["type_ids"])
@@ -51,7 +63,7 @@ class CatalogGenerationTests(unittest.TestCase):
         self.assertIn("distance.mm", dimensions["distance"]["unit_ids"])
         self.assertEqual(dimensions["diopter"]["canonical_dimension_id"], "inverse_distance")
         self.assertIn("temperature.degC", dimensions["temperature"]["unit_ids"])
-        self.assertEqual({dimension["public_type"] for dimension in summary["dimensions"]}, self.authoritative_inventory())
+        self.assertEqual({dimension["public_type"] for dimension in summary["dimensions"]}, self.derived_inventory())
 
     def test_generation_fixture_preserves_case_reserved_alias_and_affine_units(self) -> None:
         fixture = json.loads((ROOT / "catalog" / "examples" / "generation-edge-catalog.json").read_text(encoding="utf-8"))
@@ -74,6 +86,14 @@ class CatalogGenerationTests(unittest.TestCase):
         self.assertIn("pub struct Mm;", rendered)
         self.assertIn("impl DistanceUnit for mm {}", rendered)
         self.assertIn("impl DistanceUnit for Mm {}", rendered)
+
+    def test_generated_public_types_use_reserved_alias_for_default_unit(self) -> None:
+        fixture = json.loads((ROOT / "catalog" / "examples" / "generation-edge-catalog.json").read_text(encoding="utf-8"))
+        fixture["dimensions"][0]["base_unit_code_id"] = "type"
+        summary = build_summary(fixture)
+
+        rendered = render_generated_public_types(summary)
+        self.assertIn("pub struct Distance<Storage = f64, Unit = type_>", rendered)
 
     def test_render_rust_module_escapes_catalog_strings(self) -> None:
         catalog = json.loads((ROOT / "catalog" / "examples" / "generation-edge-catalog.json").read_text(encoding="utf-8"))
@@ -141,6 +161,70 @@ class CatalogGenerationTests(unittest.TestCase):
             {dimension["public_type"] for dimension in summary["dimensions"]},
             {row["source_public_type"] for row in coverage},
         )
+        ft_to_mm_f32 = next(
+            row
+            for row in coverage
+            if row["source_public_type"] == "Distance"
+            and row["source_unit"] == "ft"
+            and row["source_storage"] == "f32"
+            and row["target_public_type"] == "Distance"
+            and row["target_unit"] == "mm"
+            and row["target_storage"] == "f32"
+        )
+        self.assertEqual(ft_to_mm_f32["api_surface"], "try_to_unit")
+        self.assertEqual(ft_to_mm_f32["expected_failure"], "Overflow|PrecisionLoss")
+
+        mm_to_m_f32 = next(
+            row
+            for row in coverage
+            if row["source_public_type"] == "Distance"
+            and row["source_unit"] == "mm"
+            and row["source_storage"] == "f32"
+            and row["target_public_type"] == "Distance"
+            and row["target_unit"] == "m"
+            and row["target_storage"] == "f32"
+        )
+        self.assertEqual(mm_to_m_f32["api_surface"], "try_to_unit")
+        self.assertEqual(mm_to_m_f32["expected_failure"], "Overflow|PrecisionLoss")
+
+        mm_to_m_f64 = next(
+            row
+            for row in coverage
+            if row["source_public_type"] == "Distance"
+            and row["source_unit"] == "mm"
+            and row["source_storage"] == "f64"
+            and row["target_public_type"] == "Distance"
+            and row["target_unit"] == "m"
+            and row["target_storage"] == "f64"
+        )
+        self.assertEqual(mm_to_m_f64["api_surface"], "to_unit")
+        self.assertIsNone(mm_to_m_f64["expected_failure"])
+
+        kelvin_to_celsius_f32 = next(
+            row
+            for row in coverage
+            if row["source_public_type"] == "Temperature"
+            and row["source_unit"] == "K"
+            and row["source_storage"] == "f32"
+            and row["target_public_type"] == "Temperature"
+            and row["target_unit"] == "degC"
+            and row["target_storage"] == "f32"
+        )
+        self.assertEqual(kelvin_to_celsius_f32["api_surface"], "try_to_unit")
+        self.assertEqual(kelvin_to_celsius_f32["expected_failure"], "Overflow|PrecisionLoss")
+
+        reciprocal_widen = next(
+            row
+            for row in coverage
+            if row["source_public_type"] == "Distance"
+            and row["source_unit"] == "m"
+            and row["source_storage"] == "f32"
+            and row["target_public_type"] == "Diopter"
+            and row["target_unit"] == "dpt"
+            and row["target_storage"] == "f64"
+        )
+        self.assertEqual(reciprocal_widen["api_surface"], "to_reciprocal_quantity")
+        self.assertEqual(reciprocal_widen["expected_failure"], "DomainViolation")
 
     def test_arithmetic_support_report_is_complete_for_b3_scope(self) -> None:
         summary = build_summary(json.loads((ROOT / "catalog" / "units-catalog.json").read_text(encoding="utf-8")))
