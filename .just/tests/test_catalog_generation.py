@@ -9,9 +9,11 @@ import unittest
 ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
 
+from generate_catalog_artifacts import arithmetic_support_rows
 from generate_catalog_artifacts import build_summary
 from generate_catalog_artifacts import conversion_coverage_rows
 from generate_catalog_artifacts import expected_outputs
+from generate_catalog_artifacts import render_generated_arithmetic_impls
 from generate_catalog_artifacts import render_generated_conversion_metadata
 from generate_catalog_artifacts import render_generated_ffi_types
 from generate_catalog_artifacts import render_generated_public_types
@@ -50,6 +52,14 @@ class CatalogGenerationTests(unittest.TestCase):
         self.assertEqual(
             summary["conversion_policies"]["reciprocal_bridge"]["api_surface"],
             "to_reciprocal_quantity",
+        )
+        self.assertEqual(
+            summary["arithmetic_policies"]["same_dimension_add_sub"]["storage_pair_policies"][0]["api_mode"],
+            "checked",
+        )
+        self.assertEqual(
+            summary["arithmetic_policies"]["compute_bridges"][1]["operator"],
+            "acceleration_from_velocity_and_time",
         )
         dimensions = {dimension["dimension_id"]: dimension for dimension in summary["dimensions"]}
         self.assertIn("distance", dimensions)
@@ -127,6 +137,8 @@ class CatalogGenerationTests(unittest.TestCase):
         self.assertIn("pub struct mm;", rendered)
         self.assertIn("pub struct degC;", rendered)
         self.assertIn("ConvertUnit", rendered)
+        self.assertIn("pub trait QuantityForStorage<Storage>: UnitMarker {", rendered)
+        self.assertIn("impl ScalarArithmeticUnit for mm {}", rendered)
         self.assertIn("TryConvertQuantity", rendered)
         self.assertIn("pub trait DistanceUnit: UnitMarker {}", rendered)
         self.assertIn("impl DistanceUnit for mm {}", rendered)
@@ -145,6 +157,24 @@ class CatalogGenerationTests(unittest.TestCase):
         self.assertIn("kind: CatalogConversionKind::Affine", rendered)
         self.assertIn('left_public_type: "Distance"', rendered)
         self.assertIn('right_public_type: "Diopter"', rendered)
+
+    def test_generated_arithmetic_impls_are_catalog_owned(self) -> None:
+        catalog = json.loads((ROOT / "catalog" / "units-catalog.json").read_text(encoding="utf-8"))
+        rendered = render_generated_arithmetic_impls(build_summary(catalog))
+
+        self.assertIn("impl_add_sub_rule!(i32, i32 => i32, checked);", rendered)
+        self.assertIn("impl_mul_rule!(f32, f64 => f64, infallible);", rendered)
+        self.assertIn("impl_div_rule!(i32, f32 => f64, infallible);", rendered)
+        self.assertIn("impl_same_public_type_arithmetic!(Distance, DistanceUnit);", rendered)
+        self.assertIn(
+            "impl_cross_public_add_sub!(Diopter, DiopterUnit, InverseDistance, InverseDistanceUnit);",
+            rendered,
+        )
+        self.assertIn(
+            "impl_cross_public_add_sub!(InverseDistance, InverseDistanceUnit, Diopter, DiopterUnit);",
+            rendered,
+        )
+        self.assertNotIn("impl_same_public_type_arithmetic!(Temperature, TemperatureUnit);", rendered)
 
     def test_conversion_coverage_report_is_complete_for_b2_scope(self) -> None:
         summary = build_summary(json.loads((ROOT / "catalog" / "units-catalog.json").read_text(encoding="utf-8")))
@@ -222,6 +252,74 @@ class CatalogGenerationTests(unittest.TestCase):
         )
         self.assertEqual(reciprocal_widen["api_surface"], "to_reciprocal_quantity")
         self.assertEqual(reciprocal_widen["expected_failure"], "DomainViolation")
+
+    def test_arithmetic_support_report_is_complete_for_b3_scope(self) -> None:
+        summary = build_summary(json.loads((ROOT / "catalog" / "units-catalog.json").read_text(encoding="utf-8")))
+        support = arithmetic_support_rows(summary)
+
+        self.assertTrue(any(row["path_family"] == "scalar_arithmetic" and row["lhs_public_type"] == "Distance" for row in support))
+        self.assertTrue(any(row["path_family"] == "same_canonical_add_sub" and row["lhs_public_type"] == "Diopter" and row["rhs_public_type"] == "InverseDistance" for row in support))
+        self.assertTrue(any(row["path_family"] == "compute_bridge" and row["result_public_type"] == "Velocity" for row in support))
+        self.assertTrue(any(row["lhs_public_type"] == "Temperature" and row["support_status"] == "unsupported" for row in support))
+        scalar_keys = [
+            (
+                row["lhs_public_type"],
+                row["lhs_unit"],
+                row["lhs_storage"],
+                row["operator"],
+                row["rhs_public_type"],
+                row["rhs_storage"],
+            )
+            for row in support
+            if row["path_family"] == "scalar_arithmetic"
+        ]
+        self.assertEqual(len(scalar_keys), len(set(scalar_keys)))
+
+        cross_pair = next(
+            row
+            for row in support
+            if row["lhs_public_type"] == "Diopter"
+            and row["lhs_storage"] == "f32"
+            and row["operator"] == "add"
+            and row["rhs_public_type"] == "InverseDistance"
+            and row["rhs_storage"] == "f32"
+        )
+        self.assertEqual(cross_pair["api_mode"], "infallible")
+        self.assertEqual(cross_pair["support_status"], "supported")
+        self.assertIsNone(cross_pair["expected_failure"])
+
+        compute_bridge = next(
+            row
+            for row in support
+            if row["lhs_public_type"] == "Distance"
+            and row["operator"] == "velocity_from_distance_and_time"
+            and row["rhs_public_type"] == "Time"
+        )
+        self.assertEqual(compute_bridge["result_unit_code_id"], "mps")
+        self.assertEqual(compute_bridge["result_storage"], "f64")
+        self.assertEqual(compute_bridge["expected_failure"], "ZeroDuration")
+
+        unsupported_add = next(
+            row
+            for row in support
+            if row["lhs_public_type"] == "Distance"
+            and row["operator"] == "add"
+            and row["rhs_public_type"] == "Time"
+            and row["path_family"] == "cross_dimension_non_support"
+        )
+        self.assertEqual(unsupported_add["api_mode"], "absent")
+        self.assertEqual(unsupported_add["support_status"], "unsupported")
+        self.assertEqual(unsupported_add["expected_failure"], "IntentionallyUnsupported")
+
+        unsupported_mul = next(
+            row
+            for row in support
+            if row["lhs_public_type"] == "Velocity"
+            and row["operator"] == "mul_quantity"
+            and row["rhs_public_type"] == "Time"
+            and row["path_family"] == "cross_dimension_non_support"
+        )
+        self.assertEqual(unsupported_mul["api_mode"], "absent")
 
     def test_generated_public_types_reject_invalid_marker_names(self) -> None:
         summary = json.loads((ROOT / "catalog" / "generated" / "units-catalog-summary.json").read_text(encoding="utf-8"))

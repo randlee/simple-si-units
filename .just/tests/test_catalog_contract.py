@@ -20,6 +20,9 @@ class CatalogContractTests(unittest.TestCase):
     def load_sample(self) -> dict:
         return json.loads((ROOT / "catalog" / "examples" / "phase-a-sample-catalog.json").read_text(encoding="utf-8"))
 
+    def load_production(self) -> dict:
+        return json.loads((ROOT / "catalog" / "units-catalog.json").read_text(encoding="utf-8"))
+
     def test_schema_and_sample_catalog_parse(self) -> None:
         schema = json.loads((ROOT / "catalog" / "schema" / "units-catalog.schema.json").read_text(encoding="utf-8"))
         sample = self.load_sample()
@@ -27,8 +30,10 @@ class CatalogContractTests(unittest.TestCase):
         self.assertEqual(sample["catalog_version"], "0.1.0-phase-a-sample")
         self.assertIn("bridges", schema["required"])
         self.assertIn("conversion_policies", schema["required"])
+        self.assertIn("arithmetic_policies", schema["required"])
         self.assertIn("bridge", schema["$defs"])
         self.assertIn("conversion_policies", schema["$defs"])
+        self.assertIn("arithmetic_policies", schema["$defs"])
         self.assertEqual(
             schema["$defs"]["dimension"]["properties"]["family"]["enum"],
             ["base", "geometry", "mechanical", "electromagnetic"],
@@ -74,6 +79,15 @@ class CatalogContractTests(unittest.TestCase):
             sample["conversion_policies"]["reciprocal_bridge"]["api_surface"],
             "to_reciprocal_quantity",
         )
+        self.assertEqual(
+            sample["arithmetic_policies"]["same_dimension_add_sub"]["storage_pair_policies"][0]["api_mode"],
+            "checked",
+        )
+        self.assertEqual(
+            sample["arithmetic_policies"]["scalar_arithmetic"]["storage_pair_policies"][9]["operator"],
+            "div",
+        )
+        self.assertEqual(sample["arithmetic_policies"]["compute_bridges"], [])
         dimensions = {dimension["dimension_id"]: dimension for dimension in sample["dimensions"]}
 
         distance_units = {
@@ -215,6 +229,20 @@ class CatalogContractTests(unittest.TestCase):
         sample["conversion_policies"]["policies"][2]["fallback_policy_id"] = "missing_policy"
         with self.assertRaises(ValidationError):
             validate_catalog(sample)
+
+        sample = self.load_sample()
+        sample["arithmetic_policies"]["same_dimension_add_sub"]["storage_pair_policies"] = [
+            row
+            for row in sample["arithmetic_policies"]["same_dimension_add_sub"]["storage_pair_policies"]
+            if not (row["lhs_storage"] == "f64" and row["rhs_storage"] == "f32")
+        ]
+        with self.assertRaises(ValidationError):
+            validate_catalog(sample)
+
+        production = self.load_production()
+        production["arithmetic_policies"]["compute_bridges"][0]["result_unit_code_id"] = "nope"
+        with self.assertRaises(ValidationError):
+            validate_catalog(production)
 
     def test_validator_cli_emits_machine_readable_envelope_for_file_errors(self) -> None:
         with tempfile.TemporaryDirectory(prefix="units-x-catalog-cli-") as tmpdir:

@@ -42,14 +42,18 @@
 //! let _ = Distance::mm(1.0_f32).to_unit::<m>();
 //! ```
 
+pub mod arithmetic;
 pub mod conversion;
 pub mod ffi_contract;
 pub mod generated;
 pub mod model;
 
+pub use arithmetic::{
+    acceleration_from_velocity_and_time, velocity_from_distance_and_time, ArithmeticError,
+    ComputeError,
+};
 pub use conversion::{
-    ConversionError, ConvertUnit, InfallibleUnitStorage, ReciprocalBridge, TryConvertQuantity,
-    TryConvertUnit, ValueStorage,
+    ConversionError, ConvertUnit, ReciprocalBridge, TryConvertQuantity, TryConvertUnit,
 };
 pub use generated::public_types::*;
 pub use model::{Quantity, QuantityType, UnitMarker};

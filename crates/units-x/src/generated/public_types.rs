@@ -27,6 +27,14 @@ pub struct GeneratedPublicTypeMetadata {
     pub supported_units: &'static [&'static str],
 }
 
+pub trait QuantityForStorage<Storage>: UnitMarker {
+    type Quantity: QuantityType<Storage = Storage, Unit = Self>;
+
+    fn wrap(storage: Storage) -> Self::Quantity;
+}
+
+pub trait ScalarArithmeticUnit: UnitMarker {}
+
 /// Unit marker generated from catalog unit `mol`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct mol;
@@ -40,6 +48,8 @@ impl UnitMarker for mol {
     const CANONICAL_DIMENSION_ID: &'static str = "amount";
     const PUBLIC_TYPE: &'static str = "Amount";
 }
+
+impl ScalarArithmeticUnit for mol {}
 
 /// Unit marker generated from catalog unit `A`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -55,6 +65,8 @@ impl UnitMarker for A {
     const PUBLIC_TYPE: &'static str = "Current";
 }
 
+impl ScalarArithmeticUnit for A {}
+
 /// Unit marker generated from catalog unit `mm`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct mm;
@@ -68,6 +80,8 @@ impl UnitMarker for mm {
     const CANONICAL_DIMENSION_ID: &'static str = "distance";
     const PUBLIC_TYPE: &'static str = "Distance";
 }
+
+impl ScalarArithmeticUnit for mm {}
 
 /// Unit marker generated from catalog unit `m`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -83,6 +97,8 @@ impl UnitMarker for m {
     const PUBLIC_TYPE: &'static str = "Distance";
 }
 
+impl ScalarArithmeticUnit for m {}
+
 /// Unit marker generated from catalog unit `ft`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct ft;
@@ -96,6 +112,8 @@ impl UnitMarker for ft {
     const CANONICAL_DIMENSION_ID: &'static str = "distance";
     const PUBLIC_TYPE: &'static str = "Distance";
 }
+
+impl ScalarArithmeticUnit for ft {}
 
 /// Unit marker generated from catalog unit `per_mol`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -111,6 +129,8 @@ impl UnitMarker for per_mol {
     const PUBLIC_TYPE: &'static str = "InverseAmount";
 }
 
+impl ScalarArithmeticUnit for per_mol {}
+
 /// Unit marker generated from catalog unit `per_A`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct per_A;
@@ -124,6 +144,8 @@ impl UnitMarker for per_A {
     const CANONICAL_DIMENSION_ID: &'static str = "inverse_current";
     const PUBLIC_TYPE: &'static str = "InverseCurrent";
 }
+
+impl ScalarArithmeticUnit for per_A {}
 
 /// Unit marker generated from catalog unit `per_m`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -139,6 +161,8 @@ impl UnitMarker for per_m {
     const PUBLIC_TYPE: &'static str = "InverseDistance";
 }
 
+impl ScalarArithmeticUnit for per_m {}
+
 /// Unit marker generated from catalog unit `per_cd`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct per_cd;
@@ -152,6 +176,8 @@ impl UnitMarker for per_cd {
     const CANONICAL_DIMENSION_ID: &'static str = "inverse_luminosity";
     const PUBLIC_TYPE: &'static str = "InverseLuminosity";
 }
+
+impl ScalarArithmeticUnit for per_cd {}
 
 /// Unit marker generated from catalog unit `per_kg`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -167,6 +193,8 @@ impl UnitMarker for per_kg {
     const PUBLIC_TYPE: &'static str = "InverseMass";
 }
 
+impl ScalarArithmeticUnit for per_kg {}
+
 /// Unit marker generated from catalog unit `per_K`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct per_K;
@@ -180,6 +208,8 @@ impl UnitMarker for per_K {
     const CANONICAL_DIMENSION_ID: &'static str = "inverse_temperature";
     const PUBLIC_TYPE: &'static str = "InverseTemperature";
 }
+
+impl ScalarArithmeticUnit for per_K {}
 
 /// Unit marker generated from catalog unit `cd`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -195,6 +225,8 @@ impl UnitMarker for cd {
     const PUBLIC_TYPE: &'static str = "Luminosity";
 }
 
+impl ScalarArithmeticUnit for cd {}
+
 /// Unit marker generated from catalog unit `kg`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct kg;
@@ -208,6 +240,8 @@ impl UnitMarker for kg {
     const CANONICAL_DIMENSION_ID: &'static str = "mass";
     const PUBLIC_TYPE: &'static str = "Mass";
 }
+
+impl ScalarArithmeticUnit for kg {}
 
 /// Unit marker generated from catalog unit `K`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -265,6 +299,8 @@ impl UnitMarker for s {
     const PUBLIC_TYPE: &'static str = "Time";
 }
 
+impl ScalarArithmeticUnit for s {}
+
 /// Unit marker generated from catalog unit `ms`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct ms;
@@ -278,6 +314,8 @@ impl UnitMarker for ms {
     const CANONICAL_DIMENSION_ID: &'static str = "time";
     const PUBLIC_TYPE: &'static str = "Time";
 }
+
+impl ScalarArithmeticUnit for ms {}
 
 /// Unit marker generated from catalog unit `rad`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -293,6 +331,8 @@ impl UnitMarker for rad {
     const PUBLIC_TYPE: &'static str = "Angle";
 }
 
+impl ScalarArithmeticUnit for rad {}
+
 /// Unit marker generated from catalog unit `m2`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct m2;
@@ -306,6 +346,8 @@ impl UnitMarker for m2 {
     const CANONICAL_DIMENSION_ID: &'static str = "area";
     const PUBLIC_TYPE: &'static str = "Area";
 }
+
+impl ScalarArithmeticUnit for m2 {}
 
 /// Unit marker generated from catalog unit `per_rad`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -321,6 +363,8 @@ impl UnitMarker for per_rad {
     const PUBLIC_TYPE: &'static str = "InverseAngle";
 }
 
+impl ScalarArithmeticUnit for per_rad {}
+
 /// Unit marker generated from catalog unit `per_m2`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct per_m2;
@@ -334,6 +378,8 @@ impl UnitMarker for per_m2 {
     const CANONICAL_DIMENSION_ID: &'static str = "inverse_area";
     const PUBLIC_TYPE: &'static str = "InverseArea";
 }
+
+impl ScalarArithmeticUnit for per_m2 {}
 
 /// Unit marker generated from catalog unit `per_sr`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -349,6 +395,8 @@ impl UnitMarker for per_sr {
     const PUBLIC_TYPE: &'static str = "InverseSolidAngle";
 }
 
+impl ScalarArithmeticUnit for per_sr {}
+
 /// Unit marker generated from catalog unit `per_m3`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct per_m3;
@@ -362,6 +410,8 @@ impl UnitMarker for per_m3 {
     const CANONICAL_DIMENSION_ID: &'static str = "inverse_volume";
     const PUBLIC_TYPE: &'static str = "InverseVolume";
 }
+
+impl ScalarArithmeticUnit for per_m3 {}
 
 /// Unit marker generated from catalog unit `sr`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -377,6 +427,8 @@ impl UnitMarker for sr {
     const PUBLIC_TYPE: &'static str = "SolidAngle";
 }
 
+impl ScalarArithmeticUnit for sr {}
+
 /// Unit marker generated from catalog unit `m3`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct m3;
@@ -390,6 +442,8 @@ impl UnitMarker for m3 {
     const CANONICAL_DIMENSION_ID: &'static str = "volume";
     const PUBLIC_TYPE: &'static str = "Volume";
 }
+
+impl ScalarArithmeticUnit for m3 {}
 
 /// Unit marker generated from catalog unit `mps2`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -405,6 +459,8 @@ impl UnitMarker for mps2 {
     const PUBLIC_TYPE: &'static str = "Acceleration";
 }
 
+impl ScalarArithmeticUnit for mps2 {}
+
 /// Unit marker generated from catalog unit `radps2`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct radps2;
@@ -418,6 +474,8 @@ impl UnitMarker for radps2 {
     const CANONICAL_DIMENSION_ID: &'static str = "angular_acceleration";
     const PUBLIC_TYPE: &'static str = "AngularAcceleration";
 }
+
+impl ScalarArithmeticUnit for radps2 {}
 
 /// Unit marker generated from catalog unit `kgm2ps`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -433,6 +491,8 @@ impl UnitMarker for kgm2ps {
     const PUBLIC_TYPE: &'static str = "AngularMomentum";
 }
 
+impl ScalarArithmeticUnit for kgm2ps {}
+
 /// Unit marker generated from catalog unit `radps`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct radps;
@@ -446,6 +506,8 @@ impl UnitMarker for radps {
     const CANONICAL_DIMENSION_ID: &'static str = "angular_velocity";
     const PUBLIC_TYPE: &'static str = "AngularVelocity";
 }
+
+impl ScalarArithmeticUnit for radps {}
 
 /// Unit marker generated from catalog unit `kgpm2`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -461,6 +523,8 @@ impl UnitMarker for kgpm2 {
     const PUBLIC_TYPE: &'static str = "AreaDensity";
 }
 
+impl ScalarArithmeticUnit for kgpm2 {}
+
 /// Unit marker generated from catalog unit `m2pkg`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct m2pkg;
@@ -474,6 +538,8 @@ impl UnitMarker for m2pkg {
     const CANONICAL_DIMENSION_ID: &'static str = "area_per_mass";
     const PUBLIC_TYPE: &'static str = "AreaPerMass";
 }
+
+impl ScalarArithmeticUnit for m2pkg {}
 
 /// Unit marker generated from catalog unit `kgpm3`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -489,6 +555,8 @@ impl UnitMarker for kgpm3 {
     const PUBLIC_TYPE: &'static str = "Density";
 }
 
+impl ScalarArithmeticUnit for kgpm3 {}
+
 /// Unit marker generated from catalog unit `J`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct J;
@@ -502,6 +570,8 @@ impl UnitMarker for J {
     const CANONICAL_DIMENSION_ID: &'static str = "energy";
     const PUBLIC_TYPE: &'static str = "Energy";
 }
+
+impl ScalarArithmeticUnit for J {}
 
 /// Unit marker generated from catalog unit `N`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -517,6 +587,8 @@ impl UnitMarker for N {
     const PUBLIC_TYPE: &'static str = "Force";
 }
 
+impl ScalarArithmeticUnit for N {}
+
 /// Unit marker generated from catalog unit `Hz`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct Hz;
@@ -530,6 +602,8 @@ impl UnitMarker for Hz {
     const CANONICAL_DIMENSION_ID: &'static str = "frequency";
     const PUBLIC_TYPE: &'static str = "Frequency";
 }
+
+impl ScalarArithmeticUnit for Hz {}
 
 /// Unit marker generated from catalog unit `per_mps2`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -545,6 +619,8 @@ impl UnitMarker for per_mps2 {
     const PUBLIC_TYPE: &'static str = "InverseAcceleration";
 }
 
+impl ScalarArithmeticUnit for per_mps2 {}
+
 /// Unit marker generated from catalog unit `per_radps2`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct per_radps2;
@@ -558,6 +634,8 @@ impl UnitMarker for per_radps2 {
     const CANONICAL_DIMENSION_ID: &'static str = "inverse_angular_acceleration";
     const PUBLIC_TYPE: &'static str = "InverseAngularAcceleration";
 }
+
+impl ScalarArithmeticUnit for per_radps2 {}
 
 /// Unit marker generated from catalog unit `per_kgm2ps`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -573,6 +651,8 @@ impl UnitMarker for per_kgm2ps {
     const PUBLIC_TYPE: &'static str = "InverseAngularMomentum";
 }
 
+impl ScalarArithmeticUnit for per_kgm2ps {}
+
 /// Unit marker generated from catalog unit `per_radps`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct per_radps;
@@ -586,6 +666,8 @@ impl UnitMarker for per_radps {
     const CANONICAL_DIMENSION_ID: &'static str = "inverse_angular_velocity";
     const PUBLIC_TYPE: &'static str = "InverseAngularVelocity";
 }
+
+impl ScalarArithmeticUnit for per_radps {}
 
 /// Unit marker generated from catalog unit `per_J`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -601,6 +683,8 @@ impl UnitMarker for per_J {
     const PUBLIC_TYPE: &'static str = "InverseEnergy";
 }
 
+impl ScalarArithmeticUnit for per_J {}
+
 /// Unit marker generated from catalog unit `per_N`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct per_N;
@@ -614,6 +698,8 @@ impl UnitMarker for per_N {
     const CANONICAL_DIMENSION_ID: &'static str = "inverse_force";
     const PUBLIC_TYPE: &'static str = "InverseForce";
 }
+
+impl ScalarArithmeticUnit for per_N {}
 
 /// Unit marker generated from catalog unit `per_kgm2`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -629,6 +715,8 @@ impl UnitMarker for per_kgm2 {
     const PUBLIC_TYPE: &'static str = "InverseMomentOfInertia";
 }
 
+impl ScalarArithmeticUnit for per_kgm2 {}
+
 /// Unit marker generated from catalog unit `per_kgmps`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct per_kgmps;
@@ -642,6 +730,8 @@ impl UnitMarker for per_kgmps {
     const CANONICAL_DIMENSION_ID: &'static str = "inverse_momentum";
     const PUBLIC_TYPE: &'static str = "InverseMomentum";
 }
+
+impl ScalarArithmeticUnit for per_kgmps {}
 
 /// Unit marker generated from catalog unit `per_W`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -657,6 +747,8 @@ impl UnitMarker for per_W {
     const PUBLIC_TYPE: &'static str = "InversePower";
 }
 
+impl ScalarArithmeticUnit for per_W {}
+
 /// Unit marker generated from catalog unit `per_Pa`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct per_Pa;
@@ -670,6 +762,8 @@ impl UnitMarker for per_Pa {
     const CANONICAL_DIMENSION_ID: &'static str = "inverse_pressure";
     const PUBLIC_TYPE: &'static str = "InversePressure";
 }
+
+impl ScalarArithmeticUnit for per_Pa {}
 
 /// Unit marker generated from catalog unit `per_Nm`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -685,6 +779,8 @@ impl UnitMarker for per_Nm {
     const PUBLIC_TYPE: &'static str = "InverseTorque";
 }
 
+impl ScalarArithmeticUnit for per_Nm {}
+
 /// Unit marker generated from catalog unit `kgm2`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct kgm2;
@@ -698,6 +794,8 @@ impl UnitMarker for kgm2 {
     const CANONICAL_DIMENSION_ID: &'static str = "moment_of_inertia";
     const PUBLIC_TYPE: &'static str = "MomentOfInertia";
 }
+
+impl ScalarArithmeticUnit for kgm2 {}
 
 /// Unit marker generated from catalog unit `kgmps`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -713,6 +811,8 @@ impl UnitMarker for kgmps {
     const PUBLIC_TYPE: &'static str = "Momentum";
 }
 
+impl ScalarArithmeticUnit for kgmps {}
+
 /// Unit marker generated from catalog unit `W`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct W;
@@ -726,6 +826,8 @@ impl UnitMarker for W {
     const CANONICAL_DIMENSION_ID: &'static str = "power";
     const PUBLIC_TYPE: &'static str = "Power";
 }
+
+impl ScalarArithmeticUnit for W {}
 
 /// Unit marker generated from catalog unit `Pa`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -741,6 +843,8 @@ impl UnitMarker for Pa {
     const PUBLIC_TYPE: &'static str = "Pressure";
 }
 
+impl ScalarArithmeticUnit for Pa {}
+
 /// Unit marker generated from catalog unit `spm`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct spm;
@@ -754,6 +858,8 @@ impl UnitMarker for spm {
     const CANONICAL_DIMENSION_ID: &'static str = "time_per_distance";
     const PUBLIC_TYPE: &'static str = "TimePerDistance";
 }
+
+impl ScalarArithmeticUnit for spm {}
 
 /// Unit marker generated from catalog unit `Nm`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -769,6 +875,8 @@ impl UnitMarker for Nm {
     const PUBLIC_TYPE: &'static str = "Torque";
 }
 
+impl ScalarArithmeticUnit for Nm {}
+
 /// Unit marker generated from catalog unit `mps`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct mps;
@@ -782,6 +890,8 @@ impl UnitMarker for mps {
     const CANONICAL_DIMENSION_ID: &'static str = "velocity";
     const PUBLIC_TYPE: &'static str = "Velocity";
 }
+
+impl ScalarArithmeticUnit for mps {}
 
 /// Unit marker generated from catalog unit `m3pkg`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -797,6 +907,8 @@ impl UnitMarker for m3pkg {
     const PUBLIC_TYPE: &'static str = "VolumePerMass";
 }
 
+impl ScalarArithmeticUnit for m3pkg {}
+
 /// Unit marker generated from catalog unit `m2plm`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct m2plm;
@@ -810,6 +922,8 @@ impl UnitMarker for m2plm {
     const CANONICAL_DIMENSION_ID: &'static str = "area_per_lumen";
     const PUBLIC_TYPE: &'static str = "AreaPerLumen";
 }
+
+impl ScalarArithmeticUnit for m2plm {}
 
 /// Unit marker generated from catalog unit `F`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -825,6 +939,8 @@ impl UnitMarker for F {
     const PUBLIC_TYPE: &'static str = "Capacitance";
 }
 
+impl ScalarArithmeticUnit for F {}
+
 /// Unit marker generated from catalog unit `C`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct C;
@@ -838,6 +954,8 @@ impl UnitMarker for C {
     const CANONICAL_DIMENSION_ID: &'static str = "charge";
     const PUBLIC_TYPE: &'static str = "Charge";
 }
+
+impl ScalarArithmeticUnit for C {}
 
 /// Unit marker generated from catalog unit `S`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -853,6 +971,8 @@ impl UnitMarker for S {
     const PUBLIC_TYPE: &'static str = "Conductance";
 }
 
+impl ScalarArithmeticUnit for S {}
+
 /// Unit marker generated from catalog unit `per_F`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct per_F;
@@ -866,6 +986,8 @@ impl UnitMarker for per_F {
     const CANONICAL_DIMENSION_ID: &'static str = "elastance";
     const PUBLIC_TYPE: &'static str = "Elastance";
 }
+
+impl ScalarArithmeticUnit for per_F {}
 
 /// Unit marker generated from catalog unit `lx`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -881,6 +1003,8 @@ impl UnitMarker for lx {
     const PUBLIC_TYPE: &'static str = "Illuminance";
 }
 
+impl ScalarArithmeticUnit for lx {}
+
 /// Unit marker generated from catalog unit `H`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct H;
@@ -894,6 +1018,8 @@ impl UnitMarker for H {
     const CANONICAL_DIMENSION_ID: &'static str = "inductance";
     const PUBLIC_TYPE: &'static str = "Inductance";
 }
+
+impl ScalarArithmeticUnit for H {}
 
 /// Unit marker generated from catalog unit `per_C`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -909,6 +1035,8 @@ impl UnitMarker for per_C {
     const PUBLIC_TYPE: &'static str = "InverseCharge";
 }
 
+impl ScalarArithmeticUnit for per_C {}
+
 /// Unit marker generated from catalog unit `per_H`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct per_H;
@@ -922,6 +1050,8 @@ impl UnitMarker for per_H {
     const CANONICAL_DIMENSION_ID: &'static str = "inverse_inductance";
     const PUBLIC_TYPE: &'static str = "InverseInductance";
 }
+
+impl ScalarArithmeticUnit for per_H {}
 
 /// Unit marker generated from catalog unit `per_lm`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -937,6 +1067,8 @@ impl UnitMarker for per_lm {
     const PUBLIC_TYPE: &'static str = "InverseLuminousFlux";
 }
 
+impl ScalarArithmeticUnit for per_lm {}
+
 /// Unit marker generated from catalog unit `per_Wb`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct per_Wb;
@@ -950,6 +1082,8 @@ impl UnitMarker for per_Wb {
     const CANONICAL_DIMENSION_ID: &'static str = "inverse_magnetic_flux";
     const PUBLIC_TYPE: &'static str = "InverseMagneticFlux";
 }
+
+impl ScalarArithmeticUnit for per_Wb {}
 
 /// Unit marker generated from catalog unit `per_T`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -965,6 +1099,8 @@ impl UnitMarker for per_T {
     const PUBLIC_TYPE: &'static str = "InverseMagneticFluxDensity";
 }
 
+impl ScalarArithmeticUnit for per_T {}
+
 /// Unit marker generated from catalog unit `per_V`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct per_V;
@@ -978,6 +1114,8 @@ impl UnitMarker for per_V {
     const CANONICAL_DIMENSION_ID: &'static str = "inverse_voltage";
     const PUBLIC_TYPE: &'static str = "InverseVoltage";
 }
+
+impl ScalarArithmeticUnit for per_V {}
 
 /// Unit marker generated from catalog unit `lm`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -993,6 +1131,8 @@ impl UnitMarker for lm {
     const PUBLIC_TYPE: &'static str = "LuminousFlux";
 }
 
+impl ScalarArithmeticUnit for lm {}
+
 /// Unit marker generated from catalog unit `Wb`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct Wb;
@@ -1006,6 +1146,8 @@ impl UnitMarker for Wb {
     const CANONICAL_DIMENSION_ID: &'static str = "magnetic_flux";
     const PUBLIC_TYPE: &'static str = "MagneticFlux";
 }
+
+impl ScalarArithmeticUnit for Wb {}
 
 /// Unit marker generated from catalog unit `T`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -1021,6 +1163,8 @@ impl UnitMarker for T {
     const PUBLIC_TYPE: &'static str = "MagneticFluxDensity";
 }
 
+impl ScalarArithmeticUnit for T {}
+
 /// Unit marker generated from catalog unit `Ohm`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct Ohm;
@@ -1034,6 +1178,8 @@ impl UnitMarker for Ohm {
     const CANONICAL_DIMENSION_ID: &'static str = "resistance";
     const PUBLIC_TYPE: &'static str = "Resistance";
 }
+
+impl ScalarArithmeticUnit for Ohm {}
 
 /// Unit marker generated from catalog unit `V`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -1049,6 +1195,8 @@ impl UnitMarker for V {
     const PUBLIC_TYPE: &'static str = "Voltage";
 }
 
+impl ScalarArithmeticUnit for V {}
+
 /// Unit marker generated from catalog unit `dpt`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct dpt;
@@ -1062,6 +1210,8 @@ impl UnitMarker for dpt {
     const CANONICAL_DIMENSION_ID: &'static str = "inverse_distance";
     const PUBLIC_TYPE: &'static str = "Diopter";
 }
+
+impl ScalarArithmeticUnit for dpt {}
 
 pub const GENERATED_UNIT_COUNT: usize = 74;
 pub const UNIT_METADATA: &[GeneratedUnitMetadata] = &[
@@ -1819,6 +1969,14 @@ impl<Storage> Amount<Storage, mol> {
     }
 }
 
+impl<Storage> QuantityForStorage<Storage> for mol {
+    type Quantity = Amount<Storage, mol>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        Amount::<Storage, mol>::new(storage)
+    }
+}
+
 /// Sealed unit-family marker trait for `Current`.
 ///
 /// External crates cannot implement this trait; only
@@ -2050,6 +2208,14 @@ where
 impl<Storage> Current<Storage, A> {
     pub const fn A(storage: Storage) -> Self {
         Self::new(storage)
+    }
+}
+
+impl<Storage> QuantityForStorage<Storage> for A {
+    type Quantity = Current<Storage, A>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        Current::<Storage, A>::new(storage)
     }
 }
 
@@ -2317,15 +2483,39 @@ impl<Storage> Distance<Storage, mm> {
     }
 }
 
+impl<Storage> QuantityForStorage<Storage> for mm {
+    type Quantity = Distance<Storage, mm>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        Distance::<Storage, mm>::new(storage)
+    }
+}
+
 impl<Storage> Distance<Storage, m> {
     pub const fn m(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
+impl<Storage> QuantityForStorage<Storage> for m {
+    type Quantity = Distance<Storage, m>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        Distance::<Storage, m>::new(storage)
+    }
+}
+
 impl<Storage> Distance<Storage, ft> {
     pub const fn ft(storage: Storage) -> Self {
         Self::new(storage)
+    }
+}
+
+impl<Storage> QuantityForStorage<Storage> for ft {
+    type Quantity = Distance<Storage, ft>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        Distance::<Storage, ft>::new(storage)
     }
 }
 
@@ -2566,6 +2756,14 @@ impl<Storage> InverseAmount<Storage, per_mol> {
     }
 }
 
+impl<Storage> QuantityForStorage<Storage> for per_mol {
+    type Quantity = InverseAmount<Storage, per_mol>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        InverseAmount::<Storage, per_mol>::new(storage)
+    }
+}
+
 /// Sealed unit-family marker trait for `InverseCurrent`.
 ///
 /// External crates cannot implement this trait; only
@@ -2803,6 +3001,14 @@ impl<Storage> InverseCurrent<Storage, per_A> {
     }
 }
 
+impl<Storage> QuantityForStorage<Storage> for per_A {
+    type Quantity = InverseCurrent<Storage, per_A>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        InverseCurrent::<Storage, per_A>::new(storage)
+    }
+}
+
 /// Sealed unit-family marker trait for `InverseDistance`.
 ///
 /// External crates cannot implement this trait; only
@@ -3037,6 +3243,14 @@ where
 impl<Storage> InverseDistance<Storage, per_m> {
     pub const fn per_m(storage: Storage) -> Self {
         Self::new(storage)
+    }
+}
+
+impl<Storage> QuantityForStorage<Storage> for per_m {
+    type Quantity = InverseDistance<Storage, per_m>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        InverseDistance::<Storage, per_m>::new(storage)
     }
 }
 
@@ -3278,6 +3492,14 @@ impl<Storage> InverseLuminosity<Storage, per_cd> {
     }
 }
 
+impl<Storage> QuantityForStorage<Storage> for per_cd {
+    type Quantity = InverseLuminosity<Storage, per_cd>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        InverseLuminosity::<Storage, per_cd>::new(storage)
+    }
+}
+
 /// Sealed unit-family marker trait for `InverseMass`.
 ///
 /// External crates cannot implement this trait; only
@@ -3512,6 +3734,14 @@ where
 impl<Storage> InverseMass<Storage, per_kg> {
     pub const fn per_kg(storage: Storage) -> Self {
         Self::new(storage)
+    }
+}
+
+impl<Storage> QuantityForStorage<Storage> for per_kg {
+    type Quantity = InverseMass<Storage, per_kg>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        InverseMass::<Storage, per_kg>::new(storage)
     }
 }
 
@@ -3757,6 +3987,14 @@ impl<Storage> InverseTemperature<Storage, per_K> {
     }
 }
 
+impl<Storage> QuantityForStorage<Storage> for per_K {
+    type Quantity = InverseTemperature<Storage, per_K>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        InverseTemperature::<Storage, per_K>::new(storage)
+    }
+}
+
 /// Sealed unit-family marker trait for `Luminosity`.
 ///
 /// External crates cannot implement this trait; only
@@ -3994,6 +4232,14 @@ impl<Storage> Luminosity<Storage, cd> {
     }
 }
 
+impl<Storage> QuantityForStorage<Storage> for cd {
+    type Quantity = Luminosity<Storage, cd>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        Luminosity::<Storage, cd>::new(storage)
+    }
+}
+
 /// Sealed unit-family marker trait for `Mass`.
 ///
 /// External crates cannot implement this trait; only
@@ -4225,6 +4471,14 @@ where
 impl<Storage> Mass<Storage, kg> {
     pub const fn kg(storage: Storage) -> Self {
         Self::new(storage)
+    }
+}
+
+impl<Storage> QuantityForStorage<Storage> for kg {
+    type Quantity = Mass<Storage, kg>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        Mass::<Storage, kg>::new(storage)
     }
 }
 
@@ -4489,15 +4743,39 @@ impl<Storage> Temperature<Storage, K> {
     }
 }
 
+impl<Storage> QuantityForStorage<Storage> for K {
+    type Quantity = Temperature<Storage, K>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        Temperature::<Storage, K>::new(storage)
+    }
+}
+
 impl<Storage> Temperature<Storage, degC> {
     pub const fn degC(storage: Storage) -> Self {
         Self::new(storage)
     }
 }
 
+impl<Storage> QuantityForStorage<Storage> for degC {
+    type Quantity = Temperature<Storage, degC>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        Temperature::<Storage, degC>::new(storage)
+    }
+}
+
 impl<Storage> Temperature<Storage, degF> {
     pub const fn degF(storage: Storage) -> Self {
         Self::new(storage)
+    }
+}
+
+impl<Storage> QuantityForStorage<Storage> for degF {
+    type Quantity = Temperature<Storage, degF>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        Temperature::<Storage, degF>::new(storage)
     }
 }
 
@@ -4749,9 +5027,25 @@ impl<Storage> Time<Storage, s> {
     }
 }
 
+impl<Storage> QuantityForStorage<Storage> for s {
+    type Quantity = Time<Storage, s>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        Time::<Storage, s>::new(storage)
+    }
+}
+
 impl<Storage> Time<Storage, ms> {
     pub const fn ms(storage: Storage) -> Self {
         Self::new(storage)
+    }
+}
+
+impl<Storage> QuantityForStorage<Storage> for ms {
+    type Quantity = Time<Storage, ms>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        Time::<Storage, ms>::new(storage)
     }
 }
 
@@ -4989,6 +5283,14 @@ impl<Storage> Angle<Storage, rad> {
     }
 }
 
+impl<Storage> QuantityForStorage<Storage> for rad {
+    type Quantity = Angle<Storage, rad>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        Angle::<Storage, rad>::new(storage)
+    }
+}
+
 /// Sealed unit-family marker trait for `Area`.
 ///
 /// External crates cannot implement this trait; only
@@ -5220,6 +5522,14 @@ where
 impl<Storage> Area<Storage, m2> {
     pub const fn m2(storage: Storage) -> Self {
         Self::new(storage)
+    }
+}
+
+impl<Storage> QuantityForStorage<Storage> for m2 {
+    type Quantity = Area<Storage, m2>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        Area::<Storage, m2>::new(storage)
     }
 }
 
@@ -5460,6 +5770,14 @@ impl<Storage> InverseAngle<Storage, per_rad> {
     }
 }
 
+impl<Storage> QuantityForStorage<Storage> for per_rad {
+    type Quantity = InverseAngle<Storage, per_rad>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        InverseAngle::<Storage, per_rad>::new(storage)
+    }
+}
+
 /// Sealed unit-family marker trait for `InverseArea`.
 ///
 /// External crates cannot implement this trait; only
@@ -5694,6 +6012,14 @@ where
 impl<Storage> InverseArea<Storage, per_m2> {
     pub const fn per_m2(storage: Storage) -> Self {
         Self::new(storage)
+    }
+}
+
+impl<Storage> QuantityForStorage<Storage> for per_m2 {
+    type Quantity = InverseArea<Storage, per_m2>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        InverseArea::<Storage, per_m2>::new(storage)
     }
 }
 
@@ -5935,6 +6261,14 @@ impl<Storage> InverseSolidAngle<Storage, per_sr> {
     }
 }
 
+impl<Storage> QuantityForStorage<Storage> for per_sr {
+    type Quantity = InverseSolidAngle<Storage, per_sr>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        InverseSolidAngle::<Storage, per_sr>::new(storage)
+    }
+}
+
 /// Sealed unit-family marker trait for `InverseVolume`.
 ///
 /// External crates cannot implement this trait; only
@@ -6169,6 +6503,14 @@ where
 impl<Storage> InverseVolume<Storage, per_m3> {
     pub const fn per_m3(storage: Storage) -> Self {
         Self::new(storage)
+    }
+}
+
+impl<Storage> QuantityForStorage<Storage> for per_m3 {
+    type Quantity = InverseVolume<Storage, per_m3>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        InverseVolume::<Storage, per_m3>::new(storage)
     }
 }
 
@@ -6409,6 +6751,14 @@ impl<Storage> SolidAngle<Storage, sr> {
     }
 }
 
+impl<Storage> QuantityForStorage<Storage> for sr {
+    type Quantity = SolidAngle<Storage, sr>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        SolidAngle::<Storage, sr>::new(storage)
+    }
+}
+
 /// Sealed unit-family marker trait for `Volume`.
 ///
 /// External crates cannot implement this trait; only
@@ -6640,6 +6990,14 @@ where
 impl<Storage> Volume<Storage, m3> {
     pub const fn m3(storage: Storage) -> Self {
         Self::new(storage)
+    }
+}
+
+impl<Storage> QuantityForStorage<Storage> for m3 {
+    type Quantity = Volume<Storage, m3>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        Volume::<Storage, m3>::new(storage)
     }
 }
 
@@ -6877,6 +7235,14 @@ where
 impl<Storage> Acceleration<Storage, mps2> {
     pub const fn mps2(storage: Storage) -> Self {
         Self::new(storage)
+    }
+}
+
+impl<Storage> QuantityForStorage<Storage> for mps2 {
+    type Quantity = Acceleration<Storage, mps2>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        Acceleration::<Storage, mps2>::new(storage)
     }
 }
 
@@ -7122,6 +7488,14 @@ impl<Storage> AngularAcceleration<Storage, radps2> {
     }
 }
 
+impl<Storage> QuantityForStorage<Storage> for radps2 {
+    type Quantity = AngularAcceleration<Storage, radps2>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        AngularAcceleration::<Storage, radps2>::new(storage)
+    }
+}
+
 /// Sealed unit-family marker trait for `AngularMomentum`.
 ///
 /// External crates cannot implement this trait; only
@@ -7356,6 +7730,14 @@ where
 impl<Storage> AngularMomentum<Storage, kgm2ps> {
     pub const fn kgm2ps(storage: Storage) -> Self {
         Self::new(storage)
+    }
+}
+
+impl<Storage> QuantityForStorage<Storage> for kgm2ps {
+    type Quantity = AngularMomentum<Storage, kgm2ps>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        AngularMomentum::<Storage, kgm2ps>::new(storage)
     }
 }
 
@@ -7596,6 +7978,14 @@ impl<Storage> AngularVelocity<Storage, radps> {
     }
 }
 
+impl<Storage> QuantityForStorage<Storage> for radps {
+    type Quantity = AngularVelocity<Storage, radps>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        AngularVelocity::<Storage, radps>::new(storage)
+    }
+}
+
 /// Sealed unit-family marker trait for `AreaDensity`.
 ///
 /// External crates cannot implement this trait; only
@@ -7830,6 +8220,14 @@ where
 impl<Storage> AreaDensity<Storage, kgpm2> {
     pub const fn kgpm2(storage: Storage) -> Self {
         Self::new(storage)
+    }
+}
+
+impl<Storage> QuantityForStorage<Storage> for kgpm2 {
+    type Quantity = AreaDensity<Storage, kgpm2>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        AreaDensity::<Storage, kgpm2>::new(storage)
     }
 }
 
@@ -8070,6 +8468,14 @@ impl<Storage> AreaPerMass<Storage, m2pkg> {
     }
 }
 
+impl<Storage> QuantityForStorage<Storage> for m2pkg {
+    type Quantity = AreaPerMass<Storage, m2pkg>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        AreaPerMass::<Storage, m2pkg>::new(storage)
+    }
+}
+
 /// Sealed unit-family marker trait for `Density`.
 ///
 /// External crates cannot implement this trait; only
@@ -8301,6 +8707,14 @@ where
 impl<Storage> Density<Storage, kgpm3> {
     pub const fn kgpm3(storage: Storage) -> Self {
         Self::new(storage)
+    }
+}
+
+impl<Storage> QuantityForStorage<Storage> for kgpm3 {
+    type Quantity = Density<Storage, kgpm3>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        Density::<Storage, kgpm3>::new(storage)
     }
 }
 
@@ -8538,6 +8952,14 @@ impl<Storage> Energy<Storage, J> {
     }
 }
 
+impl<Storage> QuantityForStorage<Storage> for J {
+    type Quantity = Energy<Storage, J>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        Energy::<Storage, J>::new(storage)
+    }
+}
+
 /// Sealed unit-family marker trait for `Force`.
 ///
 /// External crates cannot implement this trait; only
@@ -8769,6 +9191,14 @@ where
 impl<Storage> Force<Storage, N> {
     pub const fn N(storage: Storage) -> Self {
         Self::new(storage)
+    }
+}
+
+impl<Storage> QuantityForStorage<Storage> for N {
+    type Quantity = Force<Storage, N>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        Force::<Storage, N>::new(storage)
     }
 }
 
@@ -9006,6 +9436,14 @@ where
 impl<Storage> Frequency<Storage, Hz> {
     pub const fn Hz(storage: Storage) -> Self {
         Self::new(storage)
+    }
+}
+
+impl<Storage> QuantityForStorage<Storage> for Hz {
+    type Quantity = Frequency<Storage, Hz>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        Frequency::<Storage, Hz>::new(storage)
     }
 }
 
@@ -9248,6 +9686,14 @@ where
 impl<Storage> InverseAcceleration<Storage, per_mps2> {
     pub const fn per_mps2(storage: Storage) -> Self {
         Self::new(storage)
+    }
+}
+
+impl<Storage> QuantityForStorage<Storage> for per_mps2 {
+    type Quantity = InverseAcceleration<Storage, per_mps2>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        InverseAcceleration::<Storage, per_mps2>::new(storage)
     }
 }
 
@@ -9506,6 +9952,14 @@ impl<Storage> InverseAngularAcceleration<Storage, per_radps2> {
     }
 }
 
+impl<Storage> QuantityForStorage<Storage> for per_radps2 {
+    type Quantity = InverseAngularAcceleration<Storage, per_radps2>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        InverseAngularAcceleration::<Storage, per_radps2>::new(storage)
+    }
+}
+
 /// Sealed unit-family marker trait for `InverseAngularMomentum`.
 ///
 /// External crates cannot implement this trait; only
@@ -9754,6 +10208,14 @@ where
 impl<Storage> InverseAngularMomentum<Storage, per_kgm2ps> {
     pub const fn per_kgm2ps(storage: Storage) -> Self {
         Self::new(storage)
+    }
+}
+
+impl<Storage> QuantityForStorage<Storage> for per_kgm2ps {
+    type Quantity = InverseAngularMomentum<Storage, per_kgm2ps>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        InverseAngularMomentum::<Storage, per_kgm2ps>::new(storage)
     }
 }
 
@@ -10008,6 +10470,14 @@ impl<Storage> InverseAngularVelocity<Storage, per_radps> {
     }
 }
 
+impl<Storage> QuantityForStorage<Storage> for per_radps {
+    type Quantity = InverseAngularVelocity<Storage, per_radps>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        InverseAngularVelocity::<Storage, per_radps>::new(storage)
+    }
+}
+
 /// Sealed unit-family marker trait for `InverseEnergy`.
 ///
 /// External crates cannot implement this trait; only
@@ -10245,6 +10715,14 @@ impl<Storage> InverseEnergy<Storage, per_J> {
     }
 }
 
+impl<Storage> QuantityForStorage<Storage> for per_J {
+    type Quantity = InverseEnergy<Storage, per_J>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        InverseEnergy::<Storage, per_J>::new(storage)
+    }
+}
+
 /// Sealed unit-family marker trait for `InverseForce`.
 ///
 /// External crates cannot implement this trait; only
@@ -10479,6 +10957,14 @@ where
 impl<Storage> InverseForce<Storage, per_N> {
     pub const fn per_N(storage: Storage) -> Self {
         Self::new(storage)
+    }
+}
+
+impl<Storage> QuantityForStorage<Storage> for per_N {
+    type Quantity = InverseForce<Storage, per_N>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        InverseForce::<Storage, per_N>::new(storage)
     }
 }
 
@@ -10733,6 +11219,14 @@ impl<Storage> InverseMomentOfInertia<Storage, per_kgm2> {
     }
 }
 
+impl<Storage> QuantityForStorage<Storage> for per_kgm2 {
+    type Quantity = InverseMomentOfInertia<Storage, per_kgm2>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        InverseMomentOfInertia::<Storage, per_kgm2>::new(storage)
+    }
+}
+
 /// Sealed unit-family marker trait for `InverseMomentum`.
 ///
 /// External crates cannot implement this trait; only
@@ -10967,6 +11461,14 @@ where
 impl<Storage> InverseMomentum<Storage, per_kgmps> {
     pub const fn per_kgmps(storage: Storage) -> Self {
         Self::new(storage)
+    }
+}
+
+impl<Storage> QuantityForStorage<Storage> for per_kgmps {
+    type Quantity = InverseMomentum<Storage, per_kgmps>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        InverseMomentum::<Storage, per_kgmps>::new(storage)
     }
 }
 
@@ -11207,6 +11709,14 @@ impl<Storage> InversePower<Storage, per_W> {
     }
 }
 
+impl<Storage> QuantityForStorage<Storage> for per_W {
+    type Quantity = InversePower<Storage, per_W>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        InversePower::<Storage, per_W>::new(storage)
+    }
+}
+
 /// Sealed unit-family marker trait for `InversePressure`.
 ///
 /// External crates cannot implement this trait; only
@@ -11441,6 +11951,14 @@ where
 impl<Storage> InversePressure<Storage, per_Pa> {
     pub const fn per_Pa(storage: Storage) -> Self {
         Self::new(storage)
+    }
+}
+
+impl<Storage> QuantityForStorage<Storage> for per_Pa {
+    type Quantity = InversePressure<Storage, per_Pa>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        InversePressure::<Storage, per_Pa>::new(storage)
     }
 }
 
@@ -11681,6 +12199,14 @@ impl<Storage> InverseTorque<Storage, per_Nm> {
     }
 }
 
+impl<Storage> QuantityForStorage<Storage> for per_Nm {
+    type Quantity = InverseTorque<Storage, per_Nm>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        InverseTorque::<Storage, per_Nm>::new(storage)
+    }
+}
+
 /// Sealed unit-family marker trait for `MomentOfInertia`.
 ///
 /// External crates cannot implement this trait; only
@@ -11918,6 +12444,14 @@ impl<Storage> MomentOfInertia<Storage, kgm2> {
     }
 }
 
+impl<Storage> QuantityForStorage<Storage> for kgm2 {
+    type Quantity = MomentOfInertia<Storage, kgm2>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        MomentOfInertia::<Storage, kgm2>::new(storage)
+    }
+}
+
 /// Sealed unit-family marker trait for `Momentum`.
 ///
 /// External crates cannot implement this trait; only
@@ -12149,6 +12683,14 @@ where
 impl<Storage> Momentum<Storage, kgmps> {
     pub const fn kgmps(storage: Storage) -> Self {
         Self::new(storage)
+    }
+}
+
+impl<Storage> QuantityForStorage<Storage> for kgmps {
+    type Quantity = Momentum<Storage, kgmps>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        Momentum::<Storage, kgmps>::new(storage)
     }
 }
 
@@ -12386,6 +12928,14 @@ impl<Storage> Power<Storage, W> {
     }
 }
 
+impl<Storage> QuantityForStorage<Storage> for W {
+    type Quantity = Power<Storage, W>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        Power::<Storage, W>::new(storage)
+    }
+}
+
 /// Sealed unit-family marker trait for `Pressure`.
 ///
 /// External crates cannot implement this trait; only
@@ -12617,6 +13167,14 @@ where
 impl<Storage> Pressure<Storage, Pa> {
     pub const fn Pa(storage: Storage) -> Self {
         Self::new(storage)
+    }
+}
+
+impl<Storage> QuantityForStorage<Storage> for Pa {
+    type Quantity = Pressure<Storage, Pa>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        Pressure::<Storage, Pa>::new(storage)
     }
 }
 
@@ -12857,6 +13415,14 @@ impl<Storage> TimePerDistance<Storage, spm> {
     }
 }
 
+impl<Storage> QuantityForStorage<Storage> for spm {
+    type Quantity = TimePerDistance<Storage, spm>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        TimePerDistance::<Storage, spm>::new(storage)
+    }
+}
+
 /// Sealed unit-family marker trait for `Torque`.
 ///
 /// External crates cannot implement this trait; only
@@ -13091,6 +13657,14 @@ impl<Storage> Torque<Storage, Nm> {
     }
 }
 
+impl<Storage> QuantityForStorage<Storage> for Nm {
+    type Quantity = Torque<Storage, Nm>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        Torque::<Storage, Nm>::new(storage)
+    }
+}
+
 /// Sealed unit-family marker trait for `Velocity`.
 ///
 /// External crates cannot implement this trait; only
@@ -13322,6 +13896,14 @@ where
 impl<Storage> Velocity<Storage, mps> {
     pub const fn mps(storage: Storage) -> Self {
         Self::new(storage)
+    }
+}
+
+impl<Storage> QuantityForStorage<Storage> for mps {
+    type Quantity = Velocity<Storage, mps>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        Velocity::<Storage, mps>::new(storage)
     }
 }
 
@@ -13562,6 +14144,14 @@ impl<Storage> VolumePerMass<Storage, m3pkg> {
     }
 }
 
+impl<Storage> QuantityForStorage<Storage> for m3pkg {
+    type Quantity = VolumePerMass<Storage, m3pkg>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        VolumePerMass::<Storage, m3pkg>::new(storage)
+    }
+}
+
 /// Sealed unit-family marker trait for `AreaPerLumen`.
 ///
 /// External crates cannot implement this trait; only
@@ -13796,6 +14386,14 @@ where
 impl<Storage> AreaPerLumen<Storage, m2plm> {
     pub const fn m2plm(storage: Storage) -> Self {
         Self::new(storage)
+    }
+}
+
+impl<Storage> QuantityForStorage<Storage> for m2plm {
+    type Quantity = AreaPerLumen<Storage, m2plm>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        AreaPerLumen::<Storage, m2plm>::new(storage)
     }
 }
 
@@ -14036,6 +14634,14 @@ impl<Storage> Capacitance<Storage, F> {
     }
 }
 
+impl<Storage> QuantityForStorage<Storage> for F {
+    type Quantity = Capacitance<Storage, F>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        Capacitance::<Storage, F>::new(storage)
+    }
+}
+
 /// Sealed unit-family marker trait for `Charge`.
 ///
 /// External crates cannot implement this trait; only
@@ -14267,6 +14873,14 @@ where
 impl<Storage> Charge<Storage, C> {
     pub const fn C(storage: Storage) -> Self {
         Self::new(storage)
+    }
+}
+
+impl<Storage> QuantityForStorage<Storage> for C {
+    type Quantity = Charge<Storage, C>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        Charge::<Storage, C>::new(storage)
     }
 }
 
@@ -14507,6 +15121,14 @@ impl<Storage> Conductance<Storage, S> {
     }
 }
 
+impl<Storage> QuantityForStorage<Storage> for S {
+    type Quantity = Conductance<Storage, S>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        Conductance::<Storage, S>::new(storage)
+    }
+}
+
 /// Sealed unit-family marker trait for `Elastance`.
 ///
 /// External crates cannot implement this trait; only
@@ -14741,6 +15363,14 @@ where
 impl<Storage> Elastance<Storage, per_F> {
     pub const fn per_F(storage: Storage) -> Self {
         Self::new(storage)
+    }
+}
+
+impl<Storage> QuantityForStorage<Storage> for per_F {
+    type Quantity = Elastance<Storage, per_F>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        Elastance::<Storage, per_F>::new(storage)
     }
 }
 
@@ -14981,6 +15611,14 @@ impl<Storage> Illuminance<Storage, lx> {
     }
 }
 
+impl<Storage> QuantityForStorage<Storage> for lx {
+    type Quantity = Illuminance<Storage, lx>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        Illuminance::<Storage, lx>::new(storage)
+    }
+}
+
 /// Sealed unit-family marker trait for `Inductance`.
 ///
 /// External crates cannot implement this trait; only
@@ -15215,6 +15853,14 @@ where
 impl<Storage> Inductance<Storage, H> {
     pub const fn H(storage: Storage) -> Self {
         Self::new(storage)
+    }
+}
+
+impl<Storage> QuantityForStorage<Storage> for H {
+    type Quantity = Inductance<Storage, H>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        Inductance::<Storage, H>::new(storage)
     }
 }
 
@@ -15455,6 +16101,14 @@ impl<Storage> InverseCharge<Storage, per_C> {
     }
 }
 
+impl<Storage> QuantityForStorage<Storage> for per_C {
+    type Quantity = InverseCharge<Storage, per_C>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        InverseCharge::<Storage, per_C>::new(storage)
+    }
+}
+
 /// Sealed unit-family marker trait for `InverseInductance`.
 ///
 /// External crates cannot implement this trait; only
@@ -15690,6 +16344,14 @@ where
 impl<Storage> InverseInductance<Storage, per_H> {
     pub const fn per_H(storage: Storage) -> Self {
         Self::new(storage)
+    }
+}
+
+impl<Storage> QuantityForStorage<Storage> for per_H {
+    type Quantity = InverseInductance<Storage, per_H>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        InverseInductance::<Storage, per_H>::new(storage)
     }
 }
 
@@ -15935,6 +16597,14 @@ impl<Storage> InverseLuminousFlux<Storage, per_lm> {
     }
 }
 
+impl<Storage> QuantityForStorage<Storage> for per_lm {
+    type Quantity = InverseLuminousFlux<Storage, per_lm>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        InverseLuminousFlux::<Storage, per_lm>::new(storage)
+    }
+}
+
 /// Sealed unit-family marker trait for `InverseMagneticFlux`.
 ///
 /// External crates cannot implement this trait; only
@@ -16174,6 +16844,14 @@ where
 impl<Storage> InverseMagneticFlux<Storage, per_Wb> {
     pub const fn per_Wb(storage: Storage) -> Self {
         Self::new(storage)
+    }
+}
+
+impl<Storage> QuantityForStorage<Storage> for per_Wb {
+    type Quantity = InverseMagneticFlux<Storage, per_Wb>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        InverseMagneticFlux::<Storage, per_Wb>::new(storage)
     }
 }
 
@@ -16432,6 +17110,14 @@ impl<Storage> InverseMagneticFluxDensity<Storage, per_T> {
     }
 }
 
+impl<Storage> QuantityForStorage<Storage> for per_T {
+    type Quantity = InverseMagneticFluxDensity<Storage, per_T>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        InverseMagneticFluxDensity::<Storage, per_T>::new(storage)
+    }
+}
+
 /// Sealed unit-family marker trait for `InverseVoltage`.
 ///
 /// External crates cannot implement this trait; only
@@ -16666,6 +17352,14 @@ where
 impl<Storage> InverseVoltage<Storage, per_V> {
     pub const fn per_V(storage: Storage) -> Self {
         Self::new(storage)
+    }
+}
+
+impl<Storage> QuantityForStorage<Storage> for per_V {
+    type Quantity = InverseVoltage<Storage, per_V>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        InverseVoltage::<Storage, per_V>::new(storage)
     }
 }
 
@@ -16906,6 +17600,14 @@ impl<Storage> LuminousFlux<Storage, lm> {
     }
 }
 
+impl<Storage> QuantityForStorage<Storage> for lm {
+    type Quantity = LuminousFlux<Storage, lm>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        LuminousFlux::<Storage, lm>::new(storage)
+    }
+}
+
 /// Sealed unit-family marker trait for `MagneticFlux`.
 ///
 /// External crates cannot implement this trait; only
@@ -17140,6 +17842,14 @@ where
 impl<Storage> MagneticFlux<Storage, Wb> {
     pub const fn Wb(storage: Storage) -> Self {
         Self::new(storage)
+    }
+}
+
+impl<Storage> QuantityForStorage<Storage> for Wb {
+    type Quantity = MagneticFlux<Storage, Wb>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        MagneticFlux::<Storage, Wb>::new(storage)
     }
 }
 
@@ -17385,6 +18095,14 @@ impl<Storage> MagneticFluxDensity<Storage, T> {
     }
 }
 
+impl<Storage> QuantityForStorage<Storage> for T {
+    type Quantity = MagneticFluxDensity<Storage, T>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        MagneticFluxDensity::<Storage, T>::new(storage)
+    }
+}
+
 /// Sealed unit-family marker trait for `Resistance`.
 ///
 /// External crates cannot implement this trait; only
@@ -17622,6 +18340,14 @@ impl<Storage> Resistance<Storage, Ohm> {
     }
 }
 
+impl<Storage> QuantityForStorage<Storage> for Ohm {
+    type Quantity = Resistance<Storage, Ohm>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        Resistance::<Storage, Ohm>::new(storage)
+    }
+}
+
 /// Sealed unit-family marker trait for `Voltage`.
 ///
 /// External crates cannot implement this trait; only
@@ -17856,6 +18582,14 @@ impl<Storage> Voltage<Storage, V> {
     }
 }
 
+impl<Storage> QuantityForStorage<Storage> for V {
+    type Quantity = Voltage<Storage, V>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        Voltage::<Storage, V>::new(storage)
+    }
+}
+
 /// Sealed unit-family marker trait for `Diopter`.
 ///
 /// External crates cannot implement this trait; only
@@ -18087,6 +18821,14 @@ where
 impl<Storage> Diopter<Storage, dpt> {
     pub const fn dpt(storage: Storage) -> Self {
         Self::new(storage)
+    }
+}
+
+impl<Storage> QuantityForStorage<Storage> for dpt {
+    type Quantity = Diopter<Storage, dpt>;
+
+    fn wrap(storage: Storage) -> Self::Quantity {
+        Diopter::<Storage, dpt>::new(storage)
     }
 }
 
