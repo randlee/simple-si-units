@@ -1,5 +1,232 @@
 {
+  "bridges": [
+    {
+      "kind": "reciprocal",
+      "left_public_type": "Distance",
+      "right_public_type": "Diopter"
+    }
+  ],
   "catalog_version": "0.1.0-phase-a",
+  "conversion_policies": {
+    "policies": [
+      {
+        "api_surface": "identity",
+        "expected_failure": null,
+        "fallback_policy_id": null,
+        "infallibility_guard": null,
+        "policy_id": "identity"
+      },
+      {
+        "api_surface": "to_unit",
+        "expected_failure": null,
+        "fallback_policy_id": null,
+        "infallibility_guard": null,
+        "policy_id": "same_storage_f64"
+      },
+      {
+        "api_surface": "to_unit",
+        "expected_failure": null,
+        "fallback_policy_id": "same_storage_f32_overflow",
+        "infallibility_guard": "same_storage_float_range",
+        "policy_id": "same_storage_f32_guarded"
+      },
+      {
+        "api_surface": "try_to_unit",
+        "expected_failure": "Overflow|PrecisionLoss",
+        "fallback_policy_id": null,
+        "infallibility_guard": null,
+        "policy_id": "same_storage_f32_overflow"
+      },
+      {
+        "api_surface": "try_to_unit",
+        "expected_failure": "Overflow|PrecisionLoss",
+        "fallback_policy_id": null,
+        "infallibility_guard": null,
+        "policy_id": "same_storage_i32"
+      },
+      {
+        "api_surface": "try_to_unit",
+        "expected_failure": "PrecisionLoss",
+        "fallback_policy_id": null,
+        "infallibility_guard": null,
+        "policy_id": "i32_to_f32"
+      },
+      {
+        "api_surface": "try_to_unit",
+        "expected_failure": null,
+        "fallback_policy_id": null,
+        "infallibility_guard": null,
+        "policy_id": "widen_to_f64"
+      },
+      {
+        "api_surface": "try_to_unit",
+        "expected_failure": "Overflow|PrecisionLoss",
+        "fallback_policy_id": null,
+        "infallibility_guard": null,
+        "policy_id": "float_to_i32"
+      },
+      {
+        "api_surface": "try_to_unit",
+        "expected_failure": "Overflow|PrecisionLoss",
+        "fallback_policy_id": null,
+        "infallibility_guard": null,
+        "policy_id": "f64_to_f32"
+      }
+    ],
+    "reciprocal_bridge": {
+      "api_surface": "to_reciprocal_quantity",
+      "base_failures": [
+        "DomainViolation"
+      ],
+      "storage_pair_policies": [
+        {
+          "policy_id": "same_storage_i32",
+          "source_storage": "i32",
+          "target_storage": "i32"
+        },
+        {
+          "policy_id": "i32_to_f32",
+          "source_storage": "i32",
+          "target_storage": "f32"
+        },
+        {
+          "policy_id": "widen_to_f64",
+          "source_storage": "i32",
+          "target_storage": "f64"
+        },
+        {
+          "policy_id": "float_to_i32",
+          "source_storage": "f32",
+          "target_storage": "i32"
+        },
+        {
+          "policy_id": "same_storage_f32_guarded",
+          "source_storage": "f32",
+          "target_storage": "f32"
+        },
+        {
+          "policy_id": "widen_to_f64",
+          "source_storage": "f32",
+          "target_storage": "f64"
+        },
+        {
+          "policy_id": "float_to_i32",
+          "source_storage": "f64",
+          "target_storage": "i32"
+        },
+        {
+          "policy_id": "f64_to_f32",
+          "source_storage": "f64",
+          "target_storage": "f32"
+        },
+        {
+          "policy_id": "same_storage_f64",
+          "source_storage": "f64",
+          "target_storage": "f64"
+        }
+      ]
+    },
+    "same_canonical_dimension": {
+      "api_surface": "try_to_quantity",
+      "storage_pair_policies": [
+        {
+          "policy_id": "same_storage_i32",
+          "source_storage": "i32",
+          "target_storage": "i32"
+        },
+        {
+          "policy_id": "i32_to_f32",
+          "source_storage": "i32",
+          "target_storage": "f32"
+        },
+        {
+          "policy_id": "widen_to_f64",
+          "source_storage": "i32",
+          "target_storage": "f64"
+        },
+        {
+          "policy_id": "float_to_i32",
+          "source_storage": "f32",
+          "target_storage": "i32"
+        },
+        {
+          "policy_id": "same_storage_f32_guarded",
+          "source_storage": "f32",
+          "target_storage": "f32"
+        },
+        {
+          "policy_id": "widen_to_f64",
+          "source_storage": "f32",
+          "target_storage": "f64"
+        },
+        {
+          "policy_id": "float_to_i32",
+          "source_storage": "f64",
+          "target_storage": "i32"
+        },
+        {
+          "policy_id": "f64_to_f32",
+          "source_storage": "f64",
+          "target_storage": "f32"
+        },
+        {
+          "policy_id": "same_storage_f64",
+          "source_storage": "f64",
+          "target_storage": "f64"
+        }
+      ]
+    },
+    "same_public_type": {
+      "identity_policy_id": "identity",
+      "storage_pair_policies": [
+        {
+          "policy_id": "same_storage_i32",
+          "source_storage": "i32",
+          "target_storage": "i32"
+        },
+        {
+          "policy_id": "i32_to_f32",
+          "source_storage": "i32",
+          "target_storage": "f32"
+        },
+        {
+          "policy_id": "widen_to_f64",
+          "source_storage": "i32",
+          "target_storage": "f64"
+        },
+        {
+          "policy_id": "float_to_i32",
+          "source_storage": "f32",
+          "target_storage": "i32"
+        },
+        {
+          "policy_id": "same_storage_f32_guarded",
+          "source_storage": "f32",
+          "target_storage": "f32"
+        },
+        {
+          "policy_id": "widen_to_f64",
+          "source_storage": "f32",
+          "target_storage": "f64"
+        },
+        {
+          "policy_id": "float_to_i32",
+          "source_storage": "f64",
+          "target_storage": "i32"
+        },
+        {
+          "policy_id": "f64_to_f32",
+          "source_storage": "f64",
+          "target_storage": "f32"
+        },
+        {
+          "policy_id": "same_storage_f64",
+          "source_storage": "f64",
+          "target_storage": "f64"
+        }
+      ]
+    }
+  },
   "dimension_count": 69,
   "dimensions": [
     {
@@ -31,6 +258,11 @@
       "units": [
         {
           "binary_unit_id": "amount.mol",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "mol",
           "unit_symbol": "mol"
@@ -66,6 +298,11 @@
       "units": [
         {
           "binary_unit_id": "current.A",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "A",
           "unit_symbol": "A"
@@ -104,18 +341,33 @@
       "units": [
         {
           "binary_unit_id": "distance.mm",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 0.001
+          },
           "reserved_word_alias": null,
           "unit_code_id": "mm",
           "unit_symbol": "mm"
         },
         {
           "binary_unit_id": "distance.m",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "m",
           "unit_symbol": "m"
         },
         {
           "binary_unit_id": "distance.ft",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 0.3048
+          },
           "reserved_word_alias": null,
           "unit_code_id": "ft",
           "unit_symbol": "ft"
@@ -151,6 +403,11 @@
       "units": [
         {
           "binary_unit_id": "inverse_amount.per_mol",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "per_mol",
           "unit_symbol": "1/mol"
@@ -186,6 +443,11 @@
       "units": [
         {
           "binary_unit_id": "inverse_current.per_A",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "per_A",
           "unit_symbol": "1/A"
@@ -221,6 +483,11 @@
       "units": [
         {
           "binary_unit_id": "inverse_distance.per_m",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "per_m",
           "unit_symbol": "1/m"
@@ -256,6 +523,11 @@
       "units": [
         {
           "binary_unit_id": "inverse_luminosity.per_cd",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "per_cd",
           "unit_symbol": "1/cd"
@@ -291,6 +563,11 @@
       "units": [
         {
           "binary_unit_id": "inverse_mass.per_kg",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "per_kg",
           "unit_symbol": "1/kg"
@@ -326,6 +603,11 @@
       "units": [
         {
           "binary_unit_id": "inverse_temperature.per_K",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "per_K",
           "unit_symbol": "1/K"
@@ -361,6 +643,11 @@
       "units": [
         {
           "binary_unit_id": "luminosity.cd",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "cd",
           "unit_symbol": "cd"
@@ -396,6 +683,11 @@
       "units": [
         {
           "binary_unit_id": "mass.kg",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "kg",
           "unit_symbol": "kg"
@@ -433,18 +725,33 @@
       "units": [
         {
           "binary_unit_id": "temperature.K",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "K",
           "unit_symbol": "K"
         },
         {
           "binary_unit_id": "temperature.degC",
+          "conversion": {
+            "kind": "affine",
+            "offset_to_base": 273.15,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "degC",
           "unit_symbol": "C"
         },
         {
           "binary_unit_id": "temperature.degF",
+          "conversion": {
+            "kind": "affine",
+            "offset_to_base": 255.372222222222,
+            "scale_to_base": 0.555555555555556
+          },
           "reserved_word_alias": null,
           "unit_code_id": "degF",
           "unit_symbol": "F"
@@ -482,12 +789,22 @@
       "units": [
         {
           "binary_unit_id": "time.s",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "s",
           "unit_symbol": "s"
         },
         {
           "binary_unit_id": "time.ms",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 0.001
+          },
           "reserved_word_alias": null,
           "unit_code_id": "ms",
           "unit_symbol": "ms"
@@ -523,6 +840,11 @@
       "units": [
         {
           "binary_unit_id": "angle.rad",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "rad",
           "unit_symbol": "rad"
@@ -558,6 +880,11 @@
       "units": [
         {
           "binary_unit_id": "area.m2",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "m2",
           "unit_symbol": "m^2"
@@ -593,6 +920,11 @@
       "units": [
         {
           "binary_unit_id": "inverse_angle.per_rad",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "per_rad",
           "unit_symbol": "1/rad"
@@ -628,6 +960,11 @@
       "units": [
         {
           "binary_unit_id": "inverse_area.per_m2",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "per_m2",
           "unit_symbol": "1/m^2"
@@ -663,6 +1000,11 @@
       "units": [
         {
           "binary_unit_id": "inverse_solid_angle.per_sr",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "per_sr",
           "unit_symbol": "1/sr"
@@ -698,6 +1040,11 @@
       "units": [
         {
           "binary_unit_id": "inverse_volume.per_m3",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "per_m3",
           "unit_symbol": "1/m^3"
@@ -733,6 +1080,11 @@
       "units": [
         {
           "binary_unit_id": "solid_angle.sr",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "sr",
           "unit_symbol": "sr"
@@ -768,6 +1120,11 @@
       "units": [
         {
           "binary_unit_id": "volume.m3",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "m3",
           "unit_symbol": "m^3"
@@ -803,6 +1160,11 @@
       "units": [
         {
           "binary_unit_id": "acceleration.mps2",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "mps2",
           "unit_symbol": "m/(s*s)"
@@ -838,6 +1200,11 @@
       "units": [
         {
           "binary_unit_id": "angular_acceleration.radps2",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "radps2",
           "unit_symbol": "rad/(s*s)"
@@ -873,6 +1240,11 @@
       "units": [
         {
           "binary_unit_id": "angular_momentum.kgm2ps",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "kgm2ps",
           "unit_symbol": "kg*m^2/s"
@@ -908,6 +1280,11 @@
       "units": [
         {
           "binary_unit_id": "angular_velocity.radps",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "radps",
           "unit_symbol": "rad/s"
@@ -943,6 +1320,11 @@
       "units": [
         {
           "binary_unit_id": "area_density.kgpm2",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "kgpm2",
           "unit_symbol": "kg/m^2"
@@ -978,6 +1360,11 @@
       "units": [
         {
           "binary_unit_id": "area_per_mass.m2pkg",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "m2pkg",
           "unit_symbol": "m^2/kg"
@@ -1013,6 +1400,11 @@
       "units": [
         {
           "binary_unit_id": "density.kgpm3",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "kgpm3",
           "unit_symbol": "kg/m^3"
@@ -1048,6 +1440,11 @@
       "units": [
         {
           "binary_unit_id": "energy.J",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "J",
           "unit_symbol": "J"
@@ -1083,6 +1480,11 @@
       "units": [
         {
           "binary_unit_id": "force.N",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "N",
           "unit_symbol": "N"
@@ -1118,6 +1520,11 @@
       "units": [
         {
           "binary_unit_id": "frequency.Hz",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "Hz",
           "unit_symbol": "Hz"
@@ -1153,6 +1560,11 @@
       "units": [
         {
           "binary_unit_id": "inverse_acceleration.per_mps2",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "per_mps2",
           "unit_symbol": "1/(m/(s*s))"
@@ -1188,6 +1600,11 @@
       "units": [
         {
           "binary_unit_id": "inverse_angular_acceleration.per_radps2",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "per_radps2",
           "unit_symbol": "1/(rad/(s*s))"
@@ -1223,6 +1640,11 @@
       "units": [
         {
           "binary_unit_id": "inverse_angular_momentum.per_kgm2ps",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "per_kgm2ps",
           "unit_symbol": "1/(kg*m^2/s)"
@@ -1258,6 +1680,11 @@
       "units": [
         {
           "binary_unit_id": "inverse_angular_velocity.per_radps",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "per_radps",
           "unit_symbol": "1/(rad/s)"
@@ -1293,6 +1720,11 @@
       "units": [
         {
           "binary_unit_id": "inverse_energy.per_J",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "per_J",
           "unit_symbol": "1/J"
@@ -1328,6 +1760,11 @@
       "units": [
         {
           "binary_unit_id": "inverse_force.per_N",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "per_N",
           "unit_symbol": "1/N"
@@ -1363,6 +1800,11 @@
       "units": [
         {
           "binary_unit_id": "inverse_moment_of_inertia.per_kgm2",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "per_kgm2",
           "unit_symbol": "1/(kg*m^2)"
@@ -1398,6 +1840,11 @@
       "units": [
         {
           "binary_unit_id": "inverse_momentum.per_kgmps",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "per_kgmps",
           "unit_symbol": "1/(kg*m/s)"
@@ -1433,6 +1880,11 @@
       "units": [
         {
           "binary_unit_id": "inverse_power.per_W",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "per_W",
           "unit_symbol": "1/W"
@@ -1468,6 +1920,11 @@
       "units": [
         {
           "binary_unit_id": "inverse_pressure.per_Pa",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "per_Pa",
           "unit_symbol": "1/Pa"
@@ -1503,6 +1960,11 @@
       "units": [
         {
           "binary_unit_id": "inverse_torque.per_Nm",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "per_Nm",
           "unit_symbol": "1/(N*m)"
@@ -1538,6 +2000,11 @@
       "units": [
         {
           "binary_unit_id": "moment_of_inertia.kgm2",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "kgm2",
           "unit_symbol": "kg*m^2"
@@ -1573,6 +2040,11 @@
       "units": [
         {
           "binary_unit_id": "momentum.kgmps",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "kgmps",
           "unit_symbol": "kg*m/s"
@@ -1608,6 +2080,11 @@
       "units": [
         {
           "binary_unit_id": "power.W",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "W",
           "unit_symbol": "W"
@@ -1643,6 +2120,11 @@
       "units": [
         {
           "binary_unit_id": "pressure.Pa",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "Pa",
           "unit_symbol": "Pa"
@@ -1678,6 +2160,11 @@
       "units": [
         {
           "binary_unit_id": "time_per_distance.spm",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "spm",
           "unit_symbol": "s/m"
@@ -1713,6 +2200,11 @@
       "units": [
         {
           "binary_unit_id": "torque.Nm",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "Nm",
           "unit_symbol": "N*m"
@@ -1748,6 +2240,11 @@
       "units": [
         {
           "binary_unit_id": "velocity.mps",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "mps",
           "unit_symbol": "m/s"
@@ -1783,6 +2280,11 @@
       "units": [
         {
           "binary_unit_id": "volume_per_mass.m3pkg",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "m3pkg",
           "unit_symbol": "m^3/kg"
@@ -1818,6 +2320,11 @@
       "units": [
         {
           "binary_unit_id": "area_per_lumen.m2plm",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "m2plm",
           "unit_symbol": "m^2/lm"
@@ -1853,6 +2360,11 @@
       "units": [
         {
           "binary_unit_id": "capacitance.F",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "F",
           "unit_symbol": "F"
@@ -1888,6 +2400,11 @@
       "units": [
         {
           "binary_unit_id": "charge.C",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "C",
           "unit_symbol": "C"
@@ -1923,6 +2440,11 @@
       "units": [
         {
           "binary_unit_id": "conductance.S",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "S",
           "unit_symbol": "S"
@@ -1958,6 +2480,11 @@
       "units": [
         {
           "binary_unit_id": "elastance.per_F",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "per_F",
           "unit_symbol": "1/F"
@@ -1993,6 +2520,11 @@
       "units": [
         {
           "binary_unit_id": "illuminance.lx",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "lx",
           "unit_symbol": "lx"
@@ -2028,6 +2560,11 @@
       "units": [
         {
           "binary_unit_id": "inductance.H",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "H",
           "unit_symbol": "H"
@@ -2063,6 +2600,11 @@
       "units": [
         {
           "binary_unit_id": "inverse_charge.per_C",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "per_C",
           "unit_symbol": "1/C"
@@ -2098,6 +2640,11 @@
       "units": [
         {
           "binary_unit_id": "inverse_inductance.per_H",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "per_H",
           "unit_symbol": "1/H"
@@ -2133,6 +2680,11 @@
       "units": [
         {
           "binary_unit_id": "inverse_luminous_flux.per_lm",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "per_lm",
           "unit_symbol": "1/lm"
@@ -2168,6 +2720,11 @@
       "units": [
         {
           "binary_unit_id": "inverse_magnetic_flux.per_Wb",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "per_Wb",
           "unit_symbol": "1/Wb"
@@ -2203,6 +2760,11 @@
       "units": [
         {
           "binary_unit_id": "inverse_magnetic_flux_density.per_T",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "per_T",
           "unit_symbol": "1/T"
@@ -2238,6 +2800,11 @@
       "units": [
         {
           "binary_unit_id": "inverse_voltage.per_V",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "per_V",
           "unit_symbol": "1/V"
@@ -2273,6 +2840,11 @@
       "units": [
         {
           "binary_unit_id": "luminous_flux.lm",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "lm",
           "unit_symbol": "lm"
@@ -2308,6 +2880,11 @@
       "units": [
         {
           "binary_unit_id": "magnetic_flux.Wb",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "Wb",
           "unit_symbol": "Wb"
@@ -2343,6 +2920,11 @@
       "units": [
         {
           "binary_unit_id": "magnetic_flux_density.T",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "T",
           "unit_symbol": "T"
@@ -2378,6 +2960,11 @@
       "units": [
         {
           "binary_unit_id": "resistance.Ohm",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "Ohm",
           "unit_symbol": "Ohm"
@@ -2413,6 +3000,11 @@
       "units": [
         {
           "binary_unit_id": "voltage.V",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "V",
           "unit_symbol": "V"
@@ -2448,6 +3040,11 @@
       "units": [
         {
           "binary_unit_id": "diopter.dpt",
+          "conversion": {
+            "kind": "linear",
+            "offset_to_base": null,
+            "scale_to_base": 1.0
+          },
           "reserved_word_alias": null,
           "unit_code_id": "dpt",
           "unit_symbol": "D"

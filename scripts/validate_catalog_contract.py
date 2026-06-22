@@ -165,17 +165,104 @@ def validate_dimension_invariants(dimension: Any, label: str) -> tuple[str, str,
     return dimension_id, canonical_dimension_id, marker_names
 
 
+def validate_conversion_policies(payload: Any, dimensions: list[Any]) -> None:
+    policies = payload["conversion_policies"]
+    policy_rows = policies["policies"]
+    seen_policy_ids: set[str] = set()
+    for index, row in enumerate(policy_rows):
+        policy_id = str(row["policy_id"])
+        require(
+            policy_id not in seen_policy_ids,
+            f"conversion_policies.policies[{index}].policy_id `{policy_id}` is duplicated",
+            f"conversion_policies.policies[{index}].policy_id",
+        )
+        seen_policy_ids.add(policy_id)
+        guard = row["infallibility_guard"]
+        fallback = row["fallback_policy_id"]
+        if guard is None:
+            require(
+                fallback is None,
+                f"conversion_policies.policies[{index}] cannot declare fallback_policy_id without infallibility_guard",
+                f"conversion_policies.policies[{index}].fallback_policy_id",
+            )
+        else:
+            require(
+                fallback is not None,
+                f"conversion_policies.policies[{index}] with infallibility_guard must declare fallback_policy_id",
+                f"conversion_policies.policies[{index}].fallback_policy_id",
+            )
+    for index, row in enumerate(policy_rows):
+        fallback = row["fallback_policy_id"]
+        if fallback is not None:
+            require(
+                fallback in seen_policy_ids,
+                f"conversion_policies.policies[{index}].fallback_policy_id `{fallback}` must reference an existing policy",
+                f"conversion_policies.policies[{index}].fallback_policy_id",
+            )
+
+    observed_storages = {
+        type_id.rsplit("_", maxsplit=1)[1]
+        for dimension in dimensions
+        for type_id in dimension["json_forms"]["scalar"]["type_ids"]
+    }
+    required_pairs = {
+        (source_storage, target_storage)
+        for source_storage in observed_storages
+        for target_storage in observed_storages
+    }
+
+    same_public_type = policies["same_public_type"]
+    require(
+        same_public_type["identity_policy_id"] in seen_policy_ids,
+        "conversion_policies.same_public_type.identity_policy_id must reference an existing policy",
+        "conversion_policies.same_public_type.identity_policy_id",
+    )
+
+    for section_name in ("same_public_type", "same_canonical_dimension", "reciprocal_bridge"):
+        section = policies[section_name]
+        seen_pairs: set[tuple[str, str]] = set()
+        for index, row in enumerate(section["storage_pair_policies"]):
+            pair = (str(row["source_storage"]), str(row["target_storage"]))
+            require(
+                row["policy_id"] in seen_policy_ids,
+                f"conversion_policies.{section_name}.storage_pair_policies[{index}].policy_id `{row['policy_id']}` must reference an existing policy",
+                f"conversion_policies.{section_name}.storage_pair_policies[{index}].policy_id",
+            )
+            require(
+                pair not in seen_pairs,
+                f"conversion_policies.{section_name} duplicates storage pair `{pair[0]}->{pair[1]}`",
+                f"conversion_policies.{section_name}.storage_pair_policies[{index}]",
+            )
+            seen_pairs.add(pair)
+        missing_pairs = sorted(required_pairs - seen_pairs)
+        require(
+            not missing_pairs,
+            f"conversion_policies.{section_name} must define every observed storage pair; missing {missing_pairs}",
+            f"conversion_policies.{section_name}.storage_pair_policies",
+        )
+
+
 def validate_catalog(payload: Any) -> None:
     validate_schema(payload)
     dimensions = payload["dimensions"]
+    bridges = payload["bridges"]
+    validate_conversion_policies(payload, dimensions)
 
     seen_dimension_ids: set[str] = set()
     canonical_dimension_ids: list[tuple[str, str]] = []
     seen_marker_names: set[str] = set()
+    seen_public_types: set[str] = set()
     for index, dimension in enumerate(dimensions):
         dimension_id, canonical_dimension_id, marker_names = validate_dimension_invariants(dimension, f"dimensions[{index}]")
+        public_type = str(dimension["public_type"])
         require(dimension_id not in seen_dimension_ids, f"duplicate dimension_id `{dimension_id}`", f"dimensions[{index}].dimension_id")
+        require(
+            public_type not in seen_public_types,
+            f"duplicate public_type `{public_type}`",
+            f"dimensions[{index}].public_type",
+        )
         seen_dimension_ids.add(dimension_id)
+        seen_public_types.add(public_type)
         canonical_dimension_ids.append((canonical_dimension_id, f"dimensions[{index}].canonical_dimension_id"))
         for marker_name, location in marker_names:
             require(
@@ -192,6 +279,34 @@ def validate_catalog(payload: Any) -> None:
             location,
         )
 
+    seen_bridges: set[tuple[str, str, str]] = set()
+    for index, bridge in enumerate(bridges):
+        kind = str(bridge["kind"])
+        left_public_type = str(bridge["left_public_type"])
+        right_public_type = str(bridge["right_public_type"])
+        require(
+            left_public_type in seen_public_types,
+            f"bridges[{index}].left_public_type `{left_public_type}` must reference an existing public_type",
+            f"bridges[{index}].left_public_type",
+        )
+        require(
+            right_public_type in seen_public_types,
+            f"bridges[{index}].right_public_type `{right_public_type}` must reference an existing public_type",
+            f"bridges[{index}].right_public_type",
+        )
+        require(
+            left_public_type != right_public_type,
+            f"bridges[{index}] must connect two distinct public types",
+            f"bridges[{index}]",
+        )
+        bridge_key = (kind, *sorted((left_public_type, right_public_type)))
+        require(
+            bridge_key not in seen_bridges,
+            f"duplicate bridge `{kind}` between `{left_public_type}` and `{right_public_type}`",
+            f"bridges[{index}]",
+        )
+        seen_bridges.add(bridge_key)
+
     distance = next((dimension for dimension in dimensions if dimension["dimension_id"] == "distance"), None)
     require(distance is not None, "catalog must include the bootstrap `distance` dimension", "dimensions")
     require(
@@ -203,6 +318,15 @@ def validate_catalog(payload: Any) -> None:
         any(type_id.endswith("_i32") for type_id in distance["json_forms"]["scalar"]["type_ids"]),
         "distance dimension must include an `_i32` scalar type id for the Phase A FFI bootstrap exemplar",
         "dimensions.distance.json_forms.scalar.type_ids",
+    )
+    require(
+        any(
+            bridge["kind"] == "reciprocal"
+            and {bridge["left_public_type"], bridge["right_public_type"]} == {"Distance", "Diopter"}
+            for bridge in bridges
+        ),
+        "catalog must include the reciprocal bridge between Distance and Diopter",
+        "bridges",
     )
 
 

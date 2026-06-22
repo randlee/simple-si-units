@@ -1,6 +1,233 @@
 {
   "schema_version": "1.0.0",
   "catalog_version": "0.1.0-phase-a",
+  "bridges": [
+    {
+      "kind": "reciprocal",
+      "left_public_type": "Distance",
+      "right_public_type": "Diopter"
+    }
+  ],
+  "conversion_policies": {
+    "same_public_type": {
+      "identity_policy_id": "identity",
+      "storage_pair_policies": [
+        {
+          "source_storage": "i32",
+          "target_storage": "i32",
+          "policy_id": "same_storage_i32"
+        },
+        {
+          "source_storage": "i32",
+          "target_storage": "f32",
+          "policy_id": "i32_to_f32"
+        },
+        {
+          "source_storage": "i32",
+          "target_storage": "f64",
+          "policy_id": "widen_to_f64"
+        },
+        {
+          "source_storage": "f32",
+          "target_storage": "i32",
+          "policy_id": "float_to_i32"
+        },
+        {
+          "source_storage": "f32",
+          "target_storage": "f32",
+          "policy_id": "same_storage_f32_guarded"
+        },
+        {
+          "source_storage": "f32",
+          "target_storage": "f64",
+          "policy_id": "widen_to_f64"
+        },
+        {
+          "source_storage": "f64",
+          "target_storage": "i32",
+          "policy_id": "float_to_i32"
+        },
+        {
+          "source_storage": "f64",
+          "target_storage": "f32",
+          "policy_id": "f64_to_f32"
+        },
+        {
+          "source_storage": "f64",
+          "target_storage": "f64",
+          "policy_id": "same_storage_f64"
+        }
+      ]
+    },
+    "same_canonical_dimension": {
+      "api_surface": "try_to_quantity",
+      "storage_pair_policies": [
+        {
+          "source_storage": "i32",
+          "target_storage": "i32",
+          "policy_id": "same_storage_i32"
+        },
+        {
+          "source_storage": "i32",
+          "target_storage": "f32",
+          "policy_id": "i32_to_f32"
+        },
+        {
+          "source_storage": "i32",
+          "target_storage": "f64",
+          "policy_id": "widen_to_f64"
+        },
+        {
+          "source_storage": "f32",
+          "target_storage": "i32",
+          "policy_id": "float_to_i32"
+        },
+        {
+          "source_storage": "f32",
+          "target_storage": "f32",
+          "policy_id": "same_storage_f32_guarded"
+        },
+        {
+          "source_storage": "f32",
+          "target_storage": "f64",
+          "policy_id": "widen_to_f64"
+        },
+        {
+          "source_storage": "f64",
+          "target_storage": "i32",
+          "policy_id": "float_to_i32"
+        },
+        {
+          "source_storage": "f64",
+          "target_storage": "f32",
+          "policy_id": "f64_to_f32"
+        },
+        {
+          "source_storage": "f64",
+          "target_storage": "f64",
+          "policy_id": "same_storage_f64"
+        }
+      ]
+    },
+    "reciprocal_bridge": {
+      "api_surface": "to_reciprocal_quantity",
+      "base_failures": [
+        "DomainViolation"
+      ],
+      "storage_pair_policies": [
+        {
+          "source_storage": "i32",
+          "target_storage": "i32",
+          "policy_id": "same_storage_i32"
+        },
+        {
+          "source_storage": "i32",
+          "target_storage": "f32",
+          "policy_id": "i32_to_f32"
+        },
+        {
+          "source_storage": "i32",
+          "target_storage": "f64",
+          "policy_id": "widen_to_f64"
+        },
+        {
+          "source_storage": "f32",
+          "target_storage": "i32",
+          "policy_id": "float_to_i32"
+        },
+        {
+          "source_storage": "f32",
+          "target_storage": "f32",
+          "policy_id": "same_storage_f32_guarded"
+        },
+        {
+          "source_storage": "f32",
+          "target_storage": "f64",
+          "policy_id": "widen_to_f64"
+        },
+        {
+          "source_storage": "f64",
+          "target_storage": "i32",
+          "policy_id": "float_to_i32"
+        },
+        {
+          "source_storage": "f64",
+          "target_storage": "f32",
+          "policy_id": "f64_to_f32"
+        },
+        {
+          "source_storage": "f64",
+          "target_storage": "f64",
+          "policy_id": "same_storage_f64"
+        }
+      ]
+    },
+    "policies": [
+      {
+        "policy_id": "identity",
+        "api_surface": "identity",
+        "expected_failure": null,
+        "infallibility_guard": null,
+        "fallback_policy_id": null
+      },
+      {
+        "policy_id": "same_storage_f64",
+        "api_surface": "to_unit",
+        "expected_failure": null,
+        "infallibility_guard": null,
+        "fallback_policy_id": null
+      },
+      {
+        "policy_id": "same_storage_f32_guarded",
+        "api_surface": "to_unit",
+        "expected_failure": null,
+        "infallibility_guard": "same_storage_float_range",
+        "fallback_policy_id": "same_storage_f32_overflow"
+      },
+      {
+        "policy_id": "same_storage_f32_overflow",
+        "api_surface": "try_to_unit",
+        "expected_failure": "Overflow|PrecisionLoss",
+        "infallibility_guard": null,
+        "fallback_policy_id": null
+      },
+      {
+        "policy_id": "same_storage_i32",
+        "api_surface": "try_to_unit",
+        "expected_failure": "Overflow|PrecisionLoss",
+        "infallibility_guard": null,
+        "fallback_policy_id": null
+      },
+      {
+        "policy_id": "i32_to_f32",
+        "api_surface": "try_to_unit",
+        "expected_failure": "PrecisionLoss",
+        "infallibility_guard": null,
+        "fallback_policy_id": null
+      },
+      {
+        "policy_id": "widen_to_f64",
+        "api_surface": "try_to_unit",
+        "expected_failure": null,
+        "infallibility_guard": null,
+        "fallback_policy_id": null
+      },
+      {
+        "policy_id": "float_to_i32",
+        "api_surface": "try_to_unit",
+        "expected_failure": "Overflow|PrecisionLoss",
+        "infallibility_guard": null,
+        "fallback_policy_id": null
+      },
+      {
+        "policy_id": "f64_to_f32",
+        "api_surface": "try_to_unit",
+        "expected_failure": "Overflow|PrecisionLoss",
+        "infallibility_guard": null,
+        "fallback_policy_id": null
+      }
+    ]
+  },
   "dimensions": [
     {
       "dimension_id": "amount",
