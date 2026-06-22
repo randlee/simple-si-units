@@ -339,7 +339,7 @@ Scalar operations must preserve the declared unit.
 Examples:
 
 - `Quantity<cm, i32> * i32 -> Quantity<cm, i32>`
-- `Quantity<ft, f32> * f32 -> Quantity<ft, f32>`
+- `Quantity<ft, f32> * f32 -> Quantity<ft, f64>`
 
 ## 2. Addition and subtraction
 

@@ -21,27 +21,37 @@ pub enum ComputeError {
     ZeroDuration,
 }
 
+#[doc(hidden)]
 pub trait AddSubPromotion<Rhs>: private::SealedArithmeticPolicy + ValueStorage {
     type Output: ValueStorage;
 }
 
+#[doc(hidden)]
 pub trait InfallibleAddSubPromotion<Rhs>: AddSubPromotion<Rhs> {}
+#[doc(hidden)]
 pub trait CheckedAddSubPromotion<Rhs>: AddSubPromotion<Rhs> {}
 
+#[doc(hidden)]
 pub trait MulPromotion<Rhs>: private::SealedArithmeticPolicy + ValueStorage {
     type Output: ValueStorage;
 }
 
+#[doc(hidden)]
 pub trait InfallibleMulPromotion<Rhs>: MulPromotion<Rhs> {}
+#[doc(hidden)]
 pub trait CheckedMulPromotion<Rhs>: MulPromotion<Rhs> {}
 
+#[doc(hidden)]
 pub trait DivPromotion<Rhs>: private::SealedArithmeticPolicy + ValueStorage {
     type Output: ValueStorage;
 }
 
+#[doc(hidden)]
 pub trait InfallibleDivPromotion<Rhs>: DivPromotion<Rhs> {}
+#[doc(hidden)]
 pub trait CheckedDivPromotion<Rhs>: DivPromotion<Rhs> {}
 
+#[doc(hidden)]
 pub trait CheckedArithmeticStorage: private::SealedArithmeticStorage + ValueStorage {
     fn from_f64_for_arithmetic(value: f64) -> Result<Self, ArithmeticError>;
     fn checked_add(lhs: Self, rhs: Self) -> Result<Self, ArithmeticError>;
@@ -50,6 +60,7 @@ pub trait CheckedArithmeticStorage: private::SealedArithmeticStorage + ValueStor
     fn checked_div(lhs: Self, rhs: Self) -> Result<Self, ArithmeticError>;
 }
 
+#[doc(hidden)]
 pub trait InfallibleArithmeticStorage: ValueStorage {
     fn from_f64_for_arithmetic_infallible(value: f64) -> Self;
     fn add_infallible(lhs: Self, rhs: Self) -> Self;
@@ -735,6 +746,9 @@ mod tests {
 
         let widened: Distance<f64, m> = Distance::m(i32::MAX) + Distance::m(0.0_f32);
         assert_close(widened.value(), i32::MAX as f64);
+
+        let divided: Distance<f64, m> = Distance::m(i32::MAX) / 1.0_f32;
+        assert_close(divided.value(), i32::MAX as f64);
     }
 
     #[test]
