@@ -207,13 +207,13 @@ Representative FFI forms:
 
 ```rust
 #[repr(C)]
-pub struct DistanceMmI32 {
+pub struct distance_mm_i32 {
     pub value_mm: i32,
 }
 
 #[repr(C)]
-pub struct DistanceMmI32Slice {
-    pub ptr: *const DistanceMmI32,
+pub struct distance_mm_i32_slice {
+    pub ptr: *const distance_mm_i32,
     pub len: u64,
 }
 ```
@@ -235,8 +235,10 @@ scope from the reference project:
 This includes both base quantities and derived quantities across those
 families.
 
-The exact MVP public type inventory is defined in
-[docs/crates/units-x/in-scope-type-inventory.md](/Volumes/Extreme%20Pro/github/simple-si-units/docs/crates/units-x/in-scope-type-inventory.md).
+The authoritative MVP public type inventory is defined in
+`catalog/generated/units-catalog-summary.json`.
+[docs/crates/units-x/in-scope-type-inventory.md](/Volumes/Extreme%20Pro/github/simple-si-units/docs/crates/units-x/in-scope-type-inventory.md)
+is a derived checklist for human review and planning readability.
 
 ## 2. Support for non-SI units
 
@@ -337,7 +339,7 @@ Scalar operations must preserve the declared unit.
 Examples:
 
 - `Quantity<cm, i32> * i32 -> Quantity<cm, i32>`
-- `Quantity<ft, f32> * f32 -> Quantity<ft, f32>`
+- `Quantity<ft, f32> * f32 -> Quantity<ft, f64>`
 
 ## 2. Addition and subtraction
 
@@ -347,7 +349,7 @@ The result should preserve the left-hand unit by converting the right-hand side 
 
 Example:
 
-- `distance_cm + distance_m -> distance_cm`
+- `distance_mm + distance_m -> distance_mm`
 
 This behavior should be explicit and documented.
 
@@ -361,7 +363,10 @@ Examples:
 
 - `Distance / Time -> Velocity`
 - `Velocity / Time -> Acceleration`
-- `Velocity * Time -> Distance`
+- `Velocity * Time -> Distance`:
+  deferred beyond Sprint B-3; V1 closes first on the free-function compute
+  bridges `velocity_from_distance_and_time` and
+  `acceleration_from_velocity_and_time`
 
 Recommended behavior:
 
@@ -533,7 +538,7 @@ Representative exported functions:
 
 - `distance_mm_i32_to_m_f64`
 - `distance_cm_i16_add_distance_m_f64_as_cm_f64`
-- `velocity_mps_from_distance_m_and_time_s`
+- `velocity_mps_f64_from_distance_m_f64_and_time_s_f64`
 
 ## Relationship To Existing Project
 

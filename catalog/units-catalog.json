@@ -1,0 +1,3653 @@
+{
+  "schema_version": "1.0.0",
+  "catalog_version": "0.1.0-phase-a",
+  "bridges": [
+    {
+      "kind": "reciprocal",
+      "left_public_type": "Distance",
+      "right_public_type": "Diopter"
+    }
+  ],
+  "conversion_policies": {
+    "same_public_type": {
+      "identity_policy_id": "identity",
+      "storage_pair_policies": [
+        {
+          "source_storage": "i32",
+          "target_storage": "i32",
+          "policy_id": "same_storage_i32"
+        },
+        {
+          "source_storage": "i32",
+          "target_storage": "f32",
+          "policy_id": "i32_to_f32"
+        },
+        {
+          "source_storage": "i32",
+          "target_storage": "f64",
+          "policy_id": "widen_to_f64"
+        },
+        {
+          "source_storage": "f32",
+          "target_storage": "i32",
+          "policy_id": "float_to_i32"
+        },
+        {
+          "source_storage": "f32",
+          "target_storage": "f32",
+          "policy_id": "same_storage_f32_guarded"
+        },
+        {
+          "source_storage": "f32",
+          "target_storage": "f64",
+          "policy_id": "widen_to_f64"
+        },
+        {
+          "source_storage": "f64",
+          "target_storage": "i32",
+          "policy_id": "float_to_i32"
+        },
+        {
+          "source_storage": "f64",
+          "target_storage": "f32",
+          "policy_id": "f64_to_f32"
+        },
+        {
+          "source_storage": "f64",
+          "target_storage": "f64",
+          "policy_id": "same_storage_f64"
+        }
+      ]
+    },
+    "same_canonical_dimension": {
+      "api_surface": "try_to_quantity",
+      "storage_pair_policies": [
+        {
+          "source_storage": "i32",
+          "target_storage": "i32",
+          "policy_id": "same_storage_i32"
+        },
+        {
+          "source_storage": "i32",
+          "target_storage": "f32",
+          "policy_id": "i32_to_f32"
+        },
+        {
+          "source_storage": "i32",
+          "target_storage": "f64",
+          "policy_id": "widen_to_f64"
+        },
+        {
+          "source_storage": "f32",
+          "target_storage": "i32",
+          "policy_id": "float_to_i32"
+        },
+        {
+          "source_storage": "f32",
+          "target_storage": "f32",
+          "policy_id": "same_storage_f32_guarded"
+        },
+        {
+          "source_storage": "f32",
+          "target_storage": "f64",
+          "policy_id": "widen_to_f64"
+        },
+        {
+          "source_storage": "f64",
+          "target_storage": "i32",
+          "policy_id": "float_to_i32"
+        },
+        {
+          "source_storage": "f64",
+          "target_storage": "f32",
+          "policy_id": "f64_to_f32"
+        },
+        {
+          "source_storage": "f64",
+          "target_storage": "f64",
+          "policy_id": "same_storage_f64"
+        }
+      ]
+    },
+    "reciprocal_bridge": {
+      "api_surface": "to_reciprocal_quantity",
+      "base_failures": [
+        "DomainViolation"
+      ],
+      "storage_pair_policies": [
+        {
+          "source_storage": "i32",
+          "target_storage": "i32",
+          "policy_id": "same_storage_i32"
+        },
+        {
+          "source_storage": "i32",
+          "target_storage": "f32",
+          "policy_id": "i32_to_f32"
+        },
+        {
+          "source_storage": "i32",
+          "target_storage": "f64",
+          "policy_id": "widen_to_f64"
+        },
+        {
+          "source_storage": "f32",
+          "target_storage": "i32",
+          "policy_id": "float_to_i32"
+        },
+        {
+          "source_storage": "f32",
+          "target_storage": "f32",
+          "policy_id": "same_storage_f32_guarded"
+        },
+        {
+          "source_storage": "f32",
+          "target_storage": "f64",
+          "policy_id": "widen_to_f64"
+        },
+        {
+          "source_storage": "f64",
+          "target_storage": "i32",
+          "policy_id": "float_to_i32"
+        },
+        {
+          "source_storage": "f64",
+          "target_storage": "f32",
+          "policy_id": "f64_to_f32"
+        },
+        {
+          "source_storage": "f64",
+          "target_storage": "f64",
+          "policy_id": "same_storage_f64"
+        }
+      ]
+    },
+    "policies": [
+      {
+        "policy_id": "identity",
+        "api_surface": "identity",
+        "expected_failure": null,
+        "infallibility_guard": null,
+        "fallback_policy_id": null
+      },
+      {
+        "policy_id": "same_storage_f64",
+        "api_surface": "to_unit",
+        "expected_failure": null,
+        "infallibility_guard": null,
+        "fallback_policy_id": null
+      },
+      {
+        "policy_id": "same_storage_f32_guarded",
+        "api_surface": "to_unit",
+        "expected_failure": null,
+        "infallibility_guard": "same_storage_float_range",
+        "fallback_policy_id": "same_storage_f32_overflow"
+      },
+      {
+        "policy_id": "same_storage_f32_overflow",
+        "api_surface": "try_to_unit",
+        "expected_failure": "Overflow|PrecisionLoss",
+        "infallibility_guard": null,
+        "fallback_policy_id": null
+      },
+      {
+        "policy_id": "same_storage_i32",
+        "api_surface": "try_to_unit",
+        "expected_failure": "Overflow|PrecisionLoss",
+        "infallibility_guard": null,
+        "fallback_policy_id": null
+      },
+      {
+        "policy_id": "i32_to_f32",
+        "api_surface": "try_to_unit",
+        "expected_failure": "PrecisionLoss",
+        "infallibility_guard": null,
+        "fallback_policy_id": null
+      },
+      {
+        "policy_id": "widen_to_f64",
+        "api_surface": "try_to_unit",
+        "expected_failure": null,
+        "infallibility_guard": null,
+        "fallback_policy_id": null
+      },
+      {
+        "policy_id": "float_to_i32",
+        "api_surface": "try_to_unit",
+        "expected_failure": "Overflow|PrecisionLoss",
+        "infallibility_guard": null,
+        "fallback_policy_id": null
+      },
+      {
+        "policy_id": "f64_to_f32",
+        "api_surface": "try_to_unit",
+        "expected_failure": "Overflow|PrecisionLoss",
+        "infallibility_guard": null,
+        "fallback_policy_id": null
+      }
+    ]
+  },
+  "arithmetic_policies": {
+    "same_dimension_add_sub": {
+      "unsupported_public_types": [
+        "Temperature"
+      ],
+      "storage_pair_policies": [
+        {
+          "lhs_storage": "i32",
+          "rhs_storage": "i32",
+          "result_storage": "i32",
+          "api_mode": "checked",
+          "expected_failure": "Overflow"
+        },
+        {
+          "lhs_storage": "i32",
+          "rhs_storage": "f32",
+          "result_storage": "f64",
+          "api_mode": "infallible",
+          "expected_failure": null
+        },
+        {
+          "lhs_storage": "i32",
+          "rhs_storage": "f64",
+          "result_storage": "f64",
+          "api_mode": "infallible",
+          "expected_failure": null
+        },
+        {
+          "lhs_storage": "f32",
+          "rhs_storage": "i32",
+          "result_storage": "f64",
+          "api_mode": "infallible",
+          "expected_failure": null
+        },
+        {
+          "lhs_storage": "f32",
+          "rhs_storage": "f32",
+          "result_storage": "f64",
+          "api_mode": "infallible",
+          "expected_failure": null
+        },
+        {
+          "lhs_storage": "f32",
+          "rhs_storage": "f64",
+          "result_storage": "f64",
+          "api_mode": "infallible",
+          "expected_failure": null
+        },
+        {
+          "lhs_storage": "f64",
+          "rhs_storage": "i32",
+          "result_storage": "f64",
+          "api_mode": "infallible",
+          "expected_failure": null
+        },
+        {
+          "lhs_storage": "f64",
+          "rhs_storage": "f32",
+          "result_storage": "f64",
+          "api_mode": "infallible",
+          "expected_failure": null
+        },
+        {
+          "lhs_storage": "f64",
+          "rhs_storage": "f64",
+          "result_storage": "f64",
+          "api_mode": "infallible",
+          "expected_failure": null
+        }
+      ]
+    },
+    "scalar_arithmetic": {
+      "unsupported_public_types": [
+        "Temperature"
+      ],
+      "storage_pair_policies": [
+        {
+          "operator": "mul",
+          "lhs_storage": "i32",
+          "rhs_storage": "i32",
+          "result_storage": "i32",
+          "api_mode": "checked",
+          "exact_division_policy": "not-applicable",
+          "expected_failure": "Overflow"
+        },
+        {
+          "operator": "mul",
+          "lhs_storage": "i32",
+          "rhs_storage": "f32",
+          "result_storage": "f64",
+          "api_mode": "infallible",
+          "exact_division_policy": "not-applicable",
+          "expected_failure": null
+        },
+        {
+          "operator": "mul",
+          "lhs_storage": "i32",
+          "rhs_storage": "f64",
+          "result_storage": "f64",
+          "api_mode": "infallible",
+          "exact_division_policy": "not-applicable",
+          "expected_failure": null
+        },
+        {
+          "operator": "mul",
+          "lhs_storage": "f32",
+          "rhs_storage": "i32",
+          "result_storage": "f64",
+          "api_mode": "infallible",
+          "exact_division_policy": "not-applicable",
+          "expected_failure": null
+        },
+        {
+          "operator": "mul",
+          "lhs_storage": "f32",
+          "rhs_storage": "f32",
+          "result_storage": "f64",
+          "api_mode": "infallible",
+          "exact_division_policy": "not-applicable",
+          "expected_failure": null
+        },
+        {
+          "operator": "mul",
+          "lhs_storage": "f32",
+          "rhs_storage": "f64",
+          "result_storage": "f64",
+          "api_mode": "infallible",
+          "exact_division_policy": "not-applicable",
+          "expected_failure": null
+        },
+        {
+          "operator": "mul",
+          "lhs_storage": "f64",
+          "rhs_storage": "i32",
+          "result_storage": "f64",
+          "api_mode": "infallible",
+          "exact_division_policy": "not-applicable",
+          "expected_failure": null
+        },
+        {
+          "operator": "mul",
+          "lhs_storage": "f64",
+          "rhs_storage": "f32",
+          "result_storage": "f64",
+          "api_mode": "infallible",
+          "exact_division_policy": "not-applicable",
+          "expected_failure": null
+        },
+        {
+          "operator": "mul",
+          "lhs_storage": "f64",
+          "rhs_storage": "f64",
+          "result_storage": "f64",
+          "api_mode": "infallible",
+          "exact_division_policy": "not-applicable",
+          "expected_failure": null
+        },
+        {
+          "operator": "div",
+          "lhs_storage": "i32",
+          "rhs_storage": "i32",
+          "result_storage": "i32",
+          "api_mode": "checked",
+          "exact_division_policy": "exact-only",
+          "expected_failure": "DivisionByZero|NonIntegralDivision"
+        },
+        {
+          "operator": "div",
+          "lhs_storage": "i32",
+          "rhs_storage": "f32",
+          "result_storage": "f64",
+          "api_mode": "infallible",
+          "exact_division_policy": "not-applicable",
+          "expected_failure": null
+        },
+        {
+          "operator": "div",
+          "lhs_storage": "i32",
+          "rhs_storage": "f64",
+          "result_storage": "f64",
+          "api_mode": "infallible",
+          "exact_division_policy": "not-applicable",
+          "expected_failure": null
+        },
+        {
+          "operator": "div",
+          "lhs_storage": "f32",
+          "rhs_storage": "i32",
+          "result_storage": "f64",
+          "api_mode": "infallible",
+          "exact_division_policy": "not-applicable",
+          "expected_failure": null
+        },
+        {
+          "operator": "div",
+          "lhs_storage": "f32",
+          "rhs_storage": "f32",
+          "result_storage": "f32",
+          "api_mode": "infallible",
+          "exact_division_policy": "not-applicable",
+          "expected_failure": null
+        },
+        {
+          "operator": "div",
+          "lhs_storage": "f32",
+          "rhs_storage": "f64",
+          "result_storage": "f64",
+          "api_mode": "infallible",
+          "exact_division_policy": "not-applicable",
+          "expected_failure": null
+        },
+        {
+          "operator": "div",
+          "lhs_storage": "f64",
+          "rhs_storage": "i32",
+          "result_storage": "f64",
+          "api_mode": "infallible",
+          "exact_division_policy": "not-applicable",
+          "expected_failure": null
+        },
+        {
+          "operator": "div",
+          "lhs_storage": "f64",
+          "rhs_storage": "f32",
+          "result_storage": "f64",
+          "api_mode": "infallible",
+          "exact_division_policy": "not-applicable",
+          "expected_failure": null
+        },
+        {
+          "operator": "div",
+          "lhs_storage": "f64",
+          "rhs_storage": "f64",
+          "result_storage": "f64",
+          "api_mode": "infallible",
+          "exact_division_policy": "not-applicable",
+          "expected_failure": null
+        }
+      ]
+    },
+    "cross_public_type_add_sub": [
+      {
+        "left_public_type": "Diopter",
+        "right_public_type": "InverseDistance",
+        "supported_api_modes": [
+          "infallible"
+        ]
+      }
+    ],
+    "compute_bridges": [
+      {
+        "operator": "velocity_from_distance_and_time",
+        "lhs_public_type": "Distance",
+        "rhs_public_type": "Time",
+        "result_public_type": "Velocity",
+        "result_unit_code_id": "mps",
+        "result_storage": "f64",
+        "api_mode": "checked",
+        "expected_failure": "ZeroDuration"
+      },
+      {
+        "operator": "acceleration_from_velocity_and_time",
+        "lhs_public_type": "Velocity",
+        "rhs_public_type": "Time",
+        "result_public_type": "Acceleration",
+        "result_unit_code_id": "mps2",
+        "result_storage": "f64",
+        "api_mode": "checked",
+        "expected_failure": "ZeroDuration"
+      }
+    ]
+  },
+  "dimensions": [
+    {
+      "dimension_id": "amount",
+      "canonical_dimension_id": "amount",
+      "family": "base",
+      "public_type": "Amount",
+      "base_unit_code_id": "mol",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "amount_f32",
+            "amount_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "amount{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "amount_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "amount",
+        "binary_schema_id": "units-x.amount.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "mol",
+          "unit_symbol": "mol",
+          "display_name": "mole",
+          "binary_unit_id": "amount.mol",
+          "reserved_word_alias": null,
+          "aliases": [
+            "moles"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "current",
+      "canonical_dimension_id": "current",
+      "family": "base",
+      "public_type": "Current",
+      "base_unit_code_id": "A",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "current_f32",
+            "current_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "current{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "current_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "current",
+        "binary_schema_id": "units-x.current.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "A",
+          "unit_symbol": "A",
+          "display_name": "ampere",
+          "binary_unit_id": "current.A",
+          "reserved_word_alias": null,
+          "aliases": [
+            "amperes"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "distance",
+      "canonical_dimension_id": "distance",
+      "family": "base",
+      "public_type": "Distance",
+      "base_unit_code_id": "m",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "distance_i32",
+            "distance_f32",
+            "distance_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "distance{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "distance_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "distance",
+        "binary_schema_id": "units-x.distance.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "mm",
+          "unit_symbol": "mm",
+          "display_name": "millimeter",
+          "binary_unit_id": "distance.mm",
+          "reserved_word_alias": null,
+          "aliases": [
+            "millimeters"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 0.001,
+            "offset_to_base": null
+          }
+        },
+        {
+          "unit_code_id": "m",
+          "unit_symbol": "m",
+          "display_name": "meter",
+          "binary_unit_id": "distance.m",
+          "reserved_word_alias": null,
+          "aliases": [
+            "meters"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        },
+        {
+          "unit_code_id": "ft",
+          "unit_symbol": "ft",
+          "display_name": "foot",
+          "binary_unit_id": "distance.ft",
+          "reserved_word_alias": null,
+          "aliases": [
+            "feet"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 0.3048,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "inverse_amount",
+      "canonical_dimension_id": "inverse_amount",
+      "family": "base",
+      "public_type": "InverseAmount",
+      "base_unit_code_id": "per_mol",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "inverse_amount_f32",
+            "inverse_amount_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "inverse_amount{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "inverse_amount_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "inverse_amount",
+        "binary_schema_id": "units-x.inverse_amount.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "per_mol",
+          "unit_symbol": "1/mol",
+          "display_name": "reciprocal mole",
+          "binary_unit_id": "inverse_amount.per_mol",
+          "reserved_word_alias": null,
+          "aliases": [
+            "per mole"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "inverse_current",
+      "canonical_dimension_id": "inverse_current",
+      "family": "base",
+      "public_type": "InverseCurrent",
+      "base_unit_code_id": "per_A",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "inverse_current_f32",
+            "inverse_current_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "inverse_current{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "inverse_current_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "inverse_current",
+        "binary_schema_id": "units-x.inverse_current.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "per_A",
+          "unit_symbol": "1/A",
+          "display_name": "reciprocal ampere",
+          "binary_unit_id": "inverse_current.per_A",
+          "reserved_word_alias": null,
+          "aliases": [
+            "per ampere"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "inverse_distance",
+      "canonical_dimension_id": "inverse_distance",
+      "family": "base",
+      "public_type": "InverseDistance",
+      "base_unit_code_id": "per_m",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "inverse_distance_f32",
+            "inverse_distance_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "inverse_distance{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "inverse_distance_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "inverse_distance",
+        "binary_schema_id": "units-x.inverse_distance.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "per_m",
+          "unit_symbol": "1/m",
+          "display_name": "reciprocal meter",
+          "binary_unit_id": "inverse_distance.per_m",
+          "reserved_word_alias": null,
+          "aliases": [
+            "per meter"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "inverse_luminosity",
+      "canonical_dimension_id": "inverse_luminosity",
+      "family": "base",
+      "public_type": "InverseLuminosity",
+      "base_unit_code_id": "per_cd",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "inverse_luminosity_f32",
+            "inverse_luminosity_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "inverse_luminosity{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "inverse_luminosity_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "inverse_luminosity",
+        "binary_schema_id": "units-x.inverse_luminosity.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "per_cd",
+          "unit_symbol": "1/cd",
+          "display_name": "reciprocal candela",
+          "binary_unit_id": "inverse_luminosity.per_cd",
+          "reserved_word_alias": null,
+          "aliases": [
+            "per candela"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "inverse_mass",
+      "canonical_dimension_id": "inverse_mass",
+      "family": "base",
+      "public_type": "InverseMass",
+      "base_unit_code_id": "per_kg",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "inverse_mass_f32",
+            "inverse_mass_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "inverse_mass{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "inverse_mass_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "inverse_mass",
+        "binary_schema_id": "units-x.inverse_mass.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "per_kg",
+          "unit_symbol": "1/kg",
+          "display_name": "reciprocal kilogram",
+          "binary_unit_id": "inverse_mass.per_kg",
+          "reserved_word_alias": null,
+          "aliases": [
+            "per kilogram"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "inverse_temperature",
+      "canonical_dimension_id": "inverse_temperature",
+      "family": "base",
+      "public_type": "InverseTemperature",
+      "base_unit_code_id": "per_K",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "inverse_temperature_f32",
+            "inverse_temperature_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "inverse_temperature{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "inverse_temperature_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "inverse_temperature",
+        "binary_schema_id": "units-x.inverse_temperature.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "per_K",
+          "unit_symbol": "1/K",
+          "display_name": "reciprocal kelvin",
+          "binary_unit_id": "inverse_temperature.per_K",
+          "reserved_word_alias": null,
+          "aliases": [
+            "per kelvin"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "luminosity",
+      "canonical_dimension_id": "luminosity",
+      "family": "base",
+      "public_type": "Luminosity",
+      "base_unit_code_id": "cd",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "luminosity_f32",
+            "luminosity_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "luminosity{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "luminosity_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "luminosity",
+        "binary_schema_id": "units-x.luminosity.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "cd",
+          "unit_symbol": "cd",
+          "display_name": "candela",
+          "binary_unit_id": "luminosity.cd",
+          "reserved_word_alias": null,
+          "aliases": [
+            "candelas"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "mass",
+      "canonical_dimension_id": "mass",
+      "family": "base",
+      "public_type": "Mass",
+      "base_unit_code_id": "kg",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "mass_f32",
+            "mass_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "mass{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "mass_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "mass",
+        "binary_schema_id": "units-x.mass.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "kg",
+          "unit_symbol": "kg",
+          "display_name": "kilogram",
+          "binary_unit_id": "mass.kg",
+          "reserved_word_alias": null,
+          "aliases": [
+            "kilograms"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "temperature",
+      "canonical_dimension_id": "temperature",
+      "family": "base",
+      "public_type": "Temperature",
+      "base_unit_code_id": "K",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "temperature_f32",
+            "temperature_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "temperature{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "temperature_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "temperature",
+        "binary_schema_id": "units-x.temperature.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "K",
+          "unit_symbol": "K",
+          "display_name": "kelvin",
+          "binary_unit_id": "temperature.K",
+          "reserved_word_alias": null,
+          "aliases": [],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        },
+        {
+          "unit_code_id": "degC",
+          "unit_symbol": "C",
+          "display_name": "celsius",
+          "binary_unit_id": "temperature.degC",
+          "reserved_word_alias": null,
+          "aliases": [
+            "celsius"
+          ],
+          "conversion": {
+            "kind": "affine",
+            "scale_to_base": 1.0,
+            "offset_to_base": 273.15
+          }
+        },
+        {
+          "unit_code_id": "degF",
+          "unit_symbol": "F",
+          "display_name": "fahrenheit",
+          "binary_unit_id": "temperature.degF",
+          "reserved_word_alias": null,
+          "aliases": [
+            "fahrenheit"
+          ],
+          "conversion": {
+            "kind": "affine",
+            "scale_to_base": 0.555555555555556,
+            "offset_to_base": 255.372222222222
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "time",
+      "canonical_dimension_id": "time",
+      "family": "base",
+      "public_type": "Time",
+      "base_unit_code_id": "s",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "time_i32",
+            "time_f32",
+            "time_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "time{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "time_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "time",
+        "binary_schema_id": "units-x.time.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "s",
+          "unit_symbol": "s",
+          "display_name": "second",
+          "binary_unit_id": "time.s",
+          "reserved_word_alias": null,
+          "aliases": [
+            "seconds"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        },
+        {
+          "unit_code_id": "ms",
+          "unit_symbol": "ms",
+          "display_name": "millisecond",
+          "binary_unit_id": "time.ms",
+          "reserved_word_alias": null,
+          "aliases": [
+            "milliseconds"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 0.001,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "angle",
+      "canonical_dimension_id": "angle",
+      "family": "geometry",
+      "public_type": "Angle",
+      "base_unit_code_id": "rad",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "angle_f32",
+            "angle_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "angle{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "angle_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "angle",
+        "binary_schema_id": "units-x.angle.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "rad",
+          "unit_symbol": "rad",
+          "display_name": "radian",
+          "binary_unit_id": "angle.rad",
+          "reserved_word_alias": null,
+          "aliases": [
+            "radians"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "area",
+      "canonical_dimension_id": "area",
+      "family": "geometry",
+      "public_type": "Area",
+      "base_unit_code_id": "m2",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "area_f32",
+            "area_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "area{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "area_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "area",
+        "binary_schema_id": "units-x.area.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "m2",
+          "unit_symbol": "m^2",
+          "display_name": "square meter",
+          "binary_unit_id": "area.m2",
+          "reserved_word_alias": null,
+          "aliases": [
+            "square meters"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "inverse_angle",
+      "canonical_dimension_id": "inverse_angle",
+      "family": "geometry",
+      "public_type": "InverseAngle",
+      "base_unit_code_id": "per_rad",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "inverse_angle_f32",
+            "inverse_angle_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "inverse_angle{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "inverse_angle_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "inverse_angle",
+        "binary_schema_id": "units-x.inverse_angle.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "per_rad",
+          "unit_symbol": "1/rad",
+          "display_name": "reciprocal radian",
+          "binary_unit_id": "inverse_angle.per_rad",
+          "reserved_word_alias": null,
+          "aliases": [
+            "per radian"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "inverse_area",
+      "canonical_dimension_id": "inverse_area",
+      "family": "geometry",
+      "public_type": "InverseArea",
+      "base_unit_code_id": "per_m2",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "inverse_area_f32",
+            "inverse_area_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "inverse_area{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "inverse_area_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "inverse_area",
+        "binary_schema_id": "units-x.inverse_area.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "per_m2",
+          "unit_symbol": "1/m^2",
+          "display_name": "reciprocal square meter",
+          "binary_unit_id": "inverse_area.per_m2",
+          "reserved_word_alias": null,
+          "aliases": [
+            "per square meter"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "inverse_solid_angle",
+      "canonical_dimension_id": "inverse_solid_angle",
+      "family": "geometry",
+      "public_type": "InverseSolidAngle",
+      "base_unit_code_id": "per_sr",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "inverse_solid_angle_f32",
+            "inverse_solid_angle_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "inverse_solid_angle{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "inverse_solid_angle_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "inverse_solid_angle",
+        "binary_schema_id": "units-x.inverse_solid_angle.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "per_sr",
+          "unit_symbol": "1/sr",
+          "display_name": "reciprocal steradian",
+          "binary_unit_id": "inverse_solid_angle.per_sr",
+          "reserved_word_alias": null,
+          "aliases": [
+            "per steradian"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "inverse_volume",
+      "canonical_dimension_id": "inverse_volume",
+      "family": "geometry",
+      "public_type": "InverseVolume",
+      "base_unit_code_id": "per_m3",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "inverse_volume_f32",
+            "inverse_volume_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "inverse_volume{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "inverse_volume_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "inverse_volume",
+        "binary_schema_id": "units-x.inverse_volume.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "per_m3",
+          "unit_symbol": "1/m^3",
+          "display_name": "reciprocal cubic meter",
+          "binary_unit_id": "inverse_volume.per_m3",
+          "reserved_word_alias": null,
+          "aliases": [
+            "per cubic meter"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "solid_angle",
+      "canonical_dimension_id": "solid_angle",
+      "family": "geometry",
+      "public_type": "SolidAngle",
+      "base_unit_code_id": "sr",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "solid_angle_f32",
+            "solid_angle_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "solid_angle{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "solid_angle_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "solid_angle",
+        "binary_schema_id": "units-x.solid_angle.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "sr",
+          "unit_symbol": "sr",
+          "display_name": "steradian",
+          "binary_unit_id": "solid_angle.sr",
+          "reserved_word_alias": null,
+          "aliases": [
+            "steradians"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "volume",
+      "canonical_dimension_id": "volume",
+      "family": "geometry",
+      "public_type": "Volume",
+      "base_unit_code_id": "m3",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "volume_f32",
+            "volume_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "volume{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "volume_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "volume",
+        "binary_schema_id": "units-x.volume.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "m3",
+          "unit_symbol": "m^3",
+          "display_name": "cubic meter",
+          "binary_unit_id": "volume.m3",
+          "reserved_word_alias": null,
+          "aliases": [
+            "cubic meters"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "acceleration",
+      "canonical_dimension_id": "acceleration",
+      "family": "mechanical",
+      "public_type": "Acceleration",
+      "base_unit_code_id": "mps2",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "acceleration_f32",
+            "acceleration_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "acceleration{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "acceleration_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "acceleration",
+        "binary_schema_id": "units-x.acceleration.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "mps2",
+          "unit_symbol": "m/(s*s)",
+          "display_name": "meter per square second",
+          "binary_unit_id": "acceleration.mps2",
+          "reserved_word_alias": null,
+          "aliases": [
+            "meters per square second"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "angular_acceleration",
+      "canonical_dimension_id": "angular_acceleration",
+      "family": "mechanical",
+      "public_type": "AngularAcceleration",
+      "base_unit_code_id": "radps2",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "angular_acceleration_f32",
+            "angular_acceleration_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "angular_acceleration{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "angular_acceleration_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "angular_acceleration",
+        "binary_schema_id": "units-x.angular_acceleration.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "radps2",
+          "unit_symbol": "rad/(s*s)",
+          "display_name": "radian per square second",
+          "binary_unit_id": "angular_acceleration.radps2",
+          "reserved_word_alias": null,
+          "aliases": [
+            "radians per square second"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "angular_momentum",
+      "canonical_dimension_id": "angular_momentum",
+      "family": "mechanical",
+      "public_type": "AngularMomentum",
+      "base_unit_code_id": "kgm2ps",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "angular_momentum_f32",
+            "angular_momentum_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "angular_momentum{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "angular_momentum_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "angular_momentum",
+        "binary_schema_id": "units-x.angular_momentum.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "kgm2ps",
+          "unit_symbol": "kg*m^2/s",
+          "display_name": "kilogram meter squared per second",
+          "binary_unit_id": "angular_momentum.kgm2ps",
+          "reserved_word_alias": null,
+          "aliases": [],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "angular_velocity",
+      "canonical_dimension_id": "angular_velocity",
+      "family": "mechanical",
+      "public_type": "AngularVelocity",
+      "base_unit_code_id": "radps",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "angular_velocity_f32",
+            "angular_velocity_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "angular_velocity{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "angular_velocity_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "angular_velocity",
+        "binary_schema_id": "units-x.angular_velocity.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "radps",
+          "unit_symbol": "rad/s",
+          "display_name": "radian per second",
+          "binary_unit_id": "angular_velocity.radps",
+          "reserved_word_alias": null,
+          "aliases": [
+            "radians per second"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "area_density",
+      "canonical_dimension_id": "area_density",
+      "family": "mechanical",
+      "public_type": "AreaDensity",
+      "base_unit_code_id": "kgpm2",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "area_density_f32",
+            "area_density_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "area_density{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "area_density_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "area_density",
+        "binary_schema_id": "units-x.area_density.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "kgpm2",
+          "unit_symbol": "kg/m^2",
+          "display_name": "kilogram per square meter",
+          "binary_unit_id": "area_density.kgpm2",
+          "reserved_word_alias": null,
+          "aliases": [
+            "kilograms per square meter"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "area_per_mass",
+      "canonical_dimension_id": "area_per_mass",
+      "family": "mechanical",
+      "public_type": "AreaPerMass",
+      "base_unit_code_id": "m2pkg",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "area_per_mass_f32",
+            "area_per_mass_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "area_per_mass{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "area_per_mass_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "area_per_mass",
+        "binary_schema_id": "units-x.area_per_mass.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "m2pkg",
+          "unit_symbol": "m^2/kg",
+          "display_name": "square meter per kilogram",
+          "binary_unit_id": "area_per_mass.m2pkg",
+          "reserved_word_alias": null,
+          "aliases": [],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "density",
+      "canonical_dimension_id": "density",
+      "family": "mechanical",
+      "public_type": "Density",
+      "base_unit_code_id": "kgpm3",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "density_f32",
+            "density_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "density{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "density_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "density",
+        "binary_schema_id": "units-x.density.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "kgpm3",
+          "unit_symbol": "kg/m^3",
+          "display_name": "kilogram per cubic meter",
+          "binary_unit_id": "density.kgpm3",
+          "reserved_word_alias": null,
+          "aliases": [
+            "kilograms per cubic meter"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "energy",
+      "canonical_dimension_id": "energy",
+      "family": "mechanical",
+      "public_type": "Energy",
+      "base_unit_code_id": "J",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "energy_f32",
+            "energy_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "energy{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "energy_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "energy",
+        "binary_schema_id": "units-x.energy.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "J",
+          "unit_symbol": "J",
+          "display_name": "joule",
+          "binary_unit_id": "energy.J",
+          "reserved_word_alias": null,
+          "aliases": [
+            "joules"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "force",
+      "canonical_dimension_id": "force",
+      "family": "mechanical",
+      "public_type": "Force",
+      "base_unit_code_id": "N",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "force_f32",
+            "force_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "force{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "force_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "force",
+        "binary_schema_id": "units-x.force.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "N",
+          "unit_symbol": "N",
+          "display_name": "newton",
+          "binary_unit_id": "force.N",
+          "reserved_word_alias": null,
+          "aliases": [
+            "newtons"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "frequency",
+      "canonical_dimension_id": "frequency",
+      "family": "mechanical",
+      "public_type": "Frequency",
+      "base_unit_code_id": "Hz",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "frequency_f32",
+            "frequency_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "frequency{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "frequency_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "frequency",
+        "binary_schema_id": "units-x.frequency.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "Hz",
+          "unit_symbol": "Hz",
+          "display_name": "hertz",
+          "binary_unit_id": "frequency.Hz",
+          "reserved_word_alias": null,
+          "aliases": [],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "inverse_acceleration",
+      "canonical_dimension_id": "inverse_acceleration",
+      "family": "mechanical",
+      "public_type": "InverseAcceleration",
+      "base_unit_code_id": "per_mps2",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "inverse_acceleration_f32",
+            "inverse_acceleration_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "inverse_acceleration{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "inverse_acceleration_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "inverse_acceleration",
+        "binary_schema_id": "units-x.inverse_acceleration.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "per_mps2",
+          "unit_symbol": "1/(m/(s*s))",
+          "display_name": "reciprocal acceleration",
+          "binary_unit_id": "inverse_acceleration.per_mps2",
+          "reserved_word_alias": null,
+          "aliases": [],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "inverse_angular_acceleration",
+      "canonical_dimension_id": "inverse_angular_acceleration",
+      "family": "mechanical",
+      "public_type": "InverseAngularAcceleration",
+      "base_unit_code_id": "per_radps2",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "inverse_angular_acceleration_f32",
+            "inverse_angular_acceleration_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "inverse_angular_acceleration{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "inverse_angular_acceleration_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "inverse_angular_acceleration",
+        "binary_schema_id": "units-x.inverse_angular_acceleration.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "per_radps2",
+          "unit_symbol": "1/(rad/(s*s))",
+          "display_name": "reciprocal angular acceleration",
+          "binary_unit_id": "inverse_angular_acceleration.per_radps2",
+          "reserved_word_alias": null,
+          "aliases": [],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "inverse_angular_momentum",
+      "canonical_dimension_id": "inverse_angular_momentum",
+      "family": "mechanical",
+      "public_type": "InverseAngularMomentum",
+      "base_unit_code_id": "per_kgm2ps",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "inverse_angular_momentum_f32",
+            "inverse_angular_momentum_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "inverse_angular_momentum{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "inverse_angular_momentum_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "inverse_angular_momentum",
+        "binary_schema_id": "units-x.inverse_angular_momentum.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "per_kgm2ps",
+          "unit_symbol": "1/(kg*m^2/s)",
+          "display_name": "reciprocal angular momentum",
+          "binary_unit_id": "inverse_angular_momentum.per_kgm2ps",
+          "reserved_word_alias": null,
+          "aliases": [],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "inverse_angular_velocity",
+      "canonical_dimension_id": "inverse_angular_velocity",
+      "family": "mechanical",
+      "public_type": "InverseAngularVelocity",
+      "base_unit_code_id": "per_radps",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "inverse_angular_velocity_f32",
+            "inverse_angular_velocity_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "inverse_angular_velocity{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "inverse_angular_velocity_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "inverse_angular_velocity",
+        "binary_schema_id": "units-x.inverse_angular_velocity.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "per_radps",
+          "unit_symbol": "1/(rad/s)",
+          "display_name": "reciprocal angular velocity",
+          "binary_unit_id": "inverse_angular_velocity.per_radps",
+          "reserved_word_alias": null,
+          "aliases": [],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "inverse_energy",
+      "canonical_dimension_id": "inverse_energy",
+      "family": "mechanical",
+      "public_type": "InverseEnergy",
+      "base_unit_code_id": "per_J",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "inverse_energy_f32",
+            "inverse_energy_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "inverse_energy{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "inverse_energy_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "inverse_energy",
+        "binary_schema_id": "units-x.inverse_energy.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "per_J",
+          "unit_symbol": "1/J",
+          "display_name": "reciprocal joule",
+          "binary_unit_id": "inverse_energy.per_J",
+          "reserved_word_alias": null,
+          "aliases": [
+            "per joule"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "inverse_force",
+      "canonical_dimension_id": "inverse_force",
+      "family": "mechanical",
+      "public_type": "InverseForce",
+      "base_unit_code_id": "per_N",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "inverse_force_f32",
+            "inverse_force_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "inverse_force{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "inverse_force_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "inverse_force",
+        "binary_schema_id": "units-x.inverse_force.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "per_N",
+          "unit_symbol": "1/N",
+          "display_name": "reciprocal newton",
+          "binary_unit_id": "inverse_force.per_N",
+          "reserved_word_alias": null,
+          "aliases": [
+            "per newton"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "inverse_moment_of_inertia",
+      "canonical_dimension_id": "inverse_moment_of_inertia",
+      "family": "mechanical",
+      "public_type": "InverseMomentOfInertia",
+      "base_unit_code_id": "per_kgm2",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "inverse_moment_of_inertia_f32",
+            "inverse_moment_of_inertia_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "inverse_moment_of_inertia{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "inverse_moment_of_inertia_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "inverse_moment_of_inertia",
+        "binary_schema_id": "units-x.inverse_moment_of_inertia.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "per_kgm2",
+          "unit_symbol": "1/(kg*m^2)",
+          "display_name": "reciprocal moment of inertia",
+          "binary_unit_id": "inverse_moment_of_inertia.per_kgm2",
+          "reserved_word_alias": null,
+          "aliases": [],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "inverse_momentum",
+      "canonical_dimension_id": "inverse_momentum",
+      "family": "mechanical",
+      "public_type": "InverseMomentum",
+      "base_unit_code_id": "per_kgmps",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "inverse_momentum_f32",
+            "inverse_momentum_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "inverse_momentum{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "inverse_momentum_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "inverse_momentum",
+        "binary_schema_id": "units-x.inverse_momentum.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "per_kgmps",
+          "unit_symbol": "1/(kg*m/s)",
+          "display_name": "reciprocal momentum",
+          "binary_unit_id": "inverse_momentum.per_kgmps",
+          "reserved_word_alias": null,
+          "aliases": [],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "inverse_power",
+      "canonical_dimension_id": "inverse_power",
+      "family": "mechanical",
+      "public_type": "InversePower",
+      "base_unit_code_id": "per_W",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "inverse_power_f32",
+            "inverse_power_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "inverse_power{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "inverse_power_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "inverse_power",
+        "binary_schema_id": "units-x.inverse_power.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "per_W",
+          "unit_symbol": "1/W",
+          "display_name": "reciprocal watt",
+          "binary_unit_id": "inverse_power.per_W",
+          "reserved_word_alias": null,
+          "aliases": [
+            "per watt"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "inverse_pressure",
+      "canonical_dimension_id": "inverse_pressure",
+      "family": "mechanical",
+      "public_type": "InversePressure",
+      "base_unit_code_id": "per_Pa",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "inverse_pressure_f32",
+            "inverse_pressure_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "inverse_pressure{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "inverse_pressure_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "inverse_pressure",
+        "binary_schema_id": "units-x.inverse_pressure.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "per_Pa",
+          "unit_symbol": "1/Pa",
+          "display_name": "reciprocal pascal",
+          "binary_unit_id": "inverse_pressure.per_Pa",
+          "reserved_word_alias": null,
+          "aliases": [
+            "per pascal"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "inverse_torque",
+      "canonical_dimension_id": "inverse_torque",
+      "family": "mechanical",
+      "public_type": "InverseTorque",
+      "base_unit_code_id": "per_Nm",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "inverse_torque_f32",
+            "inverse_torque_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "inverse_torque{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "inverse_torque_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "inverse_torque",
+        "binary_schema_id": "units-x.inverse_torque.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "per_Nm",
+          "unit_symbol": "1/(N*m)",
+          "display_name": "reciprocal newton meter",
+          "binary_unit_id": "inverse_torque.per_Nm",
+          "reserved_word_alias": null,
+          "aliases": [],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "moment_of_inertia",
+      "canonical_dimension_id": "moment_of_inertia",
+      "family": "mechanical",
+      "public_type": "MomentOfInertia",
+      "base_unit_code_id": "kgm2",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "moment_of_inertia_f32",
+            "moment_of_inertia_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "moment_of_inertia{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "moment_of_inertia_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "moment_of_inertia",
+        "binary_schema_id": "units-x.moment_of_inertia.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "kgm2",
+          "unit_symbol": "kg*m^2",
+          "display_name": "kilogram meter squared",
+          "binary_unit_id": "moment_of_inertia.kgm2",
+          "reserved_word_alias": null,
+          "aliases": [],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "momentum",
+      "canonical_dimension_id": "momentum",
+      "family": "mechanical",
+      "public_type": "Momentum",
+      "base_unit_code_id": "kgmps",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "momentum_f32",
+            "momentum_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "momentum{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "momentum_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "momentum",
+        "binary_schema_id": "units-x.momentum.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "kgmps",
+          "unit_symbol": "kg*m/s",
+          "display_name": "kilogram meter per second",
+          "binary_unit_id": "momentum.kgmps",
+          "reserved_word_alias": null,
+          "aliases": [],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "power",
+      "canonical_dimension_id": "power",
+      "family": "mechanical",
+      "public_type": "Power",
+      "base_unit_code_id": "W",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "power_f32",
+            "power_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "power{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "power_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "power",
+        "binary_schema_id": "units-x.power.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "W",
+          "unit_symbol": "W",
+          "display_name": "watt",
+          "binary_unit_id": "power.W",
+          "reserved_word_alias": null,
+          "aliases": [
+            "watts"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "pressure",
+      "canonical_dimension_id": "pressure",
+      "family": "mechanical",
+      "public_type": "Pressure",
+      "base_unit_code_id": "Pa",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "pressure_f32",
+            "pressure_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "pressure{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "pressure_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "pressure",
+        "binary_schema_id": "units-x.pressure.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "Pa",
+          "unit_symbol": "Pa",
+          "display_name": "pascal",
+          "binary_unit_id": "pressure.Pa",
+          "reserved_word_alias": null,
+          "aliases": [
+            "pascals"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "time_per_distance",
+      "canonical_dimension_id": "time_per_distance",
+      "family": "mechanical",
+      "public_type": "TimePerDistance",
+      "base_unit_code_id": "spm",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "time_per_distance_f32",
+            "time_per_distance_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "time_per_distance{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "time_per_distance_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "time_per_distance",
+        "binary_schema_id": "units-x.time_per_distance.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "spm",
+          "unit_symbol": "s/m",
+          "display_name": "second per meter",
+          "binary_unit_id": "time_per_distance.spm",
+          "reserved_word_alias": null,
+          "aliases": [
+            "seconds per meter"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "torque",
+      "canonical_dimension_id": "torque",
+      "family": "mechanical",
+      "public_type": "Torque",
+      "base_unit_code_id": "Nm",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "torque_f32",
+            "torque_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "torque{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "torque_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "torque",
+        "binary_schema_id": "units-x.torque.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "Nm",
+          "unit_symbol": "N*m",
+          "display_name": "newton meter",
+          "binary_unit_id": "torque.Nm",
+          "reserved_word_alias": null,
+          "aliases": [
+            "newton meters"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "velocity",
+      "canonical_dimension_id": "velocity",
+      "family": "mechanical",
+      "public_type": "Velocity",
+      "base_unit_code_id": "mps",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "velocity_f32",
+            "velocity_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "velocity{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "velocity_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "velocity",
+        "binary_schema_id": "units-x.velocity.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "mps",
+          "unit_symbol": "m/s",
+          "display_name": "meter per second",
+          "binary_unit_id": "velocity.mps",
+          "reserved_word_alias": null,
+          "aliases": [
+            "meters per second"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "volume_per_mass",
+      "canonical_dimension_id": "volume_per_mass",
+      "family": "mechanical",
+      "public_type": "VolumePerMass",
+      "base_unit_code_id": "m3pkg",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "volume_per_mass_f32",
+            "volume_per_mass_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "volume_per_mass{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "volume_per_mass_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "volume_per_mass",
+        "binary_schema_id": "units-x.volume_per_mass.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "m3pkg",
+          "unit_symbol": "m^3/kg",
+          "display_name": "cubic meter per kilogram",
+          "binary_unit_id": "volume_per_mass.m3pkg",
+          "reserved_word_alias": null,
+          "aliases": [],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "area_per_lumen",
+      "canonical_dimension_id": "area_per_lumen",
+      "family": "electromagnetic",
+      "public_type": "AreaPerLumen",
+      "base_unit_code_id": "m2plm",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "area_per_lumen_f32",
+            "area_per_lumen_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "area_per_lumen{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "area_per_lumen_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "area_per_lumen",
+        "binary_schema_id": "units-x.area_per_lumen.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "m2plm",
+          "unit_symbol": "m^2/lm",
+          "display_name": "square meter per lumen",
+          "binary_unit_id": "area_per_lumen.m2plm",
+          "reserved_word_alias": null,
+          "aliases": [],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "capacitance",
+      "canonical_dimension_id": "capacitance",
+      "family": "electromagnetic",
+      "public_type": "Capacitance",
+      "base_unit_code_id": "F",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "capacitance_f32",
+            "capacitance_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "capacitance{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "capacitance_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "capacitance",
+        "binary_schema_id": "units-x.capacitance.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "F",
+          "unit_symbol": "F",
+          "display_name": "farad",
+          "binary_unit_id": "capacitance.F",
+          "reserved_word_alias": null,
+          "aliases": [
+            "farads"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "charge",
+      "canonical_dimension_id": "charge",
+      "family": "electromagnetic",
+      "public_type": "Charge",
+      "base_unit_code_id": "C",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "charge_f32",
+            "charge_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "charge{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "charge_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "charge",
+        "binary_schema_id": "units-x.charge.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "C",
+          "unit_symbol": "C",
+          "display_name": "coulomb",
+          "binary_unit_id": "charge.C",
+          "reserved_word_alias": null,
+          "aliases": [
+            "coulombs"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "conductance",
+      "canonical_dimension_id": "conductance",
+      "family": "electromagnetic",
+      "public_type": "Conductance",
+      "base_unit_code_id": "S",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "conductance_f32",
+            "conductance_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "conductance{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "conductance_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "conductance",
+        "binary_schema_id": "units-x.conductance.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "S",
+          "unit_symbol": "S",
+          "display_name": "siemens",
+          "binary_unit_id": "conductance.S",
+          "reserved_word_alias": null,
+          "aliases": [],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "elastance",
+      "canonical_dimension_id": "elastance",
+      "family": "electromagnetic",
+      "public_type": "Elastance",
+      "base_unit_code_id": "per_F",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "elastance_f32",
+            "elastance_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "elastance{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "elastance_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "elastance",
+        "binary_schema_id": "units-x.elastance.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "per_F",
+          "unit_symbol": "1/F",
+          "display_name": "reciprocal farad",
+          "binary_unit_id": "elastance.per_F",
+          "reserved_word_alias": null,
+          "aliases": [
+            "per farad"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "illuminance",
+      "canonical_dimension_id": "illuminance",
+      "family": "electromagnetic",
+      "public_type": "Illuminance",
+      "base_unit_code_id": "lx",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "illuminance_f32",
+            "illuminance_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "illuminance{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "illuminance_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "illuminance",
+        "binary_schema_id": "units-x.illuminance.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "lx",
+          "unit_symbol": "lx",
+          "display_name": "lux",
+          "binary_unit_id": "illuminance.lx",
+          "reserved_word_alias": null,
+          "aliases": [],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "inductance",
+      "canonical_dimension_id": "inductance",
+      "family": "electromagnetic",
+      "public_type": "Inductance",
+      "base_unit_code_id": "H",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "inductance_f32",
+            "inductance_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "inductance{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "inductance_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "inductance",
+        "binary_schema_id": "units-x.inductance.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "H",
+          "unit_symbol": "H",
+          "display_name": "henry",
+          "binary_unit_id": "inductance.H",
+          "reserved_word_alias": null,
+          "aliases": [
+            "henries"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "inverse_charge",
+      "canonical_dimension_id": "inverse_charge",
+      "family": "electromagnetic",
+      "public_type": "InverseCharge",
+      "base_unit_code_id": "per_C",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "inverse_charge_f32",
+            "inverse_charge_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "inverse_charge{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "inverse_charge_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "inverse_charge",
+        "binary_schema_id": "units-x.inverse_charge.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "per_C",
+          "unit_symbol": "1/C",
+          "display_name": "reciprocal coulomb",
+          "binary_unit_id": "inverse_charge.per_C",
+          "reserved_word_alias": null,
+          "aliases": [
+            "per coulomb"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "inverse_inductance",
+      "canonical_dimension_id": "inverse_inductance",
+      "family": "electromagnetic",
+      "public_type": "InverseInductance",
+      "base_unit_code_id": "per_H",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "inverse_inductance_f32",
+            "inverse_inductance_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "inverse_inductance{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "inverse_inductance_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "inverse_inductance",
+        "binary_schema_id": "units-x.inverse_inductance.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "per_H",
+          "unit_symbol": "1/H",
+          "display_name": "reciprocal henry",
+          "binary_unit_id": "inverse_inductance.per_H",
+          "reserved_word_alias": null,
+          "aliases": [
+            "per henry"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "inverse_luminous_flux",
+      "canonical_dimension_id": "inverse_luminous_flux",
+      "family": "electromagnetic",
+      "public_type": "InverseLuminousFlux",
+      "base_unit_code_id": "per_lm",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "inverse_luminous_flux_f32",
+            "inverse_luminous_flux_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "inverse_luminous_flux{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "inverse_luminous_flux_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "inverse_luminous_flux",
+        "binary_schema_id": "units-x.inverse_luminous_flux.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "per_lm",
+          "unit_symbol": "1/lm",
+          "display_name": "reciprocal lumen",
+          "binary_unit_id": "inverse_luminous_flux.per_lm",
+          "reserved_word_alias": null,
+          "aliases": [
+            "per lumen"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "inverse_magnetic_flux",
+      "canonical_dimension_id": "inverse_magnetic_flux",
+      "family": "electromagnetic",
+      "public_type": "InverseMagneticFlux",
+      "base_unit_code_id": "per_Wb",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "inverse_magnetic_flux_f32",
+            "inverse_magnetic_flux_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "inverse_magnetic_flux{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "inverse_magnetic_flux_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "inverse_magnetic_flux",
+        "binary_schema_id": "units-x.inverse_magnetic_flux.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "per_Wb",
+          "unit_symbol": "1/Wb",
+          "display_name": "reciprocal weber",
+          "binary_unit_id": "inverse_magnetic_flux.per_Wb",
+          "reserved_word_alias": null,
+          "aliases": [
+            "per weber"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "inverse_magnetic_flux_density",
+      "canonical_dimension_id": "inverse_magnetic_flux_density",
+      "family": "electromagnetic",
+      "public_type": "InverseMagneticFluxDensity",
+      "base_unit_code_id": "per_T",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "inverse_magnetic_flux_density_f32",
+            "inverse_magnetic_flux_density_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "inverse_magnetic_flux_density{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "inverse_magnetic_flux_density_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "inverse_magnetic_flux_density",
+        "binary_schema_id": "units-x.inverse_magnetic_flux_density.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "per_T",
+          "unit_symbol": "1/T",
+          "display_name": "reciprocal tesla",
+          "binary_unit_id": "inverse_magnetic_flux_density.per_T",
+          "reserved_word_alias": null,
+          "aliases": [
+            "per tesla"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "inverse_voltage",
+      "canonical_dimension_id": "inverse_voltage",
+      "family": "electromagnetic",
+      "public_type": "InverseVoltage",
+      "base_unit_code_id": "per_V",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "inverse_voltage_f32",
+            "inverse_voltage_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "inverse_voltage{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "inverse_voltage_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "inverse_voltage",
+        "binary_schema_id": "units-x.inverse_voltage.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "per_V",
+          "unit_symbol": "1/V",
+          "display_name": "reciprocal volt",
+          "binary_unit_id": "inverse_voltage.per_V",
+          "reserved_word_alias": null,
+          "aliases": [
+            "per volt"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "luminous_flux",
+      "canonical_dimension_id": "luminous_flux",
+      "family": "electromagnetic",
+      "public_type": "LuminousFlux",
+      "base_unit_code_id": "lm",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "luminous_flux_f32",
+            "luminous_flux_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "luminous_flux{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "luminous_flux_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "luminous_flux",
+        "binary_schema_id": "units-x.luminous_flux.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "lm",
+          "unit_symbol": "lm",
+          "display_name": "lumen",
+          "binary_unit_id": "luminous_flux.lm",
+          "reserved_word_alias": null,
+          "aliases": [
+            "lumens"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "magnetic_flux",
+      "canonical_dimension_id": "magnetic_flux",
+      "family": "electromagnetic",
+      "public_type": "MagneticFlux",
+      "base_unit_code_id": "Wb",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "magnetic_flux_f32",
+            "magnetic_flux_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "magnetic_flux{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "magnetic_flux_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "magnetic_flux",
+        "binary_schema_id": "units-x.magnetic_flux.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "Wb",
+          "unit_symbol": "Wb",
+          "display_name": "weber",
+          "binary_unit_id": "magnetic_flux.Wb",
+          "reserved_word_alias": null,
+          "aliases": [
+            "webers"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "magnetic_flux_density",
+      "canonical_dimension_id": "magnetic_flux_density",
+      "family": "electromagnetic",
+      "public_type": "MagneticFluxDensity",
+      "base_unit_code_id": "T",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "magnetic_flux_density_f32",
+            "magnetic_flux_density_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "magnetic_flux_density{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "magnetic_flux_density_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "magnetic_flux_density",
+        "binary_schema_id": "units-x.magnetic_flux_density.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "T",
+          "unit_symbol": "T",
+          "display_name": "tesla",
+          "binary_unit_id": "magnetic_flux_density.T",
+          "reserved_word_alias": null,
+          "aliases": [
+            "teslas"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "resistance",
+      "canonical_dimension_id": "resistance",
+      "family": "electromagnetic",
+      "public_type": "Resistance",
+      "base_unit_code_id": "Ohm",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "resistance_f32",
+            "resistance_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "resistance{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "resistance_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "resistance",
+        "binary_schema_id": "units-x.resistance.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "Ohm",
+          "unit_symbol": "Ohm",
+          "display_name": "ohm",
+          "binary_unit_id": "resistance.Ohm",
+          "reserved_word_alias": null,
+          "aliases": [
+            "ohms"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "voltage",
+      "canonical_dimension_id": "voltage",
+      "family": "electromagnetic",
+      "public_type": "Voltage",
+      "base_unit_code_id": "V",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "voltage_f32",
+            "voltage_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "voltage{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "voltage_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "voltage",
+        "binary_schema_id": "units-x.voltage.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "V",
+          "unit_symbol": "V",
+          "display_name": "volt",
+          "binary_unit_id": "voltage.V",
+          "reserved_word_alias": null,
+          "aliases": [
+            "volts"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "diopter",
+      "canonical_dimension_id": "inverse_distance",
+      "family": "base",
+      "public_type": "Diopter",
+      "base_unit_code_id": "dpt",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "diopter_f32",
+            "diopter_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "diopter{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "diopter_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "diopter",
+        "binary_schema_id": "units-x.diopter.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "dpt",
+          "unit_symbol": "D",
+          "display_name": "diopter",
+          "binary_unit_id": "diopter.dpt",
+          "reserved_word_alias": null,
+          "aliases": [
+            "diopters"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -78,7 +78,7 @@ identifiers where those differ.
 The crate must support the V1 unit-family scope discussed in planning:
 
 - every public type listed in
-  [in-scope-type-inventory.md](/Volumes/Extreme%20Pro/github/simple-si-units/docs/crates/units-x/in-scope-type-inventory.md)
+  `catalog/generated/units-catalog-summary.json`
 
 ### Serialization
 
@@ -166,6 +166,8 @@ pointer-plus-length contracts with documented mutability and ownership rules.
 
 The crate must define an explicit ABI status/error model for slice and buffer
 operations that can fail.
+Caller-provided output pointers and Rust-owned output buffers must have distinct
+documented failure codes rather than relying on implicit null-pointer behavior.
 
 #### REQ-UX-037
 
@@ -217,6 +219,12 @@ distance.
 The MVP is not required to reproduce the full legacy operator graph for every
 possible unit combination, but it must support conversion, serialization, and
 documented derived operations across the in-scope unit families.
+
+#### REQ-UX-046
+
+Operational compatibility for conversion and same-dimension arithmetic must be
+keyed by catalog `canonical_dimension_id` rather than inferred only from public
+type names.
 
 #### REQ-UX-026
 

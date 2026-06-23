@@ -1,0 +1,738 @@
+{
+  "schema_version": "1.0.0",
+  "catalog_version": "0.1.0-phase-a-sample",
+  "bridges": [
+    {
+      "kind": "reciprocal",
+      "left_public_type": "Distance",
+      "right_public_type": "Diopter"
+    }
+  ],
+  "conversion_policies": {
+    "same_public_type": {
+      "identity_policy_id": "identity",
+      "storage_pair_policies": [
+        {
+          "source_storage": "i32",
+          "target_storage": "i32",
+          "policy_id": "same_storage_i32"
+        },
+        {
+          "source_storage": "i32",
+          "target_storage": "f32",
+          "policy_id": "i32_to_f32"
+        },
+        {
+          "source_storage": "i32",
+          "target_storage": "f64",
+          "policy_id": "widen_to_f64"
+        },
+        {
+          "source_storage": "f32",
+          "target_storage": "i32",
+          "policy_id": "float_to_i32"
+        },
+        {
+          "source_storage": "f32",
+          "target_storage": "f32",
+          "policy_id": "same_storage_f32_guarded"
+        },
+        {
+          "source_storage": "f32",
+          "target_storage": "f64",
+          "policy_id": "widen_to_f64"
+        },
+        {
+          "source_storage": "f64",
+          "target_storage": "i32",
+          "policy_id": "float_to_i32"
+        },
+        {
+          "source_storage": "f64",
+          "target_storage": "f32",
+          "policy_id": "f64_to_f32"
+        },
+        {
+          "source_storage": "f64",
+          "target_storage": "f64",
+          "policy_id": "same_storage_f64"
+        }
+      ]
+    },
+    "same_canonical_dimension": {
+      "api_surface": "try_to_quantity",
+      "storage_pair_policies": [
+        {
+          "source_storage": "i32",
+          "target_storage": "i32",
+          "policy_id": "same_storage_i32"
+        },
+        {
+          "source_storage": "i32",
+          "target_storage": "f32",
+          "policy_id": "i32_to_f32"
+        },
+        {
+          "source_storage": "i32",
+          "target_storage": "f64",
+          "policy_id": "widen_to_f64"
+        },
+        {
+          "source_storage": "f32",
+          "target_storage": "i32",
+          "policy_id": "float_to_i32"
+        },
+        {
+          "source_storage": "f32",
+          "target_storage": "f32",
+          "policy_id": "same_storage_f32_guarded"
+        },
+        {
+          "source_storage": "f32",
+          "target_storage": "f64",
+          "policy_id": "widen_to_f64"
+        },
+        {
+          "source_storage": "f64",
+          "target_storage": "i32",
+          "policy_id": "float_to_i32"
+        },
+        {
+          "source_storage": "f64",
+          "target_storage": "f32",
+          "policy_id": "f64_to_f32"
+        },
+        {
+          "source_storage": "f64",
+          "target_storage": "f64",
+          "policy_id": "same_storage_f64"
+        }
+      ]
+    },
+    "reciprocal_bridge": {
+      "api_surface": "to_reciprocal_quantity",
+      "base_failures": [
+        "DomainViolation"
+      ],
+      "storage_pair_policies": [
+        {
+          "source_storage": "i32",
+          "target_storage": "i32",
+          "policy_id": "same_storage_i32"
+        },
+        {
+          "source_storage": "i32",
+          "target_storage": "f32",
+          "policy_id": "i32_to_f32"
+        },
+        {
+          "source_storage": "i32",
+          "target_storage": "f64",
+          "policy_id": "widen_to_f64"
+        },
+        {
+          "source_storage": "f32",
+          "target_storage": "i32",
+          "policy_id": "float_to_i32"
+        },
+        {
+          "source_storage": "f32",
+          "target_storage": "f32",
+          "policy_id": "same_storage_f32_guarded"
+        },
+        {
+          "source_storage": "f32",
+          "target_storage": "f64",
+          "policy_id": "widen_to_f64"
+        },
+        {
+          "source_storage": "f64",
+          "target_storage": "i32",
+          "policy_id": "float_to_i32"
+        },
+        {
+          "source_storage": "f64",
+          "target_storage": "f32",
+          "policy_id": "f64_to_f32"
+        },
+        {
+          "source_storage": "f64",
+          "target_storage": "f64",
+          "policy_id": "same_storage_f64"
+        }
+      ]
+    },
+    "policies": [
+      {
+        "policy_id": "identity",
+        "api_surface": "identity",
+        "expected_failure": null,
+        "infallibility_guard": null,
+        "fallback_policy_id": null
+      },
+      {
+        "policy_id": "same_storage_f64",
+        "api_surface": "to_unit",
+        "expected_failure": null,
+        "infallibility_guard": null,
+        "fallback_policy_id": null
+      },
+      {
+        "policy_id": "same_storage_f32_guarded",
+        "api_surface": "to_unit",
+        "expected_failure": null,
+        "infallibility_guard": "same_storage_float_range",
+        "fallback_policy_id": "same_storage_f32_overflow"
+      },
+      {
+        "policy_id": "same_storage_f32_overflow",
+        "api_surface": "try_to_unit",
+        "expected_failure": "Overflow|PrecisionLoss",
+        "infallibility_guard": null,
+        "fallback_policy_id": null
+      },
+      {
+        "policy_id": "same_storage_i32",
+        "api_surface": "try_to_unit",
+        "expected_failure": "Overflow|PrecisionLoss",
+        "infallibility_guard": null,
+        "fallback_policy_id": null
+      },
+      {
+        "policy_id": "i32_to_f32",
+        "api_surface": "try_to_unit",
+        "expected_failure": "PrecisionLoss",
+        "infallibility_guard": null,
+        "fallback_policy_id": null
+      },
+      {
+        "policy_id": "widen_to_f64",
+        "api_surface": "try_to_unit",
+        "expected_failure": null,
+        "infallibility_guard": null,
+        "fallback_policy_id": null
+      },
+      {
+        "policy_id": "float_to_i32",
+        "api_surface": "try_to_unit",
+        "expected_failure": "Overflow|PrecisionLoss",
+        "infallibility_guard": null,
+        "fallback_policy_id": null
+      },
+      {
+        "policy_id": "f64_to_f32",
+        "api_surface": "try_to_unit",
+        "expected_failure": "Overflow|PrecisionLoss",
+        "infallibility_guard": null,
+        "fallback_policy_id": null
+      }
+    ]
+  },
+  "arithmetic_policies": {
+    "same_dimension_add_sub": {
+      "unsupported_public_types": [
+        "Temperature"
+      ],
+      "storage_pair_policies": [
+        {
+          "lhs_storage": "i32",
+          "rhs_storage": "i32",
+          "result_storage": "i32",
+          "api_mode": "checked",
+          "expected_failure": "Overflow"
+        },
+        {
+          "lhs_storage": "i32",
+          "rhs_storage": "f32",
+          "result_storage": "f64",
+          "api_mode": "infallible",
+          "expected_failure": null
+        },
+        {
+          "lhs_storage": "i32",
+          "rhs_storage": "f64",
+          "result_storage": "f64",
+          "api_mode": "infallible",
+          "expected_failure": null
+        },
+        {
+          "lhs_storage": "f32",
+          "rhs_storage": "i32",
+          "result_storage": "f64",
+          "api_mode": "infallible",
+          "expected_failure": null
+        },
+        {
+          "lhs_storage": "f32",
+          "rhs_storage": "f32",
+          "result_storage": "f64",
+          "api_mode": "infallible",
+          "expected_failure": null
+        },
+        {
+          "lhs_storage": "f32",
+          "rhs_storage": "f64",
+          "result_storage": "f64",
+          "api_mode": "infallible",
+          "expected_failure": null
+        },
+        {
+          "lhs_storage": "f64",
+          "rhs_storage": "i32",
+          "result_storage": "f64",
+          "api_mode": "infallible",
+          "expected_failure": null
+        },
+        {
+          "lhs_storage": "f64",
+          "rhs_storage": "f32",
+          "result_storage": "f64",
+          "api_mode": "infallible",
+          "expected_failure": null
+        },
+        {
+          "lhs_storage": "f64",
+          "rhs_storage": "f64",
+          "result_storage": "f64",
+          "api_mode": "infallible",
+          "expected_failure": null
+        }
+      ]
+    },
+    "scalar_arithmetic": {
+      "unsupported_public_types": [
+        "Temperature"
+      ],
+      "storage_pair_policies": [
+        {
+          "operator": "mul",
+          "lhs_storage": "i32",
+          "rhs_storage": "i32",
+          "result_storage": "i32",
+          "api_mode": "checked",
+          "exact_division_policy": "not-applicable",
+          "expected_failure": "Overflow"
+        },
+        {
+          "operator": "mul",
+          "lhs_storage": "i32",
+          "rhs_storage": "f32",
+          "result_storage": "f64",
+          "api_mode": "infallible",
+          "exact_division_policy": "not-applicable",
+          "expected_failure": null
+        },
+        {
+          "operator": "mul",
+          "lhs_storage": "i32",
+          "rhs_storage": "f64",
+          "result_storage": "f64",
+          "api_mode": "infallible",
+          "exact_division_policy": "not-applicable",
+          "expected_failure": null
+        },
+        {
+          "operator": "mul",
+          "lhs_storage": "f32",
+          "rhs_storage": "i32",
+          "result_storage": "f64",
+          "api_mode": "infallible",
+          "exact_division_policy": "not-applicable",
+          "expected_failure": null
+        },
+        {
+          "operator": "mul",
+          "lhs_storage": "f32",
+          "rhs_storage": "f32",
+          "result_storage": "f64",
+          "api_mode": "infallible",
+          "exact_division_policy": "not-applicable",
+          "expected_failure": null
+        },
+        {
+          "operator": "mul",
+          "lhs_storage": "f32",
+          "rhs_storage": "f64",
+          "result_storage": "f64",
+          "api_mode": "infallible",
+          "exact_division_policy": "not-applicable",
+          "expected_failure": null
+        },
+        {
+          "operator": "mul",
+          "lhs_storage": "f64",
+          "rhs_storage": "i32",
+          "result_storage": "f64",
+          "api_mode": "infallible",
+          "exact_division_policy": "not-applicable",
+          "expected_failure": null
+        },
+        {
+          "operator": "mul",
+          "lhs_storage": "f64",
+          "rhs_storage": "f32",
+          "result_storage": "f64",
+          "api_mode": "infallible",
+          "exact_division_policy": "not-applicable",
+          "expected_failure": null
+        },
+        {
+          "operator": "mul",
+          "lhs_storage": "f64",
+          "rhs_storage": "f64",
+          "result_storage": "f64",
+          "api_mode": "infallible",
+          "exact_division_policy": "not-applicable",
+          "expected_failure": null
+        },
+        {
+          "operator": "div",
+          "lhs_storage": "i32",
+          "rhs_storage": "i32",
+          "result_storage": "i32",
+          "api_mode": "checked",
+          "exact_division_policy": "exact-only",
+          "expected_failure": "DivisionByZero|NonIntegralDivision"
+        },
+        {
+          "operator": "div",
+          "lhs_storage": "i32",
+          "rhs_storage": "f32",
+          "result_storage": "f32",
+          "api_mode": "infallible",
+          "exact_division_policy": "not-applicable",
+          "expected_failure": null
+        },
+        {
+          "operator": "div",
+          "lhs_storage": "i32",
+          "rhs_storage": "f64",
+          "result_storage": "f64",
+          "api_mode": "infallible",
+          "exact_division_policy": "not-applicable",
+          "expected_failure": null
+        },
+        {
+          "operator": "div",
+          "lhs_storage": "f32",
+          "rhs_storage": "i32",
+          "result_storage": "f32",
+          "api_mode": "infallible",
+          "exact_division_policy": "not-applicable",
+          "expected_failure": null
+        },
+        {
+          "operator": "div",
+          "lhs_storage": "f32",
+          "rhs_storage": "f32",
+          "result_storage": "f32",
+          "api_mode": "infallible",
+          "exact_division_policy": "not-applicable",
+          "expected_failure": null
+        },
+        {
+          "operator": "div",
+          "lhs_storage": "f32",
+          "rhs_storage": "f64",
+          "result_storage": "f64",
+          "api_mode": "infallible",
+          "exact_division_policy": "not-applicable",
+          "expected_failure": null
+        },
+        {
+          "operator": "div",
+          "lhs_storage": "f64",
+          "rhs_storage": "i32",
+          "result_storage": "f64",
+          "api_mode": "infallible",
+          "exact_division_policy": "not-applicable",
+          "expected_failure": null
+        },
+        {
+          "operator": "div",
+          "lhs_storage": "f64",
+          "rhs_storage": "f32",
+          "result_storage": "f64",
+          "api_mode": "infallible",
+          "exact_division_policy": "not-applicable",
+          "expected_failure": null
+        },
+        {
+          "operator": "div",
+          "lhs_storage": "f64",
+          "rhs_storage": "f64",
+          "result_storage": "f64",
+          "api_mode": "infallible",
+          "exact_division_policy": "not-applicable",
+          "expected_failure": null
+        }
+      ]
+    },
+    "cross_public_type_add_sub": [
+      {
+        "left_public_type": "Diopter",
+        "right_public_type": "InverseDistance",
+        "supported_api_modes": [
+          "infallible"
+        ]
+      }
+    ],
+    "compute_bridges": []
+  },
+  "dimensions": [
+    {
+      "dimension_id": "distance",
+      "canonical_dimension_id": "distance",
+      "family": "base",
+      "public_type": "Distance",
+      "base_unit_code_id": "m",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "distance_i32",
+            "distance_f32",
+            "distance_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "distance{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "distance_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "distance",
+        "binary_schema_id": "units-x.distance.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "mm",
+          "unit_symbol": "mm",
+          "display_name": "millimeter",
+          "binary_unit_id": "distance.mm",
+          "reserved_word_alias": null,
+          "aliases": [
+            "millimeters"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 0.001,
+            "offset_to_base": null
+          }
+        },
+        {
+          "unit_code_id": "Mm",
+          "unit_symbol": "Mm",
+          "display_name": "megameter",
+          "binary_unit_id": "distance.Mm",
+          "reserved_word_alias": null,
+          "aliases": [
+            "megameters"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1000000.0,
+            "offset_to_base": null
+          }
+        },
+        {
+          "unit_code_id": "m",
+          "unit_symbol": "m",
+          "display_name": "meter",
+          "binary_unit_id": "distance.m",
+          "reserved_word_alias": null,
+          "aliases": [
+            "meters"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        },
+        {
+          "unit_code_id": "ft",
+          "unit_symbol": "ft",
+          "display_name": "foot",
+          "binary_unit_id": "distance.ft",
+          "reserved_word_alias": null,
+          "aliases": [
+            "feet"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 0.3048,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "inverse_distance",
+      "canonical_dimension_id": "inverse_distance",
+      "family": "base",
+      "public_type": "InverseDistance",
+      "base_unit_code_id": "per_m",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "inverse_distance_f32",
+            "inverse_distance_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "inverse_distance{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "inverse_distance_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "inverse_distance",
+        "binary_schema_id": "units-x.inverse_distance.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "per_m",
+          "unit_symbol": "1/m",
+          "display_name": "reciprocal meter",
+          "binary_unit_id": "inverse_distance.per_m",
+          "reserved_word_alias": null,
+          "aliases": [
+            "per meter"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "diopter",
+      "canonical_dimension_id": "inverse_distance",
+      "family": "base",
+      "public_type": "Diopter",
+      "base_unit_code_id": "dpt",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "diopter_f32",
+            "diopter_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "diopter{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "diopter_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "diopter",
+        "binary_schema_id": "units-x.diopter.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "dpt",
+          "unit_symbol": "D",
+          "display_name": "diopter",
+          "binary_unit_id": "diopter.dpt",
+          "reserved_word_alias": null,
+          "aliases": [
+            "diopters"
+          ],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        }
+      ]
+    },
+    {
+      "dimension_id": "temperature",
+      "canonical_dimension_id": "temperature",
+      "family": "base",
+      "public_type": "Temperature",
+      "base_unit_code_id": "K",
+      "json_forms": {
+        "scalar": {
+          "type_ids": [
+            "temperature_f32",
+            "temperature_f64"
+          ],
+          "encoding": "object"
+        },
+        "small_array": {
+          "type_id_template": "temperature{arity}_{storage}",
+          "encoding": "array"
+        },
+        "buffer": {
+          "type_id_template": "temperature_buffer_{storage}",
+          "encoding": "base64-le"
+        }
+      },
+      "abi": {
+        "abi_name_stem": "temperature",
+        "binary_schema_id": "units-x.temperature.v1"
+      },
+      "units": [
+        {
+          "unit_code_id": "K",
+          "unit_symbol": "K",
+          "display_name": "kelvin",
+          "binary_unit_id": "temperature.K",
+          "reserved_word_alias": null,
+          "aliases": [],
+          "conversion": {
+            "kind": "linear",
+            "scale_to_base": 1.0,
+            "offset_to_base": null
+          }
+        },
+        {
+          "unit_code_id": "degC",
+          "unit_symbol": "C",
+          "display_name": "celsius",
+          "binary_unit_id": "temperature.degC",
+          "reserved_word_alias": null,
+          "aliases": [
+            "celsius"
+          ],
+          "conversion": {
+            "kind": "affine",
+            "scale_to_base": 1.0,
+            "offset_to_base": 273.15
+          }
+        },
+        {
+          "unit_code_id": "degF",
+          "unit_symbol": "F",
+          "display_name": "fahrenheit",
+          "binary_unit_id": "temperature.degF",
+          "reserved_word_alias": null,
+          "aliases": [
+            "fahrenheit"
+          ],
+          "conversion": {
+            "kind": "affine",
+            "scale_to_base": 0.555555555555556,
+            "offset_to_base": 255.372222222222
+          }
+        }
+      ]
+    }
+  ]
+}

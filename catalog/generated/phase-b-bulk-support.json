@@ -1,0 +1,7562 @@
+[
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Amount",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Amount",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Amount",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Amount",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Amount",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Amount",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Amount",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Amount",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Amount",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Amount",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Amount",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Amount",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Current",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Current",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Current",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Current",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Current",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Current",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Current",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Current",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Current",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Current",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Current",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Current",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Distance",
+    "storage": "i32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Distance",
+    "storage": "i32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Distance",
+    "storage": "i32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Distance",
+    "storage": "i32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Distance",
+    "storage": "i32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Distance",
+    "storage": "i32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Distance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Distance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Distance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Distance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Distance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Distance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Distance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Distance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Distance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Distance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Distance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Distance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseAmount",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseAmount",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseAmount",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseAmount",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseAmount",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseAmount",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseAmount",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseAmount",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseAmount",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseAmount",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseAmount",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseAmount",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseCurrent",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseCurrent",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseCurrent",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseCurrent",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseCurrent",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseCurrent",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseCurrent",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseCurrent",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseCurrent",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseCurrent",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseCurrent",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseCurrent",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseDistance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseDistance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseDistance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseDistance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseDistance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseDistance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseDistance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseDistance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseDistance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseDistance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseDistance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseDistance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseLuminosity",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseLuminosity",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseLuminosity",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseLuminosity",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseLuminosity",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseLuminosity",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseLuminosity",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseLuminosity",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseLuminosity",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseLuminosity",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseLuminosity",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseLuminosity",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseMass",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseMass",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseMass",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseMass",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseMass",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseMass",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseMass",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseMass",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseMass",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseMass",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseMass",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseMass",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseTemperature",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseTemperature",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseTemperature",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseTemperature",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseTemperature",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseTemperature",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseTemperature",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseTemperature",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseTemperature",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseTemperature",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseTemperature",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseTemperature",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Luminosity",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Luminosity",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Luminosity",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Luminosity",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Luminosity",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Luminosity",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Luminosity",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Luminosity",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Luminosity",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Luminosity",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Luminosity",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Luminosity",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Mass",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Mass",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Mass",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Mass",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Mass",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Mass",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Mass",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Mass",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Mass",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Mass",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Mass",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Mass",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Temperature",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Temperature",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Temperature",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Temperature",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Temperature",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Temperature",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Temperature",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Temperature",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Temperature",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Temperature",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Temperature",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Temperature",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Time",
+    "storage": "i32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Time",
+    "storage": "i32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Time",
+    "storage": "i32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Time",
+    "storage": "i32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Time",
+    "storage": "i32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Time",
+    "storage": "i32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Time",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Time",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Time",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Time",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Time",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Time",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Time",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Time",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Time",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Time",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Time",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Time",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Angle",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Angle",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Angle",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Angle",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Angle",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Angle",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Angle",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Angle",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Angle",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Angle",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Angle",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Angle",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Area",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Area",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Area",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Area",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Area",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Area",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Area",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Area",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Area",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Area",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Area",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Area",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseAngle",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseAngle",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseAngle",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseAngle",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseAngle",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseAngle",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseAngle",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseAngle",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseAngle",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseAngle",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseAngle",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseAngle",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseArea",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseArea",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseArea",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseArea",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseArea",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseArea",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseArea",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseArea",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseArea",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseArea",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseArea",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseArea",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseSolidAngle",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseSolidAngle",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseSolidAngle",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseSolidAngle",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseSolidAngle",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseSolidAngle",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseSolidAngle",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseSolidAngle",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseSolidAngle",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseSolidAngle",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseSolidAngle",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseSolidAngle",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseVolume",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseVolume",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseVolume",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseVolume",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseVolume",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseVolume",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseVolume",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseVolume",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseVolume",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseVolume",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseVolume",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseVolume",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "SolidAngle",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "SolidAngle",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "SolidAngle",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "SolidAngle",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "SolidAngle",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "SolidAngle",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "SolidAngle",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "SolidAngle",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "SolidAngle",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "SolidAngle",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "SolidAngle",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "SolidAngle",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Volume",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Volume",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Volume",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Volume",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Volume",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Volume",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Volume",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Volume",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Volume",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Volume",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Volume",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Volume",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Acceleration",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Acceleration",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Acceleration",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Acceleration",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Acceleration",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Acceleration",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Acceleration",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Acceleration",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Acceleration",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Acceleration",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Acceleration",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Acceleration",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "AngularAcceleration",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "AngularAcceleration",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "AngularAcceleration",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "AngularAcceleration",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "AngularAcceleration",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "AngularAcceleration",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "AngularAcceleration",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "AngularAcceleration",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "AngularAcceleration",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "AngularAcceleration",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "AngularAcceleration",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "AngularAcceleration",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "AngularMomentum",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "AngularMomentum",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "AngularMomentum",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "AngularMomentum",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "AngularMomentum",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "AngularMomentum",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "AngularMomentum",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "AngularMomentum",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "AngularMomentum",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "AngularMomentum",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "AngularMomentum",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "AngularMomentum",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "AngularVelocity",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "AngularVelocity",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "AngularVelocity",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "AngularVelocity",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "AngularVelocity",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "AngularVelocity",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "AngularVelocity",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "AngularVelocity",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "AngularVelocity",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "AngularVelocity",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "AngularVelocity",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "AngularVelocity",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "AreaDensity",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "AreaDensity",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "AreaDensity",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "AreaDensity",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "AreaDensity",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "AreaDensity",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "AreaDensity",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "AreaDensity",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "AreaDensity",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "AreaDensity",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "AreaDensity",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "AreaDensity",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "AreaPerMass",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "AreaPerMass",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "AreaPerMass",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "AreaPerMass",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "AreaPerMass",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "AreaPerMass",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "AreaPerMass",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "AreaPerMass",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "AreaPerMass",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "AreaPerMass",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "AreaPerMass",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "AreaPerMass",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Density",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Density",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Density",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Density",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Density",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Density",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Density",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Density",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Density",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Density",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Density",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Density",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Energy",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Energy",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Energy",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Energy",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Energy",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Energy",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Energy",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Energy",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Energy",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Energy",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Energy",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Energy",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Force",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Force",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Force",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Force",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Force",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Force",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Force",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Force",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Force",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Force",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Force",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Force",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Frequency",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Frequency",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Frequency",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Frequency",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Frequency",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Frequency",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Frequency",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Frequency",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Frequency",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Frequency",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Frequency",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Frequency",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseAcceleration",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseAcceleration",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseAcceleration",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseAcceleration",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseAcceleration",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseAcceleration",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseAcceleration",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseAcceleration",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseAcceleration",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseAcceleration",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseAcceleration",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseAcceleration",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseAngularAcceleration",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseAngularAcceleration",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseAngularAcceleration",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseAngularAcceleration",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseAngularAcceleration",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseAngularAcceleration",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseAngularAcceleration",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseAngularAcceleration",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseAngularAcceleration",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseAngularAcceleration",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseAngularAcceleration",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseAngularAcceleration",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseAngularMomentum",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseAngularMomentum",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseAngularMomentum",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseAngularMomentum",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseAngularMomentum",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseAngularMomentum",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseAngularMomentum",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseAngularMomentum",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseAngularMomentum",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseAngularMomentum",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseAngularMomentum",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseAngularMomentum",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseAngularVelocity",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseAngularVelocity",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseAngularVelocity",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseAngularVelocity",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseAngularVelocity",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseAngularVelocity",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseAngularVelocity",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseAngularVelocity",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseAngularVelocity",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseAngularVelocity",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseAngularVelocity",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseAngularVelocity",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseEnergy",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseEnergy",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseEnergy",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseEnergy",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseEnergy",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseEnergy",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseEnergy",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseEnergy",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseEnergy",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseEnergy",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseEnergy",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseEnergy",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseForce",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseForce",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseForce",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseForce",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseForce",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseForce",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseForce",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseForce",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseForce",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseForce",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseForce",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseForce",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseMomentOfInertia",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseMomentOfInertia",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseMomentOfInertia",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseMomentOfInertia",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseMomentOfInertia",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseMomentOfInertia",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseMomentOfInertia",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseMomentOfInertia",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseMomentOfInertia",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseMomentOfInertia",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseMomentOfInertia",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseMomentOfInertia",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseMomentum",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseMomentum",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseMomentum",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseMomentum",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseMomentum",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseMomentum",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseMomentum",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseMomentum",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseMomentum",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseMomentum",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseMomentum",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseMomentum",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InversePower",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InversePower",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InversePower",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InversePower",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InversePower",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InversePower",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InversePower",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InversePower",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InversePower",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InversePower",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InversePower",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InversePower",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InversePressure",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InversePressure",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InversePressure",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InversePressure",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InversePressure",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InversePressure",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InversePressure",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InversePressure",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InversePressure",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InversePressure",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InversePressure",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InversePressure",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseTorque",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseTorque",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseTorque",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseTorque",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseTorque",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseTorque",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseTorque",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseTorque",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseTorque",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseTorque",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseTorque",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseTorque",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "MomentOfInertia",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "MomentOfInertia",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "MomentOfInertia",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "MomentOfInertia",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "MomentOfInertia",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "MomentOfInertia",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "MomentOfInertia",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "MomentOfInertia",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "MomentOfInertia",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "MomentOfInertia",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "MomentOfInertia",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "MomentOfInertia",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Momentum",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Momentum",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Momentum",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Momentum",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Momentum",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Momentum",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Momentum",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Momentum",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Momentum",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Momentum",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Momentum",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Momentum",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Power",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Power",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Power",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Power",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Power",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Power",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Power",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Power",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Power",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Power",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Power",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Power",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Pressure",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Pressure",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Pressure",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Pressure",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Pressure",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Pressure",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Pressure",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Pressure",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Pressure",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Pressure",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Pressure",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Pressure",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "TimePerDistance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "TimePerDistance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "TimePerDistance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "TimePerDistance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "TimePerDistance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "TimePerDistance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "TimePerDistance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "TimePerDistance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "TimePerDistance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "TimePerDistance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "TimePerDistance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "TimePerDistance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Torque",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Torque",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Torque",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Torque",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Torque",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Torque",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Torque",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Torque",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Torque",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Torque",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Torque",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Torque",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Velocity",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Velocity",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Velocity",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Velocity",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Velocity",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Velocity",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Velocity",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Velocity",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Velocity",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Velocity",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Velocity",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Velocity",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "VolumePerMass",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "VolumePerMass",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "VolumePerMass",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "VolumePerMass",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "VolumePerMass",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "VolumePerMass",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "VolumePerMass",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "VolumePerMass",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "VolumePerMass",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "VolumePerMass",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "VolumePerMass",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "VolumePerMass",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "AreaPerLumen",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "AreaPerLumen",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "AreaPerLumen",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "AreaPerLumen",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "AreaPerLumen",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "AreaPerLumen",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "AreaPerLumen",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "AreaPerLumen",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "AreaPerLumen",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "AreaPerLumen",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "AreaPerLumen",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "AreaPerLumen",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Capacitance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Capacitance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Capacitance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Capacitance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Capacitance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Capacitance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Capacitance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Capacitance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Capacitance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Capacitance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Capacitance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Capacitance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Charge",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Charge",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Charge",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Charge",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Charge",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Charge",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Charge",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Charge",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Charge",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Charge",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Charge",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Charge",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Conductance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Conductance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Conductance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Conductance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Conductance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Conductance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Conductance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Conductance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Conductance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Conductance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Conductance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Conductance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Elastance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Elastance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Elastance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Elastance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Elastance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Elastance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Elastance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Elastance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Elastance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Elastance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Elastance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Elastance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Illuminance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Illuminance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Illuminance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Illuminance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Illuminance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Illuminance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Illuminance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Illuminance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Illuminance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Illuminance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Illuminance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Illuminance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Inductance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Inductance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Inductance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Inductance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Inductance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Inductance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Inductance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Inductance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Inductance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Inductance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Inductance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Inductance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseCharge",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseCharge",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseCharge",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseCharge",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseCharge",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseCharge",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseCharge",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseCharge",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseCharge",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseCharge",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseCharge",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseCharge",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseInductance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseInductance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseInductance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseInductance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseInductance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseInductance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseInductance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseInductance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseInductance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseInductance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseInductance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseInductance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseLuminousFlux",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseLuminousFlux",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseLuminousFlux",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseLuminousFlux",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseLuminousFlux",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseLuminousFlux",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseLuminousFlux",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseLuminousFlux",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseLuminousFlux",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseLuminousFlux",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseLuminousFlux",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseLuminousFlux",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseMagneticFlux",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseMagneticFlux",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseMagneticFlux",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseMagneticFlux",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseMagneticFlux",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseMagneticFlux",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseMagneticFlux",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseMagneticFlux",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseMagneticFlux",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseMagneticFlux",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseMagneticFlux",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseMagneticFlux",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseMagneticFluxDensity",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseMagneticFluxDensity",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseMagneticFluxDensity",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseMagneticFluxDensity",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseMagneticFluxDensity",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseMagneticFluxDensity",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseMagneticFluxDensity",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseMagneticFluxDensity",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseMagneticFluxDensity",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseMagneticFluxDensity",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseMagneticFluxDensity",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseMagneticFluxDensity",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseVoltage",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseVoltage",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseVoltage",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseVoltage",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseVoltage",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseVoltage",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseVoltage",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseVoltage",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseVoltage",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "InverseVoltage",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseVoltage",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "InverseVoltage",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "LuminousFlux",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "LuminousFlux",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "LuminousFlux",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "LuminousFlux",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "LuminousFlux",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "LuminousFlux",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "LuminousFlux",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "LuminousFlux",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "LuminousFlux",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "LuminousFlux",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "LuminousFlux",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "LuminousFlux",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "MagneticFlux",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "MagneticFlux",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "MagneticFlux",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "MagneticFlux",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "MagneticFlux",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "MagneticFlux",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "MagneticFlux",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "MagneticFlux",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "MagneticFlux",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "MagneticFlux",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "MagneticFlux",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "MagneticFlux",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "MagneticFluxDensity",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "MagneticFluxDensity",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "MagneticFluxDensity",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "MagneticFluxDensity",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "MagneticFluxDensity",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "MagneticFluxDensity",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "MagneticFluxDensity",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "MagneticFluxDensity",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "MagneticFluxDensity",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "MagneticFluxDensity",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "MagneticFluxDensity",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "MagneticFluxDensity",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Resistance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Resistance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Resistance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Resistance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Resistance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Resistance",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Resistance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Resistance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Resistance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Resistance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Resistance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Resistance",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Voltage",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Voltage",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Voltage",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Voltage",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Voltage",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Voltage",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Voltage",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Voltage",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Voltage",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Voltage",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Voltage",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Voltage",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Diopter",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Diopter",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Diopter",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Diopter",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Diopter",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Diopter",
+    "storage": "f32",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 0,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Diopter",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 2,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Diopter",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 3,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Diopter",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": 4,
+    "bulk_kind": "array",
+    "classification": "array",
+    "expected_failure": null,
+    "public_type": "Diopter",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Diopter",
+    "storage": "f64",
+    "support_status": "supported"
+  },
+  {
+    "array_arity": null,
+    "bulk_kind": "buffer_view",
+    "classification": "base64-le",
+    "expected_failure": null,
+    "public_type": "Diopter",
+    "storage": "f64",
+    "support_status": "supported"
+  }
+]

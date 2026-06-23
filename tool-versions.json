@@ -1,0 +1,24 @@
+{
+  "github_actions": {
+    "pull_request_branches": ["develop", "main", "sprint/**", "integrate/*", "integration/*"],
+    "push_branches": ["develop", "main", "integrate/*", "integration/*", "sprint/*"],
+    "runner_os": ["ubuntu-latest", "macos-latest", "windows-latest"],
+    "checkout_action_ref": "93cb6efe18208431cddfb8368fd83d5badbf9bfd",
+    "rust_toolchain_action_ref": "efa25f7f19611383d5b0ccf2d1c8914531636bf9",
+    "setup_python_action_ref": "a26af69be951a213d495a4c3e4e4022e16d87065",
+    "setup_dotnet_action_ref": "67a3573c9a986a3f9c594539f4ab511d57bb3ce9",
+    "rust_toolchain": "1.96.0",
+    "python": "3.11.9",
+    "dotnet_sdk": "8.0.414",
+    "just": "1.53.0",
+    "sc_lint": "0.3.0",
+    "sc_lint_boundary": "0.3.0"
+  },
+  "python_ci_requirements": [
+    "build==1.5.0",
+    "jsonschema==4.26.0",
+    "maturin==1.14.1",
+    "numpy==2.4.6",
+    "pandas==3.0.3"
+  ]
+}

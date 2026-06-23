@@ -15,7 +15,6 @@ This project was inspired by the original `simple-si-units` work:
 `units-x` is intended to ship as:
 
 - a Rust crate on `crates.io` as `units-x`
-- a Homebrew package as `units-x`
 - a NuGet package on `nuget.org` as `units-x`
 - a Python package for normal `pip install` consumption
 
@@ -43,6 +42,8 @@ Detailed product and interop planning lives under [`docs/`](docs/), especially:
 
 - [`reference/`](reference/) contains the legacy `simple-si-units` crates
 - [`crates/`](crates/) is reserved for the new Rust deliverables
+- [`catalog/`](catalog/) contains the master catalog contract and generated-input schema
+- [`catalog/units-catalog.json`](catalog/units-catalog.json) is the initial machine-readable master catalog bootstrap
 - [`python/`](python/) is reserved for the Python package and generated Pydantic models
 - [`dotnet/`](dotnet/) is reserved for the C# wrapper/package and `Directory.Build.props`
 - [`boundaries/`](boundaries/) is the future home for `sc-lint` boundary policy files
@@ -72,7 +73,8 @@ Common commands:
 - Rust lint/build checks are wired through `sc-lint` where practical.
 - The boundary analyzer is exposed as `just lint sc-boundary`.
 - The string-duplication / canonical literal lint is exposed as `just lint identity-literals`.
-- Code generation currently depends on Python packages used by the legacy generator.
+- `just generate` validates the catalog contract and shared version wiring for the
+  shipped `units-x` scope.
 
 ## Current status
 

@@ -1,8 +1,14 @@
 /target/
 /.just/logs/
 /artifacts/
+python/dist/
+dotnet/**/bin/
+dotnet/**/obj/
 /.DS_Store
 /.sc/*
 !/.sc/shared-settings.yaml
 __pycache__/
 *.pyc
+python/dist/
+dotnet/**/bin/
+dotnet/**/obj/
