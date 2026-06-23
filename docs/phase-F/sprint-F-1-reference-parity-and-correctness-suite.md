@@ -17,6 +17,7 @@ reference crates and `units-x` implement, and add direct contract tests for new
 - REQ-UX-023
 - REQ-UX-024
 - REQ-UX-032
+- REQ-UX-040
 - REQ-UX-042
 - REQ-UX-043
 - REQ-UX-044
@@ -56,11 +57,18 @@ reference crates and `units-x` implement, and add direct contract tests for new
 
 ## Required Validation
 
-1. Dedicated parity tests cover representative `base`, `geometry`, `mechanical`, and `electromagnetic` quantities plus temperature conversions.
+1. Dedicated parity tests cover every in-scope public type and unit family where shared reference behavior exists, plus temperature conversions.
 2. Dedicated tests compare derivative compute results when both the reference crates and `units-x` implement the same derivative contract, and otherwise assert the `units-x` contract directly.
 3. Dedicated tests cover `Diopter` correctness against the reciprocal-distance contract.
 4. Validation explicitly records the test or rationale path for every item in
    the authoritative inventory.
+
+## Non-Omission Rule
+
+This sprint does not close on representative family coverage. Every in-scope
+public type must either have an executable parity path against the reference
+crates or a documented direct-contract path when `units-x` intentionally ships
+behavior beyond the reference surface.
 
 ## Parity Checklist
 

@@ -14,10 +14,15 @@ Validate parity, confirm storage and ABI goals, finish cross-language examples, 
 - REQ-ROOT-011
 - REQ-ROOT-014
 - REQ-ROOT-015
+- REQ-ROOT-017
+- REQ-ROOT-018
+- REQ-ROOT-019
+- REQ-ROOT-021
 - REQ-UX-006
 - REQ-UX-023
 - REQ-UX-032
 - REQ-UX-033
+- REQ-UX-040
 - REQ-UX-042
 - REQ-UX-043
 - REQ-UX-044
@@ -26,6 +31,7 @@ Validate parity, confirm storage and ABI goals, finish cross-language examples, 
 - NFR-UX-005
 - NFR-UX-011
 - NFR-UX-012
+- NFR-UX-013
 - ADR-UX-006
 - ADR-UX-014
 - ADR-UX-020
@@ -54,5 +60,6 @@ Phase F is complete when:
    where shared reference behavior exists, and new `units-x`-only behavior is
    covered by dedicated contract tests.
 2. Size, ABI, and footprint claims are test-backed.
-3. Consumer-facing docs and examples are ready for first release.
+3. Consumer-facing docs and examples are ready for first release across Rust, C ABI, C#, and Python surfaces.
 4. crates.io, PyPI/pip, and NuGet release readiness plus version synchronization are validated.
+5. No shipped Rust, C ABI, C#, Python, JSON, or binary surface is omitted from the final validation, documentation, or release-readiness inventory without explicit user approval.

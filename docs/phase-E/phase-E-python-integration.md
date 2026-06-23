@@ -14,11 +14,13 @@ Build the Python-facing API under `python/` using PyO3/maturin, with scalar ergo
 - REQ-ROOT-016
 - REQ-ROOT-017
 - REQ-UX-012
+- REQ-UX-015
 - REQ-UX-016
 - REQ-UX-030
 - REQ-UX-031
 - REQ-UX-032
 - REQ-UX-033
+- REQ-UX-040
 - NFR-UX-007
 - NFR-UX-011
 - NFR-UX-012
@@ -45,8 +47,8 @@ Build the Python-facing API under `python/` using PyO3/maturin, with scalar ergo
 
 Phase E is complete when:
 
-1. Python scalar APIs are ergonomic.
-2. Python array/buffer APIs avoid per-element object overhead.
-3. Generated Pydantic models exist for all public JSON types.
-4. Packaging and examples are validated with `maturin`.
-5. The Python package is ready for `pip install` and version-synchronized with the shared project version source.
+1. Python scalar APIs cover the shipped scalar public surface without omission.
+2. Python array and buffer APIs avoid per-element object overhead and document owned, borrowed, read-only, and mutable semantics explicitly.
+3. Generated Pydantic models exist for every canonical JSON type shipped by the project.
+4. Packaging, built-artifact install flow, and examples are validated with `maturin` against the same canonical fixtures used by Rust and C#.
+5. The Python package is ready for `pip install` and version-synchronized with the shared project version source with no implicit deferrals of shipped scalar or bulk surfaces.

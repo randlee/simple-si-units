@@ -21,8 +21,10 @@ the binding layer.
 - REQ-UX-032
 - REQ-UX-033
 - REQ-UX-036
+- REQ-UX-040
 - NFR-UX-007
 - NFR-UX-011
+- NFR-UX-013
 - ADR-ROOT-008
 - ADR-UX-005
 - ADR-UX-014
@@ -33,6 +35,7 @@ the binding layer.
 2. C# canonical JSON parity tests
 3. `.NET` package metadata under `dotnet/`, including `Directory.Build.props` version integration
 4. NuGet publication metadata and local packaging path documentation
+5. Authoritative fixture-to-C# JSON inventory for every shipped canonical JSON shape
 
 ## Dependencies
 
@@ -50,13 +53,14 @@ the binding layer.
 ## Acceptance Criteria
 
 1. The C# JSON surface matches canonical fixtures without semantic drift.
-2. The mapping from ABI-compatible structs to JSON-facing DTO/converter surfaces is generated or trivial and documented.
+2. The mapping from ABI-compatible structs to JSON-facing DTO and converter surfaces is generated or trivial and documented for every shipped canonical JSON shape.
 3. `.NET` package metadata is wired to the shared version source.
 4. NuGet-oriented packaging metadata is explicit enough for release-readiness work to proceed without reopening design questions.
+5. The sprint closure inventory shows no shipped canonical JSON type omitted from the C# surface.
 
 ## Required Validation
 
-1. `System.Text.Json` output matches canonical fixtures for at least one scalar type, one small-buffer type, and one encoded-buffer type.
+1. `System.Text.Json` output matches canonical fixtures for every shipped canonical JSON shape class, including scalar, small-buffer, and encoded-buffer forms where shipped.
 2. Dedicated tests cover `C` and `F` unit-symbol handling in the C# JSON layer.
 3. Version synchronization reaches `Directory.Build.props`.
 4. A local `dotnet pack` path is documented and reproducible from normal repo tooling.

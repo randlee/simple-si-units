@@ -18,6 +18,9 @@ Implement the high-level Python scalar quantity API.
 - REQ-UX-024
 - REQ-UX-025
 - REQ-UX-026
+- REQ-UX-042
+- REQ-UX-043
+- REQ-UX-044
 - NFR-UX-007
 - ADR-UX-004
 - ADR-UX-005
@@ -25,13 +28,14 @@ Implement the high-level Python scalar quantity API.
 
 ## Deliverables
 
-1. PyO3 scalar classes or functions
+1. PyO3 scalar classes or functions for the shipped scalar public surface
 2. Unit-specific constructors and accessors
 3. Temperature support including Celsius/Fahrenheit
 4. Velocity and acceleration scalar surface for the V1 set
 5. Packaging path using `maturin`
 6. `abi3` viability decision and supported Python-floor policy
 7. Initial package structure under `python/`
+8. Scalar-surface coverage inventory derived from the authoritative type inventory
 
 ## Dependencies
 
@@ -43,17 +47,19 @@ Implement the high-level Python scalar quantity API.
 
 ## Acceptance Criteria
 
-1. The Python scalar API exposes explicit unit-specific constructors and accessors.
+1. The Python scalar API exposes explicit unit-specific constructors and accessors for every shipped scalar public type.
 2. Temperature scalar support includes the planned Celsius/Fahrenheit behavior.
 3. Velocity and acceleration scalar APIs exist for the V1 derived set.
 4. Packaging works through the repo `maturin` workflow.
 5. The `abi3` strategy is explicitly implemented or explicitly rejected with rationale.
+6. The sprint closure inventory shows no shipped scalar public type omitted from the Python surface.
 
 ## Required Validation
 
 1. Dedicated Python tests cover scalar construction, conversion, and display.
 2. Dedicated tests cover temperature symbol behavior using `C`/`F` at the wire level.
 3. Wheel/package build tests verify the version comes from the shared project source.
+4. Validation records the constructor/accessor path for every shipped scalar public type in the authoritative inventory.
 
 ## Code Samples / Contracts
 

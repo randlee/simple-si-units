@@ -18,6 +18,7 @@ canonical JSON contract.
 - REQ-UX-016
 - REQ-UX-032
 - REQ-UX-033
+- REQ-UX-040
 - NFR-UX-007
 - NFR-UX-013
 - ADR-ROOT-007
@@ -26,9 +27,10 @@ canonical JSON contract.
 ## Deliverables
 
 1. Python tests covering scalar APIs, bulk APIs, and canonical JSON round-trips
-2. Pydantic model generation for the canonical JSON types
+2. Pydantic model generation for every canonical JSON type
 3. Generated Pydantic models shipped from `python/<package>/models/generated/`
 4. Canonical fixture parity tests for the generated models
+5. Canonical type-id inventory mapping generated Pydantic models to shipped fixture types
 
 ## Dependencies
 
@@ -44,7 +46,8 @@ canonical JSON contract.
 1. Python-facing tests cover scalar APIs, bulk APIs, and canonical JSON round-trips.
 2. Pydantic model generation is wired into the Python package structure and shipped under the planned production path.
 3. Generated models serialize and deserialize canonical fixtures without shape drift.
-4. The generated model set covers scalar, small-buffer, and encoded-buffer canonical JSON forms.
+4. The generated model set covers every shipped scalar, small-buffer, and encoded-buffer canonical JSON form.
+5. The sprint closure inventory shows no shipped canonical type id omitted from the generated model set.
 
 ## Required Validation
 
@@ -52,3 +55,4 @@ canonical JSON contract.
 2. Dedicated tests verify generated model imports from the shipped package path.
 3. Dedicated tests cover scalar-versus-buffer model generation.
 4. Dedicated tests cover large-buffer JSON envelope handling.
+5. Validation records the generated-model path for every shipped canonical type id.
