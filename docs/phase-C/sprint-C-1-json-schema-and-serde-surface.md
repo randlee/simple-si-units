@@ -18,6 +18,9 @@ Create the explicit JSON representation and serde integration for scalar and bul
 - REQ-UX-032
 - REQ-UX-033
 - REQ-UX-036
+- REQ-UX-040
+- NFR-UX-005
+- NFR-UX-013
 - ADR-UX-005
 - ADR-UX-010
 - ADR-UX-012
@@ -28,15 +31,16 @@ Create the explicit JSON representation and serde integration for scalar and bul
 1. Scalar JSON schema
 2. Fixed small-buffer JSON array schema
 3. Large/arbitrary-buffer encoded JSON schema
-4. Rust serde integration
-5. Round-trip tests
-6. Canonical fixture set for cross-language parity
-7. Catalog-driven JSON schema generation strategy
-8. Machine-readable classification of which public types use inline arrays versus encoded payload envelopes
+4. Rust serde integration for scalar wrappers, array wrappers, and owned buffer DTOs
+5. Explicit serialize/deserialize policy for `QuantityBufferView<'a, Unit, T>`
+6. Round-trip tests
+7. Canonical fixture set for cross-language parity
+8. Catalog-driven JSON schema generation strategy
+9. Machine-readable classification of which public types use inline arrays versus encoded payload envelopes
 
 ## Dependencies
 
-- Sprints A-2, A-5, B-2, B-3
+- Sprints A-2, A-5, B-2, B-3, B-4
 
 ## Unblocks
 
@@ -48,7 +52,12 @@ Create the explicit JSON representation and serde integration for scalar and bul
 2. The fixed small-buffer JSON array shape is explicit, stable, and documented.
 3. The large/arbitrary-buffer JSON envelope shape is explicit, stable, and documented.
 4. Public type classification into array-form versus encoded-buffer JSON is source-of-truth metadata, not serializer guesswork.
-5. Canonical fixtures exist for downstream parity consumers.
+5. JSON type ids and unit symbols come from catalog-owned metadata rather than handwritten serializer constants.
+6. Distinct public types that share one `canonical_dimension_id` remain distinct on the wire.
+7. `QuantityBufferView<'a, Unit, T>` has an explicit policy:
+   - serialize through the canonical owned JSON DTO shape
+   - do not expose borrowed-lifetime JSON deserialization
+8. Canonical fixtures exist for downstream parity consumers.
 
 ## Required Validation
 
@@ -56,6 +65,8 @@ Create the explicit JSON representation and serde integration for scalar and bul
 2. Dedicated tests reject mismatched `type` and `unit` combinations where the contract requires consistency.
 3. Dedicated tests cover `C`/`F` wire symbols for temperature.
 4. Dedicated tests cover the boundary between inline-array and encoded-buffer classification.
+5. Dedicated tests prove `Diopter` and `InverseDistance` remain distinct JSON types despite sharing one canonical dimension.
+6. Dedicated tests prove catalog-derived type ids and encoding tags are used verbatim for every supported family.
 
 ## Code Samples / Contracts
 
@@ -74,7 +85,7 @@ Representative fixed-buffer JSON:
 ```json
 {
   "type": "distance3_f32",
-  "unit": "cm",
+  "unit": "mm",
   "values": [12.0, 15.0, 18.0]
 }
 ```
@@ -85,8 +96,20 @@ Representative encoded-buffer JSON:
 {
   "type": "temperature_buffer_f32",
   "unit": "C",
-  "encoding": "base64-le-f32",
+  "encoding": "base64-le",
   "count": 16384,
   "data": "AAAgQQAAKEEAACRBAAAYQQ=="
 }
 ```
+
+Authoritative JSON-boundary rule:
+
+- scalar, fixed-array, and encoded-buffer JSON forms are canonical DTO shapes,
+  not the same contract as Rust ABI structs
+- `type` must be the catalog-derived JSON type id
+- `unit` must be the human-readable symbol published for that concrete public
+  type and unit
+- the `encoding` tag comes from catalog-owned classification metadata and does
+  not redundantly encode the storage type
+- borrowed Rust views serialize through the canonical owned DTO shape; they do
+  not define a lifetime-bearing JSON type
