@@ -6,7 +6,7 @@ Define and implement scalar arithmetic, mixed-unit addition/subtraction, and bri
 
 ## Status
 
-`Not Started`
+`Done`
 
 ## Scope References
 
@@ -99,7 +99,7 @@ Define and implement scalar arithmetic, mixed-unit addition/subtraction, and bri
 
 ## Required Validation
 
-1. Dedicated tests cover `distance_cm + distance_m` with documented left-hand preservation behavior.
+1. Dedicated tests cover `distance_mm + distance_m` with documented left-hand preservation behavior.
 2. Dedicated tests cover mixed integer/float storage promotion.
 3. Dedicated tests cover the distance -> velocity -> acceleration chain.
 4. Dedicated tests cover zero-duration rejection or failure behavior for velocity/acceleration compute bridges.
@@ -124,13 +124,13 @@ Define and implement scalar arithmetic, mixed-unit addition/subtraction, and bri
 Representative semantics:
 
 ```rust
-let lhs = Distance::cm(25.0);
+let lhs = Distance::mm(250.0);
 let rhs = Distance::m(1.0);
 let out = lhs + rhs;
-assert_eq!(out.unit(), "cm");
+assert_eq!(out.unit(), "mm");
 
 let scaled = out * 2.0;
-assert_eq!(scaled.unit(), "cm");
+assert_eq!(scaled.unit(), "mm");
 ```
 
 Promotion rule:
@@ -140,8 +140,8 @@ Promotion rule:
   `scalar_arithmetic`; that matrix must enumerate every supported
   `lhs_storage/operator/rhs_storage` combination exactly once
 - `f64` dominates `f32`, signed integers, and unsigned integers
-- `f32` dominates signed integers and unsigned integers when no `f64` operand is
-  present
+- mixed `i32`/`f32` rows widen to `f64` in V1 so integer payloads do not
+  silently lose precision at large magnitudes
 - signed integers dominate unsigned integers of equal or smaller width
 - integer add/subtract/multiply paths are infallible only when the matrix
   selects a result storage that eliminates overflow for the documented operand
@@ -153,13 +153,13 @@ Promotion rule:
 Representative mixed-storage behavior:
 
 ```rust
-let lhs = Distance::cm(25_i32);
+let lhs = Distance::mm(25_i32);
 let rhs = Distance::m(1.0_f64);
-let out: Distance<f64> = lhs + rhs;
+let out: Distance<f64, mm> = lhs + rhs;
 
-let scaled: Distance<f32> = Distance::cm(25_i32) * 2.5_f32;
-let exact: Distance<i32> = Distance::cm(20_i32) / 2_i32;
-let lossy = Distance::cm(1_i32).checked_div(2_i32);
+let scaled: Distance<f64, mm> = Distance::mm(25_i32) * 2.5_f32;
+let exact: Distance<i32, mm> = Distance::mm(20_i32).checked_div(2_i32)?;
+let lossy = Distance::mm(1_i32).checked_div(2_i32);
 assert!(lossy.is_err());
 ```
 
@@ -168,24 +168,39 @@ Representative promotion-matrix rows:
 | lhs_storage | operator | rhs_storage | result_storage | path_family | api_mode | exact_division_policy | expected_failure |
 |---|---|---|---|---|---|---|---|
 | `i32` | `add` | `f64` | `f64` | `scalar_arithmetic` | `infallible` | not-applicable | none |
-| `i32` | `mul` | `f32` | `f32` | `scalar_arithmetic` | `infallible` | not-applicable | none |
+| `i32` | `mul` | `f32` | `f64` | `scalar_arithmetic` | `infallible` | not-applicable | none |
+| `i32` | `div` | `f32` | `f64` | `scalar_arithmetic` | `infallible` | not-applicable | none |
 | `i32` | `add` | `i32` | `i32` | `scalar_arithmetic` | `checked` | not-applicable | `Overflow` when result exceeds `i32` |
 | `i32` | `mul` | `i32` | `i32` | `scalar_arithmetic` | `checked` | not-applicable | `Overflow` when result exceeds `i32` |
-| `i32` | `div` | `i32` | `i32` | `scalar_arithmetic` | `checked` | exact-only | `NonIntegralDivision` when remainder != 0 |
+| `i32` | `div` | `i32` | `i32` | `scalar_arithmetic` | `checked` | exact-only | `DivisionByZero` when rhs == 0; `NonIntegralDivision` when remainder != 0 |
 
-Representative compute bridge contract:
+Representative checked arithmetic and compute-bridge contract:
 
 ```rust
-pub trait CheckedScalarArithmeticOps<Rhs = Self> {
-    type Output;
+impl<Storage, Unit> Distance<Storage, Unit> {
+    pub fn checked_add<RhsStorage, RhsUnit, OutStorage>(
+        self,
+        rhs: Distance<RhsStorage, RhsUnit>,
+    ) -> Result<Distance<OutStorage, Unit>, ArithmeticError>;
 
-    fn checked_add(self, rhs: Rhs) -> Result<Self::Output, ArithmeticError>;
-    fn checked_sub(self, rhs: Rhs) -> Result<Self::Output, ArithmeticError>;
-    fn checked_mul(self, rhs: Rhs) -> Result<Self::Output, ArithmeticError>;
-    fn checked_div(self, rhs: Rhs) -> Result<Self::Output, ArithmeticError>;
+    pub fn checked_sub<RhsStorage, RhsUnit, OutStorage>(
+        self,
+        rhs: Distance<RhsStorage, RhsUnit>,
+    ) -> Result<Distance<OutStorage, Unit>, ArithmeticError>;
+
+    pub fn checked_mul<Rhs, OutStorage>(
+        self,
+        rhs: Rhs,
+    ) -> Result<Distance<OutStorage, Unit>, ArithmeticError>;
+
+    pub fn checked_div<Rhs, OutStorage>(
+        self,
+        rhs: Rhs,
+    ) -> Result<Distance<OutStorage, Unit>, ArithmeticError>;
 }
 
 pub enum ArithmeticError {
+    DivisionByZero,
     NonIntegralDivision,
     Overflow,
     PrecisionLoss,
@@ -193,8 +208,6 @@ pub enum ArithmeticError {
 
 pub enum ComputeError {
     ZeroDuration,
-    Overflow,
-    PrecisionLoss,
 }
 
 pub fn velocity_from_distance_and_time(
@@ -216,6 +229,8 @@ Authoritative compute-bridge rule:
 - if later phases add convenience methods, those methods are derivative shims
   over the same free-function boundary rather than a second normative contract
 - compute bridges return canonical compute units in fixed `f64` storage in V1
+- because the V1 compute bridges canonicalize into fixed `f64` outputs, the
+  only runtime `ComputeError` in scope for this sprint is `ZeroDuration`
 
 Result-identity rule:
 
@@ -224,12 +239,40 @@ Result-identity rule:
 - same-canonical-dimension cross-public-type arithmetic also preserves the
   left-hand public quantity type and left-hand unit when the authoritative
   matrix marks that exact path supported
+- the authoritative matrix is generated from catalog-owned arithmetic policy;
+  it may mark a same-canonical-dimension public-type pair supported for
+  infallible paths while marking checked-only storage combinations intentionally
+  unsupported until a later API expansion closes that surface
+- floating-point scalar division follows Rust IEEE-754 semantics for supported
+  infallible paths; `ArithmeticError::DivisionByZero` is reserved for checked
+  integer-division paths
+- mixed `i32`/`f32` scalar division widens to `f64` in V1 so the infallible
+  path does not silently round large integer payloads through `f32`
 - any cross-public-type pair not named supported in
   `catalog/generated/phase-b-arithmetic-support.json` is intentionally
   unsupported in V1
-- unsupported type pairs and unsupported storage pairs are absent from the
-  infallible and checked arithmetic traits rather than returning runtime
-  `UnsupportedTypePair` or `UnsupportedStoragePair` variants
+- intentional non-support rows for the out-of-scope cross-dimension operator
+  graph are recorded once per `(lhs_public_type, operator, rhs_public_type)` at
+  base-unit / `f64` granularity because API absence is declared at the
+  public-type boundary rather than per-unit runtime dispatch
+- unsupported type pairs and unsupported storage pairs are expressed by
+  compile-time absence of the relevant infallible operator impl or by
+  unsatisfied bounds on the inherent checked methods rather than returning
+  runtime `UnsupportedTypePair` or `UnsupportedStoragePair` variants
+- storage-promotion traits and storage canonicalization traits are sealed
+  policy scaffolding for compile-time gating; they are not supported
+  downstream extension points for adding arithmetic surface outside the
+  catalog-owned generation path
+
+## Error Inventory
+
+| Error type | Variant | Trigger | Caller-visible cause | Recovery guidance |
+|---|---|---|---|---|
+| `ArithmeticError` | `DivisionByZero` | checked integer scalar division with rhs `== 0` | integer division is undefined for zero divisor | validate divisors before checked integer division or route through a floating path if IEEE-754 behavior is desired |
+| `ArithmeticError` | `NonIntegralDivision` | checked integer scalar division where lhs `%` rhs `!= 0` | selected integer result storage cannot represent the exact quotient | widen to `f32`/`f64`, choose a documented floating path, or avoid integer division when remainder is possible |
+| `ArithmeticError` | `Overflow` | checked integer add/sub/mul exceeds result storage or checked numeric canonicalization cannot fit destination storage | selected result storage is too narrow for the documented path | select the widened storage named by the authoritative matrix or use a checked API and handle overflow explicitly |
+| `ArithmeticError` | `PrecisionLoss` | checked arithmetic canonicalization into integer storage would discard fractional information | selected integer result storage cannot preserve the converted arithmetic value exactly | widen to `f32`/`f64` or choose an exact integer path only when the matrix documents it |
+| `ComputeError` | `ZeroDuration` | `velocity_from_distance_and_time` or `acceleration_from_velocity_and_time` receives a zero-duration rhs | V1 compute bridge rejects division by zero duration before producing canonical output | reject zero durations before calling the bridge or branch on zero-duration business rules upstream |
 
 Representative cross-public-type example:
 
@@ -242,9 +285,9 @@ assert_eq!(out.unit(), "dpt");
 
 Representative compute-bridge matrix row:
 
-| lhs_public_type | operator | rhs_public_type | result_public_type | result_storage | path_family | api_mode | expected_failure |
-|---|---|---|---|---|---|---|---|
-| `Distance` | `velocity_from_time` | `Time` | `Velocity` | `f64` | `compute_bridge` | `checked` | `ZeroDuration` when rhs == 0 |
+| lhs_public_type | operator | rhs_public_type | result_public_type | result_unit_code_id | result_storage | path_family | api_mode | expected_failure |
+|---|---|---|---|---|---|---|---|---|
+| `Distance` | `velocity_from_distance_and_time` | `Time` | `Velocity` | `mps` | `f64` | `compute_bridge` | `checked` | `ZeroDuration` when rhs == 0 |
 
 Authoritative arithmetic-support artifact columns:
 
@@ -256,6 +299,7 @@ Authoritative arithmetic-support artifact columns:
 - `rhs_unit`
 - `rhs_storage`
 - `result_public_type`
+- `result_unit_code_id`
 - `result_unit_rule`
 - `result_storage`
 - `path_family`

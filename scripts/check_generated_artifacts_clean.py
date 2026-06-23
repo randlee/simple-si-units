@@ -9,8 +9,15 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 GENERATED_PATHS = (
     "catalog/generated/units-catalog-summary.json",
+    "catalog/generated/phase-b-conversion-coverage.json",
+    "catalog/generated/phase-b-arithmetic-support.json",
+    "catalog/generated/phase-b-bulk-support.json",
+    "crates/units-x/src/generated/arithmetic_impls.rs",
+    "crates/units-x/src/generated/bulk_storage_impls.rs",
     "crates/units-x/src/generated/catalog_metadata.rs",
+    "crates/units-x/src/generated/conversion_metadata.rs",
     "crates/units-x/src/generated/ffi_contract_types.rs",
+    "crates/units-x/src/generated/public_types.rs",
 )
 
 
@@ -24,13 +31,23 @@ def main(argv: list[str]) -> int:
         return generator_check.returncode
 
     completed = subprocess.run(
-        ["git", "diff", "--exit-code", "HEAD", "--", *GENERATED_PATHS],
+        ["git", "status", "--porcelain=1", "--untracked-files=all", "--", *GENERATED_PATHS],
         cwd=ROOT,
         check=False,
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
     )
-    if completed.returncode == 0:
+    if completed.returncode != 0:
+        return completed.returncode
+    dirty_rows = [line for line in completed.stdout.splitlines() if line.strip()]
+    if not dirty_rows:
         print("generated artifact cleanliness check passed")
-    return completed.returncode
+        return 0
+    for row in dirty_rows:
+        print(row)
+    return 1
 
 
 if __name__ == "__main__":

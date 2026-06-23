@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 from pathlib import Path
 import subprocess
 import sys
@@ -13,8 +14,15 @@ from validate_catalog_contract import is_valid_rust_identifier
 ROOT = Path(__file__).resolve().parent.parent
 CATALOG_PATH = ROOT / "catalog" / "units-catalog.json"
 SUMMARY_PATH = ROOT / "catalog" / "generated" / "units-catalog-summary.json"
+CONVERSION_COVERAGE_PATH = ROOT / "catalog" / "generated" / "phase-b-conversion-coverage.json"
+ARITHMETIC_SUPPORT_PATH = ROOT / "catalog" / "generated" / "phase-b-arithmetic-support.json"
+BULK_SUPPORT_PATH = ROOT / "catalog" / "generated" / "phase-b-bulk-support.json"
 RUST_PATH = ROOT / "crates" / "units-x" / "src" / "generated" / "catalog_metadata.rs"
 FFI_TYPES_PATH = ROOT / "crates" / "units-x" / "src" / "generated" / "ffi_contract_types.rs"
+PUBLIC_TYPES_PATH = ROOT / "crates" / "units-x" / "src" / "generated" / "public_types.rs"
+CONVERSION_METADATA_PATH = ROOT / "crates" / "units-x" / "src" / "generated" / "conversion_metadata.rs"
+ARITHMETIC_IMPLS_PATH = ROOT / "crates" / "units-x" / "src" / "generated" / "arithmetic_impls.rs"
+BULK_STORAGE_IMPLS_PATH = ROOT / "crates" / "units-x" / "src" / "generated" / "bulk_storage_impls.rs"
 
 
 def load_catalog() -> dict:
@@ -25,12 +33,17 @@ def build_summary(catalog: dict) -> dict:
     dimensions = catalog["dimensions"]
     return {
         "catalog_version": catalog["catalog_version"],
+        "bridges": catalog["bridges"],
+        "conversion_policies": catalog["conversion_policies"],
+        "arithmetic_policies": catalog["arithmetic_policies"],
         "dimension_count": len(dimensions),
         "dimensions": [
             {
                 "dimension_id": dimension["dimension_id"],
                 "canonical_dimension_id": dimension["canonical_dimension_id"],
+                "family": dimension["family"],
                 "public_type": dimension["public_type"],
+                "base_unit_code_id": dimension["base_unit_code_id"],
                 "scalar": dimension["json_forms"]["scalar"],
                 "small_array": dimension["json_forms"]["small_array"],
                 "buffer": dimension["json_forms"]["buffer"],
@@ -39,8 +52,10 @@ def build_summary(catalog: dict) -> dict:
                 "units": [
                     {
                         "unit_code_id": unit["unit_code_id"],
+                        "unit_symbol": unit["unit_symbol"],
                         "binary_unit_id": unit["binary_unit_id"],
                         "reserved_word_alias": unit["reserved_word_alias"],
+                        "conversion": unit["conversion"],
                     }
                     for unit in dimension["units"]
                 ],
@@ -204,27 +219,43 @@ def rust_identifier(value: str) -> str:
     return rendered
 
 
+def scalar_storage_name(type_id: str) -> str:
+    return type_id.rsplit("_", maxsplit=1)[1]
+
+
+def marker_name_for_unit(unit: dict[str, object]) -> str:
+    marker_source = unit["reserved_word_alias"] or unit["unit_code_id"]
+    if not is_valid_rust_identifier(marker_source):
+        raise ValueError(f"invalid generated Rust marker: {marker_source}")
+    return rust_identifier(marker_source)
+
+
+def default_marker_for_dimension(dimension: dict[str, object]) -> str:
+    base_unit_code_id = dimension["base_unit_code_id"]
+    for unit in dimension["units"]:
+        if unit["unit_code_id"] == base_unit_code_id:
+            return marker_name_for_unit(unit)
+    raise ValueError(
+        f"missing base unit `{base_unit_code_id}` for dimension `{dimension['dimension_id']}`"
+    )
+
+
+def conversion_kind_variant(kind: str) -> str:
+    if kind == "linear":
+        return "Linear"
+    if kind == "affine":
+        return "Affine"
+    raise ValueError(f"unsupported conversion kind: {kind}")
+
+
+def conversion_offset_literal(offset_to_base: float | None) -> str:
+    if offset_to_base is None:
+        return "None"
+    return f"Some({offset_to_base!r})"
+
+
 def render_generated_ffi_types(summary: dict) -> str:
     dimensions = summary["dimensions"]
-    unit_markers: list[str] = []
-    seen_markers: set[str] = set()
-    for dimension in dimensions:
-        for unit in dimension["units"]:
-            marker_source = unit["reserved_word_alias"] or unit["unit_code_id"]
-            if not is_valid_rust_identifier(marker_source):
-                raise ValueError(f"invalid generated Rust marker: {marker_source}")
-            marker = rust_identifier(marker_source)
-            if marker in seen_markers:
-                raise ValueError(f"duplicate generated Rust marker: {marker}")
-            seen_markers.add(marker)
-            unit_markers.extend(
-                [
-                    f"/// Unit marker generated from catalog unit `{unit['unit_code_id']}`.",
-                    f"pub struct {marker};",
-                    "",
-                ]
-            )
-
     exemplar_dimension = next(dimension for dimension in dimensions if dimension["dimension_id"] == "distance")
     exemplar_unit = next(unit for unit in exemplar_dimension["units"] if unit["unit_code_id"] == "mm")
     scalar_type_id = next(value for value in exemplar_dimension["scalar"]["type_ids"] if value.endswith("_i32"))
@@ -241,7 +272,6 @@ def render_generated_ffi_types(summary: dict) -> str:
         "#![allow(non_camel_case_types)]",
         "",
     ]
-    lines.extend(unit_markers)
     lines.extend(
         [
             "/// ABI-facing scalar name pattern generated from catalog naming metadata.",
@@ -284,11 +314,1086 @@ def render_generated_ffi_types(summary: dict) -> str:
     return "\n".join(lines) + "\n"
 
 
+def render_generated_public_types(summary: dict) -> str:
+    dimensions = summary["dimensions"]
+    coverage_rows = conversion_coverage_rows(summary)
+    unit_rows: list[dict[str, str]] = []
+    seen_markers: set[str] = set()
+    lines = [
+        "// @generated by scripts/generate_catalog_artifacts.py",
+        "#![allow(non_camel_case_types, non_snake_case)]",
+        "",
+        "use crate::conversion::{",
+        "    convert_same_public_type_infallible, ConvertUnit, InfallibleUnitStorage, ReciprocalBridge,",
+        "    TryConvertQuantity, TryConvertUnit, ValueStorage, try_convert_quantity,",
+        "    try_convert_reciprocal, try_convert_same_public_type,",
+        "};",
+        "use crate::model::{private, Quantity, QuantityType, ScalarStorageFor, UnitMarker};",
+        "",
+        "#[derive(Copy, Clone, Debug, PartialEq, Eq)]",
+        "pub struct GeneratedUnitMetadata {",
+        "    pub unit_code_id: &'static str,",
+        "    pub unit_symbol: &'static str,",
+        "    pub dimension_id: &'static str,",
+        "    pub canonical_dimension_id: &'static str,",
+        "    pub public_type: &'static str,",
+        "}",
+        "",
+        "#[derive(Copy, Clone, Debug, PartialEq, Eq)]",
+        "pub struct GeneratedPublicTypeMetadata {",
+        "    pub public_type: &'static str,",
+        "    pub dimension_id: &'static str,",
+        "    pub canonical_dimension_id: &'static str,",
+        "    pub default_unit_code_id: &'static str,",
+        "    pub scalar_type_ids: &'static [&'static str],",
+        "    pub supported_units: &'static [&'static str],",
+        "}",
+        "",
+        "pub trait QuantityForStorage<Storage>: UnitMarker {",
+        "    type Quantity: QuantityType<Storage = Storage, Unit = Self>;",
+        "",
+        "    fn wrap(storage: Storage) -> Self::Quantity;",
+        "}",
+        "",
+        "pub trait ScalarArithmeticUnit: UnitMarker {}",
+        "",
+    ]
+
+    for dimension in dimensions:
+        for unit in dimension["units"]:
+            marker = marker_name_for_unit(unit)
+            if marker in seen_markers:
+                raise ValueError(f"duplicate generated Rust marker: {marker}")
+            seen_markers.add(marker)
+            unit_rows.append(
+                {
+                    "marker": marker,
+                    "unit_code_id": unit["unit_code_id"],
+                    "unit_symbol": unit["unit_symbol"],
+                    "dimension_id": dimension["dimension_id"],
+                    "canonical_dimension_id": dimension["canonical_dimension_id"],
+                    "public_type": dimension["public_type"],
+                }
+            )
+            lines.extend(
+                [
+                    f"/// Unit marker generated from catalog unit `{unit['unit_code_id']}`.",
+                    "#[derive(Copy, Clone, Debug, PartialEq, Eq)]",
+                    f"pub struct {marker};",
+                    "",
+                    f"impl private::SealedUnit for {marker} {{}}",
+                    "",
+                    f"impl UnitMarker for {marker} {{",
+                    f"    const UNIT_SYMBOL: &'static str = {rust_string_literal(unit['unit_symbol'])};",
+                    f"    const UNIT_CODE_ID: &'static str = {rust_string_literal(unit['unit_code_id'])};",
+                    f"    const DIMENSION_ID: &'static str = {rust_string_literal(dimension['dimension_id'])};",
+                    f"    const CANONICAL_DIMENSION_ID: &'static str = {rust_string_literal(dimension['canonical_dimension_id'])};",
+                    f"    const PUBLIC_TYPE: &'static str = {rust_string_literal(dimension['public_type'])};",
+                    "}",
+                    "",
+                ]
+            )
+            if dimension["public_type"] != "Temperature":
+                lines.extend(
+                    [
+                        f"impl ScalarArithmeticUnit for {marker} {{}}",
+                        "",
+                    ]
+                )
+        storages = [scalar_storage_name(type_id) for type_id in dimension["scalar"]["type_ids"]]
+        for unit in dimension["units"]:
+            marker = marker_name_for_unit(unit)
+            for storage in storages:
+                lines.extend(
+                    [
+                        f"impl private::SealedScalarStorageFor<{marker}> for {storage} {{}}",
+                        "",
+                        f"impl ScalarStorageFor<{marker}> for {storage} {{}}",
+                        "",
+                    ]
+                )
+
+    lines.extend(
+        [
+            f"pub const GENERATED_UNIT_COUNT: usize = {len(unit_rows)};",
+            "pub const UNIT_METADATA: &[GeneratedUnitMetadata] = &[",
+        ]
+    )
+    for row in unit_rows:
+        lines.extend(
+            [
+                "    GeneratedUnitMetadata {",
+                f"        unit_code_id: {rust_string_literal(row['unit_code_id'])},",
+                f"        unit_symbol: {rust_string_literal(row['unit_symbol'])},",
+                f"        dimension_id: {rust_string_literal(row['dimension_id'])},",
+                f"        canonical_dimension_id: {rust_string_literal(row['canonical_dimension_id'])},",
+                f"        public_type: {rust_string_literal(row['public_type'])},",
+                "    },",
+            ]
+        )
+    lines.extend(["];", ""])
+
+    for dimension in dimensions:
+        public_type = dimension["public_type"]
+        default_unit = default_marker_for_dimension(dimension)
+        unit_trait = f"{public_type}Unit"
+        infallible_trait = f"{public_type}InfallibleUnitPath"
+        markers_by_unit_code = {
+            unit["unit_code_id"]: marker_name_for_unit(unit) for unit in dimension["units"]
+        }
+        lines.extend(
+            [
+                f"/// Sealed unit-family marker trait for `{public_type}`.",
+                "///",
+                "/// External crates cannot implement this trait; only",
+                "/// catalog-generated unit markers participate in this family.",
+                f"pub trait {unit_trait}: UnitMarker {{}}",
+                "",
+                "#[doc(hidden)]",
+                f"pub trait {infallible_trait}<TargetUnit, Storage>: {unit_trait} {{}}",
+                "",
+            ]
+        )
+        for unit in dimension["units"]:
+            marker = marker_name_for_unit(unit)
+            lines.extend(
+                [
+                    f"impl {unit_trait} for {marker} {{}}",
+                    "",
+                ]
+            )
+        for row in coverage_rows:
+            if row["path_kind"] != "same_public_type":
+                continue
+            if row["source_public_type"] != public_type:
+                continue
+            if row["api_surface"] not in {"identity", "to_unit"}:
+                continue
+            source_marker = markers_by_unit_code[row["source_unit"]]
+            target_marker = markers_by_unit_code[row["target_unit"]]
+            lines.extend(
+                [
+                    f"impl {infallible_trait}<{target_marker}, {row['source_storage']}> for {source_marker} {{}}",
+                    "",
+                ]
+            )
+        lines.extend(
+            [
+                "#[repr(transparent)]",
+                "#[derive(Copy, Clone, Debug, PartialEq, Eq)]",
+                f"pub struct {public_type}<Storage = f64, Unit = {default_unit}>",
+                "where",
+                "    Storage: ScalarStorageFor<Unit>,",
+                f"    Unit: {unit_trait},",
+                "{",
+                "    quantity: Quantity<Unit, Storage>,",
+                "}",
+                "",
+                f"impl<Storage, Unit> private::SealedQuantityType for {public_type}<Storage, Unit>",
+                "where",
+                "    Storage: ScalarStorageFor<Unit>,",
+                f"    Unit: {unit_trait},",
+                "{}",
+                "",
+                f"impl<Storage, Unit> {public_type}<Storage, Unit>",
+                "where",
+                "    Storage: ScalarStorageFor<Unit>,",
+                f"    Unit: {unit_trait},",
+                "{",
+                f"    pub const PUBLIC_TYPE: &'static str = {rust_string_literal(dimension['public_type'])};",
+                f"    pub const DIMENSION_ID: &'static str = {rust_string_literal(dimension['dimension_id'])};",
+                f"    pub const CANONICAL_DIMENSION_ID: &'static str = {rust_string_literal(dimension['canonical_dimension_id'])};",
+                "",
+                "    pub const fn new(storage: Storage) -> Self {",
+                "        Self {",
+                "            quantity: Quantity::new(storage),",
+                "        }",
+                "    }",
+                "",
+                "    pub const fn value_ref(&self) -> &Storage {",
+                "        &self.quantity.storage",
+                "    }",
+                "",
+                "    pub fn value(&self) -> Storage",
+                "    where",
+                "        Storage: Copy,",
+                "    {",
+                "        self.quantity.storage",
+                "    }",
+                "",
+                "    pub fn value_mut(&mut self) -> &mut Storage {",
+                "        &mut self.quantity.storage",
+                "    }",
+                "",
+                "    pub fn into_value(self) -> Storage {",
+                "        self.quantity.storage",
+                "    }",
+                "",
+                "    pub const fn unit(&self) -> &'static str {",
+                "        Unit::UNIT_SYMBOL",
+                "    }",
+                "",
+                "    pub const fn unit_code_id(&self) -> &'static str {",
+                "        Unit::UNIT_CODE_ID",
+                "    }",
+                "",
+                "    pub const fn dimension_id(&self) -> &'static str {",
+                "        Self::DIMENSION_ID",
+                "    }",
+                "",
+                "    pub const fn canonical_dimension_id(&self) -> &'static str {",
+                "        Self::CANONICAL_DIMENSION_ID",
+                "    }",
+                "",
+                "    pub const fn as_quantity(&self) -> &Quantity<Unit, Storage> {",
+                "        &self.quantity",
+                "    }",
+                "",
+                "    pub fn as_quantity_mut(&mut self) -> &mut Quantity<Unit, Storage> {",
+                "        &mut self.quantity",
+                "    }",
+                "",
+                "    pub fn into_quantity(self) -> Quantity<Unit, Storage> {",
+                "        self.quantity",
+                "    }",
+                "",
+                "    pub fn from_quantity(quantity: Quantity<Unit, Storage>) -> Self {",
+                "        Self { quantity }",
+                "    }",
+                "}",
+                "",
+                f"impl<Storage, Unit> QuantityType for {public_type}<Storage, Unit>",
+                "where",
+                "    Storage: ScalarStorageFor<Unit>,",
+                f"    Unit: {unit_trait},",
+                "{",
+                "    type Storage = Storage;",
+                "    type Unit = Unit;",
+                "",
+                f"    const PUBLIC_TYPE: &'static str = {rust_string_literal(dimension['public_type'])};",
+                f"    const DIMENSION_ID: &'static str = {rust_string_literal(dimension['dimension_id'])};",
+                f"    const CANONICAL_DIMENSION_ID: &'static str = {rust_string_literal(dimension['canonical_dimension_id'])};",
+                "",
+                "    fn from_quantity(quantity: Quantity<Unit, Storage>) -> Self {",
+                "        Self { quantity }",
+                "    }",
+                "",
+                "    fn quantity(&self) -> &Quantity<Unit, Storage> {",
+                "        &self.quantity",
+                "    }",
+                "",
+                "    fn quantity_mut(&mut self) -> &mut Quantity<Unit, Storage> {",
+                "        &mut self.quantity",
+                "    }",
+                "",
+                "    fn into_quantity(self) -> Quantity<Unit, Storage> {",
+                "        self.quantity",
+                "    }",
+                "}",
+                "",
+                f"impl<Storage, Unit> {public_type}<Storage, Unit>",
+                "where",
+                "    Storage: ScalarStorageFor<Unit> + InfallibleUnitStorage,",
+                f"    Unit: {unit_trait},",
+                "{",
+                "    pub fn to_unit<TargetUnit>(self) -> "
+                f"{public_type}<Storage, TargetUnit>",
+                "    where",
+                "        Storage: ScalarStorageFor<TargetUnit>,",
+                f"        TargetUnit: {unit_trait},",
+                f"        Unit: {infallible_trait}<TargetUnit, Storage>,",
+                "    {",
+                f"        convert_same_public_type_infallible::<Self, {public_type}<Storage, TargetUnit>>(self)",
+                "    }",
+                "}",
+                "",
+                f"impl<Storage, Unit> {public_type}<Storage, Unit>",
+                "where",
+                "    Storage: ScalarStorageFor<Unit> + ValueStorage,",
+                f"    Unit: {unit_trait},",
+                "{",
+                "    pub fn try_to_unit<TargetUnit, TargetStorage>(",
+                "        self,",
+                f"    ) -> Result<{public_type}<TargetStorage, TargetUnit>, crate::conversion::ConversionError>",
+                "    where",
+                f"        TargetUnit: {unit_trait},",
+                "        TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,",
+                "    {",
+                f"        try_convert_same_public_type::<Self, {public_type}<TargetStorage, TargetUnit>>(self)",
+                "    }",
+                "",
+                "    pub fn try_to_quantity<TargetQuantity, TargetUnit, TargetStorage>(",
+                "        self,",
+                "    ) -> Result<TargetQuantity, crate::conversion::ConversionError>",
+                "    where",
+                "        TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,",
+                "        TargetStorage: ValueStorage,",
+                "        TargetUnit: UnitMarker,",
+                "    {",
+                "        try_convert_quantity::<Self, TargetQuantity>(self)",
+                "    }",
+                "",
+                "    pub fn to_reciprocal_quantity<TargetQuantity, TargetUnit, TargetStorage>(",
+                "        self,",
+                "    ) -> Result<TargetQuantity, crate::conversion::ConversionError>",
+                "    where",
+                "        TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,",
+                "        TargetStorage: ValueStorage,",
+                "        TargetUnit: UnitMarker,",
+                "    {",
+                "        try_convert_reciprocal::<Self, TargetQuantity>(self)",
+                "    }",
+                "}",
+                "",
+                f"impl<Storage, Unit, TargetUnit> ConvertUnit<TargetUnit> for {public_type}<Storage, Unit>",
+                "where",
+                "    Storage: ScalarStorageFor<Unit> + ScalarStorageFor<TargetUnit> + InfallibleUnitStorage,",
+                f"    Unit: {unit_trait} + {infallible_trait}<TargetUnit, Storage>,",
+                f"    TargetUnit: {unit_trait},",
+                "{",
+                f"    type Output = {public_type}<Storage, TargetUnit>;",
+                "",
+                "    fn to_unit(self) -> Self::Output {",
+                f"        convert_same_public_type_infallible::<Self, {public_type}<Storage, TargetUnit>>(self)",
+                "    }",
+                "}",
+                "",
+                f"impl<Storage, Unit, TargetUnit, TargetStorage> TryConvertUnit<TargetUnit, TargetStorage> for {public_type}<Storage, Unit>",
+                "where",
+                "    Storage: ScalarStorageFor<Unit> + ValueStorage,",
+                f"    Unit: {unit_trait},",
+                f"    TargetUnit: {unit_trait},",
+                "    TargetStorage: ScalarStorageFor<TargetUnit> + ValueStorage,",
+                "{",
+                f"    type Output = {public_type}<TargetStorage, TargetUnit>;",
+                "",
+                "    fn try_to_unit(self) -> Result<Self::Output, crate::conversion::ConversionError> {",
+                f"        try_convert_same_public_type::<Self, {public_type}<TargetStorage, TargetUnit>>(self)",
+                "    }",
+                "}",
+                "",
+                f"impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage> TryConvertQuantity<TargetQuantity, TargetUnit, TargetStorage> for {public_type}<Storage, Unit>",
+                "where",
+                "    Storage: ScalarStorageFor<Unit> + ValueStorage,",
+                f"    Unit: {unit_trait},",
+                "    TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,",
+                "    TargetStorage: ValueStorage,",
+                "    TargetUnit: UnitMarker,",
+                "{",
+                "    fn try_to_quantity(self) -> Result<TargetQuantity, crate::conversion::ConversionError> {",
+                "        try_convert_quantity::<Self, TargetQuantity>(self)",
+                "    }",
+                "}",
+                "",
+                f"impl<Storage, Unit, TargetQuantity, TargetUnit, TargetStorage> ReciprocalBridge<TargetQuantity, TargetUnit, TargetStorage> for {public_type}<Storage, Unit>",
+                "where",
+                "    Storage: ScalarStorageFor<Unit> + ValueStorage,",
+                f"    Unit: {unit_trait},",
+                "    TargetQuantity: QuantityType<Storage = TargetStorage, Unit = TargetUnit>,",
+                "    TargetStorage: ValueStorage,",
+                "    TargetUnit: UnitMarker,",
+                "{",
+                "    fn to_reciprocal_quantity(self) -> Result<TargetQuantity, crate::conversion::ConversionError> {",
+                "        try_convert_reciprocal::<Self, TargetQuantity>(self)",
+                "    }",
+                "}",
+                "",
+            ]
+        )
+        for unit in dimension["units"]:
+            marker = rust_identifier(unit["reserved_word_alias"] or unit["unit_code_id"])
+            ctor = marker
+            lines.extend(
+                [
+                    f"impl<Storage> {public_type}<Storage, {marker}>",
+                    "where",
+                    f"    Storage: ScalarStorageFor<{marker}>,",
+                    "{",
+                    f"    pub const fn {ctor}(storage: Storage) -> Self {{",
+                    "        Self::new(storage)",
+                    "    }",
+                    "}",
+                    "",
+                    f"impl<Storage> QuantityForStorage<Storage> for {marker}",
+                    "where",
+                    f"    Storage: ScalarStorageFor<{marker}>,",
+                    "{",
+                    f"    type Quantity = {public_type}<Storage, {marker}>;",
+                    "",
+                    "    fn wrap(storage: Storage) -> Self::Quantity {",
+                    f"        {public_type}::<Storage, {marker}>::new(storage)",
+                    "    }",
+                    "}",
+                    "",
+                ]
+            )
+
+    lines.extend(
+        [
+            f"pub const GENERATED_PUBLIC_TYPE_COUNT: usize = {len(dimensions)};",
+            "pub const PUBLIC_TYPE_METADATA: &[GeneratedPublicTypeMetadata] = &[",
+        ]
+    )
+    for dimension in dimensions:
+        scalar_type_literals = ", ".join(
+            rust_string_literal(type_id) for type_id in dimension["scalar"]["type_ids"]
+        )
+        supported_unit_literals = ", ".join(
+            rust_string_literal(unit["unit_code_id"]) for unit in dimension["units"]
+        )
+        lines.extend(
+            [
+                "    GeneratedPublicTypeMetadata {",
+                f"        public_type: {rust_string_literal(dimension['public_type'])},",
+                f"        dimension_id: {rust_string_literal(dimension['dimension_id'])},",
+                f"        canonical_dimension_id: {rust_string_literal(dimension['canonical_dimension_id'])},",
+                f"        default_unit_code_id: {rust_string_literal(dimension['base_unit_code_id'])},",
+                f"        scalar_type_ids: &[{scalar_type_literals}],",
+                f"        supported_units: &[{supported_unit_literals}],",
+                "    },",
+            ]
+        )
+    lines.extend(["];", ""])
+    return "\n".join(lines) + "\n"
+
+
+def render_generated_bulk_storage_impls(summary: dict) -> str:
+    lines = [
+        "// @generated by scripts/generate_catalog_artifacts.py",
+        "use crate::generated::public_types::*;",
+        "",
+    ]
+    for dimension in summary["dimensions"]:
+        storages = [scalar_storage_name(type_id) for type_id in dimension["scalar"]["type_ids"]]
+        markers = [marker_name_for_unit(unit) for unit in dimension["units"]]
+        for marker in markers:
+            for storage in storages:
+                lines.append(f"impl private::SealedBulkStorageFor<{marker}> for {storage} {{}}")
+                lines.append(f"impl BulkStorageFor<{marker}> for {storage} {{}}")
+        lines.append("")
+    return "\n".join(lines) + "\n"
+
+
+def render_generated_conversion_metadata(summary: dict) -> str:
+    lines = [
+        "// @generated by scripts/generate_catalog_artifacts.py",
+        "",
+        "#[derive(Copy, Clone, Debug, PartialEq, Eq)]",
+        "pub enum CatalogConversionKind {",
+        "    Linear,",
+        "    Affine,",
+        "}",
+        "",
+        "#[derive(Copy, Clone, Debug, PartialEq)]",
+        "pub struct GeneratedUnitConversionMetadata {",
+        "    pub public_type: &'static str,",
+        "    pub dimension_id: &'static str,",
+        "    pub canonical_dimension_id: &'static str,",
+        "    pub unit_code_id: &'static str,",
+        "    pub kind: CatalogConversionKind,",
+        "    pub scale_to_base: f64,",
+        "    pub offset_to_base: Option<f64>,",
+        "}",
+        "",
+        "#[derive(Copy, Clone, Debug, PartialEq, Eq)]",
+        "pub struct GeneratedBridgeMetadata {",
+        "    pub kind: &'static str,",
+        "    pub left_public_type: &'static str,",
+        "    pub right_public_type: &'static str,",
+        "}",
+        "",
+        "pub const UNIT_CONVERSIONS: &[GeneratedUnitConversionMetadata] = &[",
+    ]
+    for dimension in summary["dimensions"]:
+        for unit in dimension["units"]:
+            lines.extend(
+                [
+                    "    GeneratedUnitConversionMetadata {",
+                    f"        public_type: {rust_string_literal(dimension['public_type'])},",
+                    f"        dimension_id: {rust_string_literal(dimension['dimension_id'])},",
+                    f"        canonical_dimension_id: {rust_string_literal(dimension['canonical_dimension_id'])},",
+                    f"        unit_code_id: {rust_string_literal(unit['unit_code_id'])},",
+                    f"        kind: CatalogConversionKind::{conversion_kind_variant(unit['conversion']['kind'])},",
+                    f"        scale_to_base: {unit['conversion']['scale_to_base']!r},",
+                    f"        offset_to_base: {conversion_offset_literal(unit['conversion']['offset_to_base'])},",
+                    "    },",
+                ]
+            )
+    lines.extend(["];", "", "pub const BRIDGES: &[GeneratedBridgeMetadata] = &["])
+    for bridge in summary["bridges"]:
+        lines.extend(
+            [
+                "    GeneratedBridgeMetadata {",
+                f"        kind: {rust_string_literal(bridge['kind'])},",
+                f"        left_public_type: {rust_string_literal(bridge['left_public_type'])},",
+                f"        right_public_type: {rust_string_literal(bridge['right_public_type'])},",
+                "    },",
+            ]
+        )
+    lines.extend(["];", ""])
+    return "\n".join(lines) + "\n"
+
+
+def render_generated_arithmetic_impls(summary: dict) -> str:
+    policies = summary["arithmetic_policies"]
+    dimensions = summary["dimensions"]
+    lines = [
+        "// @generated by scripts/generate_catalog_artifacts.py",
+        "",
+    ]
+
+    for row in policies["same_dimension_add_sub"]["storage_pair_policies"]:
+        lines.append(
+            f"impl_add_sub_rule!({row['lhs_storage']}, {row['rhs_storage']} => {row['result_storage']}, {row['api_mode']});"
+        )
+    lines.append("")
+
+    for row in policies["scalar_arithmetic"]["storage_pair_policies"]:
+        macro_name = "impl_mul_rule" if row["operator"] == "mul" else "impl_div_rule"
+        lines.append(
+            f"impl_{row['operator']}_rule!({row['lhs_storage']}, {row['rhs_storage']} => {row['result_storage']}, {row['api_mode']});"
+        )
+    lines.append("")
+
+    add_sub_unsupported = set(policies["same_dimension_add_sub"]["unsupported_public_types"])
+    scalar_unsupported = set(policies["scalar_arithmetic"]["unsupported_public_types"])
+
+    for dimension in dimensions:
+        public_type = dimension["public_type"]
+        unit_trait = f"{public_type}Unit"
+        if public_type not in add_sub_unsupported:
+            lines.append(f"impl_same_public_type_arithmetic!({public_type}, {unit_trait});")
+        if public_type not in scalar_unsupported:
+            lines.append(f"impl_scalar_arithmetic!({public_type}, {unit_trait});")
+    lines.append("")
+
+    for row in policies["cross_public_type_add_sub"]:
+        supported_modes = row["supported_api_modes"]
+        if supported_modes != ["infallible"]:
+            raise ValueError(
+                "only infallible cross-public arithmetic is supported in Phase B generation"
+            )
+        left_public_type = row["left_public_type"]
+        right_public_type = row["right_public_type"]
+        lines.append(
+            f"impl_cross_public_add_sub!({left_public_type}, {left_public_type}Unit, {right_public_type}, {right_public_type}Unit);"
+        )
+        if left_public_type != right_public_type:
+            lines.append(
+                f"impl_cross_public_add_sub!({right_public_type}, {right_public_type}Unit, {left_public_type}, {left_public_type}Unit);"
+            )
+    lines.append("")
+    return "\n".join(lines)
+
+
+def policy_index(summary: dict) -> dict[str, dict[str, object]]:
+    return {
+        policy["policy_id"]: policy for policy in summary["conversion_policies"]["policies"]
+    }
+
+
+def storage_pair_policy_id(path_policy: dict[str, object], source_storage: str, target_storage: str) -> str:
+    for row in path_policy["storage_pair_policies"]:
+        if row["source_storage"] == source_storage and row["target_storage"] == target_storage:
+            return str(row["policy_id"])
+    raise ValueError(f"missing storage pair policy for {source_storage}->{target_storage}")
+
+
+def combine_failure_tags(*fragments: str | None) -> str | None:
+    tags: list[str] = []
+    for fragment in fragments:
+        if fragment is None:
+            continue
+        for token in fragment.split("|"):
+            if token and token not in tags:
+                tags.append(token)
+    if not tags:
+        return None
+    return "|".join(tags)
+
+
+def resolve_policy(
+    summary: dict,
+    policy_id: str,
+    source_unit: dict[str, object],
+    target_unit: dict[str, object],
+    source_storage: str,
+) -> dict[str, object]:
+    policies = policy_index(summary)
+    policy = policies[policy_id]
+    guard = policy["infallibility_guard"]
+    if guard is None:
+        return policy
+    if guard == "same_storage_float_range":
+        if same_storage_float_path_is_infallible(source_storage, source_unit, target_unit):
+            return policy
+        fallback_policy_id = policy["fallback_policy_id"]
+        if fallback_policy_id is None:
+            raise ValueError(f"guarded policy `{policy_id}` is missing fallback")
+        return policies[fallback_policy_id]
+    raise ValueError(f"unsupported infallibility guard `{guard}`")
+
+
+def arithmetic_same_dimension_policy(
+    summary: dict, lhs_storage: str, rhs_storage: str
+) -> dict[str, object]:
+    for row in summary["arithmetic_policies"]["same_dimension_add_sub"]["storage_pair_policies"]:
+        if row["lhs_storage"] == lhs_storage and row["rhs_storage"] == rhs_storage:
+            return row
+    raise ValueError(f"missing arithmetic same-dimension policy for {lhs_storage}->{rhs_storage}")
+
+
+def scalar_arithmetic_policy(
+    summary: dict, operator: str, lhs_storage: str, rhs_storage: str
+) -> dict[str, object]:
+    for row in summary["arithmetic_policies"]["scalar_arithmetic"]["storage_pair_policies"]:
+        if (
+            row["operator"] == operator
+            and row["lhs_storage"] == lhs_storage
+            and row["rhs_storage"] == rhs_storage
+        ):
+            return row
+    raise ValueError(
+        f"missing scalar arithmetic policy for {operator}:{lhs_storage}->{rhs_storage}"
+    )
+
+
+def storage_bounds(storage: str) -> tuple[float, float]:
+    if storage == "i32":
+        return (float(-(2**31)), float(2**31 - 1))
+    if storage == "f32":
+        f32_max = float.fromhex("0x1.fffffep127")
+        return (-f32_max, f32_max)
+    if storage == "f64":
+        return (-sys.float_info.max, sys.float_info.max)
+    raise ValueError(f"unsupported storage `{storage}`")
+
+
+def to_base_value(value: float, unit: dict[str, object]) -> float:
+    conversion = unit["conversion"]
+    if conversion["kind"] == "linear":
+        return value * conversion["scale_to_base"]
+    return value * conversion["scale_to_base"] + conversion["offset_to_base"]
+
+
+def from_base_value(base_value: float, unit: dict[str, object]) -> float:
+    conversion = unit["conversion"]
+    if conversion["kind"] == "linear":
+        return base_value / conversion["scale_to_base"]
+    return (base_value - conversion["offset_to_base"]) / conversion["scale_to_base"]
+
+
+def converted_value(value: float, source_unit: dict[str, object], target_unit: dict[str, object]) -> float:
+    return from_base_value(to_base_value(value, source_unit), target_unit)
+
+
+def same_storage_float_path_is_infallible(
+    storage: str, source_unit: dict[str, object], target_unit: dict[str, object]
+) -> bool:
+    # For same-storage float paths we only expose `to_unit` when every source
+    # value is preserved exactly, not merely when the endpoints stay in range.
+    # With the current catalog contract, differing conversion coefficients imply
+    # runtime precision loss for at least some values, so those paths stay
+    # explicitly fallible.
+    if source_unit["conversion"] != target_unit["conversion"]:
+        return False
+    lower, upper = storage_bounds(storage)
+    target_lower, target_upper = storage_bounds(storage)
+    for source_value in (lower, upper):
+        candidate = converted_value(source_value, source_unit, target_unit)
+        if not math.isfinite(candidate):
+            return False
+        if candidate < target_lower or candidate > target_upper:
+            return False
+    return True
+
+
+def classify_same_public_type_path(
+    summary: dict,
+    source_storage: str,
+    target_storage: str,
+    source_unit: dict[str, object],
+    target_unit: dict[str, object],
+) -> tuple[str, str | None]:
+    path_policy = summary["conversion_policies"]["same_public_type"]
+    if source_unit["unit_code_id"] == target_unit["unit_code_id"] and source_storage == target_storage:
+        policy = resolve_policy(
+            summary,
+            str(path_policy["identity_policy_id"]),
+            source_unit,
+            target_unit,
+            source_storage,
+        )
+        return (str(policy["api_surface"]), policy["expected_failure"])
+
+    policy = resolve_policy(
+        summary,
+        storage_pair_policy_id(path_policy, source_storage, target_storage),
+        source_unit,
+        target_unit,
+        source_storage,
+    )
+    return (str(policy["api_surface"]), policy["expected_failure"])
+
+
+def conversion_coverage_rows(summary: dict) -> list[dict[str, str | None]]:
+    dimensions = summary["dimensions"]
+    rows: list[dict[str, str | None]] = []
+    same_canonical_policy = summary["conversion_policies"]["same_canonical_dimension"]
+    reciprocal_policy = summary["conversion_policies"]["reciprocal_bridge"]
+
+    for dimension in dimensions:
+        source_public_type = dimension["public_type"]
+        storages = [scalar_storage_name(type_id) for type_id in dimension["scalar"]["type_ids"]]
+        units = dimension["units"]
+        for source_storage in storages:
+            for target_storage in storages:
+                for source_unit in units:
+                    for target_unit in units:
+                        api_surface, expected_failure = classify_same_public_type_path(
+                            summary,
+                            source_storage,
+                            target_storage,
+                            source_unit,
+                            target_unit,
+                        )
+                        rows.append(
+                            {
+                                "source_public_type": source_public_type,
+                                "source_unit": source_unit["unit_code_id"],
+                                "source_storage": source_storage,
+                                "target_public_type": source_public_type,
+                                "target_unit": target_unit["unit_code_id"],
+                                "target_storage": target_storage,
+                                "path_kind": "same_public_type",
+                                "api_surface": api_surface,
+                                "support_status": "supported",
+                                "expected_failure": expected_failure,
+                            }
+                        )
+
+    canonical_groups: dict[str, list[dict]] = {}
+    for dimension in dimensions:
+        canonical_groups.setdefault(dimension["canonical_dimension_id"], []).append(dimension)
+
+    for group in canonical_groups.values():
+        if len(group) < 2:
+            continue
+        for source_dimension in group:
+            for target_dimension in group:
+                if source_dimension["public_type"] == target_dimension["public_type"]:
+                    continue
+                source_storages = [scalar_storage_name(type_id) for type_id in source_dimension["scalar"]["type_ids"]]
+                target_storages = [scalar_storage_name(type_id) for type_id in target_dimension["scalar"]["type_ids"]]
+                for source_storage in source_storages:
+                    for target_storage in target_storages:
+                        for source_unit in source_dimension["units"]:
+                            for target_unit in target_dimension["units"]:
+                                policy = resolve_policy(
+                                    summary,
+                                    storage_pair_policy_id(same_canonical_policy, source_storage, target_storage),
+                                    source_unit,
+                                    target_unit,
+                                    source_storage,
+                                )
+                                rows.append(
+                                    {
+                                        "source_public_type": source_dimension["public_type"],
+                                        "source_unit": source_unit["unit_code_id"],
+                                        "source_storage": source_storage,
+                                        "target_public_type": target_dimension["public_type"],
+                                        "target_unit": target_unit["unit_code_id"],
+                                        "target_storage": target_storage,
+                                        "path_kind": "same_canonical_dimension",
+                                        "api_surface": same_canonical_policy["api_surface"],
+                                        "support_status": "supported",
+                                        "expected_failure": policy["expected_failure"],
+                                    }
+                                )
+
+    public_types = {dimension["public_type"]: dimension for dimension in dimensions}
+    for bridge in summary["bridges"]:
+        left = public_types[bridge["left_public_type"]]
+        right = public_types[bridge["right_public_type"]]
+        for source_dimension, target_dimension in ((left, right), (right, left)):
+            source_storages = [scalar_storage_name(type_id) for type_id in source_dimension["scalar"]["type_ids"]]
+            target_storages = [scalar_storage_name(type_id) for type_id in target_dimension["scalar"]["type_ids"]]
+            for source_storage in source_storages:
+                for target_storage in target_storages:
+                    for source_unit in source_dimension["units"]:
+                        for target_unit in target_dimension["units"]:
+                            policy = resolve_policy(
+                                summary,
+                                storage_pair_policy_id(reciprocal_policy, source_storage, target_storage),
+                                source_unit,
+                                target_unit,
+                                source_storage,
+                            )
+                            rows.append(
+                                {
+                                    "source_public_type": source_dimension["public_type"],
+                                    "source_unit": source_unit["unit_code_id"],
+                                    "source_storage": source_storage,
+                                    "target_public_type": target_dimension["public_type"],
+                                    "target_unit": target_unit["unit_code_id"],
+                                    "target_storage": target_storage,
+                                    "path_kind": "reciprocal_bridge",
+                                    "api_surface": reciprocal_policy["api_surface"],
+                                    "support_status": "supported",
+                                    "expected_failure": combine_failure_tags(
+                                        "|".join(reciprocal_policy.get("base_failures", [])),
+                                        policy["expected_failure"],
+                                    ),
+                                }
+                            )
+
+    return rows
+
+
+def arithmetic_support_rows(summary: dict) -> list[dict[str, str | None]]:
+    dimensions = summary["dimensions"]
+    rows: list[dict[str, str | None]] = []
+    arithmetic_policies = summary["arithmetic_policies"]
+    same_dimension_policy = arithmetic_policies["same_dimension_add_sub"]
+    same_dimension_unsupported = set(same_dimension_policy["unsupported_public_types"])
+    scalar_policy = arithmetic_policies["scalar_arithmetic"]
+    scalar_unsupported = set(scalar_policy["unsupported_public_types"])
+    supported_cross_public_pairs = {
+        tuple(sorted((row["left_public_type"], row["right_public_type"]))): set(row["supported_api_modes"])
+        for row in arithmetic_policies["cross_public_type_add_sub"]
+    }
+    scalar_rhs_storages = sorted(
+        {row["rhs_storage"] for row in scalar_policy["storage_pair_policies"]}
+    )
+
+    for dimension in dimensions:
+        public_type = dimension["public_type"]
+        storages = [scalar_storage_name(type_id) for type_id in dimension["scalar"]["type_ids"]]
+        units = [unit["unit_code_id"] for unit in dimension["units"]]
+
+        for lhs_storage in storages:
+            for rhs_storage in storages:
+                row_policy = arithmetic_same_dimension_policy(summary, lhs_storage, rhs_storage)
+                for lhs_unit in units:
+                    for rhs_unit in units:
+                        for operator in ("add", "sub"):
+                            unsupported = public_type in same_dimension_unsupported
+                            rows.append(
+                                {
+                                    "lhs_public_type": public_type,
+                                    "lhs_unit": lhs_unit,
+                                    "lhs_storage": lhs_storage,
+                                    "operator": operator,
+                                    "rhs_public_type": public_type,
+                                    "rhs_unit": rhs_unit,
+                                    "rhs_storage": rhs_storage,
+                                    "result_public_type": public_type,
+                                    "result_unit_code_id": lhs_unit,
+                                    "result_unit_rule": "lhs_unit",
+                                    "result_storage": row_policy["result_storage"],
+                                    "path_family": "same_canonical_add_sub",
+                                    "api_mode": "absent" if unsupported else row_policy["api_mode"],
+                                    "exact_division_policy": "not-applicable",
+                                    "support_status": "unsupported" if unsupported else "supported",
+                                    "expected_failure": (
+                                        "IntentionallyUnsupported"
+                                        if unsupported
+                                        else row_policy["expected_failure"]
+                                    ),
+                                }
+                            )
+
+            for lhs_unit in units:
+                for rhs_storage_scalar in scalar_rhs_storages:
+                    for operator in ("mul", "div"):
+                        row_policy = scalar_arithmetic_policy(
+                            summary, operator, lhs_storage, rhs_storage_scalar
+                        )
+                        unsupported = public_type in scalar_unsupported
+                        rows.append(
+                            {
+                                "lhs_public_type": public_type,
+                                "lhs_unit": lhs_unit,
+                                "lhs_storage": lhs_storage,
+                                "operator": operator,
+                                "rhs_public_type": "Scalar",
+                                "rhs_unit": "scalar",
+                                "rhs_storage": rhs_storage_scalar,
+                                "result_public_type": public_type,
+                                "result_unit_code_id": lhs_unit,
+                                "result_unit_rule": "lhs_unit",
+                                "result_storage": row_policy["result_storage"],
+                                "path_family": "scalar_arithmetic",
+                                "api_mode": "absent" if unsupported else row_policy["api_mode"],
+                                "exact_division_policy": row_policy["exact_division_policy"],
+                                "support_status": "unsupported" if unsupported else "supported",
+                                "expected_failure": (
+                                    "IntentionallyUnsupported"
+                                    if unsupported
+                                    else row_policy["expected_failure"]
+                                ),
+                            }
+                        )
+
+    public_types = {dimension["public_type"]: dimension for dimension in dimensions}
+    for pair_key, supported_api_modes in supported_cross_public_pairs.items():
+        left_dimension = public_types[pair_key[0]]
+        right_dimension = public_types[pair_key[1]]
+        for lhs_dimension, rhs_dimension in (
+            (left_dimension, right_dimension),
+            (right_dimension, left_dimension),
+        ):
+            lhs_storages = [scalar_storage_name(type_id) for type_id in lhs_dimension["scalar"]["type_ids"]]
+            rhs_storages = [scalar_storage_name(type_id) for type_id in rhs_dimension["scalar"]["type_ids"]]
+            for lhs_storage in lhs_storages:
+                for rhs_storage in rhs_storages:
+                    for lhs_unit in [unit["unit_code_id"] for unit in lhs_dimension["units"]]:
+                        for rhs_unit in [unit["unit_code_id"] for unit in rhs_dimension["units"]]:
+                            for operator in ("add", "sub"):
+                                row_policy = arithmetic_same_dimension_policy(
+                                    summary, lhs_storage, rhs_storage
+                                )
+                                supported = row_policy["api_mode"] in supported_api_modes
+                                rows.append(
+                                    {
+                                        "lhs_public_type": lhs_dimension["public_type"],
+                                        "lhs_unit": lhs_unit,
+                                        "lhs_storage": lhs_storage,
+                                        "operator": operator,
+                                        "rhs_public_type": rhs_dimension["public_type"],
+                                        "rhs_unit": rhs_unit,
+                                        "rhs_storage": rhs_storage,
+                                        "result_public_type": lhs_dimension["public_type"],
+                                        "result_unit_code_id": lhs_unit,
+                                        "result_unit_rule": "lhs_unit",
+                                        "result_storage": row_policy["result_storage"],
+                                        "path_family": "same_canonical_add_sub",
+                                        "api_mode": row_policy["api_mode"] if supported else "absent",
+                                        "exact_division_policy": "not-applicable",
+                                        "support_status": "supported" if supported else "unsupported",
+                                        "expected_failure": (
+                                            row_policy["expected_failure"]
+                                            if supported
+                                            else "IntentionallyUnsupported"
+                                        ),
+                                    }
+                                )
+
+    for bridge in arithmetic_policies["compute_bridges"]:
+        lhs_dimension = public_types[bridge["lhs_public_type"]]
+        rhs_dimension = public_types[bridge["rhs_public_type"]]
+        result_dimension = public_types[bridge["result_public_type"]]
+        lhs_storages = [scalar_storage_name(type_id) for type_id in lhs_dimension["scalar"]["type_ids"]]
+        rhs_storages = [scalar_storage_name(type_id) for type_id in rhs_dimension["scalar"]["type_ids"]]
+        for lhs_storage in lhs_storages:
+            for rhs_storage in rhs_storages:
+                for lhs_unit in [unit["unit_code_id"] for unit in lhs_dimension["units"]]:
+                    for rhs_unit in [unit["unit_code_id"] for unit in rhs_dimension["units"]]:
+                        rows.append(
+                            {
+                                "lhs_public_type": lhs_dimension["public_type"],
+                                "lhs_unit": lhs_unit,
+                                "lhs_storage": lhs_storage,
+                                "operator": bridge["operator"],
+                                "rhs_public_type": rhs_dimension["public_type"],
+                                "rhs_unit": rhs_unit,
+                                    "rhs_storage": rhs_storage,
+                                    "result_public_type": result_dimension["public_type"],
+                                    "result_unit_code_id": bridge["result_unit_code_id"],
+                                    "result_unit_rule": "canonical_compute_unit",
+                                    "result_storage": bridge["result_storage"],
+                                    "path_family": "compute_bridge",
+                                "api_mode": bridge["api_mode"],
+                                "exact_division_policy": "not-applicable",
+                                "support_status": "supported",
+                                "expected_failure": bridge["expected_failure"],
+                            }
+                        )
+
+    for lhs_dimension in dimensions:
+        lhs_base_unit = lhs_dimension["base_unit_code_id"]
+        for rhs_dimension in dimensions:
+            if lhs_dimension["public_type"] == rhs_dimension["public_type"]:
+                continue
+            if lhs_dimension["canonical_dimension_id"] == rhs_dimension["canonical_dimension_id"]:
+                continue
+            rhs_base_unit = rhs_dimension["base_unit_code_id"]
+            for operator in ("add", "sub", "mul_quantity", "div_quantity"):
+                rows.append(
+                    {
+                        "lhs_public_type": lhs_dimension["public_type"],
+                        "lhs_unit": lhs_base_unit,
+                        "lhs_storage": "f64",
+                        "operator": operator,
+                        "rhs_public_type": rhs_dimension["public_type"],
+                        "rhs_unit": rhs_base_unit,
+                        "rhs_storage": "f64",
+                        "result_public_type": lhs_dimension["public_type"],
+                        "result_unit_code_id": lhs_base_unit,
+                        "result_unit_rule": "lhs_unit",
+                        "result_storage": "f64",
+                        "path_family": "cross_dimension_non_support",
+                        "api_mode": "absent",
+                        "exact_division_policy": "not-applicable",
+                        "support_status": "unsupported",
+                        "expected_failure": "IntentionallyUnsupported",
+                    }
+                )
+
+    return rows
+
+
+def bulk_support_rows(summary: dict) -> list[dict[str, str | None]]:
+    review_arities = (0, 2, 3, 4)
+    rows: list[dict[str, str | None]] = []
+    for dimension in summary["dimensions"]:
+        public_type = dimension["public_type"]
+        storages = [scalar_storage_name(type_id) for type_id in dimension["scalar"]["type_ids"]]
+        for storage in storages:
+            for arity in review_arities:
+                rows.append(
+                    {
+                        "public_type": public_type,
+                        "bulk_kind": "array",
+                        "array_arity": arity,
+                        "storage": storage,
+                        "classification": dimension["small_array"]["encoding"],
+                        "support_status": "supported",
+                        "expected_failure": None,
+                    }
+                )
+            rows.append(
+                {
+                    "public_type": public_type,
+                    "bulk_kind": "buffer",
+                    "array_arity": None,
+                    "storage": storage,
+                    "classification": dimension["buffer"]["encoding"],
+                    "support_status": "supported",
+                    "expected_failure": None,
+                }
+            )
+            rows.append(
+                {
+                    "public_type": public_type,
+                    "bulk_kind": "buffer_view",
+                    "array_arity": None,
+                    "storage": storage,
+                    "classification": dimension["buffer"]["encoding"],
+                    "support_status": "supported",
+                    "expected_failure": None,
+                }
+            )
+    return rows
+
+
 def format_rust_source(source: str) -> str:
     completed = subprocess.run(
         ["rustfmt", "--emit", "stdout"],
         input=source,
         text=True,
+        encoding="utf-8",
+        errors="strict",
         capture_output=True,
         check=True,
     )
@@ -300,8 +1405,15 @@ def expected_outputs() -> dict[Path, str]:
     summary = build_summary(catalog)
     return {
         SUMMARY_PATH: json.dumps(summary, indent=2, sort_keys=True) + "\n",
+        CONVERSION_COVERAGE_PATH: json.dumps(conversion_coverage_rows(summary), indent=2, sort_keys=True) + "\n",
+        ARITHMETIC_SUPPORT_PATH: json.dumps(arithmetic_support_rows(summary), indent=2, sort_keys=True) + "\n",
+        BULK_SUPPORT_PATH: json.dumps(bulk_support_rows(summary), indent=2, sort_keys=True) + "\n",
         RUST_PATH: format_rust_source(render_rust_module(summary)),
         FFI_TYPES_PATH: format_rust_source(render_generated_ffi_types(summary)),
+        PUBLIC_TYPES_PATH: format_rust_source(render_generated_public_types(summary)),
+        CONVERSION_METADATA_PATH: format_rust_source(render_generated_conversion_metadata(summary)),
+        ARITHMETIC_IMPLS_PATH: format_rust_source(render_generated_arithmetic_impls(summary)),
+        BULK_STORAGE_IMPLS_PATH: format_rust_source(render_generated_bulk_storage_impls(summary)),
     }
 
 

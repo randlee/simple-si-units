@@ -7,7 +7,7 @@ canonical-dimension arithmetic semantics, and array/buffer model.
 
 ## Status
 
-`Not Started`
+`Done`
 
 ## Scope References
 
@@ -54,17 +54,18 @@ canonical-dimension arithmetic semantics, and array/buffer model.
 
 | Sprint | Focus | Depends On | Parallel With | Status |
 |---|---|---|---|---|
-| [Sprint B-1](sprint-B-1-core-storage-types-and-unit-markers.md) | Core storage types and unit markers | Sprint A-6 | None | `Not Started` |
-| [Sprint B-2](sprint-B-2-unit-conversions-and-temperature-offsets.md) | Catalog-owned conversions plus Celsius/Fahrenheit support | Sprint A-6, Sprint B-1 | None | `Not Started` |
-| [Sprint B-3](sprint-B-3-arithmetic-semantics-and-canonical-compute-bridges.md) | Arithmetic semantics and canonical compute bridges | Sprint A-6, Sprint B-1, Sprint B-2 | Sprint B-4 | `Not Started` |
-| [Sprint B-4](sprint-B-4-array-and-buffer-quantity-model.md) | Array and buffer quantity model | Sprint A-6, Sprint B-1 | Sprint B-3 | `Not Started` |
+| [Sprint B-1](sprint-B-1-core-storage-types-and-unit-markers.md) | Core storage types and unit markers | Sprint A-6 | None | `Done` |
+| [Sprint B-2](sprint-B-2-unit-conversions-and-temperature-offsets.md) | Catalog-owned conversions plus Celsius/Fahrenheit support | Sprint A-6, Sprint B-1 | None | `Done` |
+| [Sprint B-3](sprint-B-3-arithmetic-semantics-and-canonical-compute-bridges.md) | Arithmetic semantics and canonical compute bridges | Sprint A-6, Sprint B-1, Sprint B-2 | Sprint B-4 | `Done` |
+| [Sprint B-4](sprint-B-4-array-and-buffer-quantity-model.md) | Array and buffer quantity model | Sprint A-6, Sprint B-1 | Sprint B-3 | `Done` |
+| [Sprint B-5](sprint-B-5-phase-end-boundary-hardening.md) | Phase-end scalar, bulk, and ABI boundary hardening | Sprint B-4 | None | `Done` |
 
 ## Phase Completion Criteria
 
 Phase B is complete when:
 
-1. Unit-preserving scalar types exist for every item in
-   [docs/crates/units-x/in-scope-type-inventory.md](/Volumes/Extreme%20Pro/github/simple-si-units/docs/crates/units-x/in-scope-type-inventory.md).
+1. Unit-preserving scalar types exist for every public type row in
+   `catalog/generated/units-catalog-summary.json`.
 2. Implemented scalar, array, and buffer surfaces match catalog-derived
    metadata and regenerate cleanly from the authoritative catalog.
 3. Conversions are implemented from catalog-owned conversion metadata across
@@ -72,5 +73,6 @@ Phase B is complete when:
    `Diopter`.
 4. Arithmetic semantics use catalog `canonical_dimension_id` to determine
    same-dimension compatibility and canonical compute bridge eligibility.
-5. Inventory-backed validation demonstrates closure for every in-scope type
-   rather than representative-family sampling.
+5. Catalog-summary-backed validation demonstrates closure for every in-scope
+   public type rather than representative-family sampling, and the derived
+   inventory checklist remains in parity for human review.

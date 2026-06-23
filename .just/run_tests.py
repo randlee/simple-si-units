@@ -12,8 +12,15 @@ from lint_common import discover_repo_root
 VALID_SCOPES = ("all", "unit", "python", "dotnet", "integration", "rust", "help")
 GENERATED_ARTIFACT_PATHS = (
     "catalog/generated/units-catalog-summary.json",
+    "catalog/generated/phase-b-conversion-coverage.json",
+    "catalog/generated/phase-b-arithmetic-support.json",
+    "catalog/generated/phase-b-bulk-support.json",
+    "crates/units-x/src/generated/arithmetic_impls.rs",
+    "crates/units-x/src/generated/bulk_storage_impls.rs",
     "crates/units-x/src/generated/catalog_metadata.rs",
+    "crates/units-x/src/generated/conversion_metadata.rs",
     "crates/units-x/src/generated/ffi_contract_types.rs",
+    "crates/units-x/src/generated/public_types.rs",
 )
 
 
@@ -35,11 +42,17 @@ def run_command(command: list[str], repo_root: Path) -> int:
 
 def generated_artifacts_are_dirty(repo_root: Path) -> bool:
     completed = subprocess.run(
-        ["git", "diff", "--quiet", "HEAD", "--", *GENERATED_ARTIFACT_PATHS],
+        ["git", "status", "--porcelain=1", "--untracked-files=all", "--", *GENERATED_ARTIFACT_PATHS],
         cwd=repo_root,
         check=False,
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
     )
-    return completed.returncode == 1
+    if completed.returncode != 0:
+        return True
+    return bool(completed.stdout.strip())
 
 
 def python_checks(repo_root: Path) -> list[list[str]]:

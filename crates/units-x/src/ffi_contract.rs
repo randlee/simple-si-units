@@ -1,19 +1,12 @@
 #![allow(non_camel_case_types)]
 
 pub use crate::generated::ffi_contract_types::{
-    degC, degF, distance_mm_i32, distance_mm_i32_slice, distance_mm_i32_slice_mut, m, mm,
+    distance_mm_i32, distance_mm_i32_slice, distance_mm_i32_slice_mut,
 };
+pub use crate::generated::public_types::{degC, degF, m, mm};
 use core::ffi::{c_char, c_void};
-use core::marker::PhantomData;
 use core::slice;
 use std::vec::Vec;
-
-/// Placeholder generic quantity shape used only to pin the contract direction.
-#[repr(transparent)]
-pub struct quantity<Unit, Storage> {
-    pub storage: Storage,
-    _unit: PhantomData<Unit>,
-}
 
 /// Explicit Rust-owned byte-buffer contract for ABI-returned payloads.
 #[repr(C)]
